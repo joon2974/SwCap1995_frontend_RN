@@ -25,16 +25,13 @@ export default class LoginScreen extends Component{
         var unsubscribe = firebase
         .auth()
         .onAuthStateChanged(function(firebaseUser) {
-            console.log('여기는 된다')
           unsubscribe();
           // Check if we are already signed-in Firebase with the correct user.
           if (!this.isUserEqual(googleUser, firebaseUser)) {
-              console.log('저기돈 ㅓ마ㅣ너이ㅏ럼나ㅣ어라ㅣ')
             // Build Firebase credential with the Google ID token.
             var credential = firebase.auth.GoogleAuthProvider.credential(
                 googleUser.idToken,
                 googleUser.accessToken);
-            console.log('여기는 어떨까???', credential);
             // Sign in with credential from the Google user.
             firebase
             .auth()
