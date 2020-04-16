@@ -1,11 +1,35 @@
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import MainScreen from './Components/MainScreen'
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {createSwitchNavigator ,createAppContainer} from 'react-navigation';
+import MainScreen from './Components/MainScreen';
+import LoadingScreen from './Components/LogInScreens/LoadingScreen';
+import LoginScreen from './Components/LogInScreens/LoginScreen';
+import firebase from 'firebase';
+import {firebaseConfig} from './firebaseConfig';
 
-const AppStackNavigator = createStackNavigator({
-  Main: {
-    screen: MainScreen
-  },
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+export default class App extends React.Component{
+  render(){
+    return <AppNavigator />;
+  }
+}
+
+const AppSwitchNavigator = createSwitchNavigator({
+  LoadingScreen: LoadingScreen,
+  LoginScreen: LoginScreen,
+  MainScreen: MainScreen
 });
 
-export default createAppContainer(AppStackNavigator);
+const AppNavigator = createAppContainer(AppSwitchNavigator)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
