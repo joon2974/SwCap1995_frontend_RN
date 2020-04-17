@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {createSwitchNavigator ,createAppContainer} from 'react-navigation';
-import MainScreen from './Components/MainScreen';
+import MainScreen from './Components/NavigateScreen';
 import LoadingScreen from './Components/LogInScreens/LoadingScreen';
 import LoginScreen from './Components/LogInScreens/LoginScreen';
 import firebase from 'firebase';

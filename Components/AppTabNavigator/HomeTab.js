@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-import firebase from 'firebase';
 
 export default class HomeTab extends Component{
 
@@ -15,9 +14,6 @@ export default class HomeTab extends Component{
         return (
             <View style={styles.container}>
                 <Text>Home</Text>
-                <Button 
-                title="Sign out" 
-                onPress={() => firebase.auth().signOut()}/>
             </View>
         );
     }

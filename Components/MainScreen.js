@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, Button, Platform} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import firebase from 'firebase';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import FriendTab from './AppTabNavigator/FriendTab';
@@ -47,6 +48,11 @@ export default class MainScreen extends Component{
 
     static navigationOptions = {
         title: 'Plan A',
+        headerRight: () => <Ionicons
+            name='ios-log-out'
+            size= {30}
+            style={{marginRight: 10}}
+            onPress={() => firebase.auth().signOut()}/>,
     };
     
     render(){

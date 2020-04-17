@@ -35,10 +35,11 @@ export default class LoginScreen extends Component{
             // Sign in with credential from the Google user.
             firebase
             .auth()
-            .signInWithCredential(credential).then(function(){
+            .signInWithCredential(credential).then(function(result){
                 console.log('USER SIGNED IN');
                 console.log('sing in result', result);
                 if(result.additionalUserInfo.isNewUser){
+                  console.log("Test111");
                     firebase
                     .database()
                     .ref('/users/' + result.user.uid)
@@ -51,6 +52,7 @@ export default class LoginScreen extends Component{
                         created_at: Date.now()
                     })
                 }else{
+                    console.log("Test222");
                     firebase
                     .database()
                     .ref('/users/' + result.user.uid).update({
