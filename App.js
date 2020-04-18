@@ -4,6 +4,7 @@ import {createSwitchNavigator ,createAppContainer} from 'react-navigation';
 import MainScreen from './Components/NavigateScreen';
 import LoadingScreen from './Components/LogInScreens/LoadingScreen';
 import LoginScreen from './Components/LogInScreens/LoginScreen';
+import SignUpScreen from './Components/LogInScreens/SignUpScreen';
 import firebase from 'firebase';
 import {firebaseConfig} from './firebaseConfig';
 
@@ -20,7 +21,8 @@ export default class App extends React.Component{
 const AppSwitchNavigator = createSwitchNavigator({
   LoadingScreen: LoadingScreen,
   LoginScreen: LoginScreen,
-  MainScreen: MainScreen
+  MainScreen: MainScreen,
+  SignUpScreen: SignUpScreen,
 });
 
 const AppNavigator = createAppContainer(AppSwitchNavigator)
