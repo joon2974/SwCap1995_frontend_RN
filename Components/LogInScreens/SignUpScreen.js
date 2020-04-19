@@ -17,7 +17,7 @@ export default class HomeTab extends Component{
                 alert('Please input your ID!');
             }
             firebase.auth().createUserWithEmailAndPassword(ID, password).catch((error) => {
-                alert('비밀번호는 6자리 이상이어야 합니다!');
+                alert('비밀번호는 6자리 이상이어야 합니다!!');
             });
         }catch(error){
             console.log(error);
