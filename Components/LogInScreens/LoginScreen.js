@@ -150,6 +150,19 @@ export default class LoginScreen extends Component{
       }
     }
 
+    logInWithPlanA = async(ID, password) => {
+      try{
+        firebase.auth().signInWithEmailAndPassword(ID, password).then(function(user){
+          console.log(user);
+        })
+        .catch((error) => {
+          Alert.alert('ID 혹은 비밀번호를 확인해 주세요.');
+        })
+      }catch(error){
+        console.log(error);
+      }
+    }
+
     render(){
         const {ID, password} = this.state;
         return (
@@ -183,7 +196,7 @@ export default class LoginScreen extends Component{
                       secureTextEntry={true}/>
                   </View>
 
-                  <TouchableOpacity onPress={() => alert(`Inputs, ID: ${ID}, password: ${password}`)} style={styles.planABtn} activeOpacity={0.5}>
+                  <TouchableOpacity onPress={() => this.logInWithPlanA(ID, password)} style={styles.planABtn} activeOpacity={0.5}>
                     <Image 
                       source={{
                         uri: 'https://ifh.cc/g/BHltgC.jpg',
@@ -216,7 +229,7 @@ export default class LoginScreen extends Component{
                   <View style={styles.horizontalLine}/>
 
                   <View style={styles.moreInfoContainer}>
-                    <TouchableOpacity onPress={() => alert('회원가입')} style={styles.moreInfo}>
+                    <TouchableOpacity onPress={() => this.gotoSignUp()} style={styles.moreInfo}>
                       <Text style={styles.moreInfoText}>회원가입</Text>
                     </TouchableOpacity>
 
