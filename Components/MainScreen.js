@@ -13,10 +13,10 @@ import SearchTab from './AppTabNavigator/SearchTab';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {screen: HomeTab},
+    Search: {screen: SearchTab},
+    Plan: {screen: PlanTab},
     Friend: {screen: FriendTab},
     My: {screen: MyTab},
-    Plan: {screen: PlanTab},
-    Search: {screen: SearchTab},
 }, {
     swipeEnabled: true,
     tabBarPosition: 'bottom',
@@ -38,7 +38,7 @@ const AppTabNavigator = createMaterialTopTabNavigator({
         upperCaseLabel: false,
         showLabel: true,
         showIcon: true,
-    }
+    },
 });
 
 const AppTabContainer = createAppContainer(AppTabNavigator);

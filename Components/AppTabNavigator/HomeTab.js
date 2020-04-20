@@ -1,6 +1,22 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import MyMenuScreen from '../MyScreens/MyMenuScreen';
+import HomeMain from '../HomeScreens/HomeMain';
+
+const HomeStackNavigator = createStackNavigator({
+    Main: {
+        screen: HomeMain
+    },
+    MyMenuScreen: {
+        screen: MyMenuScreen
+    },
+},{
+    initialRouteName: 'Main',
+});
+
+const HomeAppContainer =  createAppContainer(HomeStackNavigator);
 
 export default class HomeTab extends Component{
 
@@ -11,18 +27,6 @@ export default class HomeTab extends Component{
     }
 
     render(){
-        return (
-            <View style={styles.container}>
-                <Text>Home</Text>
-            </View>
-        );
+        return <HomeAppContainer />;
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-});
