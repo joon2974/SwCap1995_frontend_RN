@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+import firebase from 'firebase';
 
 export default class HomeMain extends Component{
 

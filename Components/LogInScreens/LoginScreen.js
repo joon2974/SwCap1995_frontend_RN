@@ -251,11 +251,14 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'absolute',
+        marginTop: 80,
     },
     logoContainer: {
       flex:1,
       alignItems: 'center',
       justifyContent: 'flex-end',
+      marginBottom: 40,
     },
     btnContainer: {
       flex: 1.5,
