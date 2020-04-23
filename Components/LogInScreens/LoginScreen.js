@@ -15,7 +15,7 @@ export default class LoginScreen extends Component{
     };
 
     gotoSignUp = () => {
-      this.props.navigation.navigate('SignUpScreen');
+      this.props.navigation.navigate('SignUp');
     }
 
     isUserEqual = (googleUser, firebaseUser) => {
@@ -252,7 +252,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-        marginTop: 80,
+        marginTop: 30,
+        backgroundColor: 'white'
     },
     logoContainer: {
       flex:1,

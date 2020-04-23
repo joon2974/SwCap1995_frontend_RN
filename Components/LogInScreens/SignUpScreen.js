@@ -24,7 +24,8 @@ export default class HomeTab extends Component{
             if(this.state.ID < 1 || this.state.password.length < 6){
                 alert('Please input your ID!');
             }
-            firebase.auth().createUserWithEmailAndPassword(ID, password).catch((error) => {
+            firebase.auth().createUserWithEmailAndPassword(ID, password)
+            .catch((error) => {
                 alert('비밀번호는 6자리 이상이어야 합니다!!');
             });
         }catch(error){
@@ -36,13 +37,6 @@ export default class HomeTab extends Component{
         const {ID, password, male, female, cat1, cat2, cat3, cat4, cat5, cat6} = this.state;
         return (
             <View style={styles.container}>
-                <View style={styles.topBar}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('LoginScreen')}>
-                        <Ionicons name='ios-arrow-back' size={30} style={styles.goBackBtn}/>
-                    </TouchableOpacity>
-                    <Text style={styles.menuText}>회원 가입</Text>
-                </View>
-
                 <View style={styles.signUpContainer}>
                     <View style={styles.lineContainer}>
                         <View style={styles.lineTextContainer}>
@@ -149,28 +143,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-    },
-    topBar: {
-        height: height / 7,
-        width: width,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
-        backgroundColor: '#F2F2F2',
-        ...Platform.select({
-            ios: {
-              shadowColor: "rgb(50, 50, 50)",
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              shadowOffset: {
-                height: -1,
-                width: 0
-              }
-            },
-            android: {
-              elevation: 5
-            }
-          }),
+        backgroundColor: 'white',
     },
     signUpContainer: {
         height: height * 6 / 7,
@@ -181,11 +154,6 @@ const styles = StyleSheet.create({
     goBackBtn: {
         marginLeft: 10,
         marginTop: 20,
-    },
-    menuText: {
-        marginLeft: 15,
-        marginTop: 20,
-        fontSize: 20,
     },
     lineContainer: {
         width: width - 20,
