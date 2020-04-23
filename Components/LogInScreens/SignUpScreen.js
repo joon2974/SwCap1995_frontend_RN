@@ -22,11 +22,11 @@ export default class HomeTab extends Component{
     signUpUser = (ID, password) => {
         try{
             if(this.state.ID < 1 || this.state.password.length < 6){
-                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!');
+                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!!');
             }
             firebase.auth().createUserWithEmailAndPassword(ID, password)
             .catch((error) => {
-                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!');
+                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!!');
             });
         }catch(error){
             console.log(error);
