@@ -14,6 +14,9 @@ import MyTab from './Components/AppTabNavigator/MyTab';
 import PlanTab from './Components/AppTabNavigator/PlanTab';
 import SearchTab from './Components/AppTabNavigator/SearchTab';
 
+import MyMenuScreen from './Components/MyScreens/MyMenuScreen';
+import HomeMain from './Components/HomeScreens/HomeMain';
+
 import firebase from 'firebase';
 import {firebaseConfig} from './firebaseConfig';
 
@@ -22,8 +25,9 @@ if (!firebase.apps.length) {
 }
 
 const LoginStack = createStackNavigator({Login: LoginScreen, SignUp: SignUpScreen});
+const HomeStack = createStackNavigator({Main:HomeMain, MyMenuScreen: MyMenuScreen });
 const AppTabNavigator = createMaterialTopTabNavigator({
-  Home: {screen: HomeTab},
+  Home: HomeStack,
   Search: {screen: SearchTab},
   Plan: {screen: PlanTab},
   Friend: {screen: FriendTab},
