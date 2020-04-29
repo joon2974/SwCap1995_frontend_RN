@@ -55,6 +55,21 @@ export default class SignUpScreen extends Component{
         });
     }
 
+    catObj = (cat1, cat2, cat3, cat4 ,cat5, cat6) => {
+        let categories = new Array;
+
+        categories.push({name: '운동', value: cat1});
+        categories.push({name: '공부', value: cat2});
+        categories.push({name: '감정', value: cat3});
+        categories.push({name: '생활습관', value: cat4});
+        categories.push({name: '자기계발', value: cat5});
+        categories.push({name: '기타', value: cat6});
+
+        categories = categories.map(v => v.value !== null);
+
+        return categories;
+    }
+
     render(){
         const {ID, password, password2, male, female, cat1, cat2, cat3, cat4, cat5, cat6, ableID} = this.state;
         return (
