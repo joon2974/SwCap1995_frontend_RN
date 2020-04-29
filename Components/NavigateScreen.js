@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 
-import {createAppContainer} from 'react-navigation';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {createStackNavigator} from 'react-navigation-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
 
-import HomeTab from './AppTabNavigator/HomeTab';
 import FriendTab from './AppTabNavigator/FriendTab';
 import MyTab from './AppTabNavigator/MyTab';
 import PlanTab from './AppTabNavigator/PlanTab';
@@ -24,87 +24,99 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const LoginStack = createStackNavigator({Login: LoginScreen, SignUp: SignUpScreen});
-//const HomeStack = createStackNavigator({Main:HomeMain, MyMenuScreen: MyMenuScreen });
-const AppTabNavigator = createMaterialTopTabNavigator({
-  //Home: HomeStack,
-  Home:{screen: HomeTab},
-  Search: {screen: SearchTab},
-  Plan: {screen: PlanTab},
-  Friend: {screen: FriendTab},
-  My: {screen: MyTab},
-}, {
-  swipeEnabled: true,
-  tabBarPosition: 'bottom',
-  tabBarOptions: {
-      style: {
-          ...Platform.select({
-              ios: {
-                  backgroundColor:'white',
-              },
-              android: {
-                  backgroundColor: 'white'
-              }
-          })
-      },
-      iconStyle: {height: 10, alignItems:'center'},
-      labelStyle: {height: 20},
-      activeTintColor: '#000',
-      inactiveTintColor: '#d1cece',
-      upperCaseLabel: false,
-      showLabel: true,
-      showIcon: true,
-  },
-});
+const LoginStack = createStackNavigator();
+function LoginStackScreen(){
+    return(
+        <LoginStack.Navigator>
+            <LoginStack.Screen name='Login' component={LoginScreen} />
+            <LoginStack.Screen name='SignUp' component={SignUpScreen} />
+        </LoginStack.Navigator>
+    )
+}
 
-const LoginStackContainer = createAppContainer(LoginStack);
-const MainTabContainer = createAppContainer(AppTabNavigator);
+const HomeStack = createStackNavigator();
+function HomeStackScreen(){
+    return(
+        <HomeStack.Navigator>
+            <HomeStack.Screen name='Main' component={HomeMain} />
+            <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
+        </HomeStack.Navigator>
+    )
+}
 
-export default class NavigationScreen extends Component{
-  state={
-    isSignedIn: false,
-    isFirebaseLoaded: false,
-  }
+const Tab = createBottomTabNavigator();
 
-  componentDidMount(){
-    this.checkIfLoggedIn();
-  }
+export default function NavigateScreen(){
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isFirebaseLoaded, setIsFirebaseLoaded] = useState(false);
 
-  checkIfLoggedIn = () => {
-    firebase.auth().onAuthStateChanged(
-      function(user){
-            console.log('AUTH STATE CHANGED CALLED');
-        if(user){
-            this.state.isSignedIn = true;
-        }else{
-            this.state.isSignedIn = false;
-        }
-        this.state.isFirebaseLoaded = true;
-        this.forceUpdate();
-      }.bind(this));
-  }
+    useEffect(() => {
+        checkIfLoggedIn();
+    }, [isSignedIn, isFirebaseLoaded])
 
-  render(){
-    const { isSignedIn, isFirebaseLoaded } = this.state;
-      if(!isFirebaseLoaded){
+    const checkIfLoggedIn = () => {
+        firebase.auth().onAuthStateChanged(
+        function(user){
+                console.log('AUTH STATE CHANGED CALLED');
+            if(user){
+                setIsSignedIn(true);
+            }else{
+                setIsSignedIn(false);
+            }
+            setIsFirebaseLoaded(true);
+        });
+    }
+
+    if(!isFirebaseLoaded){
         return (
           <View style={styles.container}>
             <ActivityIndicator size="large"/>
           </View>
         );
-      }
-
-      if(isFirebaseLoaded && !isSignedIn){
+    }
+    else if(isFirebaseLoaded && !isSignedIn){
         return (
-          <LoginStackContainer />
-        );
-      }
+            <NavigationContainer>
+                <LoginStackScreen />
+            </NavigationContainer>
+        )
+    }
+    else{
+        return(
+            <NavigationContainer>
+                <Tab.Navigator
+                screenOptions={({route}) => ({
+                    tabBarIcon: ({focused, color, size}) => {
+                        let iconName;
 
-      return(
-        <MainTabContainer />
-      )
-  }
+                        if(route.name === 'Home'){
+                            iconName = focused ? 'ios-home' : 'ios-home';
+                        }else if(route.name === 'Search'){
+                            iconName = focused ? 'ios-search' : 'ios-search';
+                        }else if(route.name === 'Plan'){
+                            iconName = focused ? 'ios-calendar' : 'ios-calendar';
+                        }else if(route.name === 'Friend'){
+                            iconName = focused ? 'ios-people' : 'ios-people';
+                        }else if(route.name === 'My'){
+                            iconName = focused ? 'ios-person' : 'ios-person';
+                        }
 
+                        return <Ionicons name={iconName} size={size} color={color}/>;
+                    },
+                })}
+                tabBarOptions={{
+                    activeTintColor: '#000',
+                    inactiveTintColor: '#d1cece'
+                }}>
+                    <Tab.Screen name = "Home" component={HomeStackScreen} />
+                    <Tab.Screen name = "Search" component={SearchTab} />
+                    <Tab.Screen name = "Plan" component={PlanTab} />
+                    <Tab.Screen name = "Friend" component={FriendTab} />
+                    <Tab.Screen name = "My" component={MyTab} />
+                </Tab.Navigator>
+            </NavigationContainer>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
