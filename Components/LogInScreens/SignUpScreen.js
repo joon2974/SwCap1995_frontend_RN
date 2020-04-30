@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Platform, Dimensions, TouchableOpacity, TextInput, Button, TextInputBase} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import firebase from 'firebase';
+import axios from 'axios';
 
 const {height, width} = Dimensions.get('window');
+const SERVER_URL = 'http://49.50.172.58:3000';
 
-export default class HomeTab extends Component{
+export default class SignUpScreen extends Component{
     state = {
         ID: "",
         password: "",
+        password2: "",
         male: false,
         female: false,
         cat1: null,
@@ -17,24 +20,52 @@ export default class HomeTab extends Component{
         cat4: null,
         cat5: null,
         cat6: null,
+        albeID: "",
     }
 
     signUpUser = (ID, password) => {
         try{
             if(this.state.ID < 1 || this.state.password.length < 6){
-                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!!');
+                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!');
+            }else if(!(this.state.password === this.state.password2)){
+                alert('비밀번호를 확인해 주세요!')
+            }else{
+                firebase.auth().createUserWithEmailAndPassword(ID, password).catch((error) => {
+                    alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!');
+                });
             }
-            firebase.auth().createUserWithEmailAndPassword(ID, password)
-            .catch((error) => {
-                alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다!!');
-            });
         }catch(error){
             console.log(error);
         }
     }
 
+    sendUserCredential = (ID, password) => {
+        axios.get(`http://49.50.172.58:3000/graphql?query={userGet{id,sex,email}}`).then(res => {
+            console.log(res);
+            alert(res);
+        }).catch(error => {
+            console.log(error);
+            alert(error);
+        });
+    }
+
+    catObj = (cat1, cat2, cat3, cat4 ,cat5, cat6) => {
+        let categories = new Array;
+
+        categories.push({name: '운동', value: cat1});
+        categories.push({name: '공부', value: cat2});
+        categories.push({name: '감정', value: cat3});
+        categories.push({name: '생활습관', value: cat4});
+        categories.push({name: '자기계발', value: cat5});
+        categories.push({name: '기타', value: cat6});
+
+        categories = categories.map(v => v.value !== null);
+
+        return categories;
+    }
+
     render(){
-        const {ID, password, male, female, cat1, cat2, cat3, cat4, cat5, cat6} = this.state;
+        const {ID, password, password2, male, female, cat1, cat2, cat3, cat4, cat5, cat6, ableID} = this.state;
         return (
             <View style={styles.container}>
                 <View style={styles.signUpContainer}>
@@ -53,15 +84,38 @@ export default class HomeTab extends Component{
                     </View>
 
                     <View style={styles.lineContainer}>
+                        <TouchableOpacity style={styles.checkBtn} onPress={() => this.setState({ableID: "사용가능한 ID입니다."})}>
+                            <Text style={{color: 'white'}}>중복 확인</Text>
+                        </TouchableOpacity>
+                        <View style={styles.idCheckResult}>
+                            <Text>{ableID}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.lineContainer}>
                         <View style={styles.lineTextContainer}>
                             <Text>비밀번호</Text>
                         </View>
-                        <View style={styles.inputContainer}>
+                        <View style={styles.passwordInputContainer}>
                             <TextInput 
                             value={password}
                             onChangeText = {(password) => this.setState({password})}
                             style={styles.input}
                             placeholder='Password'
+                            secureTextEntry={true}/>
+                        </View>
+                    </View>
+
+                    <View style={styles.lineContainer}>
+                        <View style={styles.lineTextContainer}>
+                            <Text>비번 확인</Text>
+                        </View>
+                        <View style={styles.passwordInputContainer}>
+                            <TextInput 
+                            value={password2}
+                            onChangeText = {(password2) => this.setState({password2})}
+                            style={styles.input}
+                            placeholder='Password validation'
                             secureTextEntry={true}/>
                         </View>
                     </View>
@@ -130,7 +184,7 @@ export default class HomeTab extends Component{
                     <Button 
                         style={{marginTop: 20}}
                         title='입력 확인(개발용)'
-                        onPress={() => alert(`이메일: ${ID}, 비번: ${password}, 성별: ${male ? '남자' : '여자'}, 관심카테고리: ${cat1}, ${cat2}, ${cat3}, ${cat4}, ${cat5}, ${cat6}`)}/>
+                        onPress={() => this.sendUserCredential(ID, password)}/>
                 </View>
             </View>
         );
@@ -150,6 +204,7 @@ const styles = StyleSheet.create({
         width: width,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 20,
     },
     goBackBtn: {
         marginLeft: 10,
@@ -160,6 +215,12 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 10,
         flexDirection: 'row',
+    },
+    idCheckResult: {
+        width: 200,
+        height: 40,
+        marginLeft: 10,
+        justifyContent: 'center',
     },
     lineTextContainer: {
         width: 55,
@@ -199,6 +260,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F2F2',
         marginBottom: 5,
         marginLeft: 5,
+    },
+    passwordInputContainer: {
+        width: width - 100,
+        height: 45,
+        borderRadius: 10,
+        backgroundColor: '#F2F2F2',
+        marginBottom: 5,
+        marginLeft: 5,
+    },
+    checkBtn: {
+        width: 60,
+        height: 35,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 65,
+        backgroundColor: '#00FF80',
+        borderRadius: 10,
     },
     input: {
         width: width - 55,

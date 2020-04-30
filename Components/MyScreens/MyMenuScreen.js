@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import firebase from 'firebase';
 
 export default class MyMenuScreen extends Component{
 
@@ -7,6 +8,9 @@ export default class MyMenuScreen extends Component{
         return (
             <View style={styles.container}>
                 <Text>MY MENU SCREEN</Text>
+                <Button 
+                    title='Log Out'
+                    onPress={() => firebase.auth().signOut()}/>
             </View>
         );
     }
