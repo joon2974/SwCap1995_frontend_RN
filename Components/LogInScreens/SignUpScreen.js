@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 
 const {height, width} = Dimensions.get('window');
-const SERVER_URL = '';
+const SERVER_URL = 'http://49.50.172.58:3000';
 
 export default class SignUpScreen extends Component{
     state = {
@@ -40,18 +40,12 @@ export default class SignUpScreen extends Component{
     }
 
     sendUserCredential = (ID, password) => {
-        axios({
-            url: SERVER_URL,
-            method: 'post',
-            data: {
-                email: ID,
-                password: password,
-            }
-        }).then(res => {
+        axios.get(`http://49.50.172.58:3000/graphql?query={userGet{id,sex,email}}`).then(res => {
             console.log(res);
             alert(res);
         }).catch(error => {
             console.log(error);
+            alert(error);
         });
     }
 
