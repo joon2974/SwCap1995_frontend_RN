@@ -144,9 +144,13 @@ export default class SignUpScreen extends Component{
             email: ID,
         }).then(res => {
             this.state.ableID = true;
+            this.state.emailInfo = "사용가능한 ID입니다.";
+            this.forceUpdate();
             console.log(res);
         }).catch(error => {
             this.state.ableID = false;
+            this.state.emailInfo = "중복된 ID입니다.";
+            this.forceUpdate();
             console.log(error);
         })
     }
@@ -172,7 +176,7 @@ export default class SignUpScreen extends Component{
 
                     <View style={styles.lineContainer}>
                         <TouchableOpacity style={styles.checkBtn} onPress={() => {
-                            ableID ? this.setState({emailInfo: "사용 가능한 Id입니다."}) : this.setState({emailInfo: "중복된 Id입니다."});
+                            this.checkEmail(ID);
                         }}>
                             <Text style={{color: 'white'}}>중복 확인</Text>
                         </TouchableOpacity>
@@ -307,7 +311,11 @@ export default class SignUpScreen extends Component{
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.signUpBtn} onPress={() => this.signUpUser(ID, password)}>
+                    <TouchableOpacity 
+                        style={styles.signUpBtn} 
+                        onPress={() => this.signUpUser(ID, password)}
+                        disabled={ableID ? false : true}
+                        >
                         <Text>회원 가입</Text>
                     </TouchableOpacity>
 
