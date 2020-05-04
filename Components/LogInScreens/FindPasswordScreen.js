@@ -20,7 +20,7 @@ export default class FindPassword extends Component{
                         <Text>가입시 입력한 이메일을 입력해주세요</Text>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text>비밀번호 찾기에관한 설명 어쩌구 저쩌구 자나</Text>
+                        <Text style={styles.descriptionText}>이메일을 입력하시고 초기화 버튼을 누르시면 초기화 인증번호가 발송됩니다. 올바른 이메일을 입력해주세요</Text>
                     </View>
                     <View style={styles.findPasswordContainer}>
                         <View style={styles.lineContainer}>
@@ -92,12 +92,15 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     },
     descriptionContainer:{
-        width:width,
+        width:width-10,
         height:100,
         borderRadius:10,
         borderStyle:"solid",
         borderWidth: 0.5,
         borderColor: 'black',
         alignItems: 'center',
-    }
+    },
+    descriptionText:{
+        width:width-40,
+    },
 });
