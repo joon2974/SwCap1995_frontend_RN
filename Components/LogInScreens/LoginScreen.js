@@ -372,12 +372,10 @@ const styles = StyleSheet.create({
       width: 80,
       height: 40,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     moreInfoText: {
       color: '#D8D8D8',
-      width: 100,
-      marginLeft: 30,
     },
     verticalLine: {
       backgroundColor: '#D8D8D8',
