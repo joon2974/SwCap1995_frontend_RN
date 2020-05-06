@@ -10,10 +10,11 @@ export default class FindPassword extends Component{
     }
     render(){
         const {ID}=this.state;
+        var auth = firebase.auth();
         return(
             <View style={styles.container}>
                   <Image
-                        style={{width:70,height:100,marginTop:10}}
+                        style={{width:80,height:100,marginTop:10}}
                         source={{uri:'https://cdn.pixabay.com/photo/2013/07/12/15/22/keyhole-149772_960_720.png'}}
                     />
                     <View>
@@ -39,7 +40,12 @@ export default class FindPassword extends Component{
                          <Button 
                          style={{marginTop: 10}}
                          title='비밀번호 초기화'
-                         onPress={() => alert(`입력 이메일:${ID}`)}>
+                         onPress={() => auth.sendPasswordResetEmail(ID).then(function() {
+                            alert("이메일을 확인해주세요");
+                          }).catch(function(error) {
+                            // An error happened.
+                            alert('에러');
+                          })}>    
                         </Button>
                     </View>
                 </View>
