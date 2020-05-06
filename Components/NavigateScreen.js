@@ -17,6 +17,8 @@ import SearchTab from './AppTabNavigator/SearchTab';
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
 
+import SearchScreen from './SearchScreens/SearchScreen';
+
 import firebase from 'firebase';
 import {firebaseConfig} from '../firebaseConfig';
 
@@ -41,6 +43,15 @@ function HomeStackScreen(){
             <HomeStack.Screen name='Main' component={HomeMain} />
             <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
         </HomeStack.Navigator>
+    )
+}
+
+const SearchStack = createStackNavigator();
+function SearchStackScreen(){
+    return(
+        <SearchStack.Navigator>
+            <SearchStack.Screen name='Search' component={SearchScreen} />
+        </SearchStack.Navigator>
     )
 }
 
@@ -109,7 +120,7 @@ export default function NavigateScreen(){
                     inactiveTintColor: '#d1cece'
                 }}>
                     <Tab.Screen name = "Home" component={HomeStackScreen} />
-                    <Tab.Screen name = "Search" component={SearchTab} />
+                    <Tab.Screen name = "Search" component={SearchScreen} />
                     <Tab.Screen name = "Plan" component={PlanTab} />
                     <Tab.Screen name = "Friend" component={FriendTab} />
                     <Tab.Screen name = "My" component={MyTab} />
