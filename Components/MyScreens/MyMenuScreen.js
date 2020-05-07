@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import firebase from 'firebase';
 
 export default class MyMenuScreen extends Component {

@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import InputInfo from '../LogInScreens/InputInfo';
@@ -20,7 +15,7 @@ export default class HomeMain extends Component {
     }
   }
 
-  isInfoContain = (eMail) => {
+  isInfoContain = eMail => {
     axios
       .post('http://49.50.172.58:3000/users/is_user', {
         headers: {
@@ -28,10 +23,10 @@ export default class HomeMain extends Component {
         },
         email: eMail,
       })
-      .then((res) => {
+      .then(res => {
         console.log(res);
       })
-      .catch((error) => {
+      .catch(error => {
         this.state.informCheck = true;
         this.forceUpdate();
         console.log(error);
