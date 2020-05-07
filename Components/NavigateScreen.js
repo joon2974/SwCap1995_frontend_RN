@@ -110,7 +110,7 @@ export default function NavigateScreen() {
           <Tab.Screen name="Search" component={SearchTab} />
           <Tab.Screen name="Plan" component={PlanTab} />
           <Tab.Screen name="Friend" component={FriendTab} />
-          <Tab.Screen name="My" component={MyTab} />
+          <Tab.Screen name="My" component={MyMenuScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

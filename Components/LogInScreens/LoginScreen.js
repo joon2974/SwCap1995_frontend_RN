@@ -186,6 +186,16 @@ export default class LoginScreen extends Component {
     }
   };
 
+  sendLoginPath = (userID, isEmailLogin) => {
+    axios.post('http://49.50.172.58:3000/users', {
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+      },
+      is_email_login: isEmailLogin,
+      email: userID,
+    });
+  }
+
   logInWithPlanA = async (ID, password) => {
     try {
       firebase
@@ -203,16 +213,6 @@ export default class LoginScreen extends Component {
       console.log(error);
     }
   };
-
-  sendLoginPath = (userID, isEmailLogin) => {
-    axios.post('http://49.50.172.58:3000/users', {
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded',
-      },
-      is_email_login: isEmailLogin,
-      email: userID,
-    });
-  }
 
   render() {
     const { ID, password } = this.state;

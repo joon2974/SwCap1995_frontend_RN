@@ -120,7 +120,7 @@ export default class SignUpScreen extends Component {
 
   checkEmail = (ID) => {
     axios
-      .post('http://49.50.172.58:3000/users/emailcheck', {
+      .post('http://49.50.172.58:3000/users/is_user', {
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
         },
@@ -273,7 +273,7 @@ export default class SignUpScreen extends Component {
             <View style={styles.categoriesContainer}>
               <CheckBox
                 isChecked={cat1}
-                categoryName='운동'
+                categoryName="운동"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
                 pressFunc={() => (cat1
@@ -283,7 +283,7 @@ export default class SignUpScreen extends Component {
 
               <CheckBox
                 isChecked={cat2}
-                categoryName='공부'
+                categoryName="공부"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
                 pressFunc={() => (cat2
@@ -293,7 +293,7 @@ export default class SignUpScreen extends Component {
 
               <CheckBox
                 isChecked={cat3}
-                categoryName='감정'
+                categoryName="감정"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
                 pressFunc={() => (cat3
@@ -303,7 +303,7 @@ export default class SignUpScreen extends Component {
 
               <CheckBox
                 isChecked={cat4}
-                categoryName='생활습관'
+                categoryName="생활습관"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
                 pressFunc={() => (cat4
@@ -313,7 +313,7 @@ export default class SignUpScreen extends Component {
 
               <CheckBox
                 isChecked={cat5}
-                categoryName='자기계발'
+                categoryName="자기계발"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
                 pressFunc={() => (cat5
@@ -323,7 +323,7 @@ export default class SignUpScreen extends Component {
 
               <CheckBox
                 isChecked={cat6}
-                categoryName='기타'
+                categoryName="기타"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
                 pressFunc={() => (cat6

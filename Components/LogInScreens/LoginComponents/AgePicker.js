@@ -4,7 +4,6 @@ import propTypes from 'prop-types';
 
 export default class AgePicker extends Component {
   static propTypes = {
-    age: propTypes.string.isRequired,
     onValueChange: propTypes.func.isRequired,
   };
 
