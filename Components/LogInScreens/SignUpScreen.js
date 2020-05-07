@@ -6,13 +6,17 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
-  Picker,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import AgePicker from './LoginComponents/AgePicker';
 import CheckBox from './LoginComponents/CheckBox';
 
 const { height, width } = Dimensions.get('window');
+const ageList = [];
+for (let i = 13; i < 41; i++) {
+  ageList.push(i.toString());
+}
 
 export default class SignUpScreen extends Component {
   state = {
@@ -254,41 +258,11 @@ export default class SignUpScreen extends Component {
               <Text>나이</Text>
             </View>
             <View style={styles.pickerContainer}>
-              <Picker
-                selectedValue={age}
-                style={{ width: 200, height: 45, marginLeft: 5 }}
-                itemStyle={{ height: 45 }}
+              <AgePicker
+                age={age}
                 onValueChange={(itemValue) => this.setState({ age: itemValue })}
-              >
-                <Picker.Item label="13" value="13" />
-                <Picker.Item label="14" value="14" />
-                <Picker.Item label="15" value="15" />
-                <Picker.Item label="16" value="16" />
-                <Picker.Item label="17" value="17" />
-                <Picker.Item label="18" value="18" />
-                <Picker.Item label="19" value="19" />
-                <Picker.Item label="20" value="20" />
-                <Picker.Item label="21" value="21" />
-                <Picker.Item label="22" value="22" />
-                <Picker.Item label="23" value="23" />
-                <Picker.Item label="24" value="24" />
-                <Picker.Item label="25" value="25" />
-                <Picker.Item label="26" value="26" />
-                <Picker.Item label="27" value="27" />
-                <Picker.Item label="28" value="28" />
-                <Picker.Item label="29" value="29" />
-                <Picker.Item label="30" value="30" />
-                <Picker.Item label="31" value="31" />
-                <Picker.Item label="32" value="32" />
-                <Picker.Item label="33" value="33" />
-                <Picker.Item label="34" value="34" />
-                <Picker.Item label="35" value="35" />
-                <Picker.Item label="36" value="36" />
-                <Picker.Item label="37" value="37" />
-                <Picker.Item label="38" value="38" />
-                <Picker.Item label="39" value="39" />
-                <Picker.Item label="40" value="40" />
-              </Picker>
+                ages={ageList}
+              />
             </View>
           </View>
 
@@ -297,69 +271,66 @@ export default class SignUpScreen extends Component {
               <Text>관심사</Text>
             </View>
             <View style={styles.categoriesContainer}>
-              <TouchableOpacity
-                style={cat1 ? styles.categoryChecked : styles.categoryUnchecked}
-                onPress={() => (cat1
-                  ? this.setState({ cat1: null })
-                  : this.setState({ cat1: '운동' }))
-                }
-              >
-                <Text>운동</Text>
-              </TouchableOpacity>
-
               <CheckBox
                 isChecked={cat1}
-                categoryName="운동"
+                categoryName='운동'
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat1 ? this.setState({ cat1: null }) : this.setState({ cat1: '운동' }))}
+                pressFunc={() => (cat1
+                  ? this.setState({ cat1: null })
+                  : this.setState({ cat1: '운동' }))}
               />
 
-              <TouchableOpacity
-                style={cat2 ? styles.categoryChecked : styles.categoryUnchecked}
-                onPress={() => (cat2
+              <CheckBox
+                isChecked={cat2}
+                categoryName='공부'
+                checkedStyle={styles.categoryChecked}
+                unCheckedStyle={styles.categoryUnchecked}
+                pressFunc={() => (cat2
                   ? this.setState({ cat2: null })
-                  : this.setState({ cat2: '공부' }))
-                }
-              >
-                <Text>공부</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={cat3 ? styles.categoryChecked : styles.categoryUnchecked}
-                onPress={() => (cat3
+                  : this.setState({ cat2: '공부' }))}
+              />
+
+              <CheckBox
+                isChecked={cat3}
+                categoryName='감정'
+                checkedStyle={styles.categoryChecked}
+                unCheckedStyle={styles.categoryUnchecked}
+                pressFunc={() => (cat3
                   ? this.setState({ cat3: null })
-                  : this.setState({ cat3: '감정' }))
-                }
-              >
-                <Text>감정</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={cat4 ? styles.categoryChecked : styles.categoryUnchecked}
-                onPress={() => (cat4
+                  : this.setState({ cat3: '감정' }))}
+              />
+
+              <CheckBox
+                isChecked={cat4}
+                categoryName='생활습관'
+                checkedStyle={styles.categoryChecked}
+                unCheckedStyle={styles.categoryUnchecked}
+                pressFunc={() => (cat4
                   ? this.setState({ cat4: null })
-                  : this.setState({ cat4: '생활습관' }))
-                }
-              >
-                <Text>생활습관</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={cat5 ? styles.categoryChecked : styles.categoryUnchecked}
-                onPress={() => (cat5
+                  : this.setState({ cat4: '생활습관' }))}
+              />
+
+              <CheckBox
+                isChecked={cat5}
+                categoryName='자기계발'
+                checkedStyle={styles.categoryChecked}
+                unCheckedStyle={styles.categoryUnchecked}
+                pressFunc={() => (cat5
                   ? this.setState({ cat5: null })
-                  : this.setState({ cat5: '자기계발' }))
-                }
-              >
-                <Text>자기계발</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={cat6 ? styles.categoryChecked : styles.categoryUnchecked}
-                onPress={() => (cat6
+                  : this.setState({ cat5: '자기계발' }))}
+              />
+
+              <CheckBox
+                isChecked={cat6}
+                categoryName='기타'
+                checkedStyle={styles.categoryChecked}
+                unCheckedStyle={styles.categoryUnchecked}
+                pressFunc={() => (cat6
                   ? this.setState({ cat6: null })
-                  : this.setState({ cat6: '기타' }))
-                }
-              >
-                <Text>기타</Text>
-              </TouchableOpacity>
+                  : this.setState({ cat6: '기타' }))}
+              />
+
             </View>
           </View>
 

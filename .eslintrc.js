@@ -43,5 +43,7 @@ module.exports = {
     'no-plusplus': 0,
     'prefer-destructuring': 0,
     'react/static-property-placement': 0,
+    'react/jsx-closing-bracket-location': 0,
+    'no-trailing-spaces': 0,
   },
 };
