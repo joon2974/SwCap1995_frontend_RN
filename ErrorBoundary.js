@@ -1,4 +1,4 @@
-import React, { FallbackComponent } from "react";
+import React, { FallbackComponent } from 'react';
 
 export default class ErrorBoundary extends React.Component {
   state = { hasError: false };
@@ -10,6 +10,7 @@ export default class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
+    // eslint-disable-next-line no-undef
     logErrorToService(error, info.componentStack);
   }
 

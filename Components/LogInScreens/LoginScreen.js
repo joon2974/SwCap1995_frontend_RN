@@ -48,11 +48,11 @@ export default class LoginScreen extends Component {
     return false;
   };
 
-  onSignIn = googleUser => {
+  onSignIn = (googleUser) => {
     console.log('Google Auth Response', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged(
-      function(firebaseUser) {
+      function (firebaseUser) {
         unsubscribe();
         // Check if we are already signed-in Firebase with the correct user.
         if (!this.isUserEqual(googleUser, firebaseUser)) {
@@ -65,7 +65,7 @@ export default class LoginScreen extends Component {
           firebase
             .auth()
             .signInWithCredential(credential)
-            .then(function(result) {
+            .then(function (result) {
               console.log('USER SIGNED IN');
               console.log('sing in result', result);
               this.sendLoginPath(result.user.email, false);
@@ -90,7 +90,7 @@ export default class LoginScreen extends Component {
                   });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               // Handle Errors here.
               var errorCode = error.code;
               var errorMessage = error.message;
@@ -153,7 +153,7 @@ export default class LoginScreen extends Component {
       firebase
         .auth()
         .signInWithCredential(credential)
-        .then(function(result) {
+        .then(function (result) {
           console.log('USER SIGNED IN');
           console.log('sign in result', result);
           this.sendLoginPath(result.user.email, false);
@@ -178,7 +178,7 @@ export default class LoginScreen extends Component {
               });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     } else {
@@ -201,11 +201,11 @@ export default class LoginScreen extends Component {
       firebase
         .auth()
         .signInWithEmailAndPassword(ID, password)
-        .then(function(user) {
+        .then(function (user) {
           console.log(user);
           this.sendLoginPath(ID, true);
         })
-        .catch(error => {
+        .catch((error) => {
           Alert.alert('ID 혹은 비밀번호를 확인해 주세요.');
           console.log(error);
         });
@@ -231,7 +231,7 @@ export default class LoginScreen extends Component {
             <Ionicons name="ios-person" size={20} style={styles.inputIcon} />
             <TextInput
               value={ID}
-              onChangeText={ID => this.setState({ ID })}
+              onChangeText={(ID) => this.setState({ ID })}
               style={styles.input}
               placeholder="E - mail"
               keyboardType="email-address"
@@ -242,7 +242,7 @@ export default class LoginScreen extends Component {
             <Ionicons name="ios-key" size={20} style={styles.inputIcon} />
             <TextInput
               value={password}
-              onChangeText={password => this.setState({ password })}
+              onChangeText={(password) => this.setState({ password })}
               style={styles.input}
               placeholder="Password"
               secureTextEntry={true}

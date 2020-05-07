@@ -82,17 +82,17 @@ export default class SignUpScreen extends Component {
             categories: categories,
             is_email_login: true,
           })
-          .then(res => {
+          .then((res) => {
             console.log(res);
             firebase
               .auth()
               .createUserWithEmailAndPassword(ID, password)
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
                 alert('ID는 e-mail형태, 비밀번호는 6자리 이상이어야 합니다');
               });
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
             alert(error);
           });
@@ -112,13 +112,13 @@ export default class SignUpScreen extends Component {
     categories.push({ name: '자기계발', value: cat5 });
     categories.push({ name: '기타', value: cat6 });
 
-    categories = categories.filter(v => v.value !== null);
-    categories = categories.map(v => v.name);
+    categories = categories.filter((v) => v.value !== null);
+    categories = categories.map((v) => v.name);
 
     return categories;
   };
 
-  checkEmail = ID => {
+  checkEmail = (ID) => {
     axios
       .post('http://49.50.172.58:3000/users/is_user', {
         headers: {
@@ -126,13 +126,13 @@ export default class SignUpScreen extends Component {
         },
         email: ID,
       })
-      .then(res => {
+      .then((res) => {
         this.state.ableID = true;
         this.state.emailInfo = '사용가능한 ID입니다.';
         this.forceUpdate();
         console.log(res);
       })
-      .catch(error => {
+      .catch((error) => {
         this.state.ableID = false;
         this.state.emailInfo = '중복된 ID입니다.';
         this.forceUpdate();
@@ -183,7 +183,7 @@ export default class SignUpScreen extends Component {
             <View style={styles.inputContainer}>
               <TextInput
                 value={ID}
-                onChangeText={ID => this.setState({ ID })}
+                onChangeText={(ID) => this.setState({ ID })}
                 style={styles.input}
                 placeholder="abc@example.com"
                 keyboardType="email-address"
@@ -212,7 +212,7 @@ export default class SignUpScreen extends Component {
             <View style={styles.passwordInputContainer}>
               <TextInput
                 value={password}
-                onChangeText={password => this.setState({ password })}
+                onChangeText={(password) => this.setState({ password })}
                 style={styles.input}
                 placeholder="Password"
                 secureTextEntry={true}
@@ -227,7 +227,7 @@ export default class SignUpScreen extends Component {
             <View style={styles.passwordInputContainer}>
               <TextInput
                 value={password2}
-                onChangeText={password2 => this.setState({ password2 })}
+                onChangeText={(password2) => this.setState({ password2 })}
                 style={styles.input}
                 placeholder="Password validation"
                 secureTextEntry={true}
@@ -241,11 +241,10 @@ export default class SignUpScreen extends Component {
             </View>
             <TouchableOpacity
               style={male ? styles.sexChecked : styles.sexUnchecked}
-              onPress={() =>
-                this.setState({
-                  male: true,
-                  female: false,
-                })
+              onPress={() => this.setState({
+                male: true,
+                female: false,
+              })
               }
             >
               <Text>남자</Text>
@@ -253,11 +252,10 @@ export default class SignUpScreen extends Component {
 
             <TouchableOpacity
               style={female ? styles.sexChecked : styles.sexUnchecked}
-              onPress={() =>
-                this.setState({
-                  male: false,
-                  female: true,
-                })
+              onPress={() => this.setState({
+                male: false,
+                female: true,
+              })
               }
             >
               <Text>여자</Text>
@@ -271,7 +269,7 @@ export default class SignUpScreen extends Component {
             <View style={styles.pickerContainer}>
               <AgePicker
                 age={age}
-                onValueChange={itemValue => this.setState({ age: itemValue })}
+                onValueChange={(itemValue) => this.setState({ age: itemValue })}
                 ages={ageList}
               />
             </View>
@@ -287,10 +285,9 @@ export default class SignUpScreen extends Component {
                 categoryName="운동"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() =>
-                  cat1
-                    ? this.setState({ cat1: null })
-                    : this.setState({ cat1: '운동' })
+                pressFunc={() => (cat1
+                  ? this.setState({ cat1: null })
+                  : this.setState({ cat1: '운동' }))
                 }
               />
 
@@ -299,10 +296,9 @@ export default class SignUpScreen extends Component {
                 categoryName="공부"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() =>
-                  cat2
-                    ? this.setState({ cat2: null })
-                    : this.setState({ cat2: '공부' })
+                pressFunc={() => (cat2
+                  ? this.setState({ cat2: null })
+                  : this.setState({ cat2: '공부' }))
                 }
               />
 
@@ -311,10 +307,9 @@ export default class SignUpScreen extends Component {
                 categoryName="감정"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() =>
-                  cat3
-                    ? this.setState({ cat3: null })
-                    : this.setState({ cat3: '감정' })
+                pressFunc={() => (cat3
+                  ? this.setState({ cat3: null })
+                  : this.setState({ cat3: '감정' }))
                 }
               />
 
@@ -323,10 +318,9 @@ export default class SignUpScreen extends Component {
                 categoryName="생활습관"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() =>
-                  cat4
-                    ? this.setState({ cat4: null })
-                    : this.setState({ cat4: '생활습관' })
+                pressFunc={() => (cat4
+                  ? this.setState({ cat4: null })
+                  : this.setState({ cat4: '생활습관' }))
                 }
               />
 
@@ -335,10 +329,9 @@ export default class SignUpScreen extends Component {
                 categoryName="자기계발"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() =>
-                  cat5
-                    ? this.setState({ cat5: null })
-                    : this.setState({ cat5: '자기계발' })
+                pressFunc={() => (cat5
+                  ? this.setState({ cat5: null })
+                  : this.setState({ cat5: '자기계발' }))
                 }
               />
 
@@ -347,10 +340,9 @@ export default class SignUpScreen extends Component {
                 categoryName="기타"
                 checkedStyle={styles.categoryChecked}
                 unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() =>
-                  cat6
-                    ? this.setState({ cat6: null })
-                    : this.setState({ cat6: '기타' })
+                pressFunc={() => (cat6
+                  ? this.setState({ cat6: null })
+                  : this.setState({ cat6: '기타' }))
                 }
               />
             </View>
@@ -358,22 +350,21 @@ export default class SignUpScreen extends Component {
 
           <TouchableOpacity
             style={styles.signUpBtn}
-            onPress={() =>
-              this.signUp(
-                ID,
-                password,
-                password2,
-                male,
-                female,
-                cat1,
-                cat2,
-                cat3,
-                cat4,
-                cat5,
-                cat6,
-                ableID,
-                age,
-              )
+            onPress={() => this.signUp(
+              ID,
+              password,
+              password2,
+              male,
+              female,
+              cat1,
+              cat2,
+              cat3,
+              cat4,
+              cat5,
+              cat6,
+              ableID,
+              age,
+            )
             }
             disabled={ableID ? false : true}
           >

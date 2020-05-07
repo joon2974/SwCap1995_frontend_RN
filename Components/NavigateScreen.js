@@ -10,9 +10,9 @@ import firebase from 'firebase';
 
 import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
+import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
 import FriendTab from './AppTabNavigator/FriendTab';
-import MyTab from './AppTabNavigator/MyTab';
 import PlanTab from './AppTabNavigator/PlanTab';
 import SearchTab from './AppTabNavigator/SearchTab';
 
@@ -31,6 +31,7 @@ function LoginStackScreen() {
     <LoginStack.Navigator>
       <LoginStack.Screen name="Login" component={LoginScreen} />
       <LoginStack.Screen name="SignUp" component={SignUpScreen} />
+      <LoginStack.Screen name="FindPassword" component={FindPasswordScreen} />
     </LoginStack.Navigator>
   );
 }
