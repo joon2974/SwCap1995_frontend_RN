@@ -12,13 +12,12 @@ import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
-import FriendTab from './AppTabNavigator/FriendTab';
 import PlanTab from './AppTabNavigator/PlanTab';
 import SearchTab from './AppTabNavigator/SearchTab';
 
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
-
+import FriendScreen from './FriendScreens/FriendScreen';
 import { firebaseConfig } from '../firebaseConfig';
 
 if (!firebase.apps.length) {
@@ -110,7 +109,7 @@ export default function NavigateScreen() {
           <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Search" component={SearchTab} />
           <Tab.Screen name="Plan" component={PlanTab} />
-          <Tab.Screen name="Friend" component={FriendTab} />
+          <Tab.Screen name="Friend" component={FriendScreen} />
           <Tab.Screen name="My" component={MyMenuScreen} />
         </Tab.Navigator>
       </NavigationContainer>
