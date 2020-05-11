@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -17,6 +18,7 @@ const ageList = [];
 for (let i = 13; i < 41; i++) {
   ageList.push(i.toString());
 }
+let login;
 
 export default class SignUpScreen extends Component {
   state = {
@@ -34,7 +36,15 @@ export default class SignUpScreen extends Component {
     ableID: false,
     emailInfo: '',
     age: null,
+    nickname: '',
+    nicknameInfo: '',
+    ableNickname: false,
   };
+
+  componentWillUnmount() {
+    console.log('타입', login);
+    clearTimeout(login);
+  }
 
   signUp = (
     ID,
@@ -50,6 +60,8 @@ export default class SignUpScreen extends Component {
     cat6,
     ableID,
     age,
+    ableNickname,
+    nickname,
   ) => {
     try {
       if (ID < 1 || password.length < 6) {
@@ -58,6 +70,8 @@ export default class SignUpScreen extends Component {
         alert('비밀번호를 확인해 주세요!');
       } else if (!ableID) {
         alert('Email을 확인해 주세요!');
+      } else if (!ableNickname) {
+        alert('닉네임을 확인해 주세요!!');
       } else if (!(male || female)) {
         alert('성별을 선택해 주세요!');
       } else if (!age) {
@@ -81,10 +95,11 @@ export default class SignUpScreen extends Component {
             age: age,
             categories: categories,
             is_email_login: true,
+            nickname: nickname,
           })
           .then((res) => {
             console.log(res);
-            firebase
+            login = firebase
               .auth()
               .createUserWithEmailAndPassword(ID, password)
               .catch((error) => {
@@ -127,33 +142,42 @@ export default class SignUpScreen extends Component {
         email: ID,
       })
       .then((res) => {
-        this.state.ableID = true;
-        this.state.emailInfo = '사용가능한 ID입니다.';
-        this.forceUpdate();
+        if (res.data.id) {
+          this.state.ableID = false;
+          this.state.emailInfo = '중복된 ID입니다.';
+          this.forceUpdate();
+        } else {
+          this.state.ableID = true;
+          this.state.emailInfo = '사용가능한 ID입니다.';
+          this.forceUpdate();
+        }
         console.log(res);
       })
       .catch((error) => {
-        this.state.ableID = false;
-        this.state.emailInfo = '중복된 ID입니다.';
-        this.forceUpdate();
         console.log(error);
       });
   };
 
-  checkVariables = () => {
-    alert(`ID: ${this.state.ID}, password: ${this.state.password}, male: ${
-      this.state.male
-    }, 
-    female: ${this.state.female}, 
-    cat: ${this.catList(
-      this.state.cat1,
-      this.state.cat2,
-      this.state.cat3,
-      this.state.cat4,
-      this.state.cat5,
-      this.state.cat6,
-    )} 
-    age: ${this.state.age}`);
+  checkNickname = (nickname) => {
+    axios
+      .post('http://49.50.172.58:3000/users/is_nickname', {
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+        },
+        nickname: nickname,
+      })
+      .then((res) => {
+        this.state.ableNickname = true;
+        this.state.nicknameInfo = '사용가능한 닉네임입니다.';
+        this.forceUpdate();
+        console.log(res);
+      })
+      .catch((error) => {
+        this.state.ableNickname = false;
+        this.state.nicknameInfo = '중복된 닉네임입니다.';
+        this.forceUpdate();
+        console.log(error);
+      });
   };
 
   render() {
@@ -172,213 +196,244 @@ export default class SignUpScreen extends Component {
       ableID,
       age,
       emailInfo,
+      nickname,
+      nicknameInfo,
+      ableNickname,
     } = this.state;
     return (
-      <View style={styles.container}>
-        <View style={styles.signUpContainer}>
-          <View style={styles.lineContainer}>
-            <View style={styles.lineTextContainer}>
-              <Text>이메일</Text>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.signUpContainer}>
+            <View style={styles.lineContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>이메일</Text>
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  value={ID}
+                  onChangeText={(ID) => this.setState({ ID })}
+                  style={styles.input}
+                  placeholder="abc@example.com"
+                  keyboardType="email-address"
+                />
+              </View>
             </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={ID}
-                onChangeText={(ID) => this.setState({ ID })}
-                style={styles.input}
-                placeholder="abc@example.com"
-                keyboardType="email-address"
-              />
-            </View>
-          </View>
 
-          <View style={styles.lineContainer}>
+            <View style={styles.lineContainer}>
+              <TouchableOpacity
+                style={styles.checkBtn}
+                onPress={() => {
+                  this.checkEmail(ID);
+                }}
+              >
+                <Text style={{ color: 'white' }}>중복 확인</Text>
+              </TouchableOpacity>
+              <View style={styles.idCheckResult}>
+                <Text>{emailInfo}</Text>
+              </View>
+            </View>
+
+            <View style={styles.lineContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>닉네임</Text>
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  value={nickname}
+                  onChangeText={(nickname) => this.setState({ nickname })}
+                  style={styles.input}
+                  placeholder="nickname"
+                  keyboardType="email-address"
+                />
+              </View>
+            </View>
+
+            <View style={styles.lineContainer}>
+              <TouchableOpacity
+                style={styles.checkBtn}
+                onPress={() => {
+                  this.checkNickname(nickname);
+                }}
+              >
+                <Text style={{ color: 'white' }}>중복 확인</Text>
+              </TouchableOpacity>
+              <View style={styles.idCheckResult}>
+                <Text>{nicknameInfo}</Text>
+              </View>
+            </View>
+
+            <View style={styles.lineContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>비밀번호</Text>
+              </View>
+              <View style={styles.passwordInputContainer}>
+                <TextInput
+                  value={password}
+                  onChangeText={(password) => this.setState({ password })}
+                  style={styles.input}
+                  placeholder="Password"
+                  secureTextEntry={true}
+                />
+              </View>
+            </View>
+
+            <View style={styles.lineContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>비번 확인</Text>
+              </View>
+              <View style={styles.passwordInputContainer}>
+                <TextInput
+                  value={password2}
+                  onChangeText={(password2) => this.setState({ password2 })}
+                  style={styles.input}
+                  placeholder="Password validation"
+                  secureTextEntry={true}
+                />
+              </View>
+            </View>
+
+            <View style={styles.sexContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>성별</Text>
+              </View>
+              <TouchableOpacity
+                style={male ? styles.sexChecked : styles.sexUnchecked}
+                onPress={() => this.setState({
+                  male: true,
+                  female: false,
+                })
+                }
+              >
+                <Text>남자</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={female ? styles.sexChecked : styles.sexUnchecked}
+                onPress={() => this.setState({
+                  male: false,
+                  female: true,
+                })
+                }
+              >
+                <Text>여자</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.ageContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>나이</Text>
+              </View>
+              <View style={styles.pickerContainer}>
+                <AgePicker
+                  age={age}
+                  onValueChange={(itemValue) => this.setState({ age: itemValue })}
+                  ages={ageList}
+                />
+              </View>
+            </View>
+
+            <View style={styles.categoryContainer}>
+              <View style={styles.lineTextContainer}>
+                <Text>관심사</Text>
+              </View>
+              <View style={styles.categoriesContainer}>
+                <CheckBox
+                  isChecked={cat1}
+                  categoryName="운동"
+                  checkedStyle={styles.categoryChecked}
+                  unCheckedStyle={styles.categoryUnchecked}
+                  pressFunc={() => (cat1
+                    ? this.setState({ cat1: null })
+                    : this.setState({ cat1: '운동' }))
+                  }
+                />
+
+                <CheckBox
+                  isChecked={cat2}
+                  categoryName="공부"
+                  checkedStyle={styles.categoryChecked}
+                  unCheckedStyle={styles.categoryUnchecked}
+                  pressFunc={() => (cat2
+                    ? this.setState({ cat2: null })
+                    : this.setState({ cat2: '공부' }))
+                  }
+                />
+
+                <CheckBox
+                  isChecked={cat3}
+                  categoryName="감정"
+                  checkedStyle={styles.categoryChecked}
+                  unCheckedStyle={styles.categoryUnchecked}
+                  pressFunc={() => (cat3
+                    ? this.setState({ cat3: null })
+                    : this.setState({ cat3: '감정' }))
+                  }
+                />
+
+                <CheckBox
+                  isChecked={cat4}
+                  categoryName="생활습관"
+                  checkedStyle={styles.categoryChecked}
+                  unCheckedStyle={styles.categoryUnchecked}
+                  pressFunc={() => (cat4
+                    ? this.setState({ cat4: null })
+                    : this.setState({ cat4: '생활습관' }))
+                  }
+                />
+
+                <CheckBox
+                  isChecked={cat5}
+                  categoryName="자기계발"
+                  checkedStyle={styles.categoryChecked}
+                  unCheckedStyle={styles.categoryUnchecked}
+                  pressFunc={() => (cat5
+                    ? this.setState({ cat5: null })
+                    : this.setState({ cat5: '자기계발' }))
+                  }
+                />
+
+                <CheckBox
+                  isChecked={cat6}
+                  categoryName="기타"
+                  checkedStyle={styles.categoryChecked}
+                  unCheckedStyle={styles.categoryUnchecked}
+                  pressFunc={() => (cat6
+                    ? this.setState({ cat6: null })
+                    : this.setState({ cat6: '기타' }))
+                  }
+                />
+              </View>
+            </View>
+
             <TouchableOpacity
-              style={styles.checkBtn}
-              onPress={() => {
-                this.checkEmail(ID);
-              }}
-            >
-              <Text style={{ color: 'white' }}>중복 확인</Text>
-            </TouchableOpacity>
-            <View style={styles.idCheckResult}>
-              <Text>{emailInfo}</Text>
-            </View>
-          </View>
-
-          <View style={styles.lineContainer}>
-            <View style={styles.lineTextContainer}>
-              <Text>비밀번호</Text>
-            </View>
-            <View style={styles.passwordInputContainer}>
-              <TextInput
-                value={password}
-                onChangeText={(password) => this.setState({ password })}
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry={true}
-              />
-            </View>
-          </View>
-
-          <View style={styles.lineContainer}>
-            <View style={styles.lineTextContainer}>
-              <Text>비번 확인</Text>
-            </View>
-            <View style={styles.passwordInputContainer}>
-              <TextInput
-                value={password2}
-                onChangeText={(password2) => this.setState({ password2 })}
-                style={styles.input}
-                placeholder="Password validation"
-                secureTextEntry={true}
-              />
-            </View>
-          </View>
-
-          <View style={styles.sexContainer}>
-            <View style={styles.lineTextContainer}>
-              <Text>성별</Text>
-            </View>
-            <TouchableOpacity
-              style={male ? styles.sexChecked : styles.sexUnchecked}
-              onPress={() => this.setState({
-                male: true,
-                female: false,
-              })
+              style={styles.signUpBtn}
+              onPress={() => this.signUp(
+                ID,
+                password,
+                password2,
+                male,
+                female,
+                cat1,
+                cat2,
+                cat3,
+                cat4,
+                cat5,
+                cat6,
+                ableID,
+                age,
+                ableNickname,
+                nickname,
+              )
               }
+              disabled={ableID ? false : true}
             >
-              <Text>남자</Text>
+              <Text>회원 가입</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={female ? styles.sexChecked : styles.sexUnchecked}
-              onPress={() => this.setState({
-                male: false,
-                female: true,
-              })
-              }
-            >
-              <Text>여자</Text>
-            </TouchableOpacity>
           </View>
-
-          <View style={styles.ageContainer}>
-            <View style={styles.lineTextContainer}>
-              <Text>나이</Text>
-            </View>
-            <View style={styles.pickerContainer}>
-              <AgePicker
-                age={age}
-                onValueChange={(itemValue) => this.setState({ age: itemValue })}
-                ages={ageList}
-              />
-            </View>
-          </View>
-
-          <View style={styles.categoryContainer}>
-            <View style={styles.lineTextContainer}>
-              <Text>관심사</Text>
-            </View>
-            <View style={styles.categoriesContainer}>
-              <CheckBox
-                isChecked={cat1}
-                categoryName="운동"
-                checkedStyle={styles.categoryChecked}
-                unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat1
-                  ? this.setState({ cat1: null })
-                  : this.setState({ cat1: '운동' }))
-                }
-              />
-
-              <CheckBox
-                isChecked={cat2}
-                categoryName="공부"
-                checkedStyle={styles.categoryChecked}
-                unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat2
-                  ? this.setState({ cat2: null })
-                  : this.setState({ cat2: '공부' }))
-                }
-              />
-
-              <CheckBox
-                isChecked={cat3}
-                categoryName="감정"
-                checkedStyle={styles.categoryChecked}
-                unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat3
-                  ? this.setState({ cat3: null })
-                  : this.setState({ cat3: '감정' }))
-                }
-              />
-
-              <CheckBox
-                isChecked={cat4}
-                categoryName="생활습관"
-                checkedStyle={styles.categoryChecked}
-                unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat4
-                  ? this.setState({ cat4: null })
-                  : this.setState({ cat4: '생활습관' }))
-                }
-              />
-
-              <CheckBox
-                isChecked={cat5}
-                categoryName="자기계발"
-                checkedStyle={styles.categoryChecked}
-                unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat5
-                  ? this.setState({ cat5: null })
-                  : this.setState({ cat5: '자기계발' }))
-                }
-              />
-
-              <CheckBox
-                isChecked={cat6}
-                categoryName="기타"
-                checkedStyle={styles.categoryChecked}
-                unCheckedStyle={styles.categoryUnchecked}
-                pressFunc={() => (cat6
-                  ? this.setState({ cat6: null })
-                  : this.setState({ cat6: '기타' }))
-                }
-              />
-            </View>
-          </View>
-
-          <TouchableOpacity
-            style={styles.signUpBtn}
-            onPress={() => this.signUp(
-              ID,
-              password,
-              password2,
-              male,
-              female,
-              cat1,
-              cat2,
-              cat3,
-              cat4,
-              cat5,
-              cat6,
-              ableID,
-              age,
-            )
-            }
-            disabled={ableID ? false : true}
-          >
-            <Text>회원 가입</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.signUpBtn}
-            onPress={() => this.checkVariables()}
-          >
-            <Text>입력 확인(개발용)</Text>
-          </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
+      
     );
   }
 }
@@ -388,8 +443,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
     backgroundColor: 'white',
+    flexWrap: 'wrap',
+    paddingTop: 20,
+    paddingBottom: 30,
   },
   signUpContainer: {
     height: (height * 6) / 7,
@@ -528,6 +585,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     backgroundColor: '#00FF80',
-    marginTop: 5,
+    marginTop: 1,
   },
 });

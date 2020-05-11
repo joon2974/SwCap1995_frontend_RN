@@ -28,6 +28,10 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate('SignUp');
   };
 
+  gotoFindPassword = () => {
+    this.props.navigation.navigate('FindPassword');
+  }
+
   isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
@@ -309,7 +313,7 @@ export default class LoginScreen extends Component {
             <View style={styles.verticalLine} />
 
             <TouchableOpacity
-              onPress={() => alert('비번 찾기')}
+              onPress={() => this.gotoFindPassword()}
               style={styles.moreInfo}
             >
               <Text style={styles.moreInfoText}>비밀번호 찾기</Text>

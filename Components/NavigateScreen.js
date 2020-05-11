@@ -13,11 +13,13 @@ import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
 import FriendTab from './AppTabNavigator/FriendTab';
-import PlanTab from './AppTabNavigator/PlanTab';
 import SearchTab from './AppTabNavigator/SearchTab';
 
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
+
+import PlanMain from './PlanScreens/PlanMain';
+import MakePlanStep1 from './PlanScreens/MakePlanStep1';
 
 import { firebaseConfig } from '../firebaseConfig';
 
@@ -43,6 +45,16 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Main" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
     </HomeStack.Navigator>
+  );
+}
+
+const PlanStack = createStackNavigator();
+function PlanStackScreen() {
+  return (
+    <PlanStack.Navigator>
+      <PlanStack.Screen name="PlanMain" component={PlanMain} />
+      <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
+    </PlanStack.Navigator>
   );
 }
 
@@ -109,7 +121,7 @@ export default function NavigateScreen() {
         >
           <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Search" component={SearchTab} />
-          <Tab.Screen name="Plan" component={PlanTab} />
+          <Tab.Screen name="Plan" component={PlanStackScreen} />
           <Tab.Screen name="Friend" component={FriendTab} />
           <Tab.Screen name="My" component={MyMenuScreen} />
         </Tab.Navigator>
