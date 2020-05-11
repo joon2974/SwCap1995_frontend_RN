@@ -1,14 +1,30 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, FlatList, StyleSheet, Image, TouchableOpacity, Dimensions} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-
-import { SimpleLineIcons} from '@expo/vector-icons';
-import Axios from 'axios';
+import { Input, Button } from 'react-native-elements';
+import axios from 'axios';
 
 //const { width } = Dimensions.get('window');
 
+export default class Searchscreen extends Component {
 
-class Recommend extends Component{
+  state = {
+    search: '',
+    temp : 'abc',
+  };
+
+  updateSearch = search => {
+    this.setState({ search });
+  };
+
+  sendSearch = (temp) => {
+    axios.get('http://49.50.172.58:3000/categories/search?query=' + temp ).then(res => {
+      console.log(res);
+      alert(res.data);
+    }).catch(error => {
+      console.log(error);
+      alert(error);
+    });
+  }
 
   constructor(props){
     super(props)
@@ -24,143 +40,83 @@ class Recommend extends Component{
   }
 
   render(){
-    return (
-      <View>
-      <Text style = {{fontWeight: 'bold', paddingHorizontal:10, paddingVertical:5, fontSize:18}}>Today Recommended</Text>
-      
-      <FlatList 
-        horizontal
-        data = {this.state.categoryData}
-        renderItem = {({item, index}) => 
-          <View style = {{padding: 5}}>
-            <View style = {{backgroundColor: 'white', borderWidth: 5, borderColor: '#626262', borderRadius:20, height: 50, width: 70}}>
-                <Text style = {{paddingHorizontal:14, paddingVertical:8, fontWeight:'bold'}}>{item.name}</Text>
-            </View>
-          </View>}
-        //keyExtractor ={(item,index) => index.toString()} //warning 잡기
-      />
-    </View>
-    )
-  }
-}
-
-class SearchResult extends Component{
-
-  render(){
-
-    let pic = {
-      //uri : search
-        uri : 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    }
-
-
-    return(
-
-      <ScrollView
-      ref={(scrollView) => { this.scrollView = scrollView; }} 
-      //decelerationRate={0}
-      //snapToInterval={width - 60}
-      //snapToAlignment={"center"}
-      //pagingEnabled={true}
-      contentInset={{
-        top: 0,
-        left: 30,
-        bottom: 0,
-        right: 30,
-      }}>
-        
-      <View style={styles.category_list}>
-      <Image source = {pic} style = {styles.plan} />
-      <Image source = {pic} style = {styles.plan} />
-      </View>
-      <View style={styles.category_list}>
-      <Image source = {pic} style = {styles.plan} />
-      <Image source = {pic} style = {styles.plan} />
-      </View>
-      <View style={styles.category_list}>
-      <Image source = {pic} style = {styles.plan} />
-      <Image source = {pic} style = {styles.plan} />
-      </View>
-      <View style={styles.category_list}>
-      <Image source = {pic} style = {styles.plan} />
-      <Image source = {pic} style = {styles.plan} />
-      </View>
-        
-     </ScrollView>
-
-    )
-  }
-
-}
-
-class Search extends Component{
-
-  state = {
-    search: '',
-  };
-
-  updateSearch = search => {
-    this.setState({ search });
-  };
-
-
-  render(){
     const { search } = this.state;
 
-    return(
-
-      <View> 
-      <SearchBar
-        placeholder="Type Here..."
-        onChangeText={this.updateSearch}
-        value={search}
-      />
-    </View>
-
-
-    )
-  }
-}
-
-
-
-
-export default class Searchscreen extends Component {
-
-  /*
-  constructor(props){
-    super(props)
-    this.state = {
-      plandata:[
-
-      ]
-    }
-  }
-  componentDidMount(){
-    Axios.get('https://~~')
-    .then(response => 
-      {this.setState({plandata:response.plandata})
-    })
-  }
-  */
-
-
-  render() {
-
     let pic = {
       //uri : search
-        uri : 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+      uri : 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     }
 
     return (
 
       <View style = {styles.container}>
 
-        <Search />        
 
-        <Recommend />
+        <View style = {styles.searchBar}>
+          <Input
+            placeholder="Type Here..."
+            onChangeText={this.updateSearch}
+          />  
+          <Button
+            title="검색"
+            type="solid"
+            onPress={this.sendSearch}
+          />
+        </View>
 
-        <SearchResult />
+
+        <View>
+          <Text style = {styles.categoryRecommend}>
+            Today Recommended
+          </Text>
+        
+          <FlatList 
+            horizontal
+            data = {this.state.categoryData}
+            renderItem = {({item, index}) => 
+              <View style = {{padding: 5}}>
+                <View style = {styles.categoryIcon}>
+                  <Text style = {styles.categoryTitle}>{item.name}</Text>
+                </View>
+              </View>
+            }
+            //keyExtractor ={(item,index) => index.toString()} //warning 잡기
+          />
+        </View>
+
+
+        <ScrollView
+          ref={(scrollView) => { this.scrollView = scrollView; }} 
+          //decelerationRate={0}
+          //snapToInterval={width - 60}
+          //snapToAlignment={"center"}
+          //pagingEnabled={true}
+          contentInset={{
+            top: 0,
+            left: 30,
+            bottom: 0,
+            right: 30,
+          }}
+        >
+          
+          <View style={styles.categoryUnitList}>
+            <Image source ={pic} style = {styles.plan} />
+            <Image source = {pic} style = {styles.plan} />
+          </View>
+          <View style={styles.categoryUnitList}>
+            <Image source = {pic} style = {styles.plan} />
+            <Image source = {pic} style = {styles.plan} />
+          </View>
+          <View style={styles.categoryUnitList}>
+            <Image source = {pic} style = {styles.plan} />
+            <Image source = {pic} style = {styles.plan} />
+          </View>
+          <View style={styles.categoryUnitList}>
+            <Image source = {pic} style = {styles.plan} />
+            <Image source = {pic} style = {styles.plan} />
+          </View>  
+        </ScrollView>
+
 
       </View>
     );
@@ -170,11 +126,34 @@ export default class Searchscreen extends Component {
 const styles = StyleSheet.create({
 
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: 'white',
-    paddingVertical: 31,
+    paddingVertical: 50,
   },
-  category_list: {
+  searchBar:{
+    width:350, 
+    flexDirection:'row'
+  },
+  categoryRecommend:{
+    fontWeight: 'bold', 
+    paddingHorizontal:10, 
+    paddingVertical:10, 
+    fontSize:18,
+  },
+  categoryIcon:{
+    backgroundColor: 'white', 
+    borderWidth: 5, 
+    borderColor: '#626262', 
+    borderRadius:20, 
+    height: 50, 
+    width: 70
+  },
+  categoryTitle:{
+    paddingHorizontal:14,
+    paddingVertical:8, 
+    fontWeight:'bold'
+  },
+  categoryUnitList: {
     flexDirection: 'row',
     padding:5,
   },
