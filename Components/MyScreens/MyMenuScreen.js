@@ -29,7 +29,7 @@ export default class MyMenuScreen extends Component {
 
           <MyPageBtn 
             btnName="로그 아웃"
-            btnFunc={() => alert('ㅎㅇ')}
+            btnFunc={() => alert('로그 아웃')}
           />
         </View>
       </ScrollView>
