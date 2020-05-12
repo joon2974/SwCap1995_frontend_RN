@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Button,
+  AsyncStorage,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -43,6 +44,7 @@ export default class HomeMain extends Component {
       .then((res) => {
         if (res.data.id) {
           console.log('데이터 이미 존재');
+          AsyncStorage.setItem('UserID', res.data.id.toString());
           this.state.isInformChecked = true;
           this.forceUpdate();
         } else {
@@ -56,6 +58,12 @@ export default class HomeMain extends Component {
 
   informExistCheck = () => {
     this.setState({ isInformChecked: true });
+  }
+
+  // Async 확인용
+  checkAsync = async () => {
+    const ji = await AsyncStorage.getItem('UserID');
+    console.log('asdf', ji);
   }
 
   render() {
