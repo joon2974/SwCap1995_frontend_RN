@@ -13,12 +13,16 @@ let currentUser;
 let isInformCheck;
 
 export default class HomeMain extends Component {
-  state = { isInformChecked: false };
+  state = { 
+    isInformChecked: false,
+    userEmail: '',
+  };
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
     if (currentUser != null) {
       const email = currentUser.email;
+      this.setState({ userEmail: email });
       this.isInfoContain(email);
     }
   }
@@ -38,6 +42,7 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
+          console.log('데이터 이미 존재');
           this.state.isInformChecked = true;
           this.forceUpdate();
         } else {
@@ -49,8 +54,12 @@ export default class HomeMain extends Component {
       });
   };
 
+  informExistCheck = () => {
+    this.setState({ isInformChecked: true });
+  }
+
   render() {
-    const { isInformChecked } = this.state;
+    const { isInformChecked, userEmail } = this.state;
 
     if (isInformChecked) {
       return (
@@ -63,7 +72,7 @@ export default class HomeMain extends Component {
         </View>
       );
     } else {
-      return <InputInfo />;
+      return <InputInfo checkFunc={this.informExistCheck} userEmail={userEmail} />;
     }
   }
 }

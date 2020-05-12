@@ -45,5 +45,6 @@ module.exports = {
     'react/static-property-placement': 0,
     'react/jsx-closing-bracket-location': 0,
     'no-trailing-spaces': 0,
+    'import/prefer-default-export': 0,
   },
 };
