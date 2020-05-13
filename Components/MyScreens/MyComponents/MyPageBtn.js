@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 5,
+    marginBottom: 5,
     borderRadius: 5,
     ...Platform.select({
       ios: {
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
         },
       },
       android: {
-        elevation: 5,
+        elevation: 4,
       },
     }),
   },

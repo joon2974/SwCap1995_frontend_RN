@@ -32,6 +32,16 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate('FindPassword');
   }
 
+  sendLoginPath = (userID, isEmailLogin) => {
+    axios.post('http://49.50.172.58:3000/users', {
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+      },
+      is_email_login: isEmailLogin,
+      email: userID,
+    });
+  };
+
   isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
@@ -69,9 +79,9 @@ export default class LoginScreen extends Component {
           firebase
             .auth()
             .signInWithCredential(credential)
-            .then(function (result) {
+            .then((result) => {
               console.log('USER SIGNED IN');
-              console.log('sing in result', result);
+              console.log('sign in result', result.user.email);
               this.sendLoginPath(result.user.email, false);
               if (result.additionalUserInfo.isNewUser) {
                 firebase
@@ -157,7 +167,7 @@ export default class LoginScreen extends Component {
       firebase
         .auth()
         .signInWithCredential(credential)
-        .then(function (result) {
+        .then((result) => {
           console.log('USER SIGNED IN');
           console.log('sign in result', result);
           this.sendLoginPath(result.user.email, false);
@@ -190,22 +200,12 @@ export default class LoginScreen extends Component {
     }
   };
 
-  sendLoginPath = (userID, isEmailLogin) => {
-    axios.post('http://49.50.172.58:3000/users', {
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded',
-      },
-      is_email_login: isEmailLogin,
-      email: userID,
-    });
-  };
-
   logInWithPlanA = async (ID, password) => {
     try {
       firebase
         .auth()
         .signInWithEmailAndPassword(ID, password)
-        .then(function (user) {
+        .then((user) => {
           console.log(user);
           this.sendLoginPath(ID, true);
         })

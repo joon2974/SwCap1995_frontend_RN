@@ -20,6 +20,8 @@ import HomeMain from './HomeScreens/HomeMain';
 
 import PlanMain from './PlanScreens/PlanMain';
 import MakePlanStep1 from './PlanScreens/MakePlanStep1';
+import CameraScreen from './PlanScreens/CameraScreen';
+import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
 import { firebaseConfig } from '../firebaseConfig';
 
@@ -54,6 +56,8 @@ function PlanStackScreen() {
     <PlanStack.Navigator>
       <PlanStack.Screen name="PlanMain" component={PlanMain} />
       <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
+      <PlanStack.Screen name="CameraScreen" component={CameraScreen} />
+      <PlanStack.Screen name="ImagePickScreen" component={ImagePickScreen} />
     </PlanStack.Navigator>
   );
 }
