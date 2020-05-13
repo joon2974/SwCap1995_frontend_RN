@@ -3,6 +3,7 @@ import {View, Text, ScrollView, FlatList, StyleSheet, Image, TouchableOpacity, D
 import { Input, Button } from 'react-native-elements';
 import axios from 'axios';
 
+
 //const { width } = Dimensions.get('window');
 
 export default class Searchscreen extends Component {
@@ -26,21 +27,9 @@ export default class Searchscreen extends Component {
     });
   }
 
-  constructor(props){
-    super(props)
-    this.state = {
-      categoryData: [
-        {name: 'rec1'},
-        {name: 'rec2'},
-        {name: 'rec3'},
-        {name: 'rec4'},
-        {name: 'rec5'},
-      ]
-    }
-  }
 
   render(){
-    const { search } = this.state;
+   const { search } = this.state;
 
     let pic = {
       //uri : search
@@ -50,7 +39,12 @@ export default class Searchscreen extends Component {
     return (
 
       <View style = {styles.container}>
-
+        
+        <View>
+          <Text style = {styles.searchTitle}>
+            관심 있는 키워드를 아래에 입력해 보세요
+          </Text>
+        </View>
 
         <View style = {styles.searchBar}>
           <Input
@@ -61,26 +55,6 @@ export default class Searchscreen extends Component {
             title="검색"
             type="solid"
             onPress={this.sendSearch}
-          />
-        </View>
-
-
-        <View>
-          <Text style = {styles.categoryRecommend}>
-            Today Recommended
-          </Text>
-        
-          <FlatList 
-            horizontal
-            data = {this.state.categoryData}
-            renderItem = {({item, index}) => 
-              <View style = {{padding: 5}}>
-                <View style = {styles.categoryIcon}>
-                  <Text style = {styles.categoryTitle}>{item.name}</Text>
-                </View>
-              </View>
-            }
-            //keyExtractor ={(item,index) => index.toString()} //warning 잡기
           />
         </View>
 
@@ -98,23 +72,62 @@ export default class Searchscreen extends Component {
             right: 30,
           }}
         >
-          
+
+          <View>
+            <Text style = {styles.recommendTitle}>
+              주간 인기 분야
+            </Text>
+            <Text style = {styles.recommendSubTitle}>
+              이 주의 가장 인기있는 플랜들을 확인해 보세요!!
+            </Text>
+          </View>
+
+        
           <View style={styles.categoryUnitList}>
-            <Image source ={pic} style = {styles.plan} />
-            <Image source = {pic} style = {styles.plan} />
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
           </View>
           <View style={styles.categoryUnitList}>
-            <Image source = {pic} style = {styles.plan} />
-            <Image source = {pic} style = {styles.plan} />
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
+          </View>
+
+
+          <View>
+            <Text style = {styles.recommendTitle}>
+              전체 카테고리
+            </Text>
+            <Text style = {styles.recommendSubTitle}>
+              관심 있는 분야를 선택해 보세요!!
+            </Text>
+          </View>
+
+          <View style={styles.categoryUnitList}>
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
           </View>
           <View style={styles.categoryUnitList}>
-            <Image source = {pic} style = {styles.plan} />
-            <Image source = {pic} style = {styles.plan} />
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
+              <Image source = {pic} style = {styles.category} />
+            </TouchableOpacity>
           </View>
-          <View style={styles.categoryUnitList}>
-            <Image source = {pic} style = {styles.plan} />
-            <Image source = {pic} style = {styles.plan} />
-          </View>  
+
+
         </ScrollView>
 
 
@@ -128,37 +141,32 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     backgroundColor: 'white',
-    paddingVertical: 50,
+    paddingVertical: 10,
   },
   searchBar:{
     width:350, 
     flexDirection:'row'
   },
-  categoryRecommend:{
+  searchTitle:{
+    marginHorizontal: 10
+  },
+  recommendTitle:{
     fontWeight: 'bold', 
     paddingHorizontal:10, 
     paddingVertical:10, 
-    fontSize:18,
+    fontSize:24,
   },
-  categoryIcon:{
-    backgroundColor: 'white', 
-    borderWidth: 5, 
-    borderColor: '#626262', 
-    borderRadius:20, 
-    height: 50, 
-    width: 70
-  },
-  categoryTitle:{
-    paddingHorizontal:14,
-    paddingVertical:8, 
-    fontWeight:'bold'
+  recommendSubTitle:{
+    paddingHorizontal:10, 
+    paddingVertical:10, 
+    fontSize:16,
   },
   categoryUnitList: {
     flexDirection: 'row',
     padding:5,
   },
-  plan:{
-    margin:10,
+  category:{
+    margin:5,
     width:180,
     height:150,
   },

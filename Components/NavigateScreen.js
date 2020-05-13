@@ -18,6 +18,10 @@ import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
 
 import SearchScreen from './SearchScreens/SearchScreen';
+import PlanSearched from './SearchScreens/PlanSearched';
+import DetailPlan from './SearchScreens/DetailPlan';
+import Calendar from './SearchScreens/Calendar';
+import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 import firebase from 'firebase';
 import {firebaseConfig} from '../firebaseConfig';
@@ -51,6 +55,10 @@ function SearchStackScreen(){
     return(
         <SearchStack.Navigator>
             <SearchStack.Screen name='Search' component={SearchScreen} />
+            <SearchStack.Screen name='PlanSearched' component={PlanSearched} />
+            <SearchStack.Screen name='DetailPlan' component={DetailPlan} />
+            <SearchStack.Screen name='Calendar' component={Calendar} />
+            <SearchStack.Screen name='DaileyAuthentication' component={DaileyAuthentication} />
         </SearchStack.Navigator>
     )
 }
@@ -120,7 +128,7 @@ export default function NavigateScreen(){
                     inactiveTintColor: '#d1cece'
                 }}>
                     <Tab.Screen name = "Home" component={HomeStackScreen} />
-                    <Tab.Screen name = "Search" component={SearchScreen} />
+                    <Tab.Screen name = "Search" component={SearchStackScreen} />
                     <Tab.Screen name = "Plan" component={PlanTab} />
                     <Tab.Screen name = "Friend" component={FriendTab} />
                     <Tab.Screen name = "My" component={MyTab} />
