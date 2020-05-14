@@ -12,9 +12,6 @@ import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
-
-import SearchTab from './AppTabNavigator/SearchTab';
-
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
 import FriendScreen from './FriendScreens/FriendScreen';
@@ -26,6 +23,11 @@ import CameraScreen from './PlanScreens/CameraScreen';
 import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
 import { firebaseConfig } from '../firebaseConfig';
+import SearchScreen from './SearchScreens/SearchScreen';
+import PlanSearched from './SearchScreens/PlanSearched';
+import DetailPlan from './SearchScreens/DetailPlan';
+import Calendar from './SearchScreens/Calendar';
+import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -52,7 +54,6 @@ function HomeStackScreen() {
   );
 }
 
-
 const FriendStack = createStackNavigator();
 function FriendStackScreen() {
   return (
@@ -71,6 +72,22 @@ function PlanStackScreen() {
       <PlanStack.Screen name="CameraScreen" component={CameraScreen} />
       <PlanStack.Screen name="ImagePickScreen" component={ImagePickScreen} />
     </PlanStack.Navigator>
+  );
+}
+
+const SearchStack = createStackNavigator();
+function SearchStackScreen() {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="Search" component={SearchScreen} />
+      <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
+      <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
+      <SearchStack.Screen name="Calendar" component={Calendar} />
+      <SearchStack.Screen
+        name="DaileyAuthentication"
+        component={DaileyAuthentication}
+      />
+    </SearchStack.Navigator>
   );
 }
 
@@ -136,7 +153,7 @@ export default function NavigateScreen() {
           }}
         >
           <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Search" component={SearchTab} />
+          <Tab.Screen name="Search" component={SearchStackScreen} />
           <Tab.Screen name="Friend" component={FriendStackScreen} />
           <Tab.Screen name="Plan" component={PlanStackScreen} />
           <Tab.Screen name="My" component={MyMenuScreen} />
