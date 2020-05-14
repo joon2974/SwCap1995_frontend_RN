@@ -6,11 +6,10 @@ import {
   Button,
   Dimensions,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
-import firebase from 'firebase';
 import axios from 'axios';
 
-let currentUser;
 let isRegisterdCheck;
 const { height, width } = Dimensions.get('window');
 
@@ -20,28 +19,30 @@ export default class PlanMain extends Component {
   }
 
   componentDidMount() {
-    currentUser = firebase.auth().currentUser;
-    if (currentUser != null) {
-      const email = currentUser.email;
-      this.isFaceRegisterdCheck(email);
-    }
+    this.loadUserID();
   }
 
   componentWillUnmount() {
-    clearTimeout(currentUser);
     clearTimeout(isRegisterdCheck);
   }
 
-  isFaceRegisterdCheck = (eMail) => {
+  loadUserID = async () => {
+    await AsyncStorage.getItem('UserID')
+      .then((id) => { 
+        this.isFaceRegisterdCheck(id);
+      }); 
+  }
+
+  isFaceRegisterdCheck = (ID) => {
+    console.log('asdfasdfasdf', ID);
     isRegisterdCheck = axios
-      .post('http://49.50.172.58:3000/users/is_face_detection', {
+      .get('http://49.50.172.58:3000/users/is_face_detection/' + ID, {
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
         },
-        email: eMail,
       })
       .then((res) => {
-        if (res.data.id) {
+        if (res === true) {
           console.log('얼굴인식 완료된 유저');
           this.setState({ isFaceRegisterd: true });
           this.forceUpdate();
