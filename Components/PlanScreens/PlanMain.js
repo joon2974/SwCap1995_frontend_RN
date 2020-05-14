@@ -16,7 +16,7 @@ const { height, width } = Dimensions.get('window');
 export default class PlanMain extends Component {
   state = {
     isFaceRegisterd: false,
-  }
+  } 
 
   componentDidMount() {
     this.loadUserID();
