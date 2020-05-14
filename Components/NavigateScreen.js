@@ -18,6 +18,7 @@ import SearchTab from './AppTabNavigator/SearchTab';
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
 import FriendScreen from './FriendScreens/FriendScreen';
+import AddFriendScreen from './FriendScreens/AddFriendScreen';
 import { firebaseConfig } from '../firebaseConfig';
 
 if (!firebase.apps.length) {
@@ -42,6 +43,17 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Main" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
     </HomeStack.Navigator>
+  );
+}
+
+
+const FriendStack = createStackNavigator();
+function FriendStackScreen() {
+  return (
+    <FriendStack.Navigator>
+      <FriendStack.Screen name="FriendScreen" component={FriendScreen} />
+      <FriendStack.Screen name="AddFriend" component={AddFriendScreen} />
+    </FriendStack.Navigator>
   );
 }
 
@@ -109,7 +121,7 @@ export default function NavigateScreen() {
           <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Search" component={SearchTab} />
           <Tab.Screen name="Plan" component={PlanTab} />
-          <Tab.Screen name="Friend" component={FriendScreen} />
+          <Tab.Screen name="Friend" component={FriendStackScreen} />
           <Tab.Screen name="My" component={MyMenuScreen} />
         </Tab.Navigator>
       </NavigationContainer>
