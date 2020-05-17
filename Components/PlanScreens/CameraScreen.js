@@ -6,11 +6,13 @@ import {
   ActivityIndicator,
   Dimensions,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
 
 const { height, width } = Dimensions.get('window');
 const ALBUM_NAME = 'PLAN A';
@@ -22,6 +24,8 @@ export default class CameraScreen extends Component {
     this.state = {
       hasPermission: null,
       cameraType: Camera.Constants.Type.front,
+      isPhotoTaken: false,
+      imageUri: null,
     };
 
     this.cameraRef = React.createRef();
@@ -55,7 +59,10 @@ export default class CameraScreen extends Component {
         });
 
         if (uri) {
+          this.setState({ imageUri: uri });
+          alert('사진을 찍었습니다!');
           this.savePhoto(uri);
+          this.setState({ isPhotoTaken: true });
         }
       }
     } catch (error) {
@@ -84,43 +91,88 @@ export default class CameraScreen extends Component {
     }
   }
 
+  sendImage = (uri) => {
+    const uriParts = uri.split('.');
+    const fileType = uriParts[uriParts.length - 1];
+
+    const formData = new FormData();
+    // formData.append('photo', { uri: uri, name: `photo.${fileType}`, type: `image/${fileType}` });
+    formData.append('photo', uri);
+    axios.post('http://49.50.172.58:3000/test/upload2', {
+      headers: { 
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    }).then((res) => {
+      console.log(res);
+      this.props.route.params.completeFunc();
+      this.props.navigation.popToTop();
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   render() {
-    const { hasPermission, cameraType } = this.state;
+    const {
+      hasPermission,
+      cameraType,
+      isPhotoTaken,
+      imageUri,
+    } = this.state;
 
     if (hasPermission === true) {
-      return (
-        <View style={styles.container}>
-          <View style={styles.btnContainer}>
-            <TouchableOpacity
-              onPress={this.switchCameraType}
-            >
-              <Ionicons 
-                name="ios-reverse-camera"
-                size={40}
-                color="black"
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.cameraContainer}>
-            <Camera 
-              style={styles.cameraStyle}
-              type={cameraType}
-              ref={this.cameraRef}
+      if (isPhotoTaken) {
+        return (
+          <View style={styles.container}>
+            <Text>찍은 사진</Text>
+            <Image 
+              source={{ uri: imageUri }} 
+              style={{ width: width - 20, height: width - 20 }} 
             />
-          </View>
-          <View style={styles.shutterBtnContainer}>
-            <TouchableOpacity
-              onPress={this.takePhoto}
+            <TouchableOpacity 
+              style={styles.uploadBtn}
+              onPress={() => this.sendImage(imageUri)}  
             >
-              <Ionicons 
-                name="ios-add-circle-outline"
-                size={40}
-                color="black"
-              />
+              <Text>이 사진으로 얼굴 등록하기</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      );
+        );
+      } else {
+        return (
+          <View style={styles.container}>
+            <View style={styles.btnContainer}>
+              <TouchableOpacity
+                onPress={this.switchCameraType}
+              >
+                <Ionicons 
+                  name="ios-reverse-camera"
+                  size={40}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.cameraContainer}>
+              <Camera 
+                style={styles.cameraStyle}
+                type={cameraType}
+                ref={this.cameraRef}
+              />
+            </View>
+            <View style={styles.shutterBtnContainer}>
+              <TouchableOpacity
+                onPress={this.takePhoto}
+              >
+                <Ionicons 
+                  name="ios-add-circle-outline"
+                  size={40}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        );
+      }
     } else if (hasPermission === false) {
       return <Text>Dont have Permission for this App. </Text>;
     } else {
@@ -138,7 +190,7 @@ const styles = StyleSheet.create({
   },
   cameraStyle: {
     width: width - 40,
-    height: height / 1.5,
+    height: width - 40,
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -161,5 +213,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 15,
+  },
+  uploadBtn: {
+    width: width * 0.6,
+    height: 40,
+    backgroundColor: '#40FF00',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    borderRadius: 10,
   },
 });

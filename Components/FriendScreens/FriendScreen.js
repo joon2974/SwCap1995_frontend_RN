@@ -73,13 +73,14 @@ export default class FriendScreen extends Component {
   render() {
     const friends = this.state.friendData.map((data) => (
       <FriendList
+        key={data.nickname}
         nickname={data.nickname}
         />
     ));
     const friendRequsts = this.state.friendRequstData.map((data) => (
       <FriendRequestList
         stateRefresh={this.stateRefresh}
-
+        key={data.nickname}
         nickname={data.nickname}
         />
     ));

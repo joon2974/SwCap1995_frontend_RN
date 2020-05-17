@@ -55,6 +55,15 @@ export default class PlanMain extends Component {
       });
   }
 
+  registerComplete = () => {
+    this.setState({ isFaceRegisterd: true });
+  }
+
+  // Test
+  testTurnBack = () => {
+    this.setState({ isFaceRegisterd: false });
+  }
+
   render() {
     const { isFaceRegisterd } = this.state;
 
@@ -63,6 +72,7 @@ export default class PlanMain extends Component {
         <View style={styles.container}>
           <Text>플랜 메인</Text>
           <Button title="플랜 생성" onPress={() => this.props.navigation.navigate('MakePlanStep1')} />
+          <Button title="테스트 전환" onPress={() => this.testTurnBack()} />
         </View>
       );
     } else {
@@ -76,17 +86,21 @@ export default class PlanMain extends Component {
               <Text>Plan A는 사용자의 대리 인증을 방지하기 위해 본인 인증을 위한 수단으로 얼굴 인증을 사용하고 있습니다.</Text>
               <Text>하단의 두 방법 중 하나의 방법으로 자신의 얼굴을 Plan A에 등록해 주세요.</Text>
             </View>
+            <Button 
+              title="테스트 전환"
+              onPress={() => this.registerComplete()}
+            />
           </View>
           <View style={styles.BtnContainer}>
             <TouchableOpacity 
               style={styles.registerBtn}
-              onPress={() => this.props.navigation.navigate('CameraScreen')}
+              onPress={() => this.props.navigation.navigate('CameraScreen', { completeFunc: this.registerComplete.bind(this) })}
             >
               <Text>카메라로 사진 찍기</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.registerBtn}
-              onPress={() => this.props.navigation.navigate('ImagePickScreen')}
+              onPress={() => this.props.navigation.navigate('ImagePickScreen', { completeFunc: this.registerComplete.bind(this) })}
             >
               <Text>갤러리에서 사진 가져오기</Text>
             </TouchableOpacity>
