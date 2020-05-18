@@ -14,46 +14,18 @@ import PlanListEach from './PlanComponents/PlanListEach';
 
 let isRegisterdCheck;
 const { height, width } = Dimensions.get('window');
-const plansListTemp = {
-  '운동/건강': [
-    '헬스',
-    '런닝',
-    '푸시업',
-    '기타 등등',
-  ],
-  '감정관리': [
-    '하루 한 번 웃기',
-    '하루 한 번 하늘 보기',
-    'a',
-    'b',
-  ],
-  '생활습관': [
-    '하루 물 한컵 마시기',
-    'q',
-    'w',
-    'e',
-  ],
-  '자기계발': [
-    '아침 10시 일어나기',
-    '아침 9시 일어나기',
-    '12시 전 자기',
-    '스마트폰 이용 줄이기',
-  ],
-  '기타': [
-    '그 외 기타 등등',
-  ],
-};
 
 export default class PlanMain extends Component {
   state = {
     isFaceRegisterd: false,
-    selectedCategory: '운동',
-    nowPlanList: ['test', 'data', 'hello', 'world'],
+    selectedCategory: '운동/건강',
+    nowPlanList: ['헬스', '식단', '런닝', '푸시업', '기타'],
+    planListFromServer: null,
   } 
 
   componentDidMount() {
     this.loadUserID();
-    this.setPlanList('운동/건강');
+    this.loadPlansFromServer();
   }
 
   componentWillUnmount() {
@@ -67,8 +39,33 @@ export default class PlanMain extends Component {
       }); 
   }
 
+  loadPlansFromServer = async () => {
+    await axios.get('http://49.50.172.58:3000/detailedCategories').then((data) => {
+      const plansFromServer = data.data.data.detailedCategoryGet;
+      const planObject = {};
+
+      planObject['운동/건강'] = this.planFilter(plansFromServer, 1);
+      planObject['감정관리'] = this.planFilter(plansFromServer, 4);
+      planObject['생활습관'] = this.planFilter(plansFromServer, 2);
+      planObject['자기계발'] = this.planFilter(plansFromServer, 3);
+      planObject['기타'] = this.planFilter(plansFromServer, 5);
+
+      this.setState({ planListFromServer: planObject });
+      console.log('서버로부터 받아온 plan 목록: ', this.state.planListFromServer);
+    })
+      .catch((error) => {
+        console.log('서버로부터 plans 가져오기 에러: ', error);
+      });
+  }
+
+  planFilter = (plansList, categoryNum) => {
+    const categoryPlans = plansList.filter((plan) => plan.topCategoryNum === categoryNum);
+    const categoryPlansName = categoryPlans.map((plan) => plan.detailedCategory);
+
+    return categoryPlansName;
+  }
+
   isFaceRegisterdCheck = (ID) => {
-    console.log('asdfasdfasdf', ID);
     isRegisterdCheck = axios
       .get('http://49.50.172.58:3000/users/is_face_detection/' + ID, {
         headers: {
@@ -81,11 +78,11 @@ export default class PlanMain extends Component {
           this.setState({ isFaceRegisterd: true });
           this.forceUpdate();
         } else {
-          console.log(res);
+          console.log('얼굴인식 결과: ', res.data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log('얼굴인증 확인 실패', error);
       });
   }
 
@@ -98,19 +95,23 @@ export default class PlanMain extends Component {
     this.setState({ isFaceRegisterd: false });
   }
 
-  setPlanList = (categoryName) => {
+  setPlanList = (categoryName, planListFromServer) => {
     this.setState({ selectedCategory: categoryName });
-    const planList = plansListTemp[categoryName];
-    console.log(planList);
+    const planList = planListFromServer[categoryName];
     this.setState({ nowPlanList: planList });
   }
 
-  planSelected = (planName) => {
-    this.props.navigation.navigate('MakePlanStep1', { planName: planName });
+  planSelected = (planName, selectedCategory) => {
+    this.props.navigation.navigate('MakePlanStep1', { planName: planName, category: selectedCategory });
   }
 
   render() {
-    const { isFaceRegisterd, selectedCategory, nowPlanList } = this.state;
+    const {
+      isFaceRegisterd,
+      selectedCategory,
+      nowPlanList,
+      planListFromServer,
+    } = this.state;
 
     if (isFaceRegisterd) {
       return (
@@ -126,35 +127,35 @@ export default class PlanMain extends Component {
               <View style={styles.categoryBtnContainer}>
                 <TouchableOpacity
                   style={selectedCategory === '운동/건강' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('운동/건강')}
+                  onPress={() => this.setPlanList('운동/건강', planListFromServer)}
                 >
                   <Text>운동/건강</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '감정관리' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('감정관리')}
+                  onPress={() => this.setPlanList('감정관리', planListFromServer)}
                 >
                   <Text>감정관리</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '생활습관' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('생활습관')}
+                  onPress={() => this.setPlanList('생활습관', planListFromServer)}
                 >
                   <Text>생활습관</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '자기계발' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('자기계발')}
+                  onPress={() => this.setPlanList('자기계발', planListFromServer)}
                 >
                   <Text>자기계발</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '기타' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('기타')}
+                  onPress={() => this.setPlanList('기타', planListFromServer)}
                 >
                   <Text>기타</Text>
                 </TouchableOpacity>
@@ -165,7 +166,7 @@ export default class PlanMain extends Component {
                   <PlanListEach
                     key={data}
                     name={data}
-                    planSelectFunc={() => this.planSelected(data)}
+                    planSelectFunc={() => this.planSelected(data, selectedCategory)}
                   />
                 ))}
               </View>
