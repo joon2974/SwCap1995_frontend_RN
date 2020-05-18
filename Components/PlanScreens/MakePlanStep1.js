@@ -15,7 +15,7 @@ export default class PlanMain extends Component {
       <ScrollView style={styles.container}>
         <View style={styles.viewContainer}>
           <View style={styles.selectedInformContainer}>
-            <Text>정보창</Text>
+            <Text>{this.props.route.params.planName}</Text>
           </View>
 
           <View style={styles.rulesContainer}>
