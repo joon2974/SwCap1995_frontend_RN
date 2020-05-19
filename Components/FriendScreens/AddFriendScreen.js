@@ -12,7 +12,7 @@ const { width } = Dimensions.get('window');
 export default class AddFriendScreen extends Component {
   state = {
     targetNickname: '',
-    userId: '1',
+    userId: this.props.route.params.userId,
   };
 
   onChangeText(targetNickname) {
@@ -20,12 +20,13 @@ export default class AddFriendScreen extends Component {
   }
 
   sendFriendRequest=(userId, targetNickname) => {
-    console.log();
+    console.log(targetNickname);
+    console.log(this.props.route.params.userId);
+    
     axios.put('http://49.50.172.58:3000/friends/add', {
       user_id: userId,
       nickname: targetNickname,
-    }).then(function (response) {
-      console.log(response);
+    }).then(function () {
       alert(targetNickname + '님께 친구요청을 보냈습니다');
     });
   }
