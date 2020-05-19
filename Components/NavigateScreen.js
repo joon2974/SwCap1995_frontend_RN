@@ -14,6 +14,8 @@ import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import HomeMain from './HomeScreens/HomeMain';
+import NotiTestScreen from './HomeScreens/NotiTestScreen';
+
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
 
@@ -50,6 +52,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator>
       <HomeStack.Screen name="Main" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
+      <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
     </HomeStack.Navigator>
   );
 }

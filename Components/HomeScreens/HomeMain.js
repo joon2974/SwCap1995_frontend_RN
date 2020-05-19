@@ -77,6 +77,10 @@ export default class HomeMain extends Component {
             title="Go To Mypage"
             onPress={() => this.props.navigation.navigate('MyMenuScreen')}
           />
+          <Button
+            title="Go To Test Page"
+            onPress={() => this.props.navigation.navigate('NotiTestScreen')}
+          />
         </View>
       );
     } else {
