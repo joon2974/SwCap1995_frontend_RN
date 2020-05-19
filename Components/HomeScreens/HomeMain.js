@@ -18,7 +18,7 @@ export default class HomeMain extends Component {
   state = { 
     isInformChecked: false,
     userEmail: '',
-  };
+  }; 
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
