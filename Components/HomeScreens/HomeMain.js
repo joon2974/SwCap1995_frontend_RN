@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Button,
   AsyncStorage,
+  ActivityIndicator,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -33,8 +34,8 @@ export default class HomeMain extends Component {
     clearTimeout(isInformCheck);
   }
 
-  isInfoContain = (eMail) => { 
-    isInformCheck = axios
+  isInfoContain = async (eMail) => { 
+    isInformCheck = await axios
       .post('http://49.50.172.58:3000/users/is_user', {
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
@@ -45,8 +46,7 @@ export default class HomeMain extends Component {
         if (res.data.id) {
           console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
-          this.state.isInformChecked = true;
-          this.forceUpdate();
+          this.setState({ isInformChecked: true });
         } else {
           console.log(res);
         }
@@ -77,10 +77,16 @@ export default class HomeMain extends Component {
             title="Go To Mypage"
             onPress={() => this.props.navigation.navigate('MyMenuScreen')}
           />
+          <Button
+            title="Go To Test Page"
+            onPress={() => this.props.navigation.navigate('NotiTestScreen')}
+          />
         </View>
       );
-    } else {
+    } else if (isInformChecked === false) {
       return <InputInfo checkFunc={this.informExistCheck} userEmail={userEmail} />;
+    } else {
+      return <ActivityIndicator />;
     }
   }
 }
