@@ -49,7 +49,6 @@ export default class SignUpScreen extends Component {
   }
 
   componentWillUnmount() {
-    console.log('타입', login);
     clearTimeout(login);
   }
 

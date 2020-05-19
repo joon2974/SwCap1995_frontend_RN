@@ -14,6 +14,8 @@ let currentUser;
 let isInformCheck;
 
 export default class HomeMain extends Component {
+  _isMounted = false;
+
   state = { 
     isInformChecked: false,
     userEmail: '',
