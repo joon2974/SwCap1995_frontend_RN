@@ -7,56 +7,89 @@ import {
   Image, 
   TouchableOpacity, 
   Dimensions,
-  Button,
-  AsyncStorage} from 'react-native';
+  Button} from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
-import PlanListEach from './PlanListEach';
+import PlanListEach from './PlanListEach/PlanListEach';
+import PlanListEachAllCate from './PlanListEach/PlanListEachAllCate';
 
 const { height, width } = Dimensions.get('window');
 
-const plansListTemp = {
+const plansListTemplate = {
   '10대': [
-    '헬스',
-    '런닝',
-    '푸시업',
-    '기타 등등',
+    '대학 입시',
+    '학교 폭력',
+    '게임',
+    '친구들과 놀기',
   ],
   '20대': [
-    '하루 한 번 웃기',
-    '하루 한 번 하늘 보기',
-    'a',
-    'b',
+    '대학 진로',
+    '인간관계',
+    '연애',
+    '취업',
   ],
   '30대': [
-    '하루 물 한컵 마시기',
-    'q',
-    'w',
-    'e',
+    '이직',
+    '건강',
+    '결혼',
+    '효도',
   ],
   '40~50대': [
-    '아침 10시 일어나기',
-    '아침 9시 일어나기',
-    '12시 전 자기',
-    '스마트폰 이용 줄이기',
+    '건강 걱정',
+    '갱년기 걱정',
+    '노후 걱정',
+    '자식 걱정',
   ],
   '60대 이상': [
-    '그 외 기타 등등',
     '삶과 죽음 그 어딘가',
     '사랑하기 딱 좋은 나이',
-    '환갑 축하',
+    '환갑 축하문',
+    '손자손녀 건강',
   ],
 };
 
+const plansListAllCateTemplate = {
+  '운동/건강' :[
+    '조깅',
+    '흡연',
+    '다이어트',
+    '헬스',
+  ],
+  '생활습관':[
+    '아침 기상',
+    '식습관',
+    '공부습관',
+    '말투',
+  ],
+  '자기계발':[
+    '어학',
+    '상식',
+    '예술',
+    '인성',
+  ],
+  '감정관리':[
+    '우울',
+    '조울',
+    '인내',
+    '충동',
+  ],
+  '기타':[
+    '표준어 사용',
+    '과속 딱지 안 걸리기',
+    '악플 안달기',
+    '가족 챙기기',
+  ]
+
+}
 
 export default class Searchscreen extends Component {
 
   state = {
-    selectedCategory : '',
-    temp:'abc',
     search: '',
     uri:'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
+    selectedCategory : '',
     nowPlanList: ['test', 'data', 'hello', 'world'],
+    nowPlanListAllCate: ['test', 'data', 'hello', 'world'],
   };
 
 
@@ -77,24 +110,29 @@ export default class Searchscreen extends Component {
       this.setState({uri:'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'});
   }
 
-
   componentDidMount() {
     this.setPlanList('10대');
+    this.setPlanListAllCate('생활습관');
   }
 
   setPlanList = (categoryName) => {
     this.setState({ selectedCategory: categoryName });
-  
-    const planList = plansListTemp[categoryName];
-    console.log(planList);
+
+    const planList = plansListTemplate[categoryName];
     this.setState({ nowPlanList: planList });
-  
+    
   }
 
+  setPlanListAllCate = (categoryName) =>{
+    this.setState({selectedCategoryAllCate : categoryName});
+
+    const planListAllCate = plansListAllCateTemplate[categoryName];
+    this.setState({nowPlanListAllCate:planListAllCate});
+  }
 
   render(){
 
-    const { nowPlanList, selectedCategory } = this.state;
+    const { selectedCategory, selectedCategoryAllCate, nowPlanList, nowPlanListAllCate} = this.state;
 
     return (
 
@@ -140,69 +178,55 @@ export default class Searchscreen extends Component {
  
 
           <View style={styles.tabRecommended}>
-                <TouchableOpacity
-                  style={selectedCategory === '10대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('10대')}
-                >
-                  <Text>10대</Text>
-                </TouchableOpacity>     
+            <TouchableOpacity
+              style={selectedCategory === '10대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanList('10대')}
+            >
+              <Text>10대</Text>
+            </TouchableOpacity>     
 
-              <TouchableOpacity
-                  style={selectedCategory === '20대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('20대')}
-                >
-                  <Text>20대</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={selectedCategory === '30대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('30대')}
-                >
-                  <Text>30대</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={selectedCategory === '40~50대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('40~50대')}
-                >
-                  <Text>40~50대</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={selectedCategory === '60대 이상' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('60대 이상')}
-                >
-                  <Text>60대 이상</Text>
-                </TouchableOpacity>
-                
-            </View>
-
-            <View style={styles.plansContainer}>
-                {nowPlanList.map((data) => (
-                  <PlanListEach
-                    key={data}
-                    name={data}
-                  />
-                ))}
-              </View>
-                    
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
+            <TouchableOpacity
+              style={selectedCategory === '20대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanList('20대')}
+            >
+              <Text>20대</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
+
+            <TouchableOpacity
+              style={selectedCategory === '30대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanList('30대')}
+            >
+              <Text>30대</Text>
             </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
+
+
+            <TouchableOpacity
+              style={selectedCategory === '40~50대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanList('40~50대')}
+            >
+              <Text>40~50대</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
+
+            <TouchableOpacity
+              style={selectedCategory === '60대 이상' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanList('60대 이상')}
+            >
+              <Text>60대 이상</Text>
             </TouchableOpacity>
           </View>
 
+          <View style={styles.plansContainer}>
+            {nowPlanList.map((data) => (
+              <PlanListEach
+                key={data}
+                name={data}
+                explore = {()=>  this.props.navigation.navigate('DetailPlan') }
+              />
+            ))}
+          </View>
+
+                                
+         
           <View>
             <Text style = {styles.recommendTitle}>
               전체 카테고리
@@ -212,21 +236,51 @@ export default class Searchscreen extends Component {
             </Text>
           </View>
 
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
+          <View style={styles.tabRecommended}>
+            <TouchableOpacity
+              style={selectedCategoryAllCate === '운동/건강' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanListAllCate('운동/건강')}
+            >
+              <Text>운동/건강</Text>
+            </TouchableOpacity>     
+
+            <TouchableOpacity
+              style={selectedCategoryAllCate === '생활습관' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanListAllCate('생활습관')}
+            >
+              <Text>생활습관</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
+
+            <TouchableOpacity
+              style={selectedCategoryAllCate === '자기계발' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanListAllCate('자기계발')}
+            >
+              <Text>자기계발</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={selectedCategoryAllCate === '감정관리' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanListAllCate('감정관리')}
+            >
+              <Text>감정관리</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={selectedCategoryAllCate === '기타' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              onPress={() => this.setPlanListAllCate('기타')}
+            >
+              <Text>기타</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
-              <Image source = {this.state} style = {styles.category} />
-            </TouchableOpacity>
+
+          <View style={styles.plansContainer}>
+            {nowPlanListAllCate.map((data) => (
+              <PlanListEachAllCate
+                key={data}
+                name={data}
+                explore = {()=>  this.props.navigation.navigate('DetailPlan') }
+              />
+            ))}
           </View>
 
         </ScrollView>
@@ -244,51 +298,46 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 10,
   },
-  searchBar:{
-    width: width * 0.87, 
-    flexDirection:'row'
-  },
   searchTitle:{
-    marginHorizontal: 10
+    marginHorizontal: 10,
+    marginTop : 5,
+  },
+  searchBar:{ 
+    width: width * 0.87,
+    flexDirection:'row',
+    marginTop : 5, 
   },
   recommendTitle:{
     fontWeight: 'bold', 
-    paddingHorizontal:10, 
-    paddingVertical:10, 
+    marginHorizontal:25, 
+    marginTop:25,
     fontSize:24,
   },
   recommendSubTitle:{
-    paddingHorizontal:10, 
-    paddingVertical:10, 
+    marginHorizontal:25, 
+    marginTop: 10, 
     fontSize:16,
   },
-  categoryUnitList: {
-    flexDirection: 'row',
-    padding:5,
-  },
-  category:{
-    margin:5,
-    width:width*0.45,
-    height:150,
-  },
-
-
-  plansContainer: {
-    width: width,
-    height: height * 0.6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-
+  
   tabRecommended: {
     width: width,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    marginTop: 20,
   },
+  
+  plansContainer: {
+    width: width,
+    height: height * 0.58,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop:10,
+  },
+  
   categoryBtnStyle: {
     width: width * 0.17,
     height: 40,
@@ -297,12 +346,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 1,
   },
+
   selectedCategoryBtnStyle: {
     width: width * 0.17,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#00FFFF',
     borderRadius: 5,
     margin: 1,
   },
