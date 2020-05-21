@@ -15,6 +15,40 @@ import PlanListEach from './PlanListEach';
 
 const { height, width } = Dimensions.get('window');
 
+const plansListTemp = {
+  '10대': [
+    '헬스',
+    '런닝',
+    '푸시업',
+    '기타 등등',
+  ],
+  '20대': [
+    '하루 한 번 웃기',
+    '하루 한 번 하늘 보기',
+    'a',
+    'b',
+  ],
+  '30대': [
+    '하루 물 한컵 마시기',
+    'q',
+    'w',
+    'e',
+  ],
+  '40~50대': [
+    '아침 10시 일어나기',
+    '아침 9시 일어나기',
+    '12시 전 자기',
+    '스마트폰 이용 줄이기',
+  ],
+  '60대 이상': [
+    '그 외 기타 등등',
+    '삶과 죽음 그 어딘가',
+    '사랑하기 딱 좋은 나이',
+    '환갑 축하',
+  ],
+};
+
+
 export default class Searchscreen extends Component {
 
   state = {
@@ -22,6 +56,7 @@ export default class Searchscreen extends Component {
     temp:'abc',
     search: '',
     uri:'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
+    nowPlanList: ['test', 'data', 'hello', 'world'],
   };
 
 
@@ -44,15 +79,22 @@ export default class Searchscreen extends Component {
 
 
   componentDidMount() {
-    this.setPlanList('운동/건강');
+    this.setPlanList('10대');
   }
 
   setPlanList = (categoryName) => {
     this.setState({ selectedCategory: categoryName });
+  
+    const planList = plansListTemp[categoryName];
+    console.log(planList);
+    this.setState({ nowPlanList: planList });
+  
   }
 
 
   render(){
+
+    const { nowPlanList, selectedCategory } = this.state;
 
     return (
 
@@ -99,44 +141,51 @@ export default class Searchscreen extends Component {
 
           <View style={styles.tabRecommended}>
                 <TouchableOpacity
-                  style={this.state.selectedCategory === '운동/건강' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('운동/건강')}
+                  style={selectedCategory === '10대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+                  onPress={() => this.setPlanList('10대')}
                 >
-                  <Text>운동/건강</Text>
+                  <Text>10대</Text>
                 </TouchableOpacity>     
 
               <TouchableOpacity
-                  style={this.state.selectedCategory === '감정관리' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('감정관리')}
+                  style={selectedCategory === '20대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+                  onPress={() => this.setPlanList('20대')}
                 >
-                  <Text>감정관리</Text>
+                  <Text>20대</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={this.state.selectedCategory === '생활습관' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('생활습관')}
+                  style={selectedCategory === '30대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+                  onPress={() => this.setPlanList('30대')}
                 >
-                  <Text>생활습관</Text>
+                  <Text>30대</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={this.state.selectedCategory === '자기계발' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('자기계발')}
+                  style={selectedCategory === '40~50대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+                  onPress={() => this.setPlanList('40~50대')}
                 >
-                  <Text>자기계발</Text>
+                  <Text>40~50대</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={this.state.selectedCategory === '기타' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('기타')}
+                  style={selectedCategory === '60대 이상' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+                  onPress={() => this.setPlanList('60대 이상')}
                 >
-                  <Text>기타</Text>
+                  <Text>60대 이상</Text>
                 </TouchableOpacity>
                 
             </View>
 
-
-        
+            <View style={styles.plansContainer}>
+                {nowPlanList.map((data) => (
+                  <PlanListEach
+                    key={data}
+                    name={data}
+                  />
+                ))}
+              </View>
+                    
           <View style={styles.categoryUnitList}>
             <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('PlanSearched')} >
               <Image source = {this.state} style = {styles.category} />
@@ -223,6 +272,15 @@ const styles = StyleSheet.create({
     height:150,
   },
 
+
+  plansContainer: {
+    width: width,
+    height: height * 0.6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
 
   tabRecommended: {
     width: width,

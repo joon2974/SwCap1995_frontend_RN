@@ -3,8 +3,6 @@ import {View, Text, StyleSheet, TouchableOpacity, Image, Button, ScrollView} fro
 
 export default class PlanSearched extends Component{
 
-
-
     render(){
 
 
