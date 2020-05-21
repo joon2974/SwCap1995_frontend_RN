@@ -166,13 +166,11 @@ export default class SignUpScreen extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          this.state.ableID = false;
-          this.state.emailInfo = '중복된 ID입니다.';
-          this.forceUpdate();
+          this.setState({ ableID: false });
+          this.setState({ emailInfo: '중복된 ID입니다.' });
         } else {
-          this.state.ableID = true;
-          this.state.emailInfo = '사용가능한 ID입니다.';
-          this.forceUpdate();
+          this.setState({ ableID: true });
+          this.setState({ emailInfo: '사용가능한 ID입니다.' });
         }
         console.log(res);
       })
@@ -190,15 +188,13 @@ export default class SignUpScreen extends Component {
         nickname: nickname,
       })
       .then((res) => {
-        this.state.ableNickname = true;
-        this.state.nicknameInfo = '사용가능한 닉네임입니다.';
-        this.forceUpdate();
+        this.setState({ ableNickname: true });
+        this.setState({ nicknameInfo: '사용가능한 닉네임입니다.' });
         console.log(res);
       })
       .catch((error) => {
-        this.state.ableNickname = false;
-        this.state.nicknameInfo = '중복된 닉네임입니다.';
-        this.forceUpdate();
+        this.setState({ ableNickname: false });
+        this.setState({ nicknameInfo: '중복된 닉네임입니다.' });
         console.log(error);
       });
   };

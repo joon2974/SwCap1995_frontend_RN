@@ -78,15 +78,13 @@ export default class InputInfo extends Component {
         nickname: nickname,
       })
       .then((res) => {
-        this.state.ableNickname = true;
-        this.state.nicknameInfo = '사용가능한 닉네임입니다.';
-        this.forceUpdate();
+        this.setState({ ableNickname: true });
+        this.setState({ nicknameInfo: '사용가능한 닉네임입니다.' });
         console.log(res);
       })
       .catch((error) => {
-        this.state.ableNickname = false;
-        this.state.nicknameInfo = '중복된 닉네임입니다.';
-        this.forceUpdate();
+        this.setState({ ableNickname: false });
+        this.setState({ nicknameInfo: '중복된 닉네임입니다.' });
         console.log(error);
       });
   };
