@@ -18,21 +18,7 @@ export default class DetailPlan extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView
-          ref={(scrollView) => {
-            this.scrollView = scrollView;
-          }}
-          // decelerationRate={0}
-          // snapToInterval={width - 60}
-          // snapToAlignment={"center"}
-          // pagingEnabled={true}
-          contentInset={{
-            top: 0,
-            left: 30,
-            bottom: 0,
-            right: 30,
-          }}
-        >
+        <ScrollView>
           <View>
             <Text style={styles.recommendTitle}>지난 경과들에 대한 리스트</Text>
             <Text style={styles.recommendSubTitle}>

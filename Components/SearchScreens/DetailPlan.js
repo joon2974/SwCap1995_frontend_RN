@@ -17,18 +17,7 @@ export default class DetailPlan extends Component{
                
                  
 
-                <ScrollView
-                    ref={(scrollView) => { this.scrollView = scrollView; }} 
-                    //decelerationRate={0}
-                    //snapToInterval={width - 60}
-                    //snapToAlignment={"center"}
-                    //pagingEnabled={true}
-                    contentInset={{
-                    top: 0,
-                    left: 30,
-                    bottom: 0,
-                    right: 30,
-                }}>
+                <ScrollView>
 
                 <Image source = {pic} style = {styles.planPciture} />
                 

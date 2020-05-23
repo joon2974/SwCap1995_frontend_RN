@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image, Button, ScrollView} from 'react-native';
 
-export default class PlanSearched extends Component{
+export default class HotPlan extends Component{
 
     render(){
 
@@ -16,17 +16,16 @@ export default class PlanSearched extends Component{
             <View style = {styles.container}>
                 <View>
                     <Text style = {styles.recommendTitle}>
-                        클릭 or 검색된 분야  이름
+                        클릭된 세대의 인기플랜 Top 20
                     </Text>
                     <Text style = {styles.recommendSubTitle}>
-                        클릭 or 검색된 분야의 서브 타이틀~~~~~~~~
+                        클릭된 세대의 인기플랜 서브 타이틀~~~~~~~~
                     </Text>
                 </View>
 
 
                 <ScrollView>
-
-       
+                    
                 <View style={styles.categoryUnitList}>
                     <TouchableOpacity style={styles.category} onPress = {() => this.props.navigation.navigate('DetailPlan')} >
                         <Image source = {pic} style = {styles.category} />

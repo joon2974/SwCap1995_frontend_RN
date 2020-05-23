@@ -103,11 +103,13 @@ export default class Searchscreen extends Component {
   async sendSearch(){
       await axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then(res => {
              
-        alert(res);
+//        alert(res);
       }).catch(error => {
         console.log(error);
-        alert(error);
+//        alert(error);
       });
+
+      this.props.navigation.navigate('PlanSearched');
   }
 
 
@@ -157,37 +159,31 @@ export default class Searchscreen extends Component {
 
       <View style = {styles.container}>
         
-        <View>
-          <Text style = {styles.searchTitle}>
-            관심 있는 키워드를 아래에 입력해 보세요
-          </Text>
+        <View style = {styles.searchContainer}>
+   
+            <Text style = {styles.searchTitle}>
+              관심 있는 키워드를 아래에 입력해 보세요
+            </Text>
+      
+
+          <View style = {styles.searchBar}>
+            <Input 
+              placeholder="Type Here..."
+              onChangeText={(changedSearch) => {this.updateSearch(changedSearch)}}
+            />  
+            <Button 
+              title="검색"
+              type="solid"
+              onPress={() => {this.sendSearch()}}
+            />
+          </View>
         </View>
 
-        <View style = {styles.searchBar}>
-          <Input
-            placeholder="Type Here..."
-            onChangeText={(changedSearch) => {this.updateSearch(changedSearch)}}
-          />  
-          <Button
-            title="검색"
-            type="solid"
-            onPress={() => {this.sendSearch()}}
-          />
-        </View>
 
-        <ScrollView
-          ref={(scrollView) => { this.scrollView = scrollView; }} 
-          contentInset={{
-            top: 0,
-            left: 30,
-            bottom: 0,
-            right: 30,
-          }}
-        >
-
+        <ScrollView style = {styles.scrollContainer}>
           <View>
             <Text style = {styles.recommendTitle}>
-              주간 인기 분야
+              주간 인기 플랜
             </Text>
             <Text style = {styles.recommendSubTitle}>
               이 주의 가장 인기있는 플랜들을 확인해 보세요!!
@@ -246,13 +242,21 @@ export default class Searchscreen extends Component {
             ))}
           </View>
 
-                                
-         
+          <View style= {{wdith:width * 1, alignItems:'center'}}>                
+            <TouchableOpacity
+              style = {styles.moreExplore}
+              onPress={() => this.props.navigation.navigate('HotPlan')}
+            >
+              <Text>인기플랜 더보기</Text>
+            </TouchableOpacity>
+          </View>
+
+
           <View>
-            <Text style = {styles.recommendTitle}>
+            <Text style = {styles.allCateTitle}>
               전체 카테고리
             </Text>
-            <Text style = {styles.recommendSubTitle}>
+            <Text style = {styles.allCateSubTitle}>
               관심 있는 분야를 선택해 보세요!!
             </Text>
           </View>
@@ -301,10 +305,22 @@ export default class Searchscreen extends Component {
                 name={data}
                 index = {index}
                 imageUri = {nowAllCateUri}
-                explore = {()=>  this.props.navigation.navigate('DetailPlan')}
+                explore = {()=>  this.props.navigation.navigate('PlanSearched')}
               />
             ))}
           </View>
+
+
+          <View style= {{wdith:width * 1, alignItems:'center'}}>                
+            <TouchableOpacity
+              style = {styles.moreExplore}
+              onPress={() => this.props.navigation.navigate('PlanSearched')}
+            >
+              <Text>카테고리 더보기</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style = {{paddingVertical:20}}/>
 
         </ScrollView>
 
@@ -318,17 +334,25 @@ const styles = StyleSheet.create({
 
   container: {
     flex:1,
+    justifyContent:'center',
+    alignItems:'center',
     backgroundColor: 'white',
     paddingVertical: 10,
   },
+  searchContainer:{
+    width: width * 0.95,
+  },
   searchTitle:{
-    marginHorizontal: 10,
+    marginLeft : 10,
     marginTop : 5,
   },
   searchBar:{ 
-    width: width * 0.87,
+    width: width * 0.84,
     flexDirection:'row',
     marginTop : 5, 
+  },
+  scrollContainer:{
+    width: width*1,
   },
   recommendTitle:{
     fontWeight: 'bold', 
@@ -337,6 +361,26 @@ const styles = StyleSheet.create({
     fontSize:24,
   },
   recommendSubTitle:{
+    marginHorizontal:25, 
+    marginTop: 10, 
+    fontSize:16,
+  },
+  moreExplore:{
+    marginTop:15, 
+    alignItems:'center',
+    justifyContent:'center',
+    width:width*0.75,
+    backgroundColor:'#F2F2F2', 
+    borderRadius:10, 
+    height:height*0.04
+  },
+  allCateTitle:{
+    fontWeight: 'bold', 
+    marginHorizontal:25, 
+    marginTop:65,
+    fontSize:24,
+  },
+  allCateSubTitle:{
     marginHorizontal:25, 
     marginTop: 10, 
     fontSize:16,
@@ -353,7 +397,6 @@ const styles = StyleSheet.create({
   
   planContainer: {
     width: width,
-    height: height * 0.58,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
