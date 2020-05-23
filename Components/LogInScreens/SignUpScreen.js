@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import AgePicker from './LoginComponents/AgePicker';
 import CheckBox from './LoginComponents/CheckBox';
 
@@ -39,11 +41,29 @@ export default class SignUpScreen extends Component {
     nickname: '',
     nicknameInfo: '',
     ableNickname: false,
+    token: null,
   };
 
+  componentDidMount() {
+    this.registerForPushNotificationsAsync();
+  }
+
   componentWillUnmount() {
-    console.log('타입', login);
     clearTimeout(login);
+  }
+
+  registerForPushNotificationsAsync = async () => {
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      return;
+    }
+    const token = await Notifications.getExpoPushTokenAsync();
+    this.setState({ token: token });
+    this.notificationSubscription = Notifications.addListener(this.handleNotification);
+  }
+
+  handleNotification = (notification) => {
+    console.log('노티피케이션', notification);
   }
 
   signUp = (
@@ -62,6 +82,7 @@ export default class SignUpScreen extends Component {
     age,
     ableNickname,
     nickname,
+    token,
   ) => {
     try {
       if (ID < 1 || password.length < 6) {
@@ -84,6 +105,7 @@ export default class SignUpScreen extends Component {
         console.log('성별', sex);
         console.log('나이', age);
         console.log('카테고리', categories);
+        console.log('토큰', token);
 
         axios
           .post('http://49.50.172.58:3000/users', {
@@ -96,6 +118,7 @@ export default class SignUpScreen extends Component {
             categories: categories,
             is_email_login: true,
             nickname: nickname,
+            deviceToken: token,
           })
           .then((res) => {
             console.log(res);
@@ -199,6 +222,7 @@ export default class SignUpScreen extends Component {
       nickname,
       nicknameInfo,
       ableNickname,
+      token,
     } = this.state;
     return (
       <ScrollView>
@@ -423,6 +447,7 @@ export default class SignUpScreen extends Component {
                 age,
                 ableNickname,
                 nickname,
+                token,
               )
               }
               disabled={ableID ? false : true}
