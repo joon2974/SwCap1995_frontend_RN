@@ -12,7 +12,16 @@ import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
+
+import SearchScreen from './SearchScreens/SearchScreen';
+import PlanSearched from './SearchScreens/PlanSearched';
+import DetailPlan from './SearchScreens/DetailPlan';
+import Calendar from './SearchScreens/Calendar';
+import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
+
 import MyMenuScreen from './MyScreens/MyMenuScreen';
+import AddPoint from './MyScreens/AddPointScreen';
+import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
@@ -23,11 +32,6 @@ import CameraScreen from './PlanScreens/CameraScreen';
 import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
 import { firebaseConfig } from '../firebaseConfig';
-import SearchScreen from './SearchScreens/SearchScreen';
-import PlanSearched from './SearchScreens/PlanSearched';
-import DetailPlan from './SearchScreens/DetailPlan';
-import Calendar from './SearchScreens/Calendar';
-import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -54,6 +58,22 @@ function HomeStackScreen() {
   );
 }
 
+
+const SearchStack = createStackNavigator();
+function SearchStackScreen() {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="Search" component={SearchScreen} />
+      <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
+      <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
+      <SearchStack.Screen name="Calendar" component={Calendar} />
+      <SearchStack.Screen
+        name="DaileyAuthentication"
+        component={DaileyAuthentication}
+      />
+    </SearchStack.Navigator>
+  );
+}
 const FriendStack = createStackNavigator();
 function FriendStackScreen() {
   return (
@@ -75,22 +95,16 @@ function PlanStackScreen() {
   );
 }
 
-const SearchStack = createStackNavigator();
-function SearchStackScreen() {
+const MyMenuStack = createStackNavigator();
+function MyMenuStackScreen() {
   return (
-    <SearchStack.Navigator>
-      <SearchStack.Screen name="Search" component={SearchScreen} />
-      <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
-      <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
-      <SearchStack.Screen name="Calendar" component={Calendar} />
-      <SearchStack.Screen
-        name="DaileyAuthentication"
-        component={DaileyAuthentication}
-      />
-    </SearchStack.Navigator>
+    <MyMenuStack.Navigator>
+      <MyMenuStack.Screen name="MyMenu" component={MyMenuScreen} />
+      <MyMenuStack.Screen name="AddPoint" component={AddPoint} />
+      <MyMenuStack.Screen name="ChangePassword" component={ChangePassword} />
+    </MyMenuStack.Navigator>
   );
 }
-
 const Tab = createBottomTabNavigator();
 
 export default function NavigateScreen() {
@@ -156,7 +170,7 @@ export default function NavigateScreen() {
           <Tab.Screen name="Search" component={SearchStackScreen} />
           <Tab.Screen name="Friend" component={FriendStackScreen} />
           <Tab.Screen name="Plan" component={PlanStackScreen} />
-          <Tab.Screen name="My" component={MyMenuScreen} />
+          <Tab.Screen name="My" component={MyMenuStackScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

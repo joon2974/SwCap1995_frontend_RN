@@ -6,13 +6,44 @@ import {
   Dimensions, 
   ScrollView,
   Image,
+  TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import firebase from 'firebase';
+import axios from 'axios';
 import MyPageBtn from './MyComponents/MyPageBtn';
 
 const { height, width } = Dimensions.get('window');
 
 export default class MyMenuScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      myPoint: '',
+      userId: '1',
+    };
+  }
+
+  componentDidMount() {
+    this.loadUserID();
+  }
+
+  loadUserID = async () => {
+    await AsyncStorage.getItem('UserID').then((id) => {
+      this.state.userId = id;
+      this.getUserPoint(id);
+    });
+  };
+
+  getUserPoint = async (userID) => {
+    console.log('유저아이디1', userID);
+    const response = await axios.get(
+      'http://49.50.172.58:3000/users/me/points/' + userID,
+    );
+    console.log(response.data);
+    this.setState({ myPoint: response.data.total });
+  };
+
   render() {
     return (
       <ScrollView>
@@ -40,7 +71,14 @@ export default class MyMenuScreen extends Component {
               <View style={styles.friendContainer}>
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>포인트</Text>
-                  <Text>1020</Text>
+                  <Text>{this.state.myPoint}</Text>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.button}
+                    onPress={() => this.props.navigation.navigate('AddPoint')}
+                    >
+                    <Text style={styles.text}>충전</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
@@ -59,8 +97,8 @@ export default class MyMenuScreen extends Component {
           </View>
 
           <MyPageBtn 
-            btnName="비밀번호 찾기"
-            btnFunc={() => alert('비밀번호 찾기')}
+            btnName="비밀번호 변경하기"
+            btnFunc={() => this.props.navigation.navigate('ChangePassword')}
           />
 
           <MyPageBtn 
@@ -140,5 +178,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: 5,
+    width: 60,
+    height: 35,
+    backgroundColor: '#fe5746',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
