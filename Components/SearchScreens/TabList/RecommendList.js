@@ -10,15 +10,16 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-export default class PlanListEach extends Component {
+export default class RecommendList extends Component {
   render() {
+
     return (
       <TouchableOpacity 
         style={styles.container}
         onPress={this.props.explore}
       >
         <Image 
-          source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%A9%E1%86%BC.jpg' }} 
+          source={{ uri: this.props.imageUri[this.props.index].image_url}} 
           style={styles.imageStyle}
         />
         <Text>{this.props.name}</Text>
