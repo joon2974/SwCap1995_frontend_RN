@@ -115,7 +115,9 @@ export default class FriendScreen extends Component {
             title="새로고침"
             type="outline"
             onPress={() => {
-              this.loadUserID();
+              this.loadUserID().then(function () {
+                alert('새로고침을 했습니다');
+              });
             }}
           />
         </View>
