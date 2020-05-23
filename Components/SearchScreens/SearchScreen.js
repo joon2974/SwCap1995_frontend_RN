@@ -38,7 +38,7 @@ export default class Searchscreen extends Component {
   render() {
     const { search } = this.state;
 
-    let pic = {
+    const pic = {
       // uri : search
       uri:
         'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
