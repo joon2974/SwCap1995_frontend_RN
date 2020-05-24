@@ -17,6 +17,7 @@ const { height, width } = Dimensions.get('window');
 
 export default class PlanMain extends Component {
   state = {
+    userID: null,
     isFaceRegisterd: false,
     selectedCategory: '운동/건강',
     nowPlanList: ['헬스', '식단', '런닝', '푸시업', '기타'],
@@ -36,6 +37,7 @@ export default class PlanMain extends Component {
     await AsyncStorage.getItem('UserID')
       .then((id) => { 
         this.isFaceRegisterdCheck(id);
+        this.setState({ userID: id });
       }); 
   }
 
@@ -111,6 +113,7 @@ export default class PlanMain extends Component {
       selectedCategory,
       nowPlanList,
       planListFromServer,
+      userID,
     } = this.state;
 
     if (isFaceRegisterd) {
@@ -119,7 +122,6 @@ export default class PlanMain extends Component {
           <View style={styles.container}>
             <View style={styles.testContainer}>
               <Text>플랜 메인</Text>
-              <Button title="플랜 생성" onPress={() => this.props.navigation.navigate('MakePlanStep1')} />
               <Button title="테스트 전환" onPress={() => this.testTurnBack()} />
             </View>
 
@@ -193,13 +195,13 @@ export default class PlanMain extends Component {
           <View style={styles.BtnContainer}>
             <TouchableOpacity 
               style={styles.registerBtn}
-              onPress={() => this.props.navigation.navigate('CameraScreen', { completeFunc: this.registerComplete.bind(this) })}
+              onPress={() => this.props.navigation.navigate('CameraScreen', { completeFunc: this.registerComplete.bind(this), userID: userID })}
             >
               <Text>카메라로 사진 찍기</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.registerBtn}
-              onPress={() => this.props.navigation.navigate('ImagePickScreen', { completeFunc: this.registerComplete.bind(this) })}
+              onPress={() => this.props.navigation.navigate('ImagePickScreen', { completeFunc: this.registerComplete.bind(this), userID: userID })}
             >
               <Text>갤러리에서 사진 가져오기</Text>
             </TouchableOpacity>

@@ -11,7 +11,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import InputInfo from '../LogInScreens/InputInfo';
 
-console.disableYellowBox = true;
+// console.disableYellowBox = true;
 
 let currentUser;
 let isInformCheck;

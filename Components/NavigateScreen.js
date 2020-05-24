@@ -21,7 +21,8 @@ import AddFriendScreen from './FriendScreens/AddFriendScreen';
 
 import PlanMain from './PlanScreens/PlanMain';
 import MakePlanStep1 from './PlanScreens/MakePlanStep1';
-import MakePlanStep2 from './PlanScreens/MakePlanSetp2';
+import MakePlanStep2 from './PlanScreens/MakePlanStep2';
+import MakePlanStep3 from './PlanScreens/MakePlanStep3';
 import CameraScreen from './PlanScreens/CameraScreen';
 import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
@@ -74,6 +75,7 @@ function PlanStackScreen() {
       <PlanStack.Screen name="PlanMain" component={PlanMain} />
       <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
       <PlanStack.Screen name="MakePlanStep2" component={MakePlanStep2} />
+      <PlanStack.Screen name="MakePlanStep3" component={MakePlanStep3} />
       <PlanStack.Screen name="CameraScreen" component={CameraScreen} />
       <PlanStack.Screen name="ImagePickScreen" component={ImagePickScreen} />
     </PlanStack.Navigator>

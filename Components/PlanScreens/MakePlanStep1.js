@@ -17,6 +17,10 @@ const timeList = [];
 for (let i = 0; i < 23; i++) {
   timeList.push(i.toString() + '시 ~ ' + (i + 1).toString() + '시');
 }
+const periodList = [];
+for (let i = 1; i < 5; i++) {
+  periodList.push(i.toString() + '주');
+}
 // 실제 시간 형태로 바꿔야 함
 const dateList = [];
 for (let i = 13; i < 41; i++) {
@@ -26,8 +30,8 @@ for (let i = 13; i < 41; i++) {
 export default class PlanMain extends Component {
   state = {
     startDate: '05-23',
-    endDate: '05-30',
-    certifyTime: '09:11',
+    endDate: '1주',
+    certifyTime: '09시 ~ 11시',
     certifyImageUri: 'https://ifh.cc/g/BHltgC.jpg',
     pictureRules: {
       '찬물에 손 씻기': [
@@ -107,11 +111,11 @@ export default class PlanMain extends Component {
               />
             </View>
             <View style={styles.eachTimesContainer}>
-              <Text>종료일</Text>
+              <Text>도전 기간</Text>
               <TimePicker 
                 time={endDate}
                 onValueChange={(itemValue) => this.setState({ endDate: itemValue })}
-                times={dateList}
+                times={periodList}
               />
             </View>
             <View style={styles.eachTimesContainer}>
@@ -158,6 +162,7 @@ export default class PlanMain extends Component {
                 selectedMainRule: this.state.selectedMainRule,
                 subRule1: this.state.pictureRules[this.state.selectedMainRule][0],
                 subRule2: this.state.pictureRules[this.state.selectedMainRule][1],
+                certifyImgUri: this.state.certifyImageUri,
               })}
           >
             <Text style={{ fontWeight: 'bold' }}>다음 단계로</Text>
