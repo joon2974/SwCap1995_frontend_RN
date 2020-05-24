@@ -21,6 +21,9 @@ export default class MyMenuScreen extends Component {
     this.state = {
       myPoint: '',
       userId: '1',
+      nickname: '',
+      friend_count: '',
+      email: '',
     };
   }
 
@@ -38,10 +41,15 @@ export default class MyMenuScreen extends Component {
   getUserPoint = async (userID) => {
     console.log('유저아이디1', userID);
     const response = await axios.get(
-      'http://49.50.172.58:3000/users/me/points/' + userID,
+      'http://49.50.172.58:3000/users/me/' + userID,
     );
     console.log(response.data);
-    this.setState({ myPoint: response.data.total });
+    this.setState({
+      myPoint: response.data.point.challenge_total,
+      nickname: response.data.nickname,
+      friend_count: response.data.friend_count, 
+      email: response.data.email,
+    });
   };
 
   render() {
@@ -49,29 +57,31 @@ export default class MyMenuScreen extends Component {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.myInfoContainer}>
-            <View style={styles.profilePhotoContainer}>
-              <Image
-                source={{
-                  uri: 'https://ifh.cc/g/BHltgC.jpg',
-                }}
-                style={styles.profilePhotoStyle}
-                />
-            </View>
             <View style={styles.userInfoContainer}>
-              <View style={styles.pointContainer}>
-                <View style={styles.quarterContainer}>
-                  <Text style={styles.userInfoMenuText}>팔로워</Text>
-                  <Text>100</Text>
+              <View style={styles.profilecontainer}>
+                <View style={styles.halfContainer}>
+                  <Image
+                    source={{
+                      uri: 'https://ifh.cc/g/BHltgC.jpg',
+                    }}
+                    style={styles.profilePhotoStyle}
+                />
                 </View>
-                <View style={styles.quarterContainer}>
-                  <Text style={styles.userInfoMenuText}>팔로잉</Text>
-                  <Text>1222</Text>
+                <View>  
+                  <Text>{this.state.nickname}</Text>
+                  <Text>{this.state.email}</Text>
                 </View>
               </View>
+              
               <View style={styles.friendContainer}>
                 <View style={styles.quarterContainer}>
+                  <Text style={styles.userInfoMenuText}>친구 수</Text>
+                  <Text>{this.state.friend_count}</Text>
+                  <View style={{ height: 35 }} />
+                </View>
+                <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>포인트</Text>
-                  <Text>{this.state.myPoint}</Text>
+                  <Text>{this.state.myPoint}</Text> 
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.button}
@@ -83,6 +93,8 @@ export default class MyMenuScreen extends Component {
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
                   <Text>12</Text>
+                  
+                  <View style={{ height: 35 }} />
                 </View>
               </View>
             </View>
@@ -95,16 +107,21 @@ export default class MyMenuScreen extends Component {
           <View style={styles.planContainer}>
             <Text>플랜 정보</Text>
           </View>
-
-          <MyPageBtn 
-            btnName="비밀번호 변경하기"
-            btnFunc={() => this.props.navigation.navigate('ChangePassword')}
+          <View style={styles.buttonContainer}>
+            <MyPageBtn 
+              btnName="고객센터"
+              btnFunc={() => alert('고객센터')}
+          />
+            <MyPageBtn 
+              btnName="비밀번호 변경하기"
+              btnFunc={() => this.props.navigation.navigate('ChangePassword')}
           />
 
-          <MyPageBtn 
-            btnName="로그 아웃"
-            btnFunc={() => firebase.auth().signOut()}
+            <MyPageBtn 
+              btnName="로그 아웃"
+              btnFunc={() => firebase.auth().signOut()}
           />
+          </View>
         </View>
       </ScrollView>
     );
@@ -133,8 +150,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profilePhotoStyle: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 40,
   },
   userInfoContainer: {
@@ -188,4 +205,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  profilecontainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  halfContainer: {
+    height: height / 8,
+    marginRight: 50,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  
 });
