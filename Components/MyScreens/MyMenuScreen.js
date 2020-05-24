@@ -12,6 +12,7 @@ import {
 import firebase from 'firebase';
 import axios from 'axios';
 import MyPageBtn from './MyComponents/MyPageBtn';
+import MyPlan from './MyComponents/MyPlan';
 
 const { height, width } = Dimensions.get('window');
 
@@ -105,7 +106,9 @@ export default class MyMenuScreen extends Component {
           </View>
 
           <View style={styles.planContainer}>
-            <Text>플랜 정보</Text>
+            <MyPlan 
+              btnFunc={() => alert('더보기')}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <MyPageBtn 
