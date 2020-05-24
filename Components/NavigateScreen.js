@@ -25,6 +25,7 @@ import ImagePickScreen from './PlanScreens/ImagePickScreen';
 import { firebaseConfig } from '../firebaseConfig';
 import SearchScreen from './SearchScreens/SearchScreen';
 import PlanSearched from './SearchScreens/PlanSearched';
+import CategoryList from './SearchScreens/CategoryList';
 import HotPlan from './SearchScreens/HotPlan';
 import DetailPlan from './SearchScreens/DetailPlan';
 import Calendar from './SearchScreens/Calendar';
@@ -82,6 +83,7 @@ function SearchStackScreen() {
     <SearchStack.Navigator>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
+      <SearchStack.Screen name="CategoryList" component={CategoryList} />
       <SearchStack.Screen name="HotPlan" component={HotPlan} />
       <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
       <SearchStack.Screen name="Calendar" component={Calendar} />

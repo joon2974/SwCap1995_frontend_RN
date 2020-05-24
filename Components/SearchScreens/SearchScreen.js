@@ -314,7 +314,7 @@ export default class Searchscreen extends Component {
           <View style= {{wdith:width * 1, alignItems:'center'}}>                
             <TouchableOpacity
               style = {styles.moreExplore}
-              onPress={() => this.props.navigation.navigate('PlanSearched')}
+              onPress={() => this.props.navigation.navigate('CategoryList')}
             >
               <Text>카테고리 더보기</Text>
             </TouchableOpacity>
