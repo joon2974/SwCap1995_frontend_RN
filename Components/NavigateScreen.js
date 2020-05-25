@@ -13,12 +13,18 @@ import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
 import MyMenuScreen from './MyScreens/MyMenuScreen';
+import AddPoint from './MyScreens/AddPointScreen';
+import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
+import NotiTestScreen from './HomeScreens/NotiTestScreen';
+
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
 
 import PlanMain from './PlanScreens/PlanMain';
 import MakePlanStep1 from './PlanScreens/MakePlanStep1';
+import MakePlanStep2 from './PlanScreens/MakePlanStep2';
+import MakePlanStep3 from './PlanScreens/MakePlanStep3';
 import CameraScreen from './PlanScreens/CameraScreen';
 import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
@@ -52,28 +58,8 @@ function HomeStackScreen() {
     <HomeStack.Navigator>
       <HomeStack.Screen name="Main" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
+      <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
     </HomeStack.Navigator>
-  );
-}
-
-const FriendStack = createStackNavigator();
-function FriendStackScreen() {
-  return (
-    <FriendStack.Navigator>
-      <FriendStack.Screen name="FriendScreen" component={FriendScreen} />
-      <FriendStack.Screen name="AddFriend" component={AddFriendScreen} />
-    </FriendStack.Navigator>
-  );
-}
-const PlanStack = createStackNavigator();
-function PlanStackScreen() {
-  return (
-    <PlanStack.Navigator>
-      <PlanStack.Screen name="PlanMain" component={PlanMain} />
-      <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
-      <PlanStack.Screen name="CameraScreen" component={CameraScreen} />
-      <PlanStack.Screen name="ImagePickScreen" component={ImagePickScreen} />
-    </PlanStack.Navigator>
   );
 }
 
@@ -94,7 +80,39 @@ function SearchStackScreen() {
     </SearchStack.Navigator>
   );
 }
+const FriendStack = createStackNavigator();
+function FriendStackScreen() {
+  return (
+    <FriendStack.Navigator>
+      <FriendStack.Screen name="FriendScreen" component={FriendScreen} />
+      <FriendStack.Screen name="AddFriend" component={AddFriendScreen} />
+    </FriendStack.Navigator>
+  );
+}
+const PlanStack = createStackNavigator();
+function PlanStackScreen() {
+  return (
+    <PlanStack.Navigator>
+      <PlanStack.Screen name="PlanMain" component={PlanMain} />
+      <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
+      <PlanStack.Screen name="MakePlanStep2" component={MakePlanStep2} />
+      <PlanStack.Screen name="MakePlanStep3" component={MakePlanStep3} />
+      <PlanStack.Screen name="CameraScreen" component={CameraScreen} />
+      <PlanStack.Screen name="ImagePickScreen" component={ImagePickScreen} />
+    </PlanStack.Navigator>
+  );
+}
 
+const MyMenuStack = createStackNavigator();
+function MyMenuStackScreen() {
+  return (
+    <MyMenuStack.Navigator>
+      <MyMenuStack.Screen name="MyMenu" component={MyMenuScreen} />
+      <MyMenuStack.Screen name="AddPoint" component={AddPoint} />
+      <MyMenuStack.Screen name="ChangePassword" component={ChangePassword} />
+    </MyMenuStack.Navigator>
+  );
+}
 const Tab = createBottomTabNavigator();
 
 export default function NavigateScreen() {
@@ -160,7 +178,7 @@ export default function NavigateScreen() {
           <Tab.Screen name="Search" component={SearchStackScreen} />
           <Tab.Screen name="Friend" component={FriendStackScreen} />
           <Tab.Screen name="Plan" component={PlanStackScreen} />
-          <Tab.Screen name="My" component={MyMenuScreen} />
+          <Tab.Screen name="My" component={MyMenuStackScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

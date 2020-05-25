@@ -22,7 +22,7 @@ export default class AllCateList extends Component {
           source={{ uri: this.props.imageUri[this.props.index].image_url }} 
           style={styles.imageStyle}
         />
-        <Text>{this.props.name}</Text>
+        <Text>{this.props.name[this.props.index].detailedCategory}</Text>
       </TouchableOpacity>
     );
   }

@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
-  View, 
-  Text, 
-  ScrollView, 
-  StyleSheet, 
-  Image, 
-  TouchableOpacity, 
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
   Dimensions,
-  Button} from 'react-native';
+  Button,
+} from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
 import RecommendList from './TabList/RecommendList';
@@ -15,114 +16,48 @@ import AllCateList from './TabList/AllCateList';
 
 const { height, width } = Dimensions.get('window');
 
-const recommendListTemplate = {
-  '10대': [
-    '대학 입시',
-    '학교 폭력',
-    '게임',
-    '친구들과 놀기',
-  ],
-  '20대': [
-    '대학 진로',
-    '인간관계',
-    '연애',
-    '취업',
-  ],
-  '30대': [
-    '이직',
-    '건강',
-    '결혼',
-    '효도',
-  ],
-  '40~50대': [
-    '건강 걱정',
-    '갱년기 걱정',
-    '노후 걱정',
-    '자식 걱정',
-  ],
-  '60대 이상': [
-    '삶과 죽음 그 어딘가',
-    '사랑하기 딱 좋은 나이',
-    '환갑 축하문',
-    '손자손녀 건강',
-  ],
-};
-
-const allCateListTemplate = {
-  '운동/건강' :[
-    '조깅',
-    '흡연',
-    '다이어트',
-    '헬스',
-  ],
-  '생활습관':[
-    '아침 기상',
-    '식습관',
-    '공부습관',
-    '말투',
-  ],
-  '자기계발':[
-    '어학',
-    '상식',
-    '예술',
-    '인성',
-  ],
-  '감정관리':[
-    '우울',
-    '조울',
-    '인내',
-    '충동',
-  ],
-  '기타':[
-    '표준어 사용',
-    '과속 딱지 안 걸리기',
-    '악플 안달기',
-    '가족 챙기기',
-  ]
-}
-
 export default class Searchscreen extends Component {
-
   state = {
     search: '',
-    selectedRecommend : '',
-    selectedAllCate:'',
+    selectedRecommend: '',
+    selectedAllCate: '',
 
     nowRecommendList: ['1', '2', '3', '4'],
     nowAllCateList: ['1', '2', '3', '4'],
-    
+
     nowRecommendUri: ['1', '2', '3', '4'],
     nowAllCateUri: ['1', '2', '3', '4'],
+
+    test:['1','2','3','4'],
     
   };
 
-  updateSearch = (changedSearch)=> {
-    this.setState({ search : changedSearch }); 
-  }
+  updateSearch = changedSearch => {
+    this.setState({ search: changedSearch });
+  };
 
-  async sendSearch(){
-      await axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then(res => {
-             
-//        alert(res);
-      }).catch(error => {
+  async sendSearch() {
+    await axios
+      .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
+      .then(res => {
+        //        alert(res);
+      })
+      .catch(error => {
         console.log(error);
-//        alert(error);
+        //        alert(error);
       });
 
-      this.props.navigation.navigate('PlanSearched');
+    this.props.navigation.navigate('PlanSearched');
   }
-
 
   componentDidMount() {
     this.setPlanList('10대');
-    this.setPlanListAllCate('운동/건강');  
+    this.setPlanListAllCate('운동/건강');
   }
 
-  setPlanList = (categoryName) => {
+  setPlanList = categoryName => {
     this.setState({ selectedRecommend: categoryName });
 
-    const planList = recommendListTemplate[categoryName];
-    this.setState({ nowRecommendList: planList });
     
     axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then(res=>{
       this.setState({nowRecommendUri:res.data.data.categoryGet});
@@ -132,14 +67,23 @@ export default class Searchscreen extends Component {
       alert(error);
     });
 
+
+    axios.get('http://49.50.172.58:3000/detailedCategories/1').then(res=>{
+
+      this.setState({nowRecommendList:res.data.rows});
+    }).catch(error=>{
+      console.log(error);
+      alert(error);
+    });
+
   }
 
-  setPlanListAllCate = (categoryName) =>{
-    this.setState({selectedAllCate : categoryName});
+  setPlanListAllCate = categoryName => {
+    this.setState({ selectedAllCate: categoryName });
 
-    const planListAllCate = allCateListTemplate[categoryName];
-    this.setState({nowAllCateList:planListAllCate});
-  
+    // const planListAllCate = allCateListTemplate[categoryName];
+    // this.setState({nowAllCateList:planListAllCate});
+    
     axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then(res=>{
       this.setState({nowAllCateUri:res.data.data.categoryGet});
 
@@ -148,82 +92,111 @@ export default class Searchscreen extends Component {
       alert(error);
     });
 
+
+    axios.get('http://49.50.172.58:3000/detailedCategories/1').then(res=>{
+
+      this.setState({nowAllCateList:res.data.rows});
+    }).catch(error=>{
+      console.log(error);
+      alert(error);
+    });
+
   }
 
-
-  render(){
-
-    const { selectedRecommend, selectedAllCate, nowRecommendList, nowAllCateList, nowRecommendUri, nowAllCateUri} = this.state;
+  render() {
+    
+    const {
+      selectedRecommend,
+      selectedAllCate,
+      nowRecommendList,
+      nowAllCateList,
+      nowRecommendUri,
+      nowAllCateUri,
+    } = this.state;
 
     return (
+      <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <Text style={styles.searchTitle}>
+            관심 있는 키워드를 아래에 입력해 보세요
+          </Text>
 
-      <View style = {styles.container}>
-        
-        <View style = {styles.searchContainer}>
-   
-            <Text style = {styles.searchTitle}>
-              관심 있는 키워드를 아래에 입력해 보세요
-            </Text>
-      
-
-          <View style = {styles.searchBar}>
-            <Input 
+          <View style={styles.searchBar}>
+            <Input
               placeholder="Type Here..."
-              onChangeText={(changedSearch) => {this.updateSearch(changedSearch)}}
-            />  
-            <Button 
+              onChangeText={changedSearch => {
+                this.updateSearch(changedSearch);
+              }}
+            />
+            <Button
               title="검색"
               type="solid"
-              onPress={() => {this.sendSearch()}}
+              onPress={() => {
+                this.sendSearch();
+              }}
             />
           </View>
         </View>
 
-
-        <ScrollView style = {styles.scrollContainer}>
+        <ScrollView style={styles.scrollContainer}>
           <View>
-            <Text style = {styles.recommendTitle}>
-              주간 인기 플랜
-            </Text>
-            <Text style = {styles.recommendSubTitle}>
+            <Text style={styles.recommendTitle}>주간 인기 플랜</Text>
+            <Text style={styles.recommendSubTitle}>
               이 주의 가장 인기있는 플랜들을 확인해 보세요!!
             </Text>
           </View>
 
- 
-
           <View style={styles.tabButtonContainer}>
             <TouchableOpacity
-              style={selectedRecommend === '10대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedRecommend === '10대'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanList('10대')}
             >
               <Text>10대</Text>
-            </TouchableOpacity>     
+            </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedRecommend === '20대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedRecommend === '20대'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanList('20대')}
             >
               <Text>20대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedRecommend === '30대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedRecommend === '30대'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanList('30대')}
             >
               <Text>30대</Text>
             </TouchableOpacity>
 
-
             <TouchableOpacity
-              style={selectedRecommend === '40~50대' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedRecommend === '40~50대'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanList('40~50대')}
             >
               <Text>40~50대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedRecommend === '60대 이상' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedRecommend === '60대 이상'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanList('60대 이상')}
             >
               <Text>60대 이상</Text>
@@ -231,10 +204,10 @@ export default class Searchscreen extends Component {
           </View>
 
           <View style={styles.planContainer}>
-            {nowRecommendList.map((data,index) => (
+            {this.state.test.map((data,index) => (
               <RecommendList
                 key={data}
-                name={data}
+                name={nowRecommendList}
                 index = {index}
                 imageUri = {nowRecommendUri}
                 explore = {()=>  this.props.navigation.navigate('DetailPlan')}
@@ -242,56 +215,73 @@ export default class Searchscreen extends Component {
             ))}
           </View>
 
-          <View style= {{wdith:width * 1, alignItems:'center'}}>                
+          <View style={{ wdith: width * 1, alignItems: 'center' }}>
             <TouchableOpacity
-              style = {styles.moreExplore}
+              style={styles.moreExplore}
               onPress={() => this.props.navigation.navigate('HotPlan')}
             >
               <Text>인기플랜 더보기</Text>
             </TouchableOpacity>
           </View>
 
-
           <View>
-            <Text style = {styles.allCateTitle}>
-              전체 카테고리
-            </Text>
-            <Text style = {styles.allCateSubTitle}>
+            <Text style={styles.allCateTitle}>전체 카테고리</Text>
+            <Text style={styles.allCateSubTitle}>
               관심 있는 분야를 선택해 보세요!!
             </Text>
           </View>
 
           <View style={styles.tabButtonContainer}>
             <TouchableOpacity
-              style={selectedAllCate === '운동/건강' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedAllCate === '운동/건강'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanListAllCate('운동/건강')}
             >
               <Text>운동/건강</Text>
-            </TouchableOpacity>     
+            </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedAllCate === '생활습관' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedAllCate === '생활습관'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanListAllCate('생활습관')}
             >
               <Text>생활습관</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedAllCate === '자기계발' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedAllCate === '자기계발'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanListAllCate('자기계발')}
             >
               <Text>자기계발</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedAllCate === '감정관리' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedAllCate === '감정관리'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanListAllCate('감정관리')}
             >
               <Text>감정관리</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={selectedAllCate === '기타' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
+              style={
+                selectedAllCate === '기타'
+                  ? styles.selectedCategoryBtnStyle
+                  : styles.categoryBtnStyle
+              }
               onPress={() => this.setPlanListAllCate('기타')}
             >
               <Text>기타</Text>
@@ -299,10 +289,10 @@ export default class Searchscreen extends Component {
           </View>
 
           <View style={styles.planContainer}>
-            {nowAllCateList.map((data, index) => (
+            {this.state.test.map((data, index) => (
               <AllCateList
                 key={data}
-                name={data}
+                name={nowAllCateList}
                 index = {index}
                 imageUri = {nowAllCateUri}
                 explore = {()=>  this.props.navigation.navigate('PlanSearched')}
@@ -310,82 +300,77 @@ export default class Searchscreen extends Component {
             ))}
           </View>
 
-
-          <View style= {{wdith:width * 1, alignItems:'center'}}>                
+          <View style={{ wdith: width * 1, alignItems: 'center' }}>
             <TouchableOpacity
-              style = {styles.moreExplore}
+              style={styles.moreExplore}
               onPress={() => this.props.navigation.navigate('CategoryList')}
             >
               <Text>카테고리 더보기</Text>
             </TouchableOpacity>
           </View>
 
-          <View style = {{paddingVertical:20}}/>
-
+          <View style={{ paddingVertical: 20 }} />
         </ScrollView>
-
       </View>
     );
   }
 }
 
-
 const styles = StyleSheet.create({
-
   container: {
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
     paddingVertical: 10,
   },
-  searchContainer:{
+  searchContainer: {
     width: width * 0.95,
   },
-  searchTitle:{
-    marginLeft : 10,
-    marginTop : 5,
+  searchTitle: {
+    marginLeft: 10,
+    marginTop: 5,
   },
-  searchBar:{ 
+  searchBar: {
     width: width * 0.84,
-    flexDirection:'row',
-    marginTop : 5, 
+    flexDirection: 'row',
+    marginTop: 5,
   },
-  scrollContainer:{
-    width: width*1,
+  scrollContainer: {
+    width: width * 1,
   },
-  recommendTitle:{
-    fontWeight: 'bold', 
-    marginHorizontal:25, 
-    marginTop:25,
-    fontSize:24,
+  recommendTitle: {
+    fontWeight: 'bold',
+    marginHorizontal: 25,
+    marginTop: 25,
+    fontSize: 24,
   },
-  recommendSubTitle:{
-    marginHorizontal:25, 
-    marginTop: 10, 
-    fontSize:16,
+  recommendSubTitle: {
+    marginHorizontal: 25,
+    marginTop: 10,
+    fontSize: 16,
   },
-  moreExplore:{
-    marginTop:15, 
-    alignItems:'center',
-    justifyContent:'center',
-    width:width*0.75,
-    backgroundColor:'#F2F2F2', 
-    borderRadius:10, 
-    height:height*0.04
+  moreExplore: {
+    marginTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.75,
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+    height: height * 0.04,
   },
-  allCateTitle:{
-    fontWeight: 'bold', 
-    marginHorizontal:25, 
-    marginTop:65,
-    fontSize:24,
+  allCateTitle: {
+    fontWeight: 'bold',
+    marginHorizontal: 25,
+    marginTop: 65,
+    fontSize: 24,
   },
-  allCateSubTitle:{
-    marginHorizontal:25, 
-    marginTop: 10, 
-    fontSize:16,
+  allCateSubTitle: {
+    marginHorizontal: 25,
+    marginTop: 10,
+    fontSize: 16,
   },
-  
+
   tabButtonContainer: {
     width: width,
     height: 40,
@@ -394,16 +379,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
   },
-  
+
   planContainer: {
     width: width,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop:10,
+    marginTop: 10,
   },
-  
+
   categoryBtnStyle: {
     width: width * 0.17,
     height: 40,
@@ -422,9 +407,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 1,
   },
-  
-  
-})
+});
 
 /* 
 
@@ -727,4 +710,3 @@ const styles = StyleSheet.create({
   },
 });
 */
-
