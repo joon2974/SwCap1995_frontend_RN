@@ -12,7 +12,6 @@ import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
-
 import SearchScreen from './SearchScreens/SearchScreen';
 import PlanSearched from './SearchScreens/PlanSearched';
 import DetailPlan from './SearchScreens/DetailPlan';
@@ -36,6 +35,13 @@ import CameraScreen from './PlanScreens/CameraScreen';
 import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
 import { firebaseConfig } from '../firebaseConfig';
+import SearchScreen from './SearchScreens/SearchScreen';
+import PlanSearched from './SearchScreens/PlanSearched';
+import CategoryList from './SearchScreens/CategoryList';
+import HotPlan from './SearchScreens/HotPlan';
+import DetailPlan from './SearchScreens/DetailPlan';
+import Calendar from './SearchScreens/Calendar';
+import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -62,7 +68,6 @@ function HomeStackScreen() {
     </HomeStack.Navigator>
   );
 }
-
 
 const SearchStack = createStackNavigator();
 function SearchStackScreen() {
@@ -105,11 +110,18 @@ function PlanStackScreen() {
 const MyMenuStack = createStackNavigator();
 function MyMenuStackScreen() {
   return (
-    <MyMenuStack.Navigator>
-      <MyMenuStack.Screen name="MyMenu" component={MyMenuScreen} />
-      <MyMenuStack.Screen name="AddPoint" component={AddPoint} />
-      <MyMenuStack.Screen name="ChangePassword" component={ChangePassword} />
-    </MyMenuStack.Navigator>
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="Search" component={SearchScreen} />
+      <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
+      <SearchStack.Screen name="CategoryList" component={CategoryList} />
+      <SearchStack.Screen name="HotPlan" component={HotPlan} />
+      <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
+      <SearchStack.Screen name="Calendar" component={Calendar} />
+      <SearchStack.Screen
+        name="DaileyAuthentication"
+        component={DaileyAuthentication}
+      />
+    </SearchStack.Navigator>
   );
 }
 const Tab = createBottomTabNavigator();
