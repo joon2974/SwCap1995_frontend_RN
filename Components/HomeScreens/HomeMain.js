@@ -3,17 +3,20 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   AsyncStorage,
   ActivityIndicator,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import InputInfo from '../LogInScreens/InputInfo';
+import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
 let currentUser;
 let isInformCheck;
 
+const { width, height } = Dimensions.get('window');
 export default class HomeMain extends Component {
   state = { 
     isInformChecked: false,
@@ -72,15 +75,48 @@ export default class HomeMain extends Component {
     if (isInformChecked) {
       return (
         <View style={styles.container}>
-          <Text>Home Main</Text>
-          <Button
-            title="Go To Mypage"
-            onPress={() => this.props.navigation.navigate('MyMenuScreen')}
-          />
-          <Button
-            title="Go To Test Page"
-            onPress={() => this.props.navigation.navigate('NotiTestScreen')}
-          />
+          <View style={styles.planContainer}>
+            <Text>진행중인 플랜</Text>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+                paddingStart: 5,
+                paddingEnd: 5,
+              }}
+                            >
+
+
+              <MyPlan />
+              
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+            </ScrollView>
+          </View>
+          <View style={styles.planContainer}>
+            <Text>감시중인 플랜</Text>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+                paddingStart: 5,
+                paddingEnd: 5,
+              }}
+                            >
+
+
+              <MyPlan />
+              
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+            </ScrollView>
+          </View>
         </View>
       );
     } else if (isInformChecked === false) {
@@ -97,5 +133,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  planContainer: {
+    
+    alignItems: 'center',
+    width: width * 0.8,
+    height: height * 0.4,
   },
 });
