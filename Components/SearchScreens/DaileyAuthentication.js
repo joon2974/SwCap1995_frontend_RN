@@ -1,39 +1,35 @@
 import React, { Component } from 'react';
-import {
-  View, Text, StyleSheet, TouchableOpacity, Image, Button, ScrollView, 
-} from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 
 export default class DaileyAuthentication extends Component {
   render() {
-    const pic = {
+    let pic = {
       // uri : search
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
+      uri:
+        'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
     };
 
     return (
-          
       <View style={styles.container}>
-                 
-
         <ScrollView
-          ref={(scrollView) => { this.scrollView = scrollView; }} 
-                    // decelerationRate={0}
-                    // snapToInterval={width - 60}
-                    // snapToAlignment={"center"}
-                    // pagingEnabled={true}
+          ref={scrollView => {
+            this.scrollView = scrollView;
+          }}
+          // decelerationRate={0}
+          // snapToInterval={width - 60}
+          // snapToAlignment={"center"}
+          // pagingEnabled={true}
           contentInset={{
             top: 0,
             left: 30,
             bottom: 0,
             right: 30,
-          }}>
-
+          }}
+        >
           <Image source={pic} style={styles.daileyPicture} />
-                
+
           <View>
-            <Text style={styles.recommendTitle}>
-              일일 인증 타이틀
-            </Text>
+            <Text style={styles.recommendTitle}>일일 인증 타이틀</Text>
             <Text style={styles.recommendSubTitle}>
               여기에 일일 인증에 대한 간략한 정보 기술 약 3,4줄.
               {'\n'}
@@ -45,8 +41,6 @@ export default class DaileyAuthentication extends Component {
               {'\n'}
             </Text>
           </View>
-                
-          
           <View>
             <Text style={styles.recommendTitle}>
               인증 방법에 대해... 위와 비교하기 위한 리마인드용
@@ -62,7 +56,6 @@ export default class DaileyAuthentication extends Component {
               {'\n'}
             </Text>
           </View>
-      
           <View>
             <Text style={styles.recommendTitle}>
               이날 인증에 감시참여한 감시자들 리스트
@@ -78,33 +71,26 @@ export default class DaileyAuthentication extends Component {
               {'\n'}
             </Text>
           </View>
-
-               
         </ScrollView>
-
       </View>
-
     );
   }
 }
 
-
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
   },
 
-
   recommendTitle: {
-    fontWeight: 'bold', 
-    paddingHorizontal: 10, 
-    paddingVertical: 20, 
+    fontWeight: 'bold',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
     fontSize: 24,
   },
   recommendSubTitle: {
-    paddingHorizontal: 10, 
-    paddingVertical: 10, 
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     fontSize: 16,
   },
 

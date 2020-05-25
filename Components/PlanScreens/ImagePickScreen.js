@@ -52,6 +52,7 @@ export default class ImagePickScreen extends Component {
 
     const formData = new FormData();
     formData.append('photo', { uri: uri, name: `photo.${fileType}`, type: 'image/jpeg' });
+    formData.append('userId', { userId: this.props.route.params.userID });
 
     axios.post('http://49.50.172.58:3000/test/upload2', formData, {
       header: { 

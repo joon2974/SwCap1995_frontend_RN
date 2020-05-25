@@ -13,6 +13,8 @@ import axios from 'axios';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
+// console.disableYellowBox = true;
+
 let currentUser;
 let isInformCheck;
 
