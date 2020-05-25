@@ -12,12 +12,6 @@ import LoginScreen from './LogInScreens/LoginScreen';
 import SignUpScreen from './LogInScreens/SignUpScreen';
 import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 
-import SearchScreen from './SearchScreens/SearchScreen';
-import PlanSearched from './SearchScreens/PlanSearched';
-import DetailPlan from './SearchScreens/DetailPlan';
-import Calendar from './SearchScreens/Calendar';
-import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
-
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
@@ -75,6 +69,8 @@ function SearchStackScreen() {
     <SearchStack.Navigator>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
+      <SearchStack.Screen name="CategoryList" component={CategoryList} />
+      <SearchStack.Screen name="HotPlan" component={HotPlan} />
       <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
       <SearchStack.Screen name="Calendar" component={Calendar} />
       <SearchStack.Screen
@@ -110,18 +106,11 @@ function PlanStackScreen() {
 const MyMenuStack = createStackNavigator();
 function MyMenuStackScreen() {
   return (
-    <SearchStack.Navigator>
-      <SearchStack.Screen name="Search" component={SearchScreen} />
-      <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
-      <SearchStack.Screen name="CategoryList" component={CategoryList} />
-      <SearchStack.Screen name="HotPlan" component={HotPlan} />
-      <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
-      <SearchStack.Screen name="Calendar" component={Calendar} />
-      <SearchStack.Screen
-        name="DaileyAuthentication"
-        component={DaileyAuthentication}
-      />
-    </SearchStack.Navigator>
+    <MyMenuStack.Navigator>
+      <MyMenuStack.Screen name="MyMenu" component={MyMenuScreen} />
+      <MyMenuStack.Screen name="AddPoint" component={AddPoint} />
+      <MyMenuStack.Screen name="ChangePassword" component={ChangePassword} />
+    </MyMenuStack.Navigator>
   );
 }
 const Tab = createBottomTabNavigator();
