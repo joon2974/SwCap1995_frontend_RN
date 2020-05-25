@@ -3,21 +3,27 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   AsyncStorage,
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import InputInfo from '../LogInScreens/InputInfo';
+import MyPlan from '../MyScreens/MyComponents/MyPlan';
+
+// console.disableYellowBox = true;
 
 let currentUser;
 let isInformCheck;
 
+const { width, height } = Dimensions.get('window');
 export default class HomeMain extends Component {
   state = { 
     isInformChecked: false,
     userEmail: '',
-  };
+  }; 
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
@@ -33,8 +39,8 @@ export default class HomeMain extends Component {
     clearTimeout(isInformCheck);
   }
 
-  isInfoContain = (eMail) => { 
-    isInformCheck = axios
+  isInfoContain = async (eMail) => { 
+    isInformCheck = await axios
       .post('http://49.50.172.58:3000/users/is_user', {
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
@@ -45,8 +51,7 @@ export default class HomeMain extends Component {
         if (res.data.id) {
           console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
-          this.state.isInformChecked = true;
-          this.forceUpdate();
+          this.setState({ isInformChecked: true });
         } else {
           console.log(res);
         }
@@ -72,15 +77,54 @@ export default class HomeMain extends Component {
     if (isInformChecked) {
       return (
         <View style={styles.container}>
-          <Text>Home Main</Text>
-          <Button
-            title="Go To Mypage"
-            onPress={() => this.props.navigation.navigate('MyMenuScreen')}
-          />
+          <View style={styles.planContainer}>
+            <Text>진행중인 플랜</Text>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+                paddingStart: 5,
+                paddingEnd: 5,
+              }}
+                            >
+
+
+              <MyPlan />
+              
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+            </ScrollView>
+          </View>
+          <View style={styles.planContainer}>
+            <Text>감시중인 플랜</Text>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+                paddingStart: 5,
+                paddingEnd: 5,
+              }}
+                            >
+
+
+              <MyPlan />
+              
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+              <MyPlan />
+            </ScrollView>
+          </View>
         </View>
       );
-    } else {
+    } else if (isInformChecked === false) {
       return <InputInfo checkFunc={this.informExistCheck} userEmail={userEmail} />;
+    } else {
+      return <ActivityIndicator />;
     }
   }
 }
@@ -91,5 +135,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  planContainer: {
+    
+    alignItems: 'center',
+    width: width * 0.8,
+    height: height * 0.4,
   },
 });

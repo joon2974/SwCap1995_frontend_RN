@@ -8,30 +8,27 @@ import {
 
 const { width } = Dimensions.get('window');
 
-export default class MyPageBtn extends Component {
+export default class CategoryListEach extends Component {
   render() {
     return (
       <TouchableOpacity 
-        style={styles.BtnStyle}
-        onPress={this.props.btnFunc}
+        style={styles.container}
+        onPress={() => this.props.onPressFunc}  
       >
-        <Text>{this.props.btnName}</Text>
+        <Text>{this.props.name}</Text>
       </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  BtnStyle: {
-    width: width / 3,
-    height: 45,
-    backgroundColor: 'white',
+  container: {
+    width: width * 0.18,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5,
-    marginBottom: 5,
+    backgroundColor: 'yellow',
     borderRadius: 5,
-    marginRight: 5,
-    borderWidth: 1,
+    margin: 5,
   },
 });

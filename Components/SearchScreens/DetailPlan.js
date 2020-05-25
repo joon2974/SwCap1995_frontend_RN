@@ -109,7 +109,7 @@ export default class DetailPlan extends Component{
                                 style={styles.moreExplore}
                                 onPress={() => this.props.navigation.navigate('CategoryList')}
                             >
-                                <Text>카테고리 더보기</Text>
+                                <Text>감시자들 더보기</Text>
                             </TouchableOpacity>
                         </View>
 

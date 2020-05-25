@@ -9,6 +9,8 @@ import {
   Dimensions,
 } from 'react-native';
 import axios from 'axios';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import AgePicker from './LoginComponents/AgePicker';
 import CheckBox from './LoginComponents/CheckBox';
 
@@ -31,6 +33,25 @@ export default class InputInfo extends Component {
     nickname: '',
     nicknameInfo: '',
     ableNickname: false,
+    token: null,
+  }
+
+  componentDidMount() {
+    this.registerForPushNotificationsAsync();
+  }
+
+  registerForPushNotificationsAsync = async () => {
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      return;
+    }
+    const token = await Notifications.getExpoPushTokenAsync();
+    this.setState({ token: token });
+    this.notificationSubscription = Notifications.addListener(this.handleNotification);
+  }
+
+  handleNotification = (notification) => {
+    console.log('노티피케이션', notification);
   }
 
   catList = (cat1, cat2, cat3, cat4, cat5) => {
@@ -57,15 +78,13 @@ export default class InputInfo extends Component {
         nickname: nickname,
       })
       .then((res) => {
-        this.state.ableNickname = true;
-        this.state.nicknameInfo = '사용가능한 닉네임입니다.';
-        this.forceUpdate();
+        this.setState({ ableNickname: true });
+        this.setState({ nicknameInfo: '사용가능한 닉네임입니다.' });
         console.log(res);
       })
       .catch((error) => {
-        this.state.ableNickname = false;
-        this.state.nicknameInfo = '중복된 닉네임입니다.';
-        this.forceUpdate();
+        this.setState({ ableNickname: false });
+        this.setState({ nicknameInfo: '중복된 닉네임입니다.' });
         console.log(error);
       });
   };
@@ -81,6 +100,7 @@ export default class InputInfo extends Component {
     age,
     ableNickname,
     nickname,
+    token,
   ) => {
     try {
       if (!ableNickname) {
@@ -108,6 +128,7 @@ export default class InputInfo extends Component {
             categories: categories,
             is_email_login: false,
             nickname: nickname,
+            deviceToken: token,
           })
           .then((res) => {
             console.log('정보 입력 성공코드', res.status);
@@ -136,6 +157,7 @@ export default class InputInfo extends Component {
       nickname,
       nicknameInfo,
       ableNickname,
+      token,
     } = this.state;
 
     return (
@@ -286,6 +308,7 @@ export default class InputInfo extends Component {
               age,
               ableNickname,
               nickname,
+              token,
             )
               }
             disabled={ableNickname ? false : true}

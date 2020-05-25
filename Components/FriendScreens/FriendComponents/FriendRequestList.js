@@ -7,40 +7,45 @@ import axios from 'axios';
 
 export default class FriendRequestList extends Component {
     acceptRequet=(userId, targetNickname) => {
+      console.log('프롭스', this.props);
+      console.log('닉네임', targetNickname);
+      console.log('유저아이디', userId);
+      
       axios.patch('http://49.50.172.58:3000/friends/response', {
         user_id: userId,
         nickname: targetNickname,
         is_accept: 'accept',
       }).then(function () {
-        this.props.stateRefresh();
       });
     }
 
     rejectRequet=(userId, targetNickname) => {
+      console.log('닉네임', targetNickname);
       axios.patch('http://49.50.172.58:3000/friends/response', {
         user_id: userId,
         nickname: targetNickname,
         is_accept: 'reject',
       }).then(function () {
-        this.props.stateRefresh();
       });
     }
 
     render() {
-      const nickname = this.props.nickname;
+      const { nickname, userId } = this.props;
+
+      
       return (
     
         <View style={styles.container}>
           <Text style={styles.textContainer}>
-            {this.props.nickname}
+            {nickname}
           </Text>
           <Button
             title="수락"
-            onPress={() => this.acceptRequet('1', nickname)}
+            onPress={() => this.acceptRequet(userId, nickname)}
         />
           <Button
             title="거부"
-            onPress={() => this.rejectRequet('1', nickname)}
+            onPress={() => this.rejectRequet(userId, nickname)}
         />
         </View>
       );

@@ -11,6 +11,5 @@ web-build/
 web-report/
 
 firebaseConfig.js
-
 # macOS
 .DS_Store

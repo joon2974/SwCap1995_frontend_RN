@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around', // center, space-around
     marginBottom: 5,
-    borderWidth:1,
+    borderWidth: 1,
   },
   textContainer: {
     color: 'black',
