@@ -97,15 +97,17 @@ export default class CameraScreen extends Component {
 
     const formData = new FormData();
     formData.append('photo', { uri: uri, name: `photo.${fileType}`, type: 'image/jpeg' });
-    formData.append('userId', { userId: this.props.route.params.userID });
-    axios.post('http://49.50.172.58:3000/test/upload2', formData, {
+    formData.append('user_id', this.props.route.params.userID);
+    axios.post('http://49.50.172.58:3000/users/face_detection', formData, {
       header: { 
         'content-type': 'multipart/form-data',
       },
     }).then((res) => {
       console.log(res.status);
-      this.props.route.params.completeFunc();
-      this.props.navigation.popToTop();
+      if (res.status === 200) {
+        this.props.route.params.completeFunc();
+        this.props.navigation.popToTop();
+      }
     }).catch((error) => {
       console.log(error);
     });

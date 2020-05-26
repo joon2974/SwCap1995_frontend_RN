@@ -7,25 +7,13 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import axios from 'axios';
 import TimePicker from './PlanComponents/TimePicker';
 import RulePicker from './PlanComponents/RulePicker';
 
 const { height, width } = Dimensions.get('window');
-const timeList = [];
-for (let i = 0; i < 23; i++) {
-  timeList.push(i.toString() + '시 ~ ' + (i + 1).toString() + '시');
-}
-const periodList = [];
-for (let i = 1; i < 5; i++) {
-  periodList.push(i.toString() + '주');
-}
-// 실제 시간 형태로 바꿔야 함
-const dateList = [];
-for (let i = 13; i < 41; i++) {
-  dateList.push(i.toString());
-}
 
 export default class PlanMain extends Component {
   state = {
@@ -44,6 +32,40 @@ export default class PlanMain extends Component {
       ],
     },
     selectedMainRule: '찬물에 손 씻기',
+    timeList: [],
+    periodList: [],
+    dateList: [],
+  }
+
+  componentDidMount() {
+    this.setDateData();
+  }
+
+  setDateData = async () => {
+    const timeList = [];
+    for (let i = 0; i < 23; i++) {
+      timeList.push(i.toString() + '시 ~ ' + (i + 1).toString() + '시');
+    }
+
+    const periodList = [];
+    for (let i = 1; i < 5; i++) {
+      periodList.push(i.toString() + '주');
+    }
+
+    const dayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const today = new Date();
+    const year = today.getFullYear();
+    if ((year % 4) === 0) {
+      dayCount[1] = 29;
+    }
+    const month = today.getMonth();
+    const day = today.getDate();
+    const dateList = [];
+    for (let i = day; i < dayCount[month] + 1; i++) {
+      dateList.push(i.toString());
+    }
+
+    this.setState({ timeList: timeList, periodList: periodList, dateList: dateList });
   }
 
   // 추후 rules 개념 확정 지으면 수정할 것
@@ -85,6 +107,9 @@ export default class PlanMain extends Component {
       certifyImageUri,
       pictureRules,
       selectedMainRule,
+      timeList,
+      periodList,
+      dateList,
     } = this.state;
 
     return (
@@ -101,39 +126,52 @@ export default class PlanMain extends Component {
             </View>
           </View>
 
+          <View style={styles.lineDivider} />
+
           <View style={styles.timesContainer}>
-            <View style={styles.eachTimesContainer}>
-              <Text>시작일</Text>
-              <TimePicker 
-                time={startDate}
-                onValueChange={(itemValue) => this.setState({ startDate: itemValue })}
-                times={dateList}
-              />
+            <View style={styles.componentTitleContainer}>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>시간 선택</Text>
             </View>
-            <View style={styles.eachTimesContainer}>
-              <Text>도전 기간</Text>
-              <TimePicker 
-                time={endDate}
-                onValueChange={(itemValue) => this.setState({ endDate: itemValue })}
-                times={periodList}
-              />
-            </View>
-            <View style={styles.eachTimesContainer}>
-              <Text>인증 시간</Text>
-              <TimePicker 
-                time={certifyTime}
-                onValueChange={(itemValue) => this.setState({ certifyTime: itemValue })}
-                times={timeList}
-              />
+            <View style={styles.timePickerContainer}>
+              <View style={styles.eachTimesContainer}>
+                <Text>시작일</Text>
+                <TimePicker 
+                  time={startDate}
+                  onValueChange={(itemValue) => this.setState({ startDate: itemValue })}
+                  times={dateList}
+                />
+              </View>
+              <View style={styles.eachTimesContainer}>
+                <Text>도전 기간</Text>
+                <TimePicker 
+                  time={endDate}
+                  onValueChange={(itemValue) => this.setState({ endDate: itemValue })}
+                  times={periodList}
+                />
+              </View>
+              <View style={styles.eachTimesContainer}>
+                <Text>인증 시간</Text>
+                <TimePicker 
+                  time={certifyTime}
+                  onValueChange={(itemValue) => this.setState({ certifyTime: itemValue })}
+                  times={timeList}
+                />
+              </View>
             </View>
           </View>
 
+          <View style={styles.lineDivider} />
+
           <View style={styles.ruleContainer}>
+            <View style={styles.componentTitleContainer}>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>인증 조건 선택</Text>
+            </View>
             <Image 
               source={{ uri: certifyImageUri }} 
               style={styles.certifyImageStyle}
             />
             <Text>인증 사진 예시</Text>
+            <View style={styles.lineDivider} />
             <View style={styles.rulePickContainer}>
               <RulePicker 
                 rule={selectedMainRule}
@@ -163,6 +201,7 @@ export default class PlanMain extends Component {
                 subRule1: this.state.pictureRules[this.state.selectedMainRule][0],
                 subRule2: this.state.pictureRules[this.state.selectedMainRule][1],
                 certifyImgUri: this.state.certifyImageUri,
+                userID: this.props.route.params.userID,
               })}
           >
             <Text style={{ fontWeight: 'bold' }}>다음 단계로</Text>
@@ -177,6 +216,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
+    marginBottom: 15,
+    marginTop: 15,
   },
   viewContainer: {
     alignItems: 'center',
@@ -202,13 +249,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  componentTitleContainer: {
+    width: width - 20,
+    height: 30,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
   timesContainer: {
-    flexDirection: 'row',
     width: width,
     height: height / 4,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    backgroundColor: '#F2F2F2',
+  },
+  timePickerContainer: {
+    flexDirection: 'row',
+    width: width,
+    height: height / 6,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   eachTimesContainer: {
     width: width / 3,
@@ -232,7 +291,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.3,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   subRuleContainer: {
     width: width,
@@ -247,7 +306,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
 });

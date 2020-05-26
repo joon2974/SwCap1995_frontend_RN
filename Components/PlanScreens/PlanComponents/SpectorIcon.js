@@ -1,33 +1,31 @@
 import React, { Component } from 'react';
 import {
-  TouchableOpacity,
+  View,
   Text,
   StyleSheet,
   Platform,
 } from 'react-native';
 
-export default class FriendListEach extends Component {
+export default class SpectorIcon extends Component {
   render() {
     return (
-      <TouchableOpacity 
-        style={styles.container}
-        onPress={this.props.friendSelectFunc}  
-      >
-        <Text>{this.props.name}</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <Text>{this.props.nickName}</Text>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: 120,
-    height: 40,
+    height: 35,
+    width: 80,
+    backgroundColor: '#F8E0F7',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#A9F5A9',
-    borderRadius: 5,
-    margin: 3,
+    borderRadius: 10,
+    marginLeft: 5,
+    marginTop: 5,
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',

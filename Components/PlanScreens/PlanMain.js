@@ -3,11 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
+  Platform,
   Dimensions,
   TouchableOpacity,
   AsyncStorage,
   ScrollView,
+  Image,
 } from 'react-native';
 import axios from 'axios';
 import PlanListEach from './PlanComponents/PlanListEach';
@@ -75,7 +76,7 @@ export default class PlanMain extends Component {
         },
       })
       .then((res) => {
-        if (res === true) {
+        if (res.data === true) {
           console.log('얼굴인식 완료된 유저');
           this.setState({ isFaceRegisterd: true });
           this.forceUpdate();
@@ -104,7 +105,7 @@ export default class PlanMain extends Component {
   }
 
   planSelected = (planName, selectedCategory) => {
-    this.props.navigation.navigate('MakePlanStep1', { planName: planName, category: selectedCategory });
+    this.props.navigation.navigate('MakePlanStep1', { planName: planName, category: selectedCategory, userID: this.state.userID });
   }
 
   render() {
@@ -120,11 +121,6 @@ export default class PlanMain extends Component {
       return (
         <ScrollView>
           <View style={styles.container}>
-            <View style={styles.testContainer}>
-              <Text>플랜 메인</Text>
-              <Button title="테스트 전환" onPress={() => this.testTurnBack()} />
-            </View>
-
             <View style={styles.selectionContainer}>
               <View style={styles.categoryBtnContainer}>
                 <TouchableOpacity
@@ -161,8 +157,10 @@ export default class PlanMain extends Component {
                 >
                   <Text>기타</Text>
                 </TouchableOpacity>
-                
               </View>
+
+              <View style={styles.lineDivider} />
+
               <View style={styles.plansContainer}>
                 {nowPlanList.map((data) => (
                   <PlanListEach
@@ -183,27 +181,33 @@ export default class PlanMain extends Component {
             <View style={styles.informTitle}>
               <Text style={{ fontWeight: 'bold', fontSize: 30 }}>얼굴 인증</Text>
             </View>
+
+            <View style={styles.lineDivider} />
+
             <View style={styles.information}>
+              <Image 
+                source={{ uri: 'https://ifh.cc/g/gHDJv2.png' }} 
+                style={styles.imageStyle}
+              />
               <Text>Plan A는 사용자의 대리 인증을 방지하기 위해 본인 인증을 위한 수단으로 얼굴 인증을 사용하고 있습니다.</Text>
               <Text>하단의 두 방법 중 하나의 방법으로 자신의 얼굴을 Plan A에 등록해 주세요.</Text>
             </View>
-            <Button 
-              title="테스트 전환"
-              onPress={() => this.registerComplete()}
-            />
           </View>
+
+          <View style={styles.lineDivider} />
+
           <View style={styles.BtnContainer}>
             <TouchableOpacity 
               style={styles.registerBtn}
               onPress={() => this.props.navigation.navigate('CameraScreen', { completeFunc: this.registerComplete.bind(this), userID: userID })}
             >
-              <Text>카메라로 사진 찍기</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 22, color: '#848484' }}>카메라</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.registerBtn}
               onPress={() => this.props.navigation.navigate('ImagePickScreen', { completeFunc: this.registerComplete.bind(this), userID: userID })}
             >
-              <Text>갤러리에서 사진 가져오기</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 22, color: '#848484' }}>갤러리</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -218,6 +222,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
+    marginBottom: 5,
+    marginTop: 5,
   },
   testContainer: {
     width: width,
@@ -257,9 +269,23 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#F6CEEC',
     borderRadius: 5,
     margin: 1,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   plansContainer: {
     width: width,
@@ -270,32 +296,54 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   BtnContainer: {
-    height: height / 2,
+    height: height / 4,
     width: width,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
   informTitle: {
-    height: height / 4,
+    height: height / 6,
     width: width,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 30,
   },
   information: {
-    height: height / 4,
+    height: height * 0.4,
     width: width - 30,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     marginLeft: 15,
   },
   registerBtn: {
     width: 130,
     height: 130,
     borderRadius: 20,
-    backgroundColor: 'green',
+    backgroundColor: '#F6CEEC',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  imageStyle: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 20,
+    alignSelf: 'center',
   },
 });

@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import {
-  View, Text, StyleSheet, Button, 
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  Image,
 } from 'react-native';
-
 import axios from 'axios';
+
+const { width } = Dimensions.get('window');
 
 export default class FriendRequestList extends Component {
     acceptRequet=(userId, targetNickname) => {
-      console.log('프롭스', this.props);
-      console.log('닉네임', targetNickname);
-      console.log('유저아이디', userId);
-      
       axios.patch('http://49.50.172.58:3000/friends/response', {
         user_id: userId,
         nickname: targetNickname,
@@ -32,21 +34,34 @@ export default class FriendRequestList extends Component {
     render() {
       const { nickname, userId } = this.props;
 
-      
       return (
     
         <View style={styles.container}>
-          <Text style={styles.textContainer}>
-            {nickname}
-          </Text>
-          <Button
-            title="수락"
-            onPress={() => this.acceptRequet(userId, nickname)}
-        />
-          <Button
-            title="거부"
-            onPress={() => this.rejectRequet(userId, nickname)}
-        />
+          <View style={styles.ImageContainer}>
+            <Image 
+              source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
+              style={styles.imageStyle}
+            />
+          </View>
+          <View style={styles.InfoContainer}>
+            <View style={styles.nickNameContainer}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{nickname}</Text>
+            </View>
+            <View style={styles.BtnContainer}>
+              <TouchableOpacity 
+                style={styles.btnAcceptStyle}
+                onPress={() => this.acceptRequet(userId, nickname)}
+              >
+                <Text>수락</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={styles.btnRejectStyle}
+                onPress={() => this.rejectRequet(userId, nickname)}
+              >
+                <Text>거부</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       );
     }
@@ -54,16 +69,61 @@ export default class FriendRequestList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: 40,
+    width: width,
+    height: 70,
     flexDirection: 'row', // row
-    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 5,
-    borderWidth: 2,
+    marginBottom: 10,
+    marginTop: 5,
   },
-  textContainer: {
-    color: 'black',
+  ImageContainer: {
+    width: width * 0.25,
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageStyle: {
+    width: width * 0.15,
+    height: width * 0.15,
+    borderRadius: 15,
+  },
+  InfoContainer: {
+    width: width * 0.75,
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  nickNameContainer: {
+    width: width * 0.7,
+    height: 30,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  BtnContainer: {
+    width: width * 0.7,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginLeft: 10,
+    flexDirection: 'row',
+  },
+  btnAcceptStyle: {
+    width: 60,
+    height: 25,
+    backgroundColor: '#A9E2F3',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginRight: 20,
+  },
+  btnRejectStyle: {
+    width: 60,
+    height: 25,
+    backgroundColor: '#F2F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
   },
 });

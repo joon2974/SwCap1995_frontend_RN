@@ -7,7 +7,9 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
+import axios from 'axios';
 import PointPicker from './PlanComponents/PointPicker';
 import FriendListEach from './PlanComponents/FriendListEach';
 
@@ -15,8 +17,8 @@ const { width, height } = Dimensions.get('window');
 
 export default class MakePlanStep2 extends Component {
   state = {
-    point: 1984,
-    challPoint: 184,
+    point: 0,
+    challPoint: 0,
     friends: ['5882', '닉네임', '닉네임2'],
     selectedFriends: [],
     userBetPoint: '0',
@@ -25,6 +27,11 @@ export default class MakePlanStep2 extends Component {
     percentList: ['5%', '10%', '20%'],
     distribList: ['공평하게 n분의 1', '선착순', '추첨'],
   };
+
+  componentDidMount() {
+    this.getFriends();
+    this.getUserPoint();
+  }
 
   addSpector = (friend, friendList, selectedFriendList) => {
     const idx = friendList.indexOf(friend);
@@ -44,6 +51,39 @@ export default class MakePlanStep2 extends Component {
     this.setState({ friends: friendList });
   }
 
+  getFriends = async () => {
+    const userID = this.props.route.params.userID;
+    const response = await axios.get(
+      'http://49.50.172.58:3000/friends/' + userID,
+    );
+    const responseJson = await response.data.rows;
+    const count = await response.data.count;
+    const friendarray = [];
+    try {
+      if (count !== 0) {
+        for (var i = 0; i < count; i++) {
+          friendarray.push(responseJson[i].nickname);
+          this.setState({
+            friends: friendarray,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  getUserPoint = async () => {
+    const userID = this.props.route.params.userID;
+    const response = await axios.get(
+      'http://49.50.172.58:3000/users/me/' + userID,
+    );
+    this.setState({
+      point: response.data.point.general_total,
+      challPoint: response.data.point.challenge_total,
+    });
+  };
+
   render() {
     const {
       point,
@@ -61,23 +101,35 @@ export default class MakePlanStep2 extends Component {
         <View style={styles.container}>
           <View style={styles.pointContainer}>
             <View style={styles.currentPoint}>
-              <View style={styles.currentPointEach}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                  잔여 포인트: 
-                  {' '}
-                  {point}
-                </Text>
+              <View style={styles.componentTitleContainer}>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>인증 조건 선택</Text>
               </View>
-              <View style={styles.currentPointEach}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                  도전 포인트: 
-                  {' '}
-                  {challPoint}
-                </Text>
+              <View style={styles.pointsStyle}>
+                <View style={styles.currentPointEach}>
+                  <Text style={{ fontSize: 15 }}>
+                    잔여 포인트: 
+                    {' '}
+                    {point}
+                  </Text>
+                </View>
+                <View style={styles.currentPointEach}>
+                  <Text style={{ fontSize: 15 }}>
+                    도전 포인트: 
+                    {' '}
+                    {challPoint}
+                  </Text>
+                </View>
               </View>
             </View>
+
+            <View style={styles.lineDivider} />
+
+            <View style={styles.componentTitleContainer}>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>도전 포인트 선택</Text>
+            </View>
+
             <View style={styles.challengePoint}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>도전 금액:</Text>
+              <Text style={{ fontSize: 20 }}>도전 금액:</Text>
               <TextInput
                 value={userBetPoint}
                 onChangeText={(Point) => this.setState({ userBetPoint: Point })}
@@ -107,34 +159,43 @@ export default class MakePlanStep2 extends Component {
               </View>
             </View>
           </View>
+
+          <View style={styles.lineDivider} />
+
           <View style={styles.friendContainer}>
-            <View style={styles.friendContainerEach}>
-              <Text>친구 목록</Text>
-              <ScrollView style={styles.friendScrollViewContainer}>
-                <View style={styles.friendSelectContainer}>
-                  {friends.map((friend) => (
-                    <FriendListEach 
-                      key={friend}
-                      name={friend}
-                      friendSelectFunc={() => this.addSpector(friend, friends, selectedFriends)}
-                    />
-                  ))}
-                </View>
-              </ScrollView>
+            <View style={styles.componentTitleContainer}>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>감시자 선택</Text>
             </View>
-            <View style={styles.friendContainerEach}>
-              <Text>감시자 목록(최소 3명)</Text>
-              <ScrollView style={styles.friendScrollViewContainer}>
-                <View style={styles.friendSelectContainer}>
-                  {selectedFriends.map((friend) => (
-                    <FriendListEach 
-                      key={friend}
-                      name={friend}
-                      friendSelectFunc={() => this.restoreFriend(friend, friends, selectedFriends)}
-                    />
-                  ))}
-                </View>
-              </ScrollView>
+            <View style={styles.friendSelectConainerStyle}>
+              <View style={styles.friendContainerEach}>
+                <Text>친구 목록</Text>
+                <ScrollView style={styles.friendScrollViewContainer}>
+                  <View style={styles.friendSelectContainer}>
+                    {friends.map((friend) => (
+                      <FriendListEach 
+                        key={friend}
+                        name={friend}
+                        friendSelectFunc={() => this.addSpector(friend, friends, selectedFriends)}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+              <View style={styles.friendContainerEach}>
+                <Text>감시자 목록(최소 3명)</Text>
+                <ScrollView style={styles.friendScrollViewContainer}>
+                  <View style={styles.friendSelectContainer}>
+                    {selectedFriends.map((friend) => (
+                      <FriendListEach 
+                        key={friend}
+                        name={friend}
+                        // eslint-disable-next-line max-len
+                        friendSelectFunc={() => this.restoreFriend(friend, friends, selectedFriends)}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
             </View>
           </View>
           <TouchableOpacity
@@ -174,24 +235,52 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
+    marginBottom: 10,
+    marginTop: 15,
+  },
+  componentTitleContainer: {
+    width: width - 20,
+    height: 30,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginTop: 5,
+    marginBottom: 5,
+  },
   pointContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
     height: height * 0.4,
+    marginTop: 25,
+    marginBottom: 10,
   },
   currentPoint: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     width: width,
-    height: height * 0.1,
+    height: height * 0.08,
+    marginTop: 10,
+    marginBottom: 15,
+  },
+  pointsStyle: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: width,
+    height: height * 0.07,
     flexDirection: 'row',
   },
   currentPointEach: {
     justifyContent: 'center',
-    alignItems: 'center',
-    width: width / 2,
+    alignItems: 'flex-start',
+    width: width * 0.45,
     height: height * 0.1,
+    marginLeft: 10,
   },
   challengePoint: {
     justifyContent: 'center',
@@ -219,11 +308,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   friendContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: width,
+    height: height * 0.5,
+    marginTop: 5,
+  },
+  friendSelectConainerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
-    height: height / 2,
+    height: height * 0.5,
     flexDirection: 'row',
+    marginTop: 5,
   },
   friendContainerEach: {
     justifyContent: 'center',
@@ -234,6 +331,20 @@ const styles = StyleSheet.create({
   friendScrollViewContainer: {
     width: width * 0.4,
     height: height * 0.4,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   friendSelectContainer: {
     justifyContent: 'flex-start',
@@ -251,7 +362,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
 });

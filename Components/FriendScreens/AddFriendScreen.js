@@ -34,7 +34,7 @@ export default class AddFriendScreen extends Component {
   render() {
     const { targetNickname, userId } = this.state;
     return (
-      <View>
+      <View style={styles.container}>
         <TextInput
           style={styles.inputTextcontainer}
           placeholder="닉네임을 입력하세요"
@@ -43,7 +43,10 @@ export default class AddFriendScreen extends Component {
          />
         <Button
           title="친구 요청 보내기"
-          onPress={() => this.sendFriendRequest(userId, targetNickname)}
+          onPress={() => {
+            this.sendFriendRequest(userId, targetNickname);
+            this.props.navigation.popToTop();
+          }}
          />
          
       </View>
@@ -60,8 +63,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inputTextcontainer: {
-    width: width,
-    height: 40,
+    width: width - 40,
+    height: 45,
+    borderRadius: 10,
     borderWidth: 1,
+    marginBottom: 5,
   },
 });
