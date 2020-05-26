@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import Watcher from './Watcher';
+import { BaseRouter } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,9 +23,13 @@ export default class DetailPlan extends Component{
         nowWatcherList : 'A, B, C, D',
         nowCreatedAt : '',
         nowUpdatedAt : '',
-        
+    
         watchers:['1','2','3','4','5'],
         watchersComment:['hello','bye','thank','u','...'],
+    
+
+        para : this.props.route.params,
+    
     }
 
     componentDidMount(){
@@ -33,6 +38,9 @@ export default class DetailPlan extends Component{
     }
 
     setPlan = () =>{
+      
+ //       console.log(this.state.para);  파라미터 넘기는거 확인
+        
         axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then(res => {
     
             this.setState({nowPlanTitle: res.data.data.categoryGet[0].name});          
@@ -107,7 +115,6 @@ export default class DetailPlan extends Component{
                         }
                         <TouchableOpacity
                                 style={styles.moreExplore}
-                                onPress={() => this.props.navigation.navigate('CategoryList')}
                             >
                                 <Text>감시자들 더보기</Text>
                             </TouchableOpacity>
@@ -143,7 +150,7 @@ export default class DetailPlan extends Component{
                         </Text>
 
 
-                        <TouchableOpacity style={styles.calendarStyle}>
+                        <TouchableOpacity style={styles.calendarStyle} onPress = {()=>this.props.navigation.navigate('Calendar')}>
                             <Image 
                                 style={styles.calendarStyle}
                                 source={{uri : this.state.nowPlanImage} } 

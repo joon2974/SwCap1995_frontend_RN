@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   TouchableOpacity,
+  View,
   Text,
   StyleSheet,
   Dimensions,
@@ -10,42 +11,40 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-export default class Watcher extends Component {
+export default class DayList extends Component {
   render() {
 
-    let uri = 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg';
-
     return (
-        <TouchableOpacity 
-            style={styles.container}
-            onPress={this.props.explore}
-        >
-            <Image 
-            source={{ uri: uri }} 
+      <TouchableOpacity 
+        style={styles.container}
+        onPress={this.props.explore}
+      >
+        <View style = {{alignItems:'center'}}>
+            <Text>
+            ~월 ~일
+            </Text>
+              <Image 
+            source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} 
             style={styles.imageStyle}
             />
-            <Text style = {styles.watcherInfo}>
-                {this.props.index}
-            </Text>
-            <Text style = {styles.watcherInfo}>
-                {this.props.comment[this.props.index]}
-            </Text>
-
-        </TouchableOpacity>
-
+          
+        </View>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.84,
-    height: height / 12,
+    width: width * 0.39,
+    height: height / 5,
     alignItems: 'center',
+    justifyContent:'center',
     backgroundColor: 'white',
-    margin: 4,
+    margin: 6,
     borderRadius: 10,
     flexDirection:'row',
+
 
     ...Platform.select({
       ios: {
@@ -64,14 +63,10 @@ const styles = StyleSheet.create({
   },
   
   imageStyle: {
-    width: width * 0.12,
-    height: height * 0.06,
+    width: width * 0.25,
+    height: height * 0.14,
     borderRadius: 10,
-    marginLeft: 8,
-  },
-
-  watcherInfo:{
-    marginLeft:20,
-    fontSize:14,
+    marginBottom: 5,
+    marginLeft:5,
   },
 });

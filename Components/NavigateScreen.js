@@ -33,6 +33,7 @@ import SearchScreen from './SearchScreens/SearchScreen';
 import PlanSearched from './SearchScreens/PlanSearched';
 import CategoryList from './SearchScreens/CategoryList';
 import HotPlan from './SearchScreens/HotPlan';
+import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
 import Calendar from './SearchScreens/Calendar';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
@@ -71,6 +72,7 @@ function SearchStackScreen() {
       <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
       <SearchStack.Screen name="CategoryList" component={CategoryList} />
       <SearchStack.Screen name="HotPlan" component={HotPlan} />
+      <SearchStack.Screen name="PlanList" component={PlanList} />
       <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
       <SearchStack.Screen name="Calendar" component={Calendar} />
       <SearchStack.Screen

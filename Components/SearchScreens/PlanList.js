@@ -3,19 +3,23 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  Button,
   Image,
   Dimensions,
   ScrollView,
 } from 'react-native';
+import { Input } from 'react-native-elements';
 import axios from 'axios';
 import HotPlanList from './TabList/HotPlanList';
 
 const { width, height } = Dimensions.get('window');
 
-export default class DetailPlan extends Component{
+export default class PlanList extends Component{
 
     state = {
+
+        search:'',
+
         nowPlanTitle : '1',
         nowPlanImage : '2',
         nowPlanDescription : '3',
@@ -30,6 +34,8 @@ export default class DetailPlan extends Component{
 
     }
 
+    
+  
     componentDidMount(){
         this.setPlan();
         
@@ -57,18 +63,18 @@ export default class DetailPlan extends Component{
         return (
           
             <View style = {styles.container}>
-               
+
                 <ScrollView contentContainerStyle = {{alignItems:'center'}}>
 
 
-                    <View  style={styles.titleInfoContainer}>
+                <View  style={styles.titleInfoContainer}>
                         <Text style = {styles.titleStyle}>
-                            {'%%대 인기 PLAN TOP 20'}
+                            {'~~~분야 플랜들'}
                         </Text>
                         
                         <View style={{marginBottom:10}} />
 
-                    </View>
+                    </View>  
                     
                     <View  style={styles.titleInfoContainer}>
                         
@@ -81,8 +87,8 @@ export default class DetailPlan extends Component{
                                         key={data}
                                         index = {index}
                                         comment = {this.state.watchersComment}
-                                        explore = {()=>this.props.navigation.navigate('DetailPlan')}
-                                    >
+                                    explore = {()=>this.props.navigation.navigate('DetailPlan')}
+                               >
 
                                     </HotPlanList>
                                 </View>

@@ -3,121 +3,328 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  Image,
   Button,
+  Image,
+  Dimensions,
   ScrollView,
 } from 'react-native';
+import { Input } from 'react-native-elements';
+import axios from 'axios';
+import HotPlanList from './TabList/HotPlanList';
 
-export default class PlanSearched extends Component {
-  render() {
-    let pic = {
-      //uri : search
-      uri:
-        'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
+const { width, height } = Dimensions.get('window');
+
+export default class PlanSearched extends Component{
+
+    state = {
+
+        search:'',
+
+        nowPlanTitle : '1',
+        nowPlanImage : '2',
+        nowPlanDescription : '3',
+        nowWatcherList : 'A, B, C, D',
+        nowCreatedAt : '',
+        nowUpdatedAt : '',
+        
+        watchers:['1','2','3','4','5'],
+        watchersComment:['hello','bye','thank','u','...'],
+
+        para : this.props.route.params,
+
+    }
+
+    updateSearch = changedSearch => {
+      this.setState({ search: changedSearch });
     };
 
-    return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.recommendTitle}>클릭 or 검색된 분야 이름</Text>
-          <Text style={styles.recommendSubTitle}>
-            클릭 or 검색된 분야의 서브 타이틀~~~~~~~~
+    
+  async sendSearch() {
+    await axios
+      .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
+      .then(res => {
+        //        alert(res);
+      })
+      .catch(error => {
+        console.log(error);
+        //        alert(error);
+      });
+
+      
+  }
+  
+    componentDidMount(){
+        this.setPlan();
+        
+    }
+
+    setPlan = () =>{0
+        axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then(res => {
+    
+            this.setState({nowPlanTitle: res.data.data.categoryGet[0].name});          
+            this.setState({nowPlanImage : res.data.data.categoryGet[0].image_url});
+            this.setState({nowPlanDescription:res.data.data.categoryGet[0].description});
+            this.setState({nowCreatedAt:res.data.data.categoryGet[0].createdAt});
+            this.setState({nowUpdatedAt : res.data.data.categoryGet[0].updatedAt});
+            //alert(res);
+        }).catch(error => {
+            console.log(error);
+            //alert(error);
+        });
+
+        
+    }
+
+    render(){
+        
+        return (
+          
+            <View style = {styles.container}>
+               
+               <View style={styles.searchContainer}>
+          <Text style={styles.searchTitle}>
+            관심 있는 키워드를 아래에 입력해 보세요
           </Text>
+
+          <View style={styles.searchBar}>
+            <Input
+              placeholder="Type Here..."
+              onChangeText={changedSearch => {
+                this.updateSearch(changedSearch);
+              }}
+            />
+            <Button
+              title="검색"
+              type="solid"
+              onPress={() => {
+                this.sendSearch();
+              }}
+            />
+          </View>
         </View>
 
-        <ScrollView>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.category}
-              onPress={() => this.props.navigation.navigate('DetailPlan')}
-            >
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
+
+
+
+                <ScrollView contentContainerStyle = {{alignItems:'center'}}>
+
+  
+                    
+                    <View  style={styles.titleInfoContainer}>
+                        
+                        
+                        <View>
+                        {
+                            this.state.watchers.map((data,index)=>(
+                                <View>
+                                    <HotPlanList 
+                                        key={data}
+                                        index = {index}
+                                        comment = {this.state.watchersComment}
+                                    explore = {()=>this.props.navigation.navigate('DetailPlan')}
+                               >
+
+                                    </HotPlanList>
+                                </View>
+                            ))
+                                
+                                
+                        }
+                        </View>
+
+                        <View style={{marginBottom:10}} />
+
+                    </View>
+                    
+
+                    <View  style={styles.titleInfoContainer}>
+                        
+                        
+                        <View>
+                        {
+                            this.state.watchers.map((data,index)=>(
+                                <View>
+                                    <HotPlanList 
+                                        key={data}
+                                        index = {index}
+                                        comment = {this.state.watchersComment}
+                                    >
+
+                                    </HotPlanList>
+                                </View>
+                            ))
+                                
+                                
+                        }
+                        </View>
+
+                        <View style={{marginBottom:10}} />
+
+                    </View>
+                    
+
+                    <View  style={styles.titleInfoContainer}>
+                        
+                        
+                        <View>
+                        {
+                            this.state.watchers.map((data,index)=>(
+                                <View>
+                                    <HotPlanList 
+                                        key={data}
+                                        index = {index}
+                                        comment = {this.state.watchersComment}
+                                    >
+
+                                    </HotPlanList>
+                                </View>
+                            ))
+                                
+                                
+                        }
+                        </View>
+
+                        <View style={{marginBottom:10}} />
+
+                    </View>
+                    
+
+                    <View  style={styles.titleInfoContainer}>
+                        
+                        
+                        <View>
+                        {
+                            this.state.watchers.map((data,index)=>(
+                                <View>
+                                    <HotPlanList 
+                                        key={data}
+                                        index = {index}
+                                        comment = {this.state.watchersComment}
+                                    >
+
+                                    </HotPlanList>
+                                </View>
+                            ))
+                                
+                                
+                        }
+                        </View>
+
+                        <View style={{marginBottom:10}} />
+
+                    </View>
+                    
+                    <View style={{marginVertical:20}} />
+
+                </ScrollView>
+
+            </View>
+
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: width * 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
   },
 
-  recommendTitle: {
-    fontWeight: 'bold',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    fontSize: 24,
+  titleImageContainer: {
+    width: width * 0.9,
+    height: height / 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+    margin: 6,
+
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
-  recommendSubTitle: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    fontSize: 16,
+
+  imageStyle: {
+    width: width * 0.75,
+    height: height * 0.2,
+    borderRadius: 10,
+  },
+  
+  calendarStyle: {
+    width: width * 0.75,
+    height: height * 0.2,
+    borderRadius: 10,
+    marginLeft:10,
+  },
+
+  titleInfoContainer: {
+    backgroundColor: '#F2F2F2',
+    width: width * 0.9,
+    marginTop: 15,
+    borderRadius: 10,
+    margin: 6,
+    padding: 10,
+
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+
+  titleStyle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginVertical: 10,
+
+  },
+
+  subTitleStyle: {
+    fontSize: 14,
+    marginTop: 5,
+  },
+
+  
+  moreExplore: {
+    marginTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.75,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    height: height * 0.04,
+    marginLeft:24,
+},
+
+  dateInfo: {
+    fontSize: 12,
+    marginTop: 15,
+    marginLeft: 10,
   },
 
   categoryUnitList: {
@@ -128,5 +335,9 @@ const styles = StyleSheet.create({
     margin: 5,
     width: 180,
     height: 150,
+  },
+  calendar: {
+    width: 360,
+    height: 200,
   },
 });
