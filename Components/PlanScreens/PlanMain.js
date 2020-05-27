@@ -21,8 +21,9 @@ export default class PlanMain extends Component {
     userID: null,
     isFaceRegisterd: false,
     selectedCategory: '운동/건강',
-    nowPlanList: ['헬스', '식단', '런닝', '푸시업', '기타'],
+    nowPlanList: ['헬스', '다이어트', '런닝', '푸시업', '기타'],
     planListFromServer: null,
+    uriListFromServer: null,
   } 
 
   componentDidMount() {
@@ -46,6 +47,7 @@ export default class PlanMain extends Component {
     await axios.get('http://49.50.172.58:3000/detailedCategories').then((data) => {
       const plansFromServer = data.data.data.detailedCategoryGet;
       const planObject = {};
+      const uriObject = {};
 
       planObject['운동/건강'] = this.planFilter(plansFromServer, 1);
       planObject['감정관리'] = this.planFilter(plansFromServer, 4);
@@ -53,8 +55,15 @@ export default class PlanMain extends Component {
       planObject['자기계발'] = this.planFilter(plansFromServer, 3);
       planObject['기타'] = this.planFilter(plansFromServer, 5);
 
+      uriObject['운동/건강'] = this.uriFilter(plansFromServer, 1);
+      uriObject['감정관리'] = this.uriFilter(plansFromServer, 4);
+      uriObject['생활습관'] = this.uriFilter(plansFromServer, 2);
+      uriObject['자기계발'] = this.uriFilter(plansFromServer, 3);
+      uriObject['기타'] = this.uriFilter(plansFromServer, 5);
+
       this.setState({ planListFromServer: planObject });
-      console.log('서버로부터 받아온 plan 목록: ', this.state.planListFromServer);
+      this.setState({ uriListFromServer: uriObject });
+      this.setPlanList('운동/건강', this.state.planListFromServer, this.state.uriListFromServer);
     })
       .catch((error) => {
         console.log('서버로부터 plans 가져오기 에러: ', error);
@@ -64,6 +73,13 @@ export default class PlanMain extends Component {
   planFilter = (plansList, categoryNum) => {
     const categoryPlans = plansList.filter((plan) => plan.topCategoryNum === categoryNum);
     const categoryPlansName = categoryPlans.map((plan) => plan.detailedCategory);
+
+    return categoryPlansName;
+  }
+
+  uriFilter = (plansList, categoryNum) => {
+    const categoryPlans = plansList.filter((plan) => plan.topCategoryNum === categoryNum);
+    const categoryPlansName = categoryPlans.map((plan) => plan.image_url);
 
     return categoryPlansName;
   }
@@ -98,14 +114,22 @@ export default class PlanMain extends Component {
     this.setState({ isFaceRegisterd: false });
   }
 
-  setPlanList = (categoryName, planListFromServer) => {
+  setPlanList = (categoryName, planListFromServer, uriListFromServer) => {
     this.setState({ selectedCategory: categoryName });
     const planList = planListFromServer[categoryName];
-    this.setState({ nowPlanList: planList });
+    const uriList = uriListFromServer[categoryName];
+    const planListWithUri = [];
+
+    for (let i = 0; i < planList.length; i++) {
+      planListWithUri.push({ name: planList[i], uri: uriList[i] });
+    }
+    this.setState({ nowPlanList: planListWithUri });
   }
 
-  planSelected = (planName, selectedCategory) => {
-    this.props.navigation.navigate('MakePlanStep1', { planName: planName, category: selectedCategory, userID: this.state.userID });
+  planSelected = (planName, selectedCategory, imgUri) => {
+    this.props.navigation.navigate('MakePlanStep1', {
+      planName: planName, category: selectedCategory, userID: this.state.userID, uri: imgUri, 
+    });
   }
 
   render() {
@@ -115,6 +139,7 @@ export default class PlanMain extends Component {
       nowPlanList,
       planListFromServer,
       userID,
+      uriListFromServer,
     } = this.state;
 
     if (isFaceRegisterd) {
@@ -125,35 +150,35 @@ export default class PlanMain extends Component {
               <View style={styles.categoryBtnContainer}>
                 <TouchableOpacity
                   style={selectedCategory === '운동/건강' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('운동/건강', planListFromServer)}
+                  onPress={() => this.setPlanList('운동/건강', planListFromServer, uriListFromServer)}
                 >
                   <Text>운동/건강</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '감정관리' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('감정관리', planListFromServer)}
+                  onPress={() => this.setPlanList('감정관리', planListFromServer, uriListFromServer)}
                 >
                   <Text>감정관리</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '생활습관' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('생활습관', planListFromServer)}
+                  onPress={() => this.setPlanList('생활습관', planListFromServer, uriListFromServer)}
                 >
                   <Text>생활습관</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '자기계발' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('자기계발', planListFromServer)}
+                  onPress={() => this.setPlanList('자기계발', planListFromServer, uriListFromServer)}
                 >
                   <Text>자기계발</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '기타' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
-                  onPress={() => this.setPlanList('기타', planListFromServer)}
+                  onPress={() => this.setPlanList('기타', planListFromServer, uriListFromServer)}
                 >
                   <Text>기타</Text>
                 </TouchableOpacity>
@@ -164,9 +189,10 @@ export default class PlanMain extends Component {
               <View style={styles.plansContainer}>
                 {nowPlanList.map((data) => (
                   <PlanListEach
-                    key={data}
-                    name={data}
-                    planSelectFunc={() => this.planSelected(data, selectedCategory)}
+                    key={data.name}
+                    name={data.name}
+                    uri={data.uri}
+                    planSelectFunc={() => this.planSelected(data.name, selectedCategory, data.uri)}
                   />
                 ))}
               </View>

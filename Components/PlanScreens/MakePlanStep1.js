@@ -117,7 +117,7 @@ export default class PlanMain extends Component {
         <View style={styles.viewContainer}>
           <View style={styles.selectedInformContainer}>
             <Image 
-              source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
+              source={{ uri: this.props.route.params.uri }} 
               style={styles.imageStyle}
             />
             <View style={styles.infoTitle}>
@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     marginLeft: 10,
     borderRadius: 25,
   },

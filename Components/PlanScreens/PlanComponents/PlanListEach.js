@@ -18,7 +18,7 @@ export default class PlanListEach extends Component {
         onPress={this.props.planSelectFunc}
       >
         <Image 
-          source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
+          source={{ uri: this.props.uri }} 
           style={styles.imageStyle}
         />
         <Text>{this.props.name}</Text>
