@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
-import Watcher from './Watcher';
+import Watcher from './TabList/Watcher';
 
 const { width, height } = Dimensions.get('window');
 

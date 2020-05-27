@@ -6,9 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Button,
 } from 'react-native';
-import { Input } from 'react-native-elements';
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import RecommendList from './TabList/RecommendList';
 import AllCateList from './TabList/AllCateList';
@@ -17,8 +16,7 @@ const { height, width } = Dimensions.get('window');
 
 export default class Searchscreen extends Component {
   state = {
-    // eslint-disable-next-line react/no-unused-state
-    search: '',
+  
     selectedRecommend: '',
     selectedAllCate: '',
 
@@ -31,28 +29,8 @@ export default class Searchscreen extends Component {
     test: ['1', '2', '3', '4'],
     
   };
-
-  // eslint-disable-next-line react/sort-comp
-  updateSearch = (changedSearch) => {
-    // eslint-disable-next-line react/no-unused-state
-    this.setState({ search: changedSearch });
-  };
-
-  async sendSearch() {
-    await axios
-      .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
-      // eslint-disable-next-line no-unused-vars
-      .then((res) => {
-        //        alert(res);
-      })
-      .catch((error) => {
-        console.log(error);
-        //        alert(error);
-      });
-
-    this.props.navigation.navigate('PlanSearched');
-  }
-
+  
+  
   componentDidMount() {
     this.setPlanList('10대');
     this.setPlanListAllCate('운동/건강');
@@ -113,25 +91,18 @@ export default class Searchscreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
-          <Text style={styles.searchTitle}>
-            관심 있는 키워드를 아래에 입력해 보세요
-          </Text>
-
-          <View style={styles.searchBar}>
-            <Input
-              placeholder="Type Here..."
-              onChangeText={(changedSearch) => {
-                this.updateSearch(changedSearch);
-              }}
-            />
-            <Button
-              title="검색"
-              type="solid"
-              onPress={() => {
-                this.sendSearch();
-              }}
-            />
-          </View>
+          
+          <TouchableOpacity
+            style={styles.searchBar}
+            onPress={() => this.props.navigation.navigate('Searching')}
+            >
+            <FontAwesome name="search" size={20} style={{ marginLeft: 15 }} />
+            <Text style={styles.searchTitle}>
+              입력해주세요
+            </Text>
+          </TouchableOpacity>
+            
+          
         </View>
 
         <ScrollView style={styles.scrollContainer}>
@@ -321,16 +292,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   searchContainer: {
+    alignItems: 'center',
     width: width * 0.95,
   },
   searchTitle: {
     marginLeft: 10,
-    marginTop: 5,
   },
   searchBar: {
-    width: width * 0.84,
+    width: width * 0.9,
+    height: height * 0.05,
+    alignItems: 'center',
+    borderRadius: 10,
     flexDirection: 'row',
+    backgroundColor: '#F2F2F2',
     marginTop: 5,
+    marginBottom: 10,
   },
   scrollContainer: {
     width: width * 1,
@@ -338,7 +314,7 @@ const styles = StyleSheet.create({
   recommendTitle: {
     fontWeight: 'bold',
     marginHorizontal: 25,
-    marginTop: 25,
+    marginTop: 15,
     fontSize: 24,
   },
   recommendSubTitle: {
