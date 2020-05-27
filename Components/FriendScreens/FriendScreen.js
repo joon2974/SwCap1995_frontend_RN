@@ -137,7 +137,7 @@ export default class FriendScreen extends Component {
 
         <View style={styles.lineDivider} />
 
-        <View style={styles.friendRequestContainer}>
+        <ScrollView style={styles.friendRequestContainer}>
           <View style={styles.friendRequetContainer}>
             <View style={styles.titleContainerSmall}>
               <Text style={styles.titleStyle}>친구 요청</Text>
@@ -146,7 +146,7 @@ export default class FriendScreen extends Component {
               {friendRequsts}
             </ScrollView>
           </View>
-        </View>
+        </ScrollView>
 
         <View style={styles.lineDivider} />
 
