@@ -21,6 +21,8 @@ export default class HomeMain extends Component {
   state = { 
     isInformChecked: false,
     userEmail: '',
+    userId: '',
+    planData: [],
   }; 
 
   componentDidMount() {
@@ -30,6 +32,7 @@ export default class HomeMain extends Component {
       this.setState({ userEmail: email });
       this.isInfoContain(email);
     }
+    this.loadUserID();
   }
 
   componentWillUnmount() {
@@ -69,55 +72,90 @@ export default class HomeMain extends Component {
     console.log('asdf', ji);
   }
 
-  render() {
-    const { isInformChecked, userEmail } = this.state;
+  loadUserID = async () => {
+    await AsyncStorage.getItem('UserID').then((id) => {
+      this.state.userId = id;
+      this.loadAllPlan(id);
+    });
+  };
 
+  loadAllPlan = async (userId) => {
+    console.log('유저아이디1', userId);
+    const response = await axios.get(
+      'http://49.50.172.58:3000/plans/all/' + userId,
+    );
+    console.log(response.data);
+    const responseJson = await response.data.rows;
+    const count = await response.data.count;
+    var planarray;
+    try {
+      if (count !== 0) {
+        for (var i = 0; i < count; i++) {
+          const obj = { title: responseJson[i].title, url: responseJson[i].image_url };
+          planarray = this.state.planData.concat(obj);
+          this.setState({
+            planData: planarray,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    console.log('플랜데이터', this.state.planData[0].url);
+  };
+
+  render() {
+    const { isInformChecked, userEmail, planData } = this.state;
+    const plans = planData.map((data) => (
+      <MyPlan
+        key={data.title}
+        title={data.title}
+        btnFunc={() => alert('더보기')}
+        url={data.url}
+      />
+    ));
     if (isInformChecked) {
       return (
-        <View style={styles.container}>
-          <View style={styles.planContainer}>
-            <Text>진행중인 플랜</Text>
-            <ScrollView 
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: 'center',
-                paddingStart: 5,
-                paddingEnd: 5,
-              }}
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.planContainer}>
+              <Text>진행중인 플랜</Text>
+              <ScrollView 
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: 'center',
+                  paddingStart: 5,
+                  paddingEnd: 5,
+                }}
                             >
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />              
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />              
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />
-            </ScrollView>
-          </View>
-          <View style={styles.planContainer}>
-            <Text>감시중인 플랜</Text>
-            <ScrollView 
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: 'center',
-                paddingStart: 5,
-                paddingEnd: 5,
-              }}
+                {plans}
+              </ScrollView>
+            </View>
+            <View style={styles.lineDivider} />
+            <View style={styles.planContainer}>
+              <Text>감시중인 플랜</Text>
+              <ScrollView 
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: 'center',
+                  paddingStart: 5,
+                  paddingEnd: 5,
+                }}
                             >
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />              
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />              
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />              
-              <MyPlan 
-                btnFunc={() => alert('더보기')} />
-            </ScrollView>
+                <MyPlan 
+                  btnFunc={() => alert('더보기')} />              
+                <MyPlan 
+                  btnFunc={() => alert('더보기')} />              
+                <MyPlan 
+                  btnFunc={() => alert('더보기')} />              
+                <MyPlan 
+                  btnFunc={() => alert('더보기')} />
+              </ScrollView>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       );
     } else if (isInformChecked === false) {
       return <InputInfo checkFunc={this.informExistCheck} userEmail={userEmail} />;
@@ -135,9 +173,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   planContainer: {
-    
+    marginTop: 20,
     alignItems: 'center',
     width: width * 0.9,
-    height: height * 0.4,
+    height: height * 0.38,
+  },  
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
   },
 });

@@ -102,11 +102,13 @@ export default class MyMenuScreen extends Component {
             </View>
           </View>
 
+          <View style={styles.lineDivider} />
           <View style={styles.calendarContainer}>
             <PlanCalendar />
           
           </View>
 
+          <View style={styles.lineDivider} />
           <View style={styles.planContainer}>
             <MyPlan 
               btnFunc={() => alert('더보기')}
@@ -123,7 +125,7 @@ export default class MyMenuScreen extends Component {
           />
 
             <MyPageBtn 
-              btnName="로그 아웃"
+              btnName="로그아웃"
               btnFunc={() => firebase.auth().signOut()}
           />
           </View>
@@ -138,17 +140,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
     backgroundColor: 'white',
   },
   myInfoContainer: {
-    width: width,
+    marginTop: 5,
+    width: width * 0.9,
     height: height / 4,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 25,
   },
   profilePhotoContainer: {
     width: width / 3,
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
   profilePhotoStyle: {
     width: 80,
     height: 80,
-    borderRadius: 40,
+    borderRadius: 25,
   },
   userInfoContainer: {
     height: height / 4,
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 25,
     width: 60,
     height: 35,
     backgroundColor: '#fe5746',
@@ -221,5 +223,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
   },
-  
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
+    marginBottom: 15,
+    marginTop: 15,
+  },
 });
