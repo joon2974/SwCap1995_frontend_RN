@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import MyPageBtn from './MyComponents/MyPageBtn';
 import MyPlan from './MyComponents/MyPlan';
+import PlanCalendar from './MyComponents/PlanCalendar';
 
 const { height, width } = Dimensions.get('window');
 
@@ -102,7 +103,8 @@ export default class MyMenuScreen extends Component {
           </View>
 
           <View style={styles.calendarContainer}>
-            <Text>달력 출력</Text>
+            <PlanCalendar />
+          
           </View>
 
           <View style={styles.planContainer}>
@@ -145,6 +147,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 5,
   },
   profilePhotoContainer: {
     width: width / 3,
@@ -188,14 +192,12 @@ const styles = StyleSheet.create({
   calendarContainer: {
     width: width,
     height: height / 3,
-    backgroundColor: 'yellow',
     alignItems: 'center',
     justifyContent: 'center',
   },
   planContainer: {
     width: width,
     height: height / 3,
-    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
   },

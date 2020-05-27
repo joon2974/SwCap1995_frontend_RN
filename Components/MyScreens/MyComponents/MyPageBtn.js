@@ -23,7 +23,7 @@ export default class MyPageBtn extends Component {
 
 const styles = StyleSheet.create({
   BtnStyle: {
-    width: width / 3,
+    width: width / 3.3,
     height: 45,
     backgroundColor: 'white',
     alignItems: 'center',
