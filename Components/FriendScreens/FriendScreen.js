@@ -102,7 +102,7 @@ export default class FriendScreen extends Component {
 />
     ));
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.buttonContainer}>
           <View style={styles.titleCotainer}>
             <View style={styles.titleContainerSmall}>
@@ -137,7 +137,7 @@ export default class FriendScreen extends Component {
 
         <View style={styles.lineDivider} />
 
-        <View style={styles.friendRequestContainer}>
+        <ScrollView style={styles.friendRequestContainer}>
           <View style={styles.friendRequetContainer}>
             <View style={styles.titleContainerSmall}>
               <Text style={styles.titleStyle}>친구 요청</Text>
@@ -146,23 +146,19 @@ export default class FriendScreen extends Component {
               {friendRequsts}
             </ScrollView>
           </View>
-        </View>
+        </ScrollView>
 
         <View style={styles.lineDivider} />
 
-        <View style={styles.friendContainer}>
+        <ScrollView>
           <View style={styles.friendRequetContainer}>
             <View style={styles.titleContainerSmall}>
               <Text style={styles.titleStyle}>친구 목록</Text>
             </View>
-            <View style={{ height: height * 0.5, width: width }}>
-              <ScrollView>
-                <View>{friends}</View>
-              </ScrollView>
-            </View>
+            {friends}
           </View>
-        </View>
-      </View>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
