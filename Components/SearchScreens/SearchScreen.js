@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  Image,
   TouchableOpacity,
   Dimensions,
   Button,
@@ -18,6 +17,7 @@ const { height, width } = Dimensions.get('window');
 
 export default class Searchscreen extends Component {
   state = {
+    // eslint-disable-next-line react/no-unused-state
     search: '',
     selectedRecommend: '',
     selectedAllCate: '',
@@ -28,21 +28,24 @@ export default class Searchscreen extends Component {
     nowRecommendUri: ['1', '2', '3', '4'],
     nowAllCateUri: ['1', '2', '3', '4'],
 
-    test:['1','2','3','4'],
+    test: ['1', '2', '3', '4'],
     
   };
 
-  updateSearch = changedSearch => {
+  // eslint-disable-next-line react/sort-comp
+  updateSearch = (changedSearch) => {
+    // eslint-disable-next-line react/no-unused-state
     this.setState({ search: changedSearch });
   };
 
   async sendSearch() {
     await axios
       .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
-      .then(res => {
+      // eslint-disable-next-line no-unused-vars
+      .then((res) => {
         //        alert(res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         //        alert(error);
       });
@@ -55,56 +58,49 @@ export default class Searchscreen extends Component {
     this.setPlanListAllCate('운동/건강');
   }
 
-  setPlanList = categoryName => {
+  setPlanList = (categoryName) => {
     this.setState({ selectedRecommend: categoryName });
 
     
-    axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then(res=>{
-      this.setState({nowRecommendUri:res.data.data.categoryGet});
-
-    }).catch(error=>{
+    axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then((res) => {
+      this.setState({ nowRecommendUri: res.data.data.categoryGet });
+    }).catch((error) => {
       console.log(error);
       alert(error);
     });
 
 
-    axios.get('http://49.50.172.58:3000/detailedCategories/1').then(res=>{
-
-      this.setState({nowRecommendList:res.data.rows});
-    }).catch(error=>{
+    axios.get('http://49.50.172.58:3000/detailedCategories/1').then((res) => {
+      this.setState({ nowRecommendList: res.data.rows });
+    }).catch((error) => {
       console.log(error);
       alert(error);
     });
-
   }
 
-  setPlanListAllCate = categoryName => {
+  setPlanListAllCate = (categoryName) => {
     this.setState({ selectedAllCate: categoryName });
 
     // const planListAllCate = allCateListTemplate[categoryName];
     // this.setState({nowAllCateList:planListAllCate});
     
-    axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then(res=>{
-      this.setState({nowAllCateUri:res.data.data.categoryGet});
-
-    }).catch(error=>{
+    axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then((res) => {
+      this.setState({ nowAllCateUri: res.data.data.categoryGet });
+    }).catch((error) => {
       console.log(error);
       alert(error);
     });
 
 
-    axios.get('http://49.50.172.58:3000/detailedCategories/1').then(res=>{
-
-      this.setState({nowAllCateList:res.data.rows});
-    }).catch(error=>{
+    axios.get('http://49.50.172.58:3000/detailedCategories/1').then((res) => {
+      this.setState({ nowAllCateList: res.data.rows });
+    }).catch((error) => {
       console.log(error);
       alert(error);
     });
-
   }
 
   render() {
-    
     const {
       selectedRecommend,
       selectedAllCate,
@@ -124,7 +120,7 @@ export default class Searchscreen extends Component {
           <View style={styles.searchBar}>
             <Input
               placeholder="Type Here..."
-              onChangeText={changedSearch => {
+              onChangeText={(changedSearch) => {
                 this.updateSearch(changedSearch);
               }}
             />
@@ -204,13 +200,13 @@ export default class Searchscreen extends Component {
           </View>
 
           <View style={styles.planContainer}>
-            {this.state.test.map((data,index) => (
+            {this.state.test.map((data, index) => (
               <RecommendList
                 key={data}
                 name={nowRecommendList}
-                index = {index}
-                imageUri = {nowRecommendUri}
-                explore = {()=>  this.props.navigation.navigate('DetailPlan', {name : data})}
+                index={index}
+                imageUri={nowRecommendUri}
+                explore={() => this.props.navigation.navigate('DetailPlan', { name: data })}
               />
             ))}
           </View>
@@ -293,9 +289,9 @@ export default class Searchscreen extends Component {
               <AllCateList
                 key={data}
                 name={nowAllCateList}
-                index = {index}
-                imageUri = {nowAllCateUri}
-                explore = {()=>  this.props.navigation.navigate('PlanList')}
+                index={index}
+                imageUri={nowAllCateUri}
+                explore={() => this.props.navigation.navigate('PlanList')}
               />
             ))}
           </View>

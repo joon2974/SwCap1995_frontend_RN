@@ -13,7 +13,6 @@ const { width, height } = Dimensions.get('window');
 
 export default class HotPlanList extends Component {
   render() {
-
     return (
       <TouchableOpacity 
         style={styles.container}
@@ -24,10 +23,10 @@ export default class HotPlanList extends Component {
           style={styles.imageStyle}
         />
         <View>
-          <Text style = {{marginLeft:20, marginBottom:20, fontSize:20}}>
+          <Text style={{ marginLeft: 20, marginBottom: 20, fontSize: 20 }}>
             플랜 타이틀
           </Text>
-          <Text style = {{marginLeft:20, fontSize:20}}>
+          <Text style={{ marginLeft: 20, fontSize: 20 }}>
             작성일 ~~~~~~
           </Text>
         
@@ -44,9 +43,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     margin: 2,
-    marginBottom:6,
+    marginBottom: 6,
     borderRadius: 10,
-    flexDirection : 'row',
+    flexDirection: 'row',
 
     ...Platform.select({
       ios: {
@@ -69,6 +68,6 @@ const styles = StyleSheet.create({
     height: height * 0.14,
     borderRadius: 10,
     marginBottom: 5,
-    marginLeft:5,
+    marginLeft: 5,
   },
 });

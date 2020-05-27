@@ -3,8 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  Image,
   Dimensions,
   ScrollView,
 } from 'react-native';
@@ -13,176 +11,173 @@ import HotPlanList from './TabList/HotPlanList';
 
 const { width, height } = Dimensions.get('window');
 
-export default class DetailPlan extends Component{
-
+export default class DetailPlan extends Component {
     state = {
-        nowPlanTitle : '1',
-        nowPlanImage : '2',
-        nowPlanDescription : '3',
-        nowWatcherList : 'A, B, C, D',
-        nowCreatedAt : '',
-        nowUpdatedAt : '',
+      // eslint-disable-next-line react/no-unused-state
+      nowPlanTitle: '1',
+      // eslint-disable-next-line react/no-unused-state
+      nowPlanImage: '2',
+      // eslint-disable-next-line react/no-unused-state
+      nowPlanDescription: '3',
+      // eslint-disable-next-line react/no-unused-state
+      nowWatcherList: 'A, B, C, D',
+      // eslint-disable-next-line react/no-unused-state
+      nowCreatedAt: '',
+      // eslint-disable-next-line react/no-unused-state
+      nowUpdatedAt: '',
         
-        watchers:['1','2','3','4','5'],
-        watchersComment:['hello','bye','thank','u','...'],
+      watchers: ['1', '2', '3', '4', '5'],
+      watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
 
-        para : this.props.route.params,
+      // eslint-disable-next-line react/no-unused-state
+      para: this.props.route.params,
 
     }
 
-    componentDidMount(){
-        this.setPlan();
-        
+    componentDidMount() {
+      this.setPlan();
     }
 
-    setPlan = () =>{0
-        axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then(res => {
-    
-            this.setState({nowPlanTitle: res.data.data.categoryGet[0].name});          
-            this.setState({nowPlanImage : res.data.data.categoryGet[0].image_url});
-            this.setState({nowPlanDescription:res.data.data.categoryGet[0].description});
-            this.setState({nowCreatedAt:res.data.data.categoryGet[0].createdAt});
-            this.setState({nowUpdatedAt : res.data.data.categoryGet[0].updatedAt});
-            //alert(res);
-        }).catch(error => {
-            console.log(error);
-            //alert(error);
-        });
-
-        
+    setPlan = () => {
+      axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then((res) => {
+        // eslint-disable-next-line react/no-unused-state
+        this.setState({ nowPlanTitle: res.data.data.categoryGet[0].name });          
+        // eslint-disable-next-line react/no-unused-state
+        this.setState({ nowPlanImage: res.data.data.categoryGet[0].image_url });
+        // eslint-disable-next-line react/no-unused-state
+        this.setState({ nowPlanDescription: res.data.data.categoryGet[0].description });
+        // eslint-disable-next-line react/no-unused-state
+        this.setState({ nowCreatedAt: res.data.data.categoryGet[0].createdAt });
+        // eslint-disable-next-line react/no-unused-state
+        this.setState({ nowUpdatedAt: res.data.data.categoryGet[0].updatedAt });
+        // alert(res);
+      }).catch((error) => {
+        console.log(error);
+        // alert(error);
+      });
     }
 
-    render(){
-        
-        return (
+    render() {
+      return (
           
-            <View style = {styles.container}>
+        <View style={styles.container}>
                
-                <ScrollView contentContainerStyle = {{alignItems:'center'}}>
+          <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
 
 
-                    <View  style={styles.titleInfoContainer}>
-                        <Text style = {styles.titleStyle}>
-                            {'%%대 인기 PLAN TOP 20'}
-                        </Text>
+            <View style={styles.titleInfoContainer}>
+              <Text style={styles.titleStyle}>
+                %%대 인기 PLAN TOP 20
+              </Text>
                         
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-                    
-                    <View  style={styles.titleInfoContainer}>
-                        
-                        
-                        <View>
-                        {
-                            this.state.watchers.map((data,index)=>(
-                                <View>
-                                    <HotPlanList 
-                                        key={data}
-                                        index = {index}
-                                        comment = {this.state.watchersComment}
-                                        explore = {()=>this.props.navigation.navigate('DetailPlan')}
-                                    >
-
-                                    </HotPlanList>
-                                </View>
-                            ))
-                                
-                                
-                        }
-                        </View>
-
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-                    
-
-                    <View  style={styles.titleInfoContainer}>
-                        
-                        
-                        <View>
-                        {
-                            this.state.watchers.map((data,index)=>(
-                                <View>
-                                    <HotPlanList 
-                                        key={data}
-                                        index = {index}
-                                        comment = {this.state.watchersComment}
-                                    >
-
-                                    </HotPlanList>
-                                </View>
-                            ))
-                                
-                                
-                        }
-                        </View>
-
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-                    
-
-                    <View  style={styles.titleInfoContainer}>
-                        
-                        
-                        <View>
-                        {
-                            this.state.watchers.map((data,index)=>(
-                                <View>
-                                    <HotPlanList 
-                                        key={data}
-                                        index = {index}
-                                        comment = {this.state.watchersComment}
-                                    >
-
-                                    </HotPlanList>
-                                </View>
-                            ))
-                                
-                                
-                        }
-                        </View>
-
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-                    
-
-                    <View  style={styles.titleInfoContainer}>
-                        
-                        
-                        <View>
-                        {
-                            this.state.watchers.map((data,index)=>(
-                                <View>
-                                    <HotPlanList 
-                                        key={data}
-                                        index = {index}
-                                        comment = {this.state.watchersComment}
-                                    >
-
-                                    </HotPlanList>
-                                </View>
-                            ))
-                                
-                                
-                        }
-                        </View>
-
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-                    
-                    <View style={{marginVertical:20}} />
-
-                </ScrollView>
+              <View style={{ marginBottom: 10 }} />
 
             </View>
+                    
+            <View style={styles.titleInfoContainer}>
+                        
+                        
+              <View>
+                {
+                            this.state.watchers.map((data, index) => (
+                              <View>
+                                <HotPlanList 
+                                  key={data}
+                                  index={index}
+                                  comment={this.state.watchersComment}
+                                  explore={() => this.props.navigation.navigate('DetailPlan')}
+                                     />
+                              </View>
+                            ))
+                                
+                                
+                        }
+              </View>
 
-        );
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                    
+
+            <View style={styles.titleInfoContainer}>
+                        
+                        
+              <View>
+                {
+                            this.state.watchers.map((data, index) => (
+                              <View>
+                                <HotPlanList 
+                                  key={data}
+                                  index={index}
+                                  comment={this.state.watchersComment}
+                                     />
+                              </View>
+                            ))
+                                
+                                
+                        }
+              </View>
+
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                    
+
+            <View style={styles.titleInfoContainer}>
+                        
+                        
+              <View>
+                {
+                            this.state.watchers.map((data, index) => (
+                              <View>
+                                <HotPlanList 
+                                  key={data}
+                                  index={index}
+                                  comment={this.state.watchersComment}
+                                     />
+                              </View>
+                            ))
+                                
+                                
+                        }
+              </View>
+
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                    
+
+            <View style={styles.titleInfoContainer}>
+                        
+                        
+              <View>
+                {
+                            this.state.watchers.map((data, index) => (
+                              <View>
+                                <HotPlanList 
+                                  key={data}
+                                  index={index}
+                                  comment={this.state.watchersComment}
+                                     />
+                              </View>
+                            ))
+                                
+                                
+                        }
+              </View>
+
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                    
+            <View style={{ marginVertical: 20 }} />
+
+          </ScrollView>
+
+        </View>
+
+      );
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -204,6 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
 
+    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -230,7 +226,7 @@ const styles = StyleSheet.create({
     width: width * 0.75,
     height: height * 0.2,
     borderRadius: 10,
-    marginLeft:10,
+    marginLeft: 10,
   },
 
   titleInfoContainer: {
@@ -241,6 +237,7 @@ const styles = StyleSheet.create({
     margin: 6,
     padding: 10,
 
+    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -278,8 +275,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     height: height * 0.04,
-    marginLeft:24,
-},
+    marginLeft: 24,
+  },
 
   dateInfo: {
     fontSize: 12,

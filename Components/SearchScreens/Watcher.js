@@ -12,26 +12,25 @@ const { width, height } = Dimensions.get('window');
 
 export default class Watcher extends Component {
   render() {
-
-    let uri = 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg';
+    const uri = 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg';
 
     return (
-        <TouchableOpacity 
-            style={styles.container}
-            onPress={this.props.explore}
+      <TouchableOpacity 
+        style={styles.container}
+        onPress={this.props.explore}
         >
-            <Image 
-            source={{ uri: uri }} 
-            style={styles.imageStyle}
+        <Image 
+          source={{ uri: uri }} 
+          style={styles.imageStyle}
             />
-            <Text style = {styles.watcherInfo}>
-                {this.props.index}
-            </Text>
-            <Text style = {styles.watcherInfo}>
-                {this.props.comment[this.props.index]}
-            </Text>
+        <Text style={styles.watcherInfo}>
+          {this.props.index}
+        </Text>
+        <Text style={styles.watcherInfo}>
+          {this.props.comment[this.props.index]}
+        </Text>
 
-        </TouchableOpacity>
+      </TouchableOpacity>
 
     );
   }
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 4,
     borderRadius: 10,
-    flexDirection:'row',
+    flexDirection: 'row',
 
     ...Platform.select({
       ios: {
@@ -70,8 +69,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
 
-  watcherInfo:{
-    marginLeft:20,
-    fontSize:14,
+  watcherInfo: {
+    marginLeft: 20,
+    fontSize: 14,
   },
 });

@@ -12,14 +12,13 @@ const { width, height } = Dimensions.get('window');
 
 export default class RecommendList extends Component {
   render() {
-
     return (
       <TouchableOpacity 
         style={styles.container}
         onPress={this.props.explore}
       >
         <Image 
-          source={{ uri: this.props.imageUri[this.props.index].image_url}} 
+          source={{ uri: this.props.imageUri[this.props.index].image_url }} 
           style={styles.imageStyle}
         />
         <Text>{this.props.name[this.props.index].detailedCategory}</Text>

@@ -10,172 +10,161 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import Watcher from './Watcher';
-import { BaseRouter } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
-export default class DetailPlan extends Component{
-
+export default class DetailPlan extends Component {
     state = {
-        nowPlanTitle : '1',
-        nowPlanImage : '2',
-        nowPlanDescription : '3',
-        nowWatcherList : 'A, B, C, D',
-        nowCreatedAt : '',
-        nowUpdatedAt : '',
+      nowPlanTitle: '1',
+      nowPlanImage: '2',
+      nowPlanDescription: '3',
+      // eslint-disable-next-line react/no-unused-state
+      nowWatcherList: 'A, B, C, D',
+      nowCreatedAt: '',
+      nowUpdatedAt: '',
     
-        watchers:['1','2','3','4','5'],
-        watchersComment:['hello','bye','thank','u','...'],
+      watchers: ['1', '2', '3', '4', '5'],
+      watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
     
 
-        para : this.props.route.params,
+      // eslint-disable-next-line react/no-unused-state
+      para: this.props.route.params,
     
     }
 
-    componentDidMount(){
-        this.setPlan();
-        
+    componentDidMount() {
+      this.setPlan();
     }
 
-    setPlan = () =>{
-      
- //       console.log(this.state.para);  파라미터 넘기는거 확인
+    setPlan = () => {
+      //       console.log(this.state.para);  파라미터 넘기는거 확인
         
-        axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then(res => {
-    
-            this.setState({nowPlanTitle: res.data.data.categoryGet[0].name});          
-            this.setState({nowPlanImage : res.data.data.categoryGet[0].image_url});
-            this.setState({nowPlanDescription:res.data.data.categoryGet[0].description});
-            this.setState({nowCreatedAt:res.data.data.categoryGet[0].createdAt});
-            this.setState({nowUpdatedAt : res.data.data.categoryGet[0].updatedAt});
-            //alert(res);
-        }).catch(error => {
-            console.log(error);
-            //alert(error);
-        });
-
-        
+      axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then((res) => {
+        this.setState({ nowPlanTitle: res.data.data.categoryGet[0].name });          
+        this.setState({ nowPlanImage: res.data.data.categoryGet[0].image_url });
+        this.setState({ nowPlanDescription: res.data.data.categoryGet[0].description });
+        this.setState({ nowCreatedAt: res.data.data.categoryGet[0].createdAt });
+        this.setState({ nowUpdatedAt: res.data.data.categoryGet[0].updatedAt });
+        // alert(res);
+      }).catch((error) => {
+        console.log(error);
+        // alert(error);
+      });
     }
 
-    render(){
-        
-        return (
+    render() {
+      return (
           
-            <View style = {styles.container}>
+        <View style={styles.container}>
                
-                <ScrollView contentContainerStyle = {{alignItems:'center'}}>
+          <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
 
-                    <TouchableOpacity 
-                        style={styles.titleImageContainer}
+            <TouchableOpacity 
+              style={styles.titleImageContainer}
                     >
-                        <Image 
-                            style={styles.imageStyle}
-                            source={{uri : this.state.nowPlanImage} } 
+              <Image 
+                style={styles.imageStyle}
+                source={{ uri: this.state.nowPlanImage }} 
                         />
-                    </TouchableOpacity>
+            </TouchableOpacity>
 
-                    <View  style={styles.titleInfoContainer}>
-                        <Text style = {styles.titleStyle}>
-                            {'제목 : ' + this.state.nowPlanTitle}
-                        </Text>
+            <View style={styles.titleInfoContainer}>
+              <Text style={styles.titleStyle}>
+                {'제목 : ' + this.state.nowPlanTitle}
+              </Text>
                         
-                        <Text style = {styles.subTitleStyle}>
-                            {'부제 : ' + this.state.nowPlanDescription}
-                        </Text>
+              <Text style={styles.subTitleStyle}>
+                {'부제 : ' + this.state.nowPlanDescription}
+              </Text>
                         
-                        <Text style = {styles.dateInfo}>
-                            {'작성일 : ' + this.state.nowCreatedAt + '\n'}
-                            {'수정일 : ' + this.state.nowUpdatedAt}
-                        </Text>
+              <Text style={styles.dateInfo}>
+                {'작성일 : ' + this.state.nowCreatedAt + '\n'}
+                {'수정일 : ' + this.state.nowUpdatedAt}
+              </Text>
 
-                        <View style={{marginBottom:10}} />
+              <View style={{ marginBottom: 10 }} />
 
-                    </View>
+            </View>
                     
-                    <View  style={styles.titleInfoContainer}>
-                        <Text style = {styles.titleStyle}>
-                            {'감시자들'}
-                        </Text>
+            <View style={styles.titleInfoContainer}>
+              <Text style={styles.titleStyle}>
+                감시자들
+              </Text>
                         
-                        <View>
-                        {
-                            this.state.watchers.map((data,index)=>(
-                                <View>
-                                    <Watcher 
-                                        key={data}
-                                        index = {index}
-                                        comment = {this.state.watchersComment}
-                                    >
-
-                                    </Watcher>
-                                </View>
+              <View>
+                {
+                            this.state.watchers.map((data, index) => (
+                              <View>
+                                <Watcher 
+                                  key={data}
+                                  index={index}
+                                  comment={this.state.watchersComment}
+                                     />
+                              </View>
                             ))
                                 
                                 
                         }
-                        <TouchableOpacity
-                                style={styles.moreExplore}
+                <TouchableOpacity
+                  style={styles.moreExplore}
                             >
-                                <Text>감시자들 더보기</Text>
-                            </TouchableOpacity>
-                        </View>
+                  <Text>감시자들 더보기</Text>
+                </TouchableOpacity>
+              </View>
 
-                        <View style={{marginBottom:10}} />
+              <View style={{ marginBottom: 10 }} />
 
-                    </View>
-                    
+            </View>
                 
 
-                    <View  style={styles.titleInfoContainer}>
-                        <Text style = {styles.titleStyle}>
-                            인증 방법에 대해...
-                        </Text>
-                        <Text style = {styles.subTitleStyle}>
-                            RULE 1 : ~~~~~~~~~{'\n'}
-                            RULE 2 : ~~~~~~~~~{'\n'}
-                            RULE 3 : ~~~~~~~~~{'\n'}
-                            RULE 4 : ~~~~~~~~~
-                        </Text>
+            <View style={styles.titleInfoContainer}>
+              <Text style={styles.titleStyle}>
+                인증 방법에 대해...
+              </Text>
+              <Text style={styles.subTitleStyle}>
+                RULE 1 : ~~~~~~~~~
+                {'\n'}
+                RULE 2 : ~~~~~~~~~
+                {'\n'}
+                RULE 3 : ~~~~~~~~~
+                {'\n'}
+                RULE 4 : ~~~~~~~~~
+              </Text>
 
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-
-                    <View  style={styles.titleInfoContainer}>
-                        <Text style = {styles.titleStyle}>
-                            지난 경과들...
-                        </Text>
-                        <Text style = {styles.subTitleStyle}>
-                            지난 인증 결과에 대해 궁금하시다면 아래의 달력을 클릭해 보세요{'\n'}
-                        </Text>
-
-
-                        <TouchableOpacity style={styles.calendarStyle} onPress = {()=>this.props.navigation.navigate('Calendar')}>
-                            <Image 
-                                style={styles.calendarStyle}
-                                source={{uri : this.state.nowPlanImage} } 
-                            />
-                        </TouchableOpacity>
-                        
-                        <View style={{marginBottom:10}} />
-
-                    </View>
-
-
-                    
-
-
-                   
-
-                    <View style={{marginVertical:20}} />
-
-                </ScrollView>
+              <View style={{ marginBottom: 10 }} />
 
             </View>
 
-        );
-    }
+            <View style={styles.titleInfoContainer}>
+              <Text style={styles.titleStyle}>
+                지난 경과들...
+              </Text>
+              <Text style={styles.subTitleStyle}>
+                지난 인증 결과에 대해 궁금하시다면 아래의 달력을 클릭해 보세요
+                {'\n'}
+              </Text>
 
+
+              <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('Calendar')}>
+                <Image 
+                  style={styles.calendarStyle}
+                  source={{ uri: this.state.nowPlanImage }} 
+                            />
+              </TouchableOpacity>
+                        
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                   
+
+            <View style={{ marginVertical: 20 }} />
+
+          </ScrollView>
+
+        </View>
+
+      );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -197,6 +186,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
 
+    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -223,7 +213,7 @@ const styles = StyleSheet.create({
     width: width * 0.75,
     height: height * 0.2,
     borderRadius: 10,
-    marginLeft:10,
+    marginLeft: 10,
   },
 
   titleInfoContainer: {
@@ -234,6 +224,7 @@ const styles = StyleSheet.create({
     margin: 6,
     padding: 10,
 
+    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -271,8 +262,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     height: height * 0.04,
-    marginLeft:24,
-},
+    marginLeft: 24,
+  },
 
   dateInfo: {
     fontSize: 12,

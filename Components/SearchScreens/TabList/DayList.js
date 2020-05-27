@@ -13,17 +13,16 @@ const { width, height } = Dimensions.get('window');
 
 export default class DayList extends Component {
   render() {
-
     return (
       <TouchableOpacity 
         style={styles.container}
         onPress={this.props.explore}
       >
-        <View style = {{alignItems:'center'}}>
-            <Text>
+        <View style={{ alignItems: 'center' }}>
+          <Text>
             ~월 ~일
-            </Text>
-              <Image 
+          </Text>
+          <Image 
             source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} 
             style={styles.imageStyle}
             />
@@ -39,11 +38,11 @@ const styles = StyleSheet.create({
     width: width * 0.39,
     height: height / 5,
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     backgroundColor: 'white',
     margin: 6,
     borderRadius: 10,
-    flexDirection:'row',
+    flexDirection: 'row',
 
 
     ...Platform.select({
@@ -67,6 +66,6 @@ const styles = StyleSheet.create({
     height: height * 0.14,
     borderRadius: 10,
     marginBottom: 5,
-    marginLeft:5,
+    marginLeft: 5,
   },
 });
