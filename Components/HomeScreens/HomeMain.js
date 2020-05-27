@@ -13,8 +13,6 @@ import axios from 'axios';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
-// console.disableYellowBox = true;
-
 let currentUser;
 let isInformCheck;
 
@@ -88,14 +86,14 @@ export default class HomeMain extends Component {
                 paddingEnd: 5,
               }}
                             >
-
-
-              <MyPlan />
-              
-              <MyPlan />
-              <MyPlan />
-              <MyPlan />
-              <MyPlan />
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />              
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />              
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />
             </ScrollView>
           </View>
           <View style={styles.planContainer}>
@@ -109,14 +107,14 @@ export default class HomeMain extends Component {
                 paddingEnd: 5,
               }}
                             >
-
-
-              <MyPlan />
-              
-              <MyPlan />
-              <MyPlan />
-              <MyPlan />
-              <MyPlan />
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />              
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />              
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />              
+              <MyPlan 
+                btnFunc={() => alert('더보기')} />
             </ScrollView>
           </View>
         </View>
@@ -139,7 +137,7 @@ const styles = StyleSheet.create({
   planContainer: {
     
     alignItems: 'center',
-    width: width * 0.8,
+    width: width * 0.9,
     height: height * 0.4,
   },
 });
