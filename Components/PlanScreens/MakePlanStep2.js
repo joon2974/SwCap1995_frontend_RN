@@ -24,7 +24,7 @@ export default class MakePlanStep2 extends Component {
     userBetPoint: '0',
     selectedPercent: '5%',
     selectedDist: '공평하게 n분의 1',
-    percentList: ['5%', '10%', '20%'],
+    percentList: ['5', '10', '20'],
     distribList: ['공평하게 n분의 1', '선착순', '추첨'],
   };
 
@@ -215,6 +215,9 @@ export default class MakePlanStep2 extends Component {
                 distribMethod: this.state.selectedDist,
                 spectors: this.state.selectedFriends,
                 certifyImgUri: this.props.route.params.certifyImgUri,
+                categoryUri: this.props.route.params.categoryUri,
+                userID: this.props.route.params.userID,
+                percent: this.state.selectedPercent,
               })}
             >
             <Text style={{ fontWeight: 'bold' }}>플랜 결과 확인</Text>

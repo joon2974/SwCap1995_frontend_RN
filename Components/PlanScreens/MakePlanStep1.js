@@ -35,21 +35,23 @@ export default class PlanMain extends Component {
     timeList: [],
     periodList: [],
     dateList: [],
+    ruleListFromServer: [],
   }
 
   componentDidMount() {
     this.setDateData();
+    this.loadRulesFromServer();
   }
 
   setDateData = async () => {
     const timeList = [];
     for (let i = 0; i < 23; i++) {
-      timeList.push(i.toString() + '시 ~ ' + (i + 1).toString() + '시');
+      timeList.push(i.toString());
     }
 
     const periodList = [];
     for (let i = 1; i < 5; i++) {
-      periodList.push(i.toString() + '주');
+      periodList.push(i.toString());
     }
 
     const dayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -68,36 +70,51 @@ export default class PlanMain extends Component {
     this.setState({ timeList: timeList, periodList: periodList, dateList: dateList });
   }
 
-  // 추후 rules 개념 확정 지으면 수정할 것
-  // pictureRules를 재할당 하는 async 함수
   loadRulesFromServer = async () => {
-    await axios.get('http://49.50.172.58:3000/').then((data) => {
-      const rulesFromServer = data.data.data.detailedCategoryGet;
+    await axios.get('http://49.50.172.58:3000/plan_templates').then((data) => {
+      const rulesFromServer = data.data.rows;
+      this.setState({ ruleListFromServer: rulesFromServer});
       const ruleObject = {};
+      let defaultRule;
 
-      ruleObject['운동/건강'] = this.planFilter(rulesFromServer, 1);
-      ruleObject['감정관리'] = this.planFilter(rulesFromServer, 4);
-      ruleObject['생활습관'] = this.planFilter(rulesFromServer, 2);
-      ruleObject['자기계발'] = this.planFilter(rulesFromServer, 3);
-      ruleObject['기타'] = this.planFilter(rulesFromServer, 5);
+      for (let i = 0; i < rulesFromServer.length; i++) {
+        if (rulesFromServer[i].detailedCategory == this.props.route.params.planName) {
+          const tempList = [];
 
-      this.setState({ pictureRules: ruleObject });
-      console.log('서버로부터 받아온 plan 목록: ', this.state.pictureRules);
+          tempList.push(rulesFromServer[i].sub_rule_1);
+          tempList.push(rulesFromServer[i].sub_rule_2);
+          ruleObject[rulesFromServer[i].main_rule] = tempList;
+        }
+      }
+      defaultRule = Object.keys(ruleObject)[0];
+      this.setState({ selectedMainRule: defaultRule, pictureRules: ruleObject });
+
+      let certifyPhotoUri;
+      for(let i = 0; i < rulesFromServer.length; i++) {
+        if (rulesFromServer[i].main_rule === this.state.selectedMainRule) {
+          certifyPhotoUri = rulesFromServer[i].image_url;
+        }
+      }
+      this.setState({ certifyImageUri: certifyPhotoUri });
     })
       .catch((error) => {
-        console.log('서버로부터 plans 가져오기 에러: ', error);
+        console.log('서버로부터 template 가져오기 에러: ', error);
       });
   }
 
-  // 수정 요
-  planFilter = (plansList, categoryNum) => {
-    const categoryPlans = plansList.filter((plan) => plan.topCategoryNum === categoryNum);
-    const categoryPlansName = categoryPlans.map((plan) => plan.detailedCategory);
-
-    return categoryPlansName;
-  }
-
   mainRuleFilter = (pictureRules) => Object.keys(pictureRules)
+
+  updateCertifyPhoto = (selectedMainRule) => {
+    const ruleListFromServer = this.state.ruleListFromServer;
+
+    let certifyPhotoUri;
+      for(let i = 0; i < ruleListFromServer.length; i++) {
+        if (ruleListFromServer[i].main_rule === selectedMainRule) {
+          certifyPhotoUri = ruleListFromServer[i].image_url;
+        }
+      }
+      this.setState({ certifyImageUri: certifyPhotoUri });
+  }
 
   render() {
     const {
@@ -142,7 +159,7 @@ export default class PlanMain extends Component {
                 />
               </View>
               <View style={styles.eachTimesContainer}>
-                <Text>도전 기간</Text>
+                <Text>도전 기간(주)</Text>
                 <TimePicker 
                   time={endDate}
                   onValueChange={(itemValue) => this.setState({ endDate: itemValue })}
@@ -150,7 +167,7 @@ export default class PlanMain extends Component {
                 />
               </View>
               <View style={styles.eachTimesContainer}>
-                <Text>인증 시간</Text>
+                <Text>인증 시간(시)</Text>
                 <TimePicker 
                   time={certifyTime}
                   onValueChange={(itemValue) => this.setState({ certifyTime: itemValue })}
@@ -175,9 +192,12 @@ export default class PlanMain extends Component {
             <View style={styles.rulePickContainer}>
               <RulePicker 
                 rule={selectedMainRule}
-                onValueChange={(itemValue) => this.setState({ selectedMainRule: itemValue })}
+                onValueChange={(itemValue) => {
+                  this.setState({ selectedMainRule: itemValue });
+                  this.updateCertifyPhoto(itemValue);
+                }}
                 rules={this.mainRuleFilter(pictureRules)}
-                pickerWidth={width}
+                pickerWidth={width} 
               />
               <View style={styles.subRuleContainer}>
                 <Text>{pictureRules[selectedMainRule][0]}</Text>
@@ -202,6 +222,7 @@ export default class PlanMain extends Component {
                 subRule2: this.state.pictureRules[this.state.selectedMainRule][1],
                 certifyImgUri: this.state.certifyImageUri,
                 userID: this.props.route.params.userID,
+                categoryUri: this.props.route.params.uri,
               })}
           >
             <Text style={{ fontWeight: 'bold' }}>다음 단계로</Text>

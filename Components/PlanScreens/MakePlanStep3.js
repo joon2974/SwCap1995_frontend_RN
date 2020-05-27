@@ -9,11 +9,48 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
+import axios from 'axios';
 import SpectorIcon from './PlanComponents/SpectorIcon';
 
 const { width, height } = Dimensions.get('window');
 
 export default class MakePlanStep3 extends Component {
+  sendPlanInfo = () => {
+    const today = new Date();
+    today.setDate(Number(this.props.route.params.startDate));
+
+    axios
+      .post('http://49.50.172.58:3000/plans', {
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+        },
+        user_id: Number(this.props.route.params.userID),
+        title: '타이틀',
+        category: this.props.route.params.category,
+        detailedCategory: this.props.route.params.planName,
+        picture_rule_1: this.props.route.params.selectedMainRule,
+        picture_rule_2: this.props.route.params.subRule1,
+        picture_rule_3: this.props.route.params.subRule2,
+        custom_picture_rule_1: '없음',
+        custom_picture_rule_2: '없음',
+        custom_picture_rule_3: '없음',
+        plan_period: Number(this.props.route.params.endDate),
+        picture_time: Number(this.props.route.params.certifyTime),
+        plan_start_day: today,
+        bet_money: Number(this.props.route.params.challPoint),
+        is_public: false,
+        percent: Number(this.props.route.params.percent),
+        spectors: this.props.route.params.spectors.join(),
+        distribMethod: this.props.route.params.distribMethod,
+      })
+      .then((res) => {
+        console.log(res.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   render() {
     return (
       <ScrollView style={styles.scrollViewStyle}>
@@ -21,7 +58,7 @@ export default class MakePlanStep3 extends Component {
           <View style={styles.categoryContainer}>
             <View style={styles.categoryImgContainer}>
               <Image 
-                source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
+                source={{ uri: this.props.route.params.categoryUri }} 
                 style={styles.imageStyle}
               />
             </View>
@@ -109,7 +146,10 @@ export default class MakePlanStep3 extends Component {
           </View>
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.props.navigation.popToTop()}
+            onPress={() => {
+              this.sendPlanInfo();
+              this.props.navigation.popToTop();
+            }}
           >
             <Text>플랜 생성하기</Text>
           </TouchableOpacity>
