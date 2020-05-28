@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   photoStyle: {
     borderRadius: 25,
-    width: width / 2,
+    width: width / 2.1,
     height: height / 6,
     alignItems: 'center',
     justifyContent: 'center',
