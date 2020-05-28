@@ -20,8 +20,29 @@ export default class PlanMain extends Component {
   state = {
     userID: null,
     isFaceRegisterd: false,
-    selectedCategory: '운동/건강',
-    nowPlanList: ['헬스', '다이어트', '런닝', '푸시업', '기타'],
+    selectedCategory: '1',
+    nowPlanList: [
+      {
+        name: '1',
+        uri: '10',
+      },
+      {
+        name: '2',
+        uri: '20',
+      },
+      {
+        name: '3',
+        uri: '30',
+      },
+      {
+        name: '4',
+        uri: '40',
+      },
+      {
+        name: '5',
+        uri: '50',
+      },
+    ],
     planListFromServer: null,
     uriListFromServer: null,
   } 
@@ -124,6 +145,7 @@ export default class PlanMain extends Component {
       planListWithUri.push({ name: planList[i], uri: uriList[i] });
     }
     this.setState({ nowPlanList: planListWithUri });
+    console.log('asdf', this.state.nowPlanList);
   }
 
   planSelected = (planName, selectedCategory, imgUri) => {
