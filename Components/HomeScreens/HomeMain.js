@@ -24,6 +24,7 @@ export default class HomeMain extends Component {
     userEmail: '',
     userId: '',
     planData: [],
+    watchData: [],
   }; 
 
   componentDidMount() {
@@ -89,6 +90,7 @@ export default class HomeMain extends Component {
     const responseJson = await response.data.rows;
     const count = await response.data.count;
     var planarray;
+    var watcharray;
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
@@ -107,12 +109,48 @@ export default class HomeMain extends Component {
     } catch (error) {
       console.error(error);
     }
+    const watchresponse = await axios.get(
+      'http://49.50.172.58:3000/plans/watchingAll/' + userId,
+    );
+    console.log(watchresponse.data);
+    const watchresponseJson = await watchresponse.data.rows;
+    const watchcount = await watchresponse.data.count;
+    
+    try {
+      if (count !== 0) {
+        for (var l = 0; l < watchcount; l++) {
+          const obj = {
+            title: watchresponseJson[l].title,
+            url: watchresponseJson[l].image_url, 
+            picturetime: watchresponseJson[l].picture_time, 
+            id: watchresponseJson[l].id,
+          };
+          watcharray = this.state.watchData.concat(obj);
+          this.setState({
+            watchData: watcharray,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
     console.log('플랜데이터', this.state.planData[0].url);
   };
 
   render() {
-    const { isInformChecked, userEmail, planData } = this.state;
+    const {
+      isInformChecked, userEmail, planData, watchData, 
+    } = this.state;
     const plans = planData.map((data) => (
+      <MyPlan
+        key={data.id}
+        title={data.title}
+        btnFunc={() => alert('더보기')}
+        url={data.url}
+        picturetime={data.picturetime}
+      />
+    ));
+    const watchplans = watchData.map((data) => (
       <MyPlan
         key={data.id}
         title={data.title}
@@ -151,14 +189,7 @@ export default class HomeMain extends Component {
                   paddingEnd: 5,
                 }}
               >
-                <MyPlan 
-                  btnFunc={() => alert('더보기')} />              
-                <MyPlan 
-                  btnFunc={() => alert('더보기')} />              
-                <MyPlan 
-                  btnFunc={() => alert('더보기')} />              
-                <MyPlan 
-                  btnFunc={() => alert('더보기')} />
+                {watchplans}
               </ScrollView>
             </View>
           </LinearGradient>

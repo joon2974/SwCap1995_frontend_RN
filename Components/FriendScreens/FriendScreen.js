@@ -49,7 +49,11 @@ export default class FriendScreen extends Component {
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
-          const obj = { nickname: responseJson[i].nickname, email: responseJson[i].email };
+          const obj = {
+            nickname: responseJson[i].nickname, 
+            email: responseJson[i].email,
+            id: responseJson[i].id, 
+          };
           friendarray = this.state.friendData.concat(obj);
           this.setState({
             friendData: friendarray,
@@ -68,7 +72,7 @@ export default class FriendScreen extends Component {
     try {
       if (requestcount !== 0) {
         for (var k = 0; k < requestcount; k++) {
-          const obj = { nickname: requestresponseJson[k].nickname };
+          const obj = { nickname: requestresponseJson[k].nickname, id: responseJson[k].id };
           friendRequestarray = this.state.friendRequstData.concat(obj);
           this.setState({
             friendRequstData: friendRequestarray,
@@ -85,7 +89,7 @@ export default class FriendScreen extends Component {
     const friends = friendData.map((data) => (
       <> 
         <FriendList
-          key={data.nickname}
+          key={data.id}
           nickname={data.nickname}
           email={data.email}
           userId={userId}
@@ -95,7 +99,7 @@ export default class FriendScreen extends Component {
     ));
     const friendRequsts = friendRequstData.map((data) => (
       <FriendRequestList
-        key={data.nickname}
+        key={data.id}
         nickname={data.nickname}
         userId={userId}
 />
