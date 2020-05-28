@@ -116,7 +116,6 @@ export default class PlanMain extends Component {
         if (res.data === true) {
           console.log('얼굴인식 완료된 유저');
           this.setState({ isFaceRegisterd: true });
-          this.forceUpdate();
         } else {
           console.log('얼굴인식 결과: ', res.data);
         }
@@ -145,7 +144,6 @@ export default class PlanMain extends Component {
       planListWithUri.push({ name: planList[i], uri: uriList[i] });
     }
     this.setState({ nowPlanList: planListWithUri });
-    console.log('asdf', this.state.nowPlanList);
   }
 
   planSelected = (planName, selectedCategory, imgUri) => {

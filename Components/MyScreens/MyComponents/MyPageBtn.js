@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  Platform,
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -24,7 +25,7 @@ export default class MyPageBtn extends Component {
 const styles = StyleSheet.create({
   BtnStyle: {
     width: width / 3.3,
-    height: 45,
+    height: 35,
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
@@ -32,6 +33,19 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderRadius: 25,
     marginRight: 5,
-    borderWidth: 1,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
 });

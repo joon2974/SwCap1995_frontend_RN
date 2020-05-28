@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   AsyncStorage,
+  Platform,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -88,8 +89,8 @@ export default class MyMenuScreen extends Component {
                     activeOpacity={0.8}
                     style={styles.button}
                     onPress={() => this.props.navigation.navigate('AddPoint')}
-                    >
-                    <Text style={styles.text}>충전</Text>
+                  >
+                    <Text>충전</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.quarterContainer}>
@@ -105,7 +106,6 @@ export default class MyMenuScreen extends Component {
           <View style={styles.lineDivider} />
           <View style={styles.calendarContainer}>
             <PlanCalendar />
-          
           </View>
 
           <View style={styles.lineDivider} />
@@ -120,7 +120,7 @@ export default class MyMenuScreen extends Component {
               btnFunc={() => alert('고객센터')}
           />
             <MyPageBtn 
-              btnName="비밀번호 변경하기"
+              btnName="비밀번호 변경"
               btnFunc={() => this.props.navigation.navigate('ChangePassword')}
           />
 
@@ -143,14 +143,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   myInfoContainer: {
-    marginTop: 5,
+    marginTop: 10,
     width: width * 0.9,
     height: height / 4,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
+    backgroundColor: 'white',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   profilePhotoContainer: {
     width: width / 3,
@@ -162,6 +176,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 25,
+    marginTop: 5,
   },
   userInfoContainer: {
     height: height / 4,
@@ -204,13 +219,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: 60,
-    height: 35,
-    backgroundColor: '#fe5746',
+    height: 30,
+    backgroundColor: '#FD8A69',
     justifyContent: 'center',
     alignItems: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   profilecontainer: {
     alignItems: 'center',
@@ -222,6 +250,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
+    marginTop: 10,
   },
   lineDivider: {
     backgroundColor: '#F2F2F2',

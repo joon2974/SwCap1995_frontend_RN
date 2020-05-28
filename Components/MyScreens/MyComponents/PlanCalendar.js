@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Dimensions,
   Text,
+  Platform,
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -12,7 +13,6 @@ export default class MyPlan extends Component {
   render() {
     return (
       <View style={styles.container}>
-          
         <View style={styles.rowContainer}>
           <View style={styles.weekBox}><Text>Mon</Text></View>
           <View style={styles.weekBox}><Text>Tue</Text></View>
@@ -60,7 +60,6 @@ export default class MyPlan extends Component {
         </View>
       </View>
       
-  
     );
   }
 }
@@ -68,17 +67,30 @@ export default class MyPlan extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.75,
+    width: width * 0.8,
     height: width / 2,
     backgroundColor: 'white',
     marginTop: 5,
     marginBottom: 5,
     borderRadius: 25,
     marginRight: 20,
-    borderWidth: 1,
     alignContent: 'center',
     justifyContent: 'space-between',
     padding: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   rowContainer: {
     flexDirection: 'row',

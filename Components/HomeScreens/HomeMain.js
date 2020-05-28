@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
@@ -117,9 +118,9 @@ export default class HomeMain extends Component {
     if (isInformChecked) {
       return (
         <ScrollView>
-          <View style={styles.container}>
+          <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
             <View style={styles.planContainer}>
-              <Text>진행중인 플랜</Text>
+              <Text style={{ alignSelf: 'flex-start', fontWeight: 'bold', fontSize: 18 }}>진행중인 플랜</Text>
               <ScrollView 
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -128,13 +129,13 @@ export default class HomeMain extends Component {
                   paddingStart: 5,
                   paddingEnd: 5,
                 }}
-                            >
+              >
                 {plans}
               </ScrollView>
             </View>
             <View style={styles.lineDivider} />
             <View style={styles.planContainer}>
-              <Text>감시중인 플랜</Text>
+              <Text style={{ alignSelf: 'flex-start', fontWeight: 'bold', fontSize: 18 }}>감시중인 플랜</Text>
               <ScrollView 
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -143,7 +144,7 @@ export default class HomeMain extends Component {
                   paddingStart: 5,
                   paddingEnd: 5,
                 }}
-                            >
+              >
                 <MyPlan 
                   btnFunc={() => alert('더보기')} />              
                 <MyPlan 
@@ -154,7 +155,7 @@ export default class HomeMain extends Component {
                   btnFunc={() => alert('더보기')} />
               </ScrollView>
             </View>
-          </View>
+          </LinearGradient>
         </ScrollView>
       );
     } else if (isInformChecked === false) {

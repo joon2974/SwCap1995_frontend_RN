@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  TextInput,
 } from 'react-native';
 import axios from 'axios';
 import SpectorIcon from './PlanComponents/SpectorIcon';
@@ -15,6 +16,11 @@ import SpectorIcon from './PlanComponents/SpectorIcon';
 const { width, height } = Dimensions.get('window');
 
 export default class MakePlanStep3 extends Component {
+  state = {
+    title: '',
+    isPublic: false,
+  }
+
   sendPlanInfo = () => {
     const today = new Date();
     today.setDate(Number(this.props.route.params.startDate));
@@ -25,7 +31,7 @@ export default class MakePlanStep3 extends Component {
           'Content-type': 'application/x-www-form-urlencoded',
         },
         user_id: Number(this.props.route.params.userID),
-        title: '타이틀',
+        title: this.state.title,
         category: this.props.route.params.category,
         detailedCategory: this.props.route.params.planName,
         picture_rule_1: this.props.route.params.selectedMainRule,
@@ -38,7 +44,7 @@ export default class MakePlanStep3 extends Component {
         picture_time: Number(this.props.route.params.certifyTime),
         plan_start_day: today,
         bet_money: Number(this.props.route.params.challPoint),
-        is_public: false,
+        is_public: this.state.isPublic,
         percent: Number(this.props.route.params.percent),
         spectors: this.props.route.params.spectors.join(),
         distribMethod: this.props.route.params.distribMethod,
@@ -52,6 +58,8 @@ export default class MakePlanStep3 extends Component {
   };
 
   render() {
+    const { title, isPublic } = this.state;
+
     return (
       <ScrollView style={styles.scrollViewStyle}>
         <View style={styles.container}>
@@ -76,15 +84,27 @@ export default class MakePlanStep3 extends Component {
             </View>
             <View style={styles.lineContainer}>
               <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
-              <Text>{this.props.route.params.startDate}</Text>
+              <Text>
+                {this.props.route.params.startDate}
+                {' '}
+                일
+              </Text>
             </View>
             <View style={styles.lineContainer}>
               <Text style={{ fontWeight: '800', fontSize: 15 }}>플랜 기간:  </Text>
-              <Text>{this.props.route.params.endDate}</Text>
+              <Text>
+                {this.props.route.params.endDate}
+                {' '}
+                주
+              </Text>
             </View>
             <View style={styles.lineContainer}>
               <Text style={{ fontWeight: '800', fontSize: 15 }}>인증 시간:  </Text>
-              <Text>{this.props.route.params.certifyTime}</Text>
+              <Text>
+                {this.props.route.params.certifyTime}
+                {' '}
+                시(앞 뒤로 30분의 여유시간이 주어집니다)
+              </Text>
             </View>
           </View>
 
@@ -144,6 +164,41 @@ export default class MakePlanStep3 extends Component {
               ))}
             </View>
           </View>
+
+          <View style={styles.lineDivider} />
+
+          <View style={styles.additionalInfoContainer}>
+            <View style={styles.titleContainer}>
+              <View style={styles.titleStyle}>
+                <Text>나만의 플랜 제목 설정: </Text>
+              </View>
+              <TextInput
+                value={title}
+                onChangeText={(title) => this.setState({ title })}
+                style={styles.input}
+                placeholder="ex) 또 한번 술마시면 내가 개다"
+                keyboardType="email-address"
+              />
+            </View>
+            <View style={styles.isPublicSelectContainer}>
+              <View style={styles.titleStyle}>
+                <Text>플랜 공개 설정: </Text>
+                <Text>(선택 시 공개됩니다)</Text>
+              </View>
+              <View style={styles.isPublicStyle}>
+                <TouchableOpacity
+                  style={isPublic ? styles.selectedBtnStyle : styles.unselectedBtmStyle}
+                  onPress={() => {
+                    if (isPublic === false) this.setState({ isPublic: true });
+                    else this.setState({ isPublic: false });
+                  }}
+                >
+                  <Text>플랜공개하기</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
           <TouchableOpacity
             style={styles.nextStepBtn}
             onPress={() => {
@@ -264,6 +319,61 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.10,
     flexDirection: 'row',
+  },
+  additionalInfoContainer: {
+    width: width,
+    height: height * 0.2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleContainer: {
+    width: width,
+    height: height * 0.1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  isPublicStyle: {
+    width: width - 140,
+    height: height * 0.1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  isPublicSelectContainer: {
+    width: width,
+    height: height * 0.1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  titleStyle: {
+    width: 130,
+    height: height * 0.1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    width: width - 140,
+    height: height * 0.1,
+    borderRadius: 10,
+    fontSize: 16,
+    paddingLeft: 5,
+  },
+  selectedBtnStyle: {
+    width: 80,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: '#00FF80',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  unselectedBtmStyle: {
+    width: 80,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: '#F2F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nextStepBtn: {
     width: width / 2,
