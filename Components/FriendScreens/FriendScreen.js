@@ -36,7 +36,6 @@ export default class FriendScreen extends Component {
   };
 
   getFriends = async (userID) => {
-    console.log('유저아이디1', userID);
     const response = await axios.get(
       'http://49.50.172.58:3000/friends/' + userID,
     );
@@ -44,7 +43,6 @@ export default class FriendScreen extends Component {
     const count = await response.data.count;
     var friendarray = [];
     var friendRequestarray = [];
-    console.log('여기는 되나?', response.data);
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
@@ -67,7 +65,6 @@ export default class FriendScreen extends Component {
     );
     const requestcount = await requestresponse.data.count;
     const requestresponseJson = await requestresponse.data.rows;
-    console.log('여기는?', requestresponse.status);
     try {
       if (requestcount !== 0) {
         for (var k = 0; k < requestcount; k++) {
@@ -136,14 +133,12 @@ export default class FriendScreen extends Component {
 
         <View style={styles.lineDivider} />
 
-        <ScrollView style={styles.friendRequestContainer}>
+        <ScrollView>
           <View style={styles.friendRequetContainer}>
             <View style={styles.titleContainerSmall}>
               <Text style={styles.titleStyle}>친구 요청</Text>
             </View>
-            <ScrollView>
-              {friendRequsts}
-            </ScrollView>
+            {friendRequsts}
           </View>
         </ScrollView>
 
