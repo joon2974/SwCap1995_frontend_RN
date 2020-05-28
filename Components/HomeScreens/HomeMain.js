@@ -96,6 +96,7 @@ export default class HomeMain extends Component {
             title: responseJson[i].title,
             url: responseJson[i].image_url, 
             picturetime: responseJson[i].picture_time, 
+            id: responseJson[i].id,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -113,7 +114,7 @@ export default class HomeMain extends Component {
     const { isInformChecked, userEmail, planData } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
-        key={data.title}
+        key={data.id}
         title={data.title}
         btnFunc={() => alert('더보기')}
         url={data.url}
