@@ -36,16 +36,14 @@ export default class FriendScreen extends Component {
   };
 
   getFriends = async (userID) => {
-    this.setState({ friendData: [], friendRequstData: [] });
-    console.log('유저아이디1', userID);
     const response = await axios.get(
       'http://49.50.172.58:3000/friends/' + userID,
     );
     const responseJson = await response.data.rows;
     const count = await response.data.count;
-    var friendarray;
-    var friendRequestarray;
-    console.log(response.data);
+    console.log('데이터', response.data);
+    var friendarray = []; 
+    var friendRequestarray = [];
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
@@ -54,12 +52,12 @@ export default class FriendScreen extends Component {
             email: responseJson[i].email,
             id: responseJson[i].id, 
           };
-          friendarray = this.state.friendData.concat(obj);
-          this.setState({
-            friendData: friendarray,
-          });
+          friendarray.push(obj);
         }
-      }
+        this.setState({
+          friendData: friendarray,
+        });
+      } 
     } catch (error) {
       console.error(error);
     }
@@ -68,16 +66,19 @@ export default class FriendScreen extends Component {
     );
     const requestcount = await requestresponse.data.count;
     const requestresponseJson = await requestresponse.data.rows;
-    console.log('데이터', requestresponse.data);
-    try {
+    try { 
       if (requestcount !== 0) {
         for (var k = 0; k < requestcount; k++) {
           const obj = { nickname: requestresponseJson[k].nickname, id: responseJson[k].id };
-          friendRequestarray = this.state.friendRequstData.concat(obj);
-          this.setState({
-            friendRequstData: friendRequestarray,
-          });
+          friendRequestarray.push(obj);
         }
+        this.setState({
+          friendRequstData: friendRequestarray,
+        });
+      } else {
+        this.setState({
+          friendRequstData: friendRequestarray,
+        });
       }
     } catch (error) {
       console.error(error);
@@ -140,14 +141,12 @@ export default class FriendScreen extends Component {
 
         <View style={styles.lineDivider} />
 
-        <ScrollView style={styles.friendRequestContainer}>
+        <ScrollView>
           <View style={styles.friendRequetContainer}>
             <View style={styles.titleContainerSmall}>
               <Text style={styles.titleStyle}>친구 요청</Text>
             </View>
-            <ScrollView>
-              {friendRequsts}
-            </ScrollView>
+            {friendRequsts}
           </View>
         </ScrollView>
 
