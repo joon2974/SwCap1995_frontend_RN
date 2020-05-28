@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   photoStyle: {
-
-    width: width / 4,
-    height: height / 8,
+    borderRadius: 25,
+    width: width / 2,
+    height: height / 6,
     alignItems: 'center',
     justifyContent: 'center',
   },

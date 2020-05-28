@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
   },
   profilePhotoStyle: {
     width: 80,
-    height: 80,
+    height: 70,
+    marginTop: 10,
     borderRadius: 25,
   },
   userInfoContainer: {
