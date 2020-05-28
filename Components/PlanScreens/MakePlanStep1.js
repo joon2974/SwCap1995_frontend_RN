@@ -73,11 +73,12 @@ export default class PlanMain extends Component {
   loadRulesFromServer = async () => {
     await axios.get('http://49.50.172.58:3000/plan_templates').then((data) => {
       const rulesFromServer = data.data.rows;
-      this.setState({ ruleListFromServer: rulesFromServer});
+      this.setState({ ruleListFromServer: rulesFromServer });
       const ruleObject = {};
       let defaultRule;
 
       for (let i = 0; i < rulesFromServer.length; i++) {
+        // eslint-disable-next-line eqeqeq
         if (rulesFromServer[i].detailedCategory == this.props.route.params.planName) {
           const tempList = [];
 
@@ -86,11 +87,12 @@ export default class PlanMain extends Component {
           ruleObject[rulesFromServer[i].main_rule] = tempList;
         }
       }
+      // eslint-disable-next-line prefer-const
       defaultRule = Object.keys(ruleObject)[0];
       this.setState({ selectedMainRule: defaultRule, pictureRules: ruleObject });
 
       let certifyPhotoUri;
-      for(let i = 0; i < rulesFromServer.length; i++) {
+      for (let i = 0; i < rulesFromServer.length; i++) {
         if (rulesFromServer[i].main_rule === this.state.selectedMainRule) {
           certifyPhotoUri = rulesFromServer[i].image_url;
         }
@@ -108,12 +110,12 @@ export default class PlanMain extends Component {
     const ruleListFromServer = this.state.ruleListFromServer;
 
     let certifyPhotoUri;
-      for(let i = 0; i < ruleListFromServer.length; i++) {
-        if (ruleListFromServer[i].main_rule === selectedMainRule) {
-          certifyPhotoUri = ruleListFromServer[i].image_url;
-        }
+    for (let i = 0; i < ruleListFromServer.length; i++) {
+      if (ruleListFromServer[i].main_rule === selectedMainRule) {
+        certifyPhotoUri = ruleListFromServer[i].image_url;
       }
-      this.setState({ certifyImageUri: certifyPhotoUri });
+    }
+    this.setState({ certifyImageUri: certifyPhotoUri });
   }
 
   render() {
