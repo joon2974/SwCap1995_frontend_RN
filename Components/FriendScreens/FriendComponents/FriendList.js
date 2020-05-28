@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import { Feather } from '@expo/vector-icons'; 
 
 const { width } = Dimensions.get('window');
 
@@ -23,11 +24,11 @@ export default class FriendList extends Component {
           <View style={styles.nickNameContainer}>
             <Text style={{ fontSize: 22 }}>{this.props.nickname}</Text>
           </View>
-          <View style={styles.emailContainer}>
-            <Text style={{ fontSize: 12, color: 'gray' }}>{this.props.email}</Text>
-          </View>
+          
+          <Feather name="more-horizontal" size={24} color="black" />
         </View>
       </View>
+      
     );
   }
 }
@@ -54,8 +55,9 @@ const styles = StyleSheet.create({
   InfoContainer: {
     width: width * 0.70,
     height: 60,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   nickNameContainer: {
     height: 35,
@@ -66,5 +68,12 @@ const styles = StyleSheet.create({
     height: 25,
     justifyContent: 'center',
     marginLeft: 10,
+  },
+  
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
   },
 });

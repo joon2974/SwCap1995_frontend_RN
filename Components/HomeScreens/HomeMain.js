@@ -92,7 +92,11 @@ export default class HomeMain extends Component {
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
-          const obj = { title: responseJson[i].title, url: responseJson[i].image_url };
+          const obj = {
+            title: responseJson[i].title,
+            url: responseJson[i].image_url, 
+            picturetime: responseJson[i].picture_time, 
+          };
           planarray = this.state.planData.concat(obj);
           this.setState({
             planData: planarray,
@@ -113,6 +117,7 @@ export default class HomeMain extends Component {
         title={data.title}
         btnFunc={() => alert('더보기')}
         url={data.url}
+        picturetime={data.picturetime}
       />
     ));
     if (isInformChecked) {
@@ -120,7 +125,7 @@ export default class HomeMain extends Component {
         <ScrollView>
           <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
             <View style={styles.planContainer}>
-              <Text style={{ alignSelf: 'flex-start', fontWeight: 'bold', fontSize: 18 }}>진행중인 플랜</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>진행중인 플랜</Text>
               <ScrollView 
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -135,7 +140,7 @@ export default class HomeMain extends Component {
             </View>
             <View style={styles.lineDivider} />
             <View style={styles.planContainer}>
-              <Text style={{ alignSelf: 'flex-start', fontWeight: 'bold', fontSize: 18 }}>감시중인 플랜</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>감시중인 플랜</Text>
               <ScrollView 
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -175,7 +180,6 @@ const styles = StyleSheet.create({
   },
   planContainer: {
     marginTop: 20,
-    alignItems: 'center',
     width: width * 0.9,
     height: height * 0.38,
   },  

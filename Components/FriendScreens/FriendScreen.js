@@ -87,12 +87,15 @@ export default class FriendScreen extends Component {
   render() {
     const { userId, friendData, friendRequstData } = this.state;
     const friends = friendData.map((data) => (
-      <FriendList
-        key={data.nickname}
-        nickname={data.nickname}
-        email={data.email}
-        userId={userId}
+      <> 
+        <FriendList
+          key={data.nickname}
+          nickname={data.nickname}
+          email={data.email}
+          userId={userId}
       />
+        <View style={styles.lineDivider} />
+      </>
     ));
     const friendRequsts = friendRequstData.map((data) => (
       <FriendRequestList

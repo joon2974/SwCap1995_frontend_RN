@@ -27,6 +27,7 @@ export default class MyMenuScreen extends Component {
       nickname: '',
       friend_count: '',
       email: '',
+      planData: [],
     };
   }
 
@@ -38,7 +39,38 @@ export default class MyMenuScreen extends Component {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.state.userId = id;
       this.getUserPoint(id);
+      
+      this.loadAllPlan(id);
     });
+  };
+
+  loadAllPlan = async (userId) => {
+    console.log('유저아이디1', userId);
+    const response = await axios.get(
+      'http://49.50.172.58:3000/plans/all/' + userId,
+    );
+    console.log(response.data);
+    const responseJson = await response.data.rows;
+    const count = await response.data.count;
+    var planarray;
+    try {
+      if (count !== 0) {
+        for (var i = 0; i < count; i++) {
+          const obj = {
+            title: responseJson[i].title,
+            url: responseJson[i].image_url, 
+            picturetime: responseJson[i].picture_time, 
+          };
+          planarray = this.state.planData.concat(obj);
+          this.setState({
+            planData: planarray,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    console.log('플랜데이터', this.state.planData[0].url);
   };
 
   getUserPoint = async (userID) => {
@@ -56,6 +88,16 @@ export default class MyMenuScreen extends Component {
   };
 
   render() {
+    const { planData } = this.state;
+    const plans = planData.map((data) => (
+      <MyPlan
+        key={data.title}
+        title={data.title}
+        btnFunc={() => alert('더보기')}
+        url={data.url}
+        picturetime={data.picturetime}
+      />
+    ));
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -109,11 +151,17 @@ export default class MyMenuScreen extends Component {
           </View>
 
           <View style={styles.lineDivider} />
-          <View style={styles.planContainer}>
-            <MyPlan 
-              btnFunc={() => alert('더보기')}
-            />
-          </View>
+          <ScrollView 
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              alignItems: 'center',
+              paddingStart: 5,
+              paddingEnd: 5,
+            }}
+                            >
+            {plans}
+          </ScrollView>
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"
