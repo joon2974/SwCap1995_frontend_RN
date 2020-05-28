@@ -174,9 +174,9 @@ const styles = StyleSheet.create({
   },
   profilePhotoStyle: {
     width: 80,
-    height: 80,
+    height: 70,
+    marginTop: 10,
     borderRadius: 25,
-    marginTop: 5,
   },
   userInfoContainer: {
     height: height / 4,
