@@ -21,7 +21,7 @@ export default class PlanMain extends Component {
     userID: null,
     isFaceRegisterd: false,
     selectedCategory: '운동/건강',
-    nowPlanList: ['헬스', '다이어트', '런닝', '푸시업', '기타'],
+    nowPlanList: ['1', '2', '3', '4', '5'],
     planListFromServer: null,
     uriListFromServer: null,
   } 
@@ -124,6 +124,7 @@ export default class PlanMain extends Component {
       planListWithUri.push({ name: planList[i], uri: uriList[i] });
     }
     this.setState({ nowPlanList: planListWithUri });
+    console.log('asdf', this.state.nowPlanList);
   }
 
   planSelected = (planName, selectedCategory, imgUri) => {
