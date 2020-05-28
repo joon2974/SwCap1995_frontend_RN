@@ -18,7 +18,7 @@ export default class FriendScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      friendData: [],
+      friendData: [{ nickname: '1', email: '1', id: '1' }, { nickname: '2', email: '2', id: '2' }],
       friendRequstData: [],
       userId: '1',
     };
@@ -36,16 +36,15 @@ export default class FriendScreen extends Component {
   };
 
   getFriends = async (userID) => {
-    this.setState({ friendData: [], friendRequstData: [] });
     console.log('유저아이디1', userID);
     const response = await axios.get(
       'http://49.50.172.58:3000/friends/' + userID,
     );
     const responseJson = await response.data.rows;
     const count = await response.data.count;
-    var friendarray;
-    var friendRequestarray;
-    console.log(response.data);
+    var friendarray = [];
+    var friendRequestarray = [];
+    console.log('여기는 되나?', response.data);
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
@@ -54,11 +53,11 @@ export default class FriendScreen extends Component {
             email: responseJson[i].email,
             id: responseJson[i].id, 
           };
-          friendarray = this.state.friendData.concat(obj);
-          this.setState({
-            friendData: friendarray,
-          });
+          friendarray.push(obj);
         }
+        this.setState({
+          friendData: friendarray,
+        });
       }
     } catch (error) {
       console.error(error);
@@ -68,16 +67,16 @@ export default class FriendScreen extends Component {
     );
     const requestcount = await requestresponse.data.count;
     const requestresponseJson = await requestresponse.data.rows;
-    console.log('데이터', requestresponse.data);
+    console.log('여기는?', requestresponse.status);
     try {
       if (requestcount !== 0) {
         for (var k = 0; k < requestcount; k++) {
           const obj = { nickname: requestresponseJson[k].nickname, id: responseJson[k].id };
-          friendRequestarray = this.state.friendRequstData.concat(obj);
-          this.setState({
-            friendRequstData: friendRequestarray,
-          });
+          friendRequestarray.push(obj);
         }
+        this.setState({
+          friendRequstData: friendRequestarray,
+        });
       }
     } catch (error) {
       console.error(error);
@@ -87,15 +86,12 @@ export default class FriendScreen extends Component {
   render() {
     const { userId, friendData, friendRequstData } = this.state;
     const friends = friendData.map((data) => (
-      <> 
-        <FriendList
-          key={data.id}
-          nickname={data.nickname}
-          email={data.email}
-          userId={userId}
+      <FriendList
+        key={data.id}
+        nickname={data.nickname}
+        email={data.email}
+        userId={userId}
       />
-        <View style={styles.lineDivider} />
-      </>
     ));
     const friendRequsts = friendRequstData.map((data) => (
       <FriendRequestList

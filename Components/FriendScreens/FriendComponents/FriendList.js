@@ -14,32 +14,47 @@ export default class FriendList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.ImageContainer}>
-          <Image 
-            source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
-            style={styles.imageStyle}
-          />
-        </View>
-        <View style={styles.InfoContainer}>
-          <View style={styles.nickNameContainer}>
-            <Text style={{ fontSize: 22 }}>{this.props.nickname}</Text>
+        <View style={styles.notLineContainer}>
+          <View style={styles.ImageContainer}>
+            <Image 
+              source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
+              style={styles.imageStyle}
+            />
           </View>
-          
-          <Feather name="more-horizontal" size={24} color="black" />
+          <View style={styles.InfoContainer}>
+            <View style={styles.nickNameContainer}>
+              <Text style={{ fontSize: 22 }}>{this.props.nickname}</Text>
+            </View>
+            <Feather name="more-horizontal" size={24} color="black" />
+          </View>
         </View>
+        <View style={styles.lineDivider} />
       </View>
-      
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
     width: width - 20,
-    height: 60,
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 5,
+  },
+  notLineContainer: {
+    width: width - 20,
+    height: 65,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginBottom: 5,
+  },
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
+    marginBottom: 15,
   },
   ImageContainer: {
     width: 65,
@@ -68,12 +83,5 @@ const styles = StyleSheet.create({
     height: 25,
     justifyContent: 'center',
     marginLeft: 10,
-  },
-  
-  lineDivider: {
-    backgroundColor: '#F2F2F2',
-    width: width - 30,
-    height: 1.5,
-    marginLeft: 15,
   },
 });
