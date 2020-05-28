@@ -15,10 +15,6 @@ import FriendRequestList from './FriendComponents/FriendRequestList';
 
 const { width, height } = Dimensions.get('window');
 export default class FriendScreen extends Component {
-  static navigationOptions = {
-    headerRight: <Text>하이</Text>,
-  }
-
   constructor(props) {
     super(props);
     this.state = {
