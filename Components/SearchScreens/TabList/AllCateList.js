@@ -12,8 +12,6 @@ const { width, height } = Dimensions.get('window');
 
 export default class AllCateList extends Component {
   render() {
-
-
     return (
       <TouchableOpacity 
         style={styles.container}

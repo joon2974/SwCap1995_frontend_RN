@@ -1,3 +1,5 @@
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
@@ -27,8 +29,7 @@ export default class Searching extends Component {
   };
 
   sendSearch = () => {
-
-    if(this.state.searchStatus === 1){
+    if (this.state.searchStatus === 1) {
       this.state.nowPage = 1;
 
       const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
@@ -39,22 +40,19 @@ export default class Searching extends Component {
             data: data.plans,
             nowPage: this.state.nowPage + 1,
           });
-        }); 
-
-    }
-    else{
-
-    const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => {
-        this.setState({ 
-          data: this.state.data.concat(data.plans),
-          nowPage: this.state.nowPage + 1,
         });
-      });    
+    } else {
+      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => {
+          this.setState({ 
+            data: this.state.data.concat(data.plans),
+            nowPage: this.state.nowPage + 1,
+          });
+        });    
       
-    this.setState({ searchStatus: 1 });
+      this.setState({ searchStatus: 1 });
     }
   }
 
@@ -63,7 +61,6 @@ export default class Searching extends Component {
   }
 
   getData = () => {
-    
     const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
     fetch(url)
       .then((r) => r.json())
@@ -74,8 +71,6 @@ export default class Searching extends Component {
         });
       });    
   }
-
-
 
      
   renderItem = ({ item }) => (

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 /* eslint-disable react/no-access-state-in-setstate */
@@ -20,13 +21,15 @@ export default class CategoryList extends Component {
     
       // selectedAllCate: '',
       
-      data: [],
+      // data: [],
+      oddConvertedData: [],
+      evenConvertedData: [],
       page: 1, 
       flag: 1,
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
       this.setParams();
       this.getData();
     }
@@ -35,25 +38,31 @@ export default class CategoryList extends Component {
       // this.setState({ selectedAllCate: this.props.route.params.selectedAllCate });
     }
 
-    getData = () => {
+
+    async getData() {
       const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.page;
-      fetch(url)
+      await fetch(url)
         .then((r) => r.json())
         .then((data) => {
           this.setState({ 
-            data: this.state.data.concat(data.plans),
+            //    data: this.state.data.concat(data.plans),
             page: this.state.page + 1,
           });
-        });      
+          for (let i = 0; i < 10; i++) {
+            if (i % 2 === 0) this.setState({ evenConvertedData: this.state.evenConvertedData.concat(data.plans[i]) });
+            else this.setState({ oddConvertedData: this.state.oddConvertedData.concat(data.plans[i]) });
+          }
+        });
+      console.log(this.state.oddConvertedData[1]);
     }
-    
+
 
     handleLoadMore = () => {
       this.getData();
     }
   
        
-    renderItem = ({ item }) => (
+    renderItem = ({ item, index }) => (
 
       this.state.flag ? (
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
@@ -67,7 +76,6 @@ export default class CategoryList extends Component {
         </View>
       ) : <SmallCate explore={() => this.props.navigation.navigate('PlanList')} />
 
-      
     );
 
 
@@ -79,7 +87,7 @@ export default class CategoryList extends Component {
   
             <FlatList 
               style={{ marginTop: 30, width: width }}
-              data={this.state.data}
+              data={this.state.evenConvertedData}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => item.id}
               onEndReached={this.handleLoadMore}

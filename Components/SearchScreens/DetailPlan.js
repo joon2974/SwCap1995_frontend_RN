@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
@@ -6,6 +7,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
   Image,
   Dimensions,
   ScrollView,
@@ -38,43 +40,45 @@ export default class DetailPlan extends Component {
       return (
           
         <View style={styles.container}>
-               
-          <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+          <ImageBackground source={require('./back7.png')} style={{ width: width }}>
+       
 
-            <TouchableOpacity 
-              style={styles.titleImageContainer}
+            <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+
+              <TouchableOpacity 
+                style={styles.titleImageContainer}
                     >
-              <Image 
-                style={styles.imageStyle}
-                source={{ uri: item.image_url }} 
+                <Image 
+                  style={styles.imageStyle}
+                  source={{ uri: item.image_url }} 
                         />
-            </TouchableOpacity>
+              </TouchableOpacity>
 
-            <View style={styles.titleInfoContainer}>
-              <Text style={styles.titleStyle}>
-                {'제목 : ' + item.title}
-              </Text>
+              <View style={styles.titleInfoContainer}>
+                <Text style={styles.titleStyle}>
+                  {'제목 : ' + item.title}
+                </Text>
                         
-              <Text style={styles.subTitleStyle}>
-                {'부제 : ' + item.title}
-              </Text>
+                <Text style={styles.subTitleStyle}>
+                  {'부제 : ' + item.title}
+                </Text>
                         
-              <Text style={styles.dateInfo}>
-                {'작성일 : ' + item.createdAt + '\n'}
-                {'수정일 : ' + item.updatedAt}
-              </Text>
+                <Text style={styles.dateInfo}>
+                  {'작성일 : ' + item.createdAt + '\n'}
+                  {'수정일 : ' + item.updatedAt}
+                </Text>
 
-              <View style={{ marginBottom: 10 }} />
+                <View style={{ marginBottom: 10 }} />
 
-            </View>
+              </View>
                     
-            <View style={styles.titleInfoContainer}>
-              <Text style={styles.titleStyle}>
-                감시자들
-              </Text>
+              <View style={styles.titleInfoContainer}>
+                <Text style={styles.titleStyle}>
+                  감시자들
+                </Text>
                         
-              <View>
-                {
+                <View>
+                  {
                   this.state.watchers.map((data, index) => (
                     <View>
                       <Watcher 
@@ -85,57 +89,58 @@ export default class DetailPlan extends Component {
                     </View>
                   ))                                
                 }
-                <TouchableOpacity
-                  style={styles.moreExplore}
+                  <TouchableOpacity
+                    style={styles.moreExplore}
                             >
-                  <Text>감시자들 더보기</Text>
-                </TouchableOpacity>
+                    <Text>감시자들 더보기</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ marginBottom: 10 }} />
+
               </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
                 
 
-            <View style={styles.titleInfoContainer}>
-              <Text style={styles.titleStyle}>
-                인증 방법에 대해...
-              </Text>
-              <Text style={styles.subTitleStyle}>
-                {'Rule1: ' + item.picture_rule_1 + '\n'}
-                {'Rule2: ' + item.picture_rule_2 + '\n'}
-                {'Rule3: ' + item.picture_rule_3}
-              </Text>
+              <View style={styles.titleInfoContainer}>
+                <Text style={styles.titleStyle}>
+                  인증 방법에 대해...
+                </Text>
+                <Text style={styles.subTitleStyle}>
+                  {'Rule1: ' + item.picture_rule_1 + '\n'}
+                  {'Rule2: ' + item.picture_rule_2 + '\n'}
+                  {'Rule3: ' + item.picture_rule_3}
+                </Text>
 
-              <View style={{ marginBottom: 10 }} />
+                <View style={{ marginBottom: 10 }} />
 
-            </View>
+              </View>
 
-            <View style={styles.titleInfoContainer}>
-              <Text style={styles.titleStyle}>
-                지난 경과들...
-              </Text>
-              <Text style={styles.subTitleStyle}>
-                지난 인증 결과에 대해 궁금하시다면 아래의 달력을 클릭해 보세요
-                {'\n'}
-              </Text>
+              <View style={styles.titleInfoContainer}>
+                <Text style={styles.titleStyle}>
+                  지난 경과들...
+                </Text>
+                <Text style={styles.subTitleStyle}>
+                  지난 인증 결과에 대해 궁금하시다면 아래의 달력을 클릭해 보세요
+                  {'\n'}
+                </Text>
 
-              <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('Calendar')}>
-                <Image 
-                  style={styles.calendarStyle}
-                  source={{ uri: item.image_url }} 
+                <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('Calendar')}>
+                  <Image 
+                    style={styles.calendarStyle}
+                    source={{ uri: item.image_url }} 
                             />
-              </TouchableOpacity>
+                </TouchableOpacity>
                         
-              <View style={{ marginBottom: 10 }} />
+                <View style={{ marginBottom: 10 }} />
 
-            </View>
+              </View>
                    
 
-            <View style={{ marginVertical: 20 }} />
+              <View style={{ marginVertical: 20 }} />
 
-          </ScrollView>
+            </ScrollView>
 
+          </ImageBackground>
         </View>
 
       );
@@ -149,7 +154,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
   },
 
   titleImageContainer: {
@@ -160,6 +164,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     borderRadius: 10,
     margin: 6,
+    marginTop: 20,
 
     ...Platform.select({
       ios: {
