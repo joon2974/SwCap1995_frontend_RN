@@ -18,10 +18,10 @@ export default class RecommendList extends Component {
         onPress={this.props.explore}
       >
         <Image 
-          source={{ uri: this.props.imageUri[this.props.index].image_url }} 
+          source={{ uri: this.props.item.image_url }} 
           style={styles.imageStyle}
         />
-        <Text>{this.props.name[this.props.index].detailedCategory}</Text>
+        <Text>{this.props.item.title}</Text>
       </TouchableOpacity>
     );
   }

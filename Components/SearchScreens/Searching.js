@@ -1,50 +1,113 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   View,
-  ScrollView,
   StyleSheet,
-  // eslint-disable-next-line no-unused-vars
   TouchableOpacity,
+  FlatList,
   Dimensions,
   Button,
 } from 'react-native';
 import { Input } from 'react-native-elements';
-import axios from 'axios';
-import SearchedList from './TabList/SearchedList';
+import { CardFive } from './Cards';
 
 const { height, width } = Dimensions.get('window');
 
 export default class Searching extends Component {
   state = {
-    // eslint-disable-next-line react/no-unused-state
     search: '',
     searchStatus: 0,
+
+    nowPage: 1,
+    data: [],
   };
 
-  // eslint-disable-next-line react/sort-comp
   updateSearch = (changedSearch) => {
-    // eslint-disable-next-line react/no-unused-state
     this.setState({ search: changedSearch });
   };
 
-  async sendSearch() {
-    await axios
-      .get('http://49.50.172.58:3000/plans?limit=10')
-      // eslint-disable-next-line no-unused-vars
-      .then((res) => {
-        console.log(res.data.plans[1].bet_money);
-        //        alert(res);
-      })
-      .catch((error) => {
-        console.log(error);
-        //        alert(error);
-      });
+  sendSearch = () => {
 
+    if(this.state.searchStatus === 1){
+      this.state.nowPage = 1;
+
+      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => {
+          this.setState({ 
+            data: data.plans,
+            nowPage: this.state.nowPage + 1,
+          });
+        }); 
+
+    }
+    else{
+
+    const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        this.setState({ 
+          data: this.state.data.concat(data.plans),
+          nowPage: this.state.nowPage + 1,
+        });
+      });    
+      
     this.setState({ searchStatus: 1 });
+    }
   }
+
+  handleLoadMore = () => {
+    this.getData();
+  }
+
+  getData = () => {
+    
+    const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        this.setState({ 
+          data: this.state.data.concat(data.plans),
+          nowPage: this.state.nowPage + 1,
+        });
+      });    
+  }
+
+
+
+     
+  renderItem = ({ item }) => (
+    <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('DetailPlan', { item: item })}>
+      <CardFive
+        title={item.title}
+        subTitle={item.category}
+        image={{
+          uri: item.image_url,
+        }}
+      />
+    </TouchableOpacity>
+  );
 
  
   render() {
+    let showSearched = null;
+    if (this.state.searchStatus === 0) {
+      showSearched = <View />;
+    } else if (this.state.searchStatus === 1) {
+      showSearched = (
+        <FlatList 
+          style={{ marginTop: 30, width: width }}
+          data={this.state.data}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => item.id}
+          onEndReached={this.handleLoadMore}
+          onEndReachedThreshold={1}
+    />
+      );
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -66,9 +129,9 @@ export default class Searching extends Component {
           </View>
         </View>
 
-        <ScrollView style={styles.scrollContainer}>
-          {this.state.searchStatus ? <SearchedList explore={() => this.props.navigation.navigate('DetailPlan')} /> : <View /> }
-        </ScrollView>
+        <View style={styles.container}>
+          {showSearched}   
+        </View>
       </View>
     );
   }

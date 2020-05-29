@@ -12,16 +12,18 @@ const { width, height } = Dimensions.get('window');
 
 export default class AllCateList extends Component {
   render() {
+
+
     return (
       <TouchableOpacity 
         style={styles.container}
         onPress={this.props.explore}
       >
         <Image 
-          source={{ uri: this.props.imageUri[this.props.index].image_url }} 
+          source={{ uri: this.props.item.image_url }} 
           style={styles.imageStyle}
         />
-        <Text>{this.props.name[this.props.index].detailedCategory}</Text>
+        <Text>{this.props.item.title}</Text>
       </TouchableOpacity>
     );
   }

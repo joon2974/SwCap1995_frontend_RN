@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import {
   View,
@@ -20,13 +21,8 @@ export default class Searchscreen extends Component {
     selectedRecommend: '',
     selectedAllCate: '',
 
-    nowRecommendList: ['1', '2', '3', '4'],
-    nowAllCateList: ['1', '2', '3', '4'],
-
-    nowRecommendUri: ['1', '2', '3', '4'],
-    nowAllCateUri: ['1', '2', '3', '4'],
-
-    test: ['1', '2', '3', '4'],
+    nowRecommend: [],
+    nowAllCate: [],
     
   };
   
@@ -39,17 +35,10 @@ export default class Searchscreen extends Component {
   setPlanList = (categoryName) => {
     this.setState({ selectedRecommend: categoryName });
 
+    axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
+      this.setState({ nowRecommend: res.data.plans });
     
-    axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then((res) => {
-      this.setState({ nowRecommendUri: res.data.data.categoryGet });
-    }).catch((error) => {
-      console.log(error);
-      alert(error);
-    });
-
-
-    axios.get('http://49.50.172.58:3000/detailedCategories/1').then((res) => {
-      this.setState({ nowRecommendList: res.data.rows });
+    //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -59,19 +48,11 @@ export default class Searchscreen extends Component {
   setPlanListAllCate = (categoryName) => {
     this.setState({ selectedAllCate: categoryName });
 
-    // const planListAllCate = allCateListTemplate[categoryName];
-    // this.setState({nowAllCateList:planListAllCate});
     
-    axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}').then((res) => {
-      this.setState({ nowAllCateUri: res.data.data.categoryGet });
-    }).catch((error) => {
-      console.log(error);
-      alert(error);
-    });
-
-
-    axios.get('http://49.50.172.58:3000/detailedCategories/1').then((res) => {
-      this.setState({ nowAllCateList: res.data.rows });
+    axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
+      this.setState({ nowAllCate: res.data.plans });
+    
+    //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -82,11 +63,8 @@ export default class Searchscreen extends Component {
     const {
       selectedRecommend,
       selectedAllCate,
-      nowRecommendList,
-      nowAllCateList,
-      nowRecommendUri,
-      nowAllCateUri,
     } = this.state;
+    
 
     return (
       <View style={styles.container}>
@@ -171,14 +149,12 @@ export default class Searchscreen extends Component {
           </View>
 
           <View style={styles.planContainer}>
-            {this.state.test.map((data, index) => (
+            {this.state.nowRecommend.map((item, index) => (
               <RecommendList
-                // eslint-disable-next-line react/no-array-index-key
                 key={index}
-                name={nowRecommendList}
                 index={index}
-                imageUri={nowRecommendUri}
-                explore={() => this.props.navigation.navigate('DetailPlan', { name: data })}
+                item={item}
+                explore={() => this.props.navigation.navigate('DetailPlan', { item: item })}
               />
             ))}
           </View>
@@ -186,7 +162,7 @@ export default class Searchscreen extends Component {
           <View style={{ wdith: width * 1, alignItems: 'center' }}>
             <TouchableOpacity
               style={styles.moreExplore}
-              onPress={() => this.props.navigation.navigate('HotPlan')}
+              onPress={() => this.props.navigation.navigate('HotPlan', { selectedRecommend: selectedRecommend })}
             >
               <Text>인기플랜 더보기</Text>
             </TouchableOpacity>
@@ -257,14 +233,12 @@ export default class Searchscreen extends Component {
           </View>
 
           <View style={styles.planContainer}>
-            {this.state.test.map((data, index) => (
+            {this.state.nowAllCate.map((item, index) => (
               <AllCateList
-                // eslint-disable-next-line react/no-array-index-key
                 key={index}
-                name={nowAllCateList}
                 index={index}
-                imageUri={nowAllCateUri}
-                explore={() => this.props.navigation.navigate('PlanList')}
+                item={item}
+                explore={() => this.props.navigation.navigate('PlanList', { selectedAllCate: selectedAllCate })}
               />
             ))}
           </View>
@@ -272,7 +246,7 @@ export default class Searchscreen extends Component {
           <View style={{ wdith: width * 1, alignItems: 'center' }}>
             <TouchableOpacity
               style={styles.moreExplore}
-              onPress={() => this.props.navigation.navigate('CategoryList')}
+              onPress={() => this.props.navigation.navigate('CategoryList', { selectedAllCate: selectedAllCate })}
             >
               <Text>카테고리 더보기</Text>
             </TouchableOpacity>

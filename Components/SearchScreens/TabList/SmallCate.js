@@ -17,11 +17,8 @@ export default class SmallCate extends Component {
     >   
       
         <CardTwelve
-          image={{
-            uri:
-                'https://i.pinimg.com/originals/c4/9b/f9/c49bf95e4e02873610daf3bfda54e44a.jpg',
-          }}
-          title={this.props.plans.id}
+          image={{ uri: this.props.item.image_url }}
+          title={this.props.item.id}
           subTitle="John Bob"
           viewProgress={true}
           progress={2}

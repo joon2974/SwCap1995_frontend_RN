@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import {
   View,
@@ -8,28 +10,17 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import axios from 'axios';
 import Watcher from './TabList/Watcher';
 
 const { width, height } = Dimensions.get('window');
 
 export default class DetailPlan extends Component {
     state = {
-      nowPlanTitle: '1',
-      nowPlanImage: '2',
-      nowPlanDescription: '3',
-      // eslint-disable-next-line react/no-unused-state
-      nowWatcherList: 'A, B, C, D',
-      nowCreatedAt: '',
-      nowUpdatedAt: '',
+      
+      item: [],
     
       watchers: ['1', '2', '3', '4', '5'],
       watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
-    
-
-      // eslint-disable-next-line react/no-unused-state
-      para: this.props.route.params,
-    
     }
 
     componentDidMount() {
@@ -37,22 +28,13 @@ export default class DetailPlan extends Component {
     }
 
     setPlan = () => {
-      //       console.log(this.state.para);  파라미터 넘기는거 확인
-        
-      axios.get('http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}').then((res) => {
-        this.setState({ nowPlanTitle: res.data.data.categoryGet[0].name });          
-        this.setState({ nowPlanImage: res.data.data.categoryGet[0].image_url });
-        this.setState({ nowPlanDescription: res.data.data.categoryGet[0].description });
-        this.setState({ nowCreatedAt: res.data.data.categoryGet[0].createdAt });
-        this.setState({ nowUpdatedAt: res.data.data.categoryGet[0].updatedAt });
-        // alert(res);
-      }).catch((error) => {
-        console.log(error);
-        // alert(error);
-      });
+      this.setState({ item: this.props.route.params.item });
     }
 
     render() {
+      const { item } = this.state;
+      
+
       return (
           
         <View style={styles.container}>
@@ -64,22 +46,22 @@ export default class DetailPlan extends Component {
                     >
               <Image 
                 style={styles.imageStyle}
-                source={{ uri: this.state.nowPlanImage }} 
+                source={{ uri: item.image_url }} 
                         />
             </TouchableOpacity>
 
             <View style={styles.titleInfoContainer}>
               <Text style={styles.titleStyle}>
-                {'제목 : ' + this.state.nowPlanTitle}
+                {'제목 : ' + item.title}
               </Text>
                         
               <Text style={styles.subTitleStyle}>
-                {'부제 : ' + this.state.nowPlanDescription}
+                {'부제 : ' + item.title}
               </Text>
                         
               <Text style={styles.dateInfo}>
-                {'작성일 : ' + this.state.nowCreatedAt + '\n'}
-                {'수정일 : ' + this.state.nowUpdatedAt}
+                {'작성일 : ' + item.createdAt + '\n'}
+                {'수정일 : ' + item.updatedAt}
               </Text>
 
               <View style={{ marginBottom: 10 }} />
@@ -93,19 +75,16 @@ export default class DetailPlan extends Component {
                         
               <View>
                 {
-                            this.state.watchers.map((data, index) => (
-                              <View>
-                                <Watcher 
-                                  // eslint-disable-next-line react/no-array-index-key
-                                  key={index}
-                                  index={index}
-                                  comment={this.state.watchersComment}
+                  this.state.watchers.map((data, index) => (
+                    <View>
+                      <Watcher 
+                        key={index}
+                        index={index}
+                        comment={this.state.watchersComment}
                                      />
-                              </View>
-                            ))
-                                
-                                
-                        }
+                    </View>
+                  ))                                
+                }
                 <TouchableOpacity
                   style={styles.moreExplore}
                             >
@@ -123,13 +102,9 @@ export default class DetailPlan extends Component {
                 인증 방법에 대해...
               </Text>
               <Text style={styles.subTitleStyle}>
-                RULE 1 : ~~~~~~~~~
-                {'\n'}
-                RULE 2 : ~~~~~~~~~
-                {'\n'}
-                RULE 3 : ~~~~~~~~~
-                {'\n'}
-                RULE 4 : ~~~~~~~~~
+                {'Rule1: ' + item.picture_rule_1 + '\n'}
+                {'Rule2: ' + item.picture_rule_2 + '\n'}
+                {'Rule3: ' + item.picture_rule_3}
               </Text>
 
               <View style={{ marginBottom: 10 }} />
@@ -145,11 +120,10 @@ export default class DetailPlan extends Component {
                 {'\n'}
               </Text>
 
-
               <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('Calendar')}>
                 <Image 
                   style={styles.calendarStyle}
-                  source={{ uri: this.state.nowPlanImage }} 
+                  source={{ uri: item.image_url }} 
                             />
               </TouchableOpacity>
                         
@@ -187,7 +161,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
 
-    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -272,15 +245,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 
-  categoryUnitList: {
-    flexDirection: 'row',
-    padding: 5,
-  },
-  category: {
-    margin: 5,
-    width: 180,
-    height: 150,
-  },
   calendar: {
     width: 360,
     height: 200,

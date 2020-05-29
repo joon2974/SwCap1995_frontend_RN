@@ -98,30 +98,6 @@ export default class Calendar extends Component {
 
             </View>
 
-            <View style={styles.titleInfoContainer}>
-                        
-                        
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                {
-                            this.state.watchers.map((data, index) => (
-                              <View>
-                                <DayList 
-                                  key={data}
-                                  index={index}
-                                  comment={this.state.watchersComment}
-                                  explore={() => this.props.navigation.navigate('PlanSearched')}
-                                     />
-                              </View>
-                            ))
-                                
-                                
-                        }
-              </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
-
 
             <View style={{ marginVertical: 20 }} />
 
