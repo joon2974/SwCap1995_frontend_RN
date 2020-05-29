@@ -1,14 +1,25 @@
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
+  ImageBackground,
+  TouchableOpacity,
+  FlatList,
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
+import { CardFive } from './Cards';
 import HotPlanList from './TabList/HotPlanList';
 
+
+// eslint-disable-next-line no-unused-vars
 const { width, height } = Dimensions.get('window');
 
 export default class DetailPlan extends Component {
@@ -31,11 +42,16 @@ export default class DetailPlan extends Component {
 
       // eslint-disable-next-line react/no-unused-state
       para: this.props.route.params,
+      
+      data: [],
+      page: 1, // here
 
     }
 
+
     componentDidMount() {
       this.setPlan();
+      this._getData();
     }
 
     setPlan = () => {
@@ -57,125 +73,63 @@ export default class DetailPlan extends Component {
       });
     }
 
+
+    _getData = () => {
+      const url = 'http://49.50.172.58:3000/plans?limit=10';
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => {
+          this.setState({ 
+            data: this.state.data.concat(data.plans[0].category + data.plans[0].bet_money),
+            page: this.state.page + 1,
+          });
+        });      
+    }
+  
+    _handleLoadMore = () => {
+      this._getData();
+    }
+  
+  
+    // <Text>{item}</Text>
+       
+    _renderItem = ({ item }) => (
+      <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('DetailPlan')}>
+        <CardFive
+          title="Vinny’s Barber"
+          subTitle="852 N Virgil Ave, Beverly Hills"
+          profile={{
+            uri:
+                  'https://www.gettyimages.com/gi-resources/images/frontdoor/creative/PanoramicImagesRM/FD_image.jpg',
+          }}
+          image={{
+            uri:
+                  'https://www.chambre237.com/wp-content/uploads/2017/09/Un-Photographe-professionnel-partage-ses-Secrets-pour-capturer-des-Photos-de-Paysage-parfaites-03.jpg',
+          }}
+          icon="star"
+          nbStar={3}
+          iconColor="#FFC57C"
+            />
+      </TouchableOpacity>
+    );
+
+
     render() {
       return (
-          
+ 
         <View style={styles.container}>
-               
-          <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-
-
-            <View style={styles.titleInfoContainer}>
-              <Text style={styles.titleStyle}>
-                %%대 인기 PLAN TOP 20
-              </Text>
-                        
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
-                    
-            <View style={styles.titleInfoContainer}>
-                        
-                        
-              <View>
-                {
-                            this.state.watchers.map((data, index) => (
-                              <View>
-                                <HotPlanList 
-                                  key={data}
-                                  index={index}
-                                  comment={this.state.watchersComment}
-                                  explore={() => this.props.navigation.navigate('DetailPlan')}
-                                     />
-                              </View>
-                            ))
-                                
-                                
-                        }
-              </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
-                    
-
-            <View style={styles.titleInfoContainer}>
-                        
-                        
-              <View>
-                {
-                            this.state.watchers.map((data, index) => (
-                              <View>
-                                <HotPlanList 
-                                  key={data}
-                                  index={index}
-                                  comment={this.state.watchersComment}
-                                     />
-                              </View>
-                            ))
-                                
-                                
-                        }
-              </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
-                    
-
-            <View style={styles.titleInfoContainer}>
-                        
-                        
-              <View>
-                {
-                            this.state.watchers.map((data, index) => (
-                              <View>
-                                <HotPlanList 
-                                  key={data}
-                                  index={index}
-                                  comment={this.state.watchersComment}
-                                     />
-                              </View>
-                            ))
-                                
-                                
-                        }
-              </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
-                    
-
-            <View style={styles.titleInfoContainer}>
-                        
-                        
-              <View>
-                {
-                            this.state.watchers.map((data, index) => (
-                              <View>
-                                <HotPlanList 
-                                  key={data}
-                                  index={index}
-                                  comment={this.state.watchersComment}
-                                     />
-                              </View>
-                            ))
-                                
-                                
-                        }
-              </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
-                    
-            <View style={{ marginVertical: 20 }} />
-
-          </ScrollView>
-
+          <ImageBackground source={require('./back6.png')} style={{ width: width }}>
+  
+            <FlatList 
+              style={{ marginTop: 30, width: width }}
+              data={this.state.data}
+              renderItem={this._renderItem}
+              keyExtractor={(item, index) => item.id}
+              onEndReached={this._handleLoadMore}
+              onEndReachedThreshold={1}
+            />
+          </ImageBackground>
         </View>
-
       );
     }
 }
@@ -187,54 +141,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
-  },
-
-  titleImageContainer: {
-    width: width * 0.9,
-    height: height / 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10,
-    margin: 6,
-
-    // eslint-disable-next-line no-undef
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgb(50, 50, 50)',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: {
-          height: -1,
-          width: 0,
-        },
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-
-  imageStyle: {
-    width: width * 0.75,
-    height: height * 0.2,
-    borderRadius: 10,
+    
   },
   
-  calendarStyle: {
-    width: width * 0.75,
-    height: height * 0.2,
-    borderRadius: 10,
-    marginLeft: 10,
-  },
-
   titleInfoContainer: {
     backgroundColor: '#F2F2F2',
-    width: width * 0.9,
-    marginTop: 15,
+    width: width * 1,
+    height: height * 0.06,
+
+    marginTop: 5,
+    marginBottom: 20,
     borderRadius: 10,
-    margin: 6,
     padding: 10,
 
     // eslint-disable-next-line no-undef
@@ -254,47 +171,56 @@ const styles = StyleSheet.create({
     }),
   },
 
+  planListStyle: {
+    width: width,
+    alignItems: 'center',
+  },
+
   titleStyle: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginVertical: 10,
-
   },
-
-  subTitleStyle: {
-    fontSize: 14,
-    marginTop: 5,
-  },
-
   
-  moreExplore: {
-    marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width * 0.75,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    height: height * 0.04,
-    marginLeft: 24,
-  },
-
-  dateInfo: {
-    fontSize: 12,
-    marginTop: 15,
-    marginLeft: 10,
-  },
-
-  categoryUnitList: {
-    flexDirection: 'row',
-    padding: 5,
-  },
-  category: {
-    margin: 5,
-    width: 180,
-    height: 150,
-  },
-  calendar: {
-    width: 360,
-    height: 200,
-  },
+  
 });
+
+
+/*
+
+
+  <ScrollView contentContainerStyle={{ walignItems: 'center' }}>
+
+            <View style={styles.titleInfoContainer}>
+              <Text style={styles.titleStyle}>
+                %%대 인기 PLAN TOP 20
+              </Text>
+                        
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                    
+            <View>
+                       
+              <View style={styles.planListStyle}>
+                {
+                  this.state.watchers.map((data, index) => (
+                    <View>
+                      <HotPlanList 
+                                  // eslint-disable-next-line react/no-array-index-key
+                        key={index}
+                        index={index}
+                        comment={this.state.watchersComment}
+                    />
+                    </View>
+                  ))}       
+              </View>
+
+              <View style={{ marginBottom: 10 }} />
+
+            </View>
+                    
+                    
+            <View style={{ marginVertical: 20 }} />
+
+          </ScrollView>
+*/

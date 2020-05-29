@@ -123,7 +123,8 @@ export default class PlanSearched extends Component {
                             this.state.watchers.map((data, index) => (
                               <View>
                                 <HotPlanList 
-                                  key={data}
+                                  // eslint-disable-next-line react/no-array-index-key
+                                  key={index}
                                   index={index}
                                   comment={this.state.watchersComment}
                                   explore={() => this.props.navigation.navigate('DetailPlan')}
@@ -148,7 +149,8 @@ export default class PlanSearched extends Component {
                             this.state.watchers.map((data, index) => (
                               <View>
                                 <HotPlanList 
-                                  key={data}
+                                  // eslint-disable-next-line react/no-array-index-key
+                                  key={index}
                                   index={index}
                                   comment={this.state.watchersComment}
                                      />
@@ -172,7 +174,8 @@ export default class PlanSearched extends Component {
                             this.state.watchers.map((data, index) => (
                               <View>
                                 <HotPlanList 
-                                  key={data}
+                                  // eslint-disable-next-line react/no-array-index-key
+                                  key={index}
                                   index={index}
                                   comment={this.state.watchersComment}
                                      />
@@ -196,7 +199,8 @@ export default class PlanSearched extends Component {
                             this.state.watchers.map((data, index) => (
                               <View>
                                 <HotPlanList 
-                                  key={data}
+                                  // eslint-disable-next-line react/no-array-index-key
+                                  key={index}
                                   index={index}
                                   comment={this.state.watchersComment}
                                      />

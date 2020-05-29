@@ -29,9 +29,10 @@ export default class Searching extends Component {
 
   async sendSearch() {
     await axios
-      .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
+      .get('http://49.50.172.58:3000/plans?limit=10')
       // eslint-disable-next-line no-unused-vars
       .then((res) => {
+        console.log(res.data.plans[1].bet_money);
         //        alert(res);
       })
       .catch((error) => {

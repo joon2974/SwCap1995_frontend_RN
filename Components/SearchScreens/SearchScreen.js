@@ -173,7 +173,8 @@ export default class Searchscreen extends Component {
           <View style={styles.planContainer}>
             {this.state.test.map((data, index) => (
               <RecommendList
-                key={data}
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
                 name={nowRecommendList}
                 index={index}
                 imageUri={nowRecommendUri}
@@ -258,7 +259,8 @@ export default class Searchscreen extends Component {
           <View style={styles.planContainer}>
             {this.state.test.map((data, index) => (
               <AllCateList
-                key={data}
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
                 name={nowAllCateList}
                 index={index}
                 imageUri={nowAllCateUri}

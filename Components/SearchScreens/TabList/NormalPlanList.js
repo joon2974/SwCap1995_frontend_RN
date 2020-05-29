@@ -11,7 +11,7 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-export default class HotPlanList extends Component {
+export default class NormalPlanList extends Component {
   render() {
     return (
       <View style={styles.containerBackground}>

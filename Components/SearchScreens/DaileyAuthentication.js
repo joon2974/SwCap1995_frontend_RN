@@ -129,7 +129,8 @@ export default class DaileyAuthentication extends Component {
                             this.state.watchers.map((data, index) => (
                               <View>
                                 <Watcher 
-                                  key={data}
+                                  // eslint-disable-next-line react/no-array-index-key
+                                  key={index}
                                   index={index}
                                   comment={this.state.watchersComment}
                                      />
