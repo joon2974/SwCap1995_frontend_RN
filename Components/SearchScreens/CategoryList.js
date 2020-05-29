@@ -1,8 +1,6 @@
-/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 /* eslint-disable react/no-access-state-in-setstate */
-
 import React, { Component } from 'react';
 import {
   View,
@@ -21,11 +19,8 @@ export default class CategoryList extends Component {
     
       // selectedAllCate: '',
       
-      // data: [],
-      oddConvertedData: [],
-      evenConvertedData: [],
+      data: [],
       page: 1, 
-      flag: 1,
     }
 
 
@@ -45,15 +40,10 @@ export default class CategoryList extends Component {
         .then((r) => r.json())
         .then((data) => {
           this.setState({ 
-            //    data: this.state.data.concat(data.plans),
+            data: this.state.data.concat(data.plans),
             page: this.state.page + 1,
           });
-          for (let i = 0; i < 10; i++) {
-            if (i % 2 === 0) this.setState({ evenConvertedData: this.state.evenConvertedData.concat(data.plans[i]) });
-            else this.setState({ oddConvertedData: this.state.oddConvertedData.concat(data.plans[i]) });
-          }
         });
-      console.log(this.state.oddConvertedData[1]);
     }
 
 
@@ -62,20 +52,10 @@ export default class CategoryList extends Component {
     }
   
        
-    renderItem = ({ item, index }) => (
-
-      this.state.flag ? (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-          <SmallCate 
-            item={item}
-            explore={() => this.props.navigation.navigate('PlanList')} />
-          <SmallCate 
-            item={item}
-            explore={() => this.props.navigation.navigate('PlanList')} />
-
-        </View>
-      ) : <SmallCate explore={() => this.props.navigation.navigate('PlanList')} />
-
+    renderItem = ({ item }) => (
+      <SmallCate 
+        item={item}
+        explore={() => this.props.navigation.navigate('PlanList')} />    
     );
 
 
@@ -87,11 +67,19 @@ export default class CategoryList extends Component {
   
             <FlatList 
               style={{ marginTop: 30, width: width }}
-              data={this.state.evenConvertedData}
+              data={this.state.data}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => item.id}
               onEndReached={this.handleLoadMore}
               onEndReachedThreshold={1}
+        
+              contentContainerStyle={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}     
+              
             />
           </ImageBackground>
         </View>

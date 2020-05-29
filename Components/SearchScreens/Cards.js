@@ -1437,7 +1437,7 @@ export class CardTwelve extends Component {
         <View
           style={{
             borderRadius: 10,
-            width: screenWidth / 2.2,
+            width: screenWidth / 2.4,
             height: screenHeight / 2.8,
             
             shadowColor: '#999',
@@ -1453,7 +1453,7 @@ export class CardTwelve extends Component {
             borderRadius={10}
             source={this.props.image}
             style={{
-              width: screenWidth / 2.2,
+              width: screenWidth / 2.4,
               height: screenHeight / 3.8,
               resizeMode: 'cover',
             }}
@@ -1464,7 +1464,7 @@ export class CardTwelve extends Component {
               fontSize: 14,
               marginTop: 15,
               fontWeight: 'bold',
-              width: 150,
+              width: screenWidth / 2.4,
             }}
             >
             {this.props.title.length > 20
@@ -1475,7 +1475,7 @@ export class CardTwelve extends Component {
 
           <Text
             style={{
-              width: 150,
+              width: screenWidth / 2.4,
               fontSize: 12,
               color: '#bbb',
               marginTop: 5,
