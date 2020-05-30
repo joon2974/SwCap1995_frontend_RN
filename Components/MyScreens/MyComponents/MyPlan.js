@@ -9,10 +9,10 @@ import {
   Platform,
 
 } from 'react-native'; 
-import { Feather } from '@expo/vector-icons'; 
+import { Feather, MaterialIcons, AntDesign } from '@expo/vector-icons'; 
 
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
   render() {
@@ -23,22 +23,38 @@ export default class MyPlan extends Component {
           <TouchableOpacity
             onPress={this.props.btnFunc}
             style={styles.btnContainer}>
+           
             <Feather name="more-horizontal" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <View style={styles.photoContainer}>
-          <Image
-            source={{
-              uri: this.props.url,
-            }}
-            style={styles.photoStyle}
+        <View style={styles.planInfoContainer}>
+          <View style={styles.photoContainer}>
+            <Image
+              source={{
+                uri: this.props.url,
+              }}
+              style={styles.photoStyle}
                 />
+          
                 
-          <Text style={{ fontWeight: 'bold', fontSize: 40 }}>
-            {this.props.picturetime}
-            :00
-          </Text>
+          </View>
+          <View style={{
+            justifyContent: 'space-evenly', height: 200,
+          }}> 
+            <View style={{ flexDirection: 'row' }}>
+              <MaterialIcons name="access-time" size={24} color="black" />
+              <Text style={styles.textstyle}> 
+                {this.props.picturetime}
+                :00   
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <AntDesign name="piechart" size={20} color="black" />
+              <Text style={styles.textstyle}>77.11%</Text>
+            </View>
+          </View>
         </View>
+         
       </View>
 
     );
@@ -47,8 +63,8 @@ export default class MyPlan extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.8,
-    height: width / 1.8,
+    width: width * 0.7,
+    height: width / 1.6,
     backgroundColor: 'white',
     marginTop: 5,
     marginBottom: 5,
@@ -73,21 +89,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
+    backgroundColor: '#F2F2F2',
   },
   photoContainer: {
-    marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+    marginRight: 20,
   },
   photoStyle: {
-    width: width / 2.1,
-    height: height / 6,
+    width: width * 0.4,
+    height: width / 1.5,
+    resizeMode: 'cover',
+  },
+  btnContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  btnContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  textstyle: {
+    fontSize: 18, paddingLeft: 10, paddingRight: 10,
+  },
+  planInfoContainer: {
+    flexDirection: 'row',
   },
 });

@@ -6,13 +6,14 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Dimensions,
-  ScrollView,
+  ScrollView, Image,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
+import GoMakePlan from './HomeComponents/GoMakePlan';
 
 let currentUser;
 let isInformCheck;
@@ -163,32 +164,53 @@ export default class HomeMain extends Component {
         <ScrollView>
           <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
             <View style={styles.planContainer}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>진행중인 플랜</Text>
               <ScrollView 
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                   alignItems: 'center',
-                  paddingStart: 5,
-                  paddingEnd: 5,
                 }}
               >
+                <View style={{ marginRight: 30, marginLeft: 10 }}>
+                  <Text>도전중인</Text>
+                  <Text>플랜</Text>
+                  <Image
+                    source={{
+                      uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
+                    }}
+                    style={{ width: 50, height: 50, marginTop: 20 }}
+                />
+          
+                </View>
                 {plans}
+                <GoMakePlan />
               </ScrollView>
             </View>
             <View style={styles.lineDivider} />
             <View style={styles.planContainer}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>감시중인 플랜</Text>
+              
               <ScrollView 
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                   alignItems: 'center',
-                  paddingStart: 5,
                   paddingEnd: 5,
                 }}
-              >
+              >   
+                <View style={{ marginRight: 30, marginLeft: 10 }}>
+                  <Text>감시중인</Text>
+                  <Text>플랜</Text>
+                  <Image
+                    source={{
+                      uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
+                    }}
+                    style={{ width: 50, height: 50, marginTop: 20 }}
+            />
+                </View>
+      
                 {watchplans}
+                
+                <GoMakePlan />
               </ScrollView>
             </View>
           </LinearGradient>
@@ -210,9 +232,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   planContainer: {
-    marginTop: 20,
-    width: width * 0.9,
-    height: height * 0.38,
+    width: width,
+    height: height * 0.403,
   },  
   lineDivider: {
     backgroundColor: '#F2F2F2',
