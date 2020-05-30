@@ -6,14 +6,17 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Dimensions,
-  ScrollView, Image,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import { AntDesign } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
-import GoMakePlan from './HomeComponents/GoMakePlan';
 
 let currentUser;
 let isInformCheck;
@@ -29,8 +32,6 @@ export default class HomeMain extends Component {
   }; 
 
   componentDidMount() {
-    const i = this.props.navigation.dangerouslyGetParent();
-    console.log('aa', i);
     currentUser = firebase.auth().currentUser;
     if (currentUser != null) {
       const email = currentUser.email;
@@ -137,6 +138,10 @@ export default class HomeMain extends Component {
     }
   };
 
+  moveToPlan = () => {
+    this.props.navigation.dangerouslyGetParent().navigate('Plan');
+  }
+
   render() {
     const {
       isInformChecked, userEmail, planData, watchData, 
@@ -183,7 +188,15 @@ export default class HomeMain extends Component {
           
                 </View>
                 {plans}
-                <GoMakePlan />
+                <View style={styles.addContainer}>
+                  <TouchableOpacity
+                    style={styles.addBtnContainer}
+                    onPress={this.moveToPlan}
+                  >
+                    <AntDesign name="pluscircleo" size={70} color="black" />
+                    <Text>플랜 만들러 가기</Text>
+                  </TouchableOpacity>
+                </View>
               </ScrollView>
             </View>
             <View style={styles.lineDivider} />
@@ -209,8 +222,15 @@ export default class HomeMain extends Component {
                 </View>
       
                 {watchplans}
-                
-                <GoMakePlan />
+                <View style={styles.addContainer}>
+                  <TouchableOpacity
+                    style={styles.addBtnContainer}
+                    onPress={this.moveToPlan}
+                  >
+                    <AntDesign name="pluscircleo" size={70} color="black" />
+                    <Text>플랜 만들러 가기</Text>
+                  </TouchableOpacity>
+                </View>
               </ScrollView>
             </View>
           </LinearGradient>
@@ -240,5 +260,34 @@ const styles = StyleSheet.create({
     width: width - 30,
     height: 1.5,
     marginLeft: 15,
+  },
+  addContainer: {
+    width: width * 0.7,
+    height: width / 1.6,
+    backgroundColor: 'white',
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 5,
+    marginRight: 20,
+    justifyContent: 'center',
+    alignContent: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  addBtnContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

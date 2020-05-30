@@ -16,9 +16,11 @@ const { width } = Dimensions.get('window');
 export default class MyPlan extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.addContainer}>
         <TouchableOpacity
-          style={styles.btnContainer}>
+          style={styles.addBtnContainer}
+          onPress={this.props.navigateFunc}
+        >
           <AntDesign name="pluscircleo" size={70} color="black" />
           <Text>플랜 만들러 가기</Text>
         </TouchableOpacity>
@@ -29,7 +31,7 @@ export default class MyPlan extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  addContainer: {
     width: width * 0.7,
     height: width / 1.6,
     backgroundColor: 'white',
@@ -54,11 +56,9 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  btnContainer: {
+  addBtnContainer: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textstyle: {
-    fontSize: 18, paddingLeft: 10, paddingRight: 10,
-  },
+  
 });
