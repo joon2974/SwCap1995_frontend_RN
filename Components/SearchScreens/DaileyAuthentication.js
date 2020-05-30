@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
   },
 
   titleImageContainer: {
