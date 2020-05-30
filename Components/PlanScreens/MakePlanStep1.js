@@ -12,6 +12,7 @@ import {
 import axios from 'axios';
 import TimePicker from './PlanComponents/TimePicker';
 import RulePicker from './PlanComponents/RulePicker';
+import ImageModal from 'react-native-image-modal';
 
 const { height, width } = Dimensions.get('window');
 
@@ -22,21 +23,15 @@ export default class PlanMain extends Component {
     certifyTime: '09시 ~ 11시',
     certifyImageUri: 'https://ifh.cc/g/BHltgC.jpg',
     pictureRules: {
-      '찬물에 손 씻기': [
-        '자신의 손이 보일 것',
-        '차가울 물임을 증명할 것',
-      ],
-      '메모지에 시간과 글 쓰기': [
-        '손글씨 일 것',
-        '일어났을 때의 시간을 쓸 것',
-      ],
+      '찬물에 손 씻기': ['자신의 손이 보일 것', '차가울 물임을 증명할 것'],
+      '메모지에 시간과 글 쓰기': ['손글씨 일 것', '일어났을 때의 시간을 쓸 것'],
     },
     selectedMainRule: '찬물에 손 씻기',
     timeList: [],
     periodList: [],
     dateList: [],
     ruleListFromServer: [],
-  }
+  };
 
   componentDidMount() {
     this.setDateData();
@@ -57,7 +52,7 @@ export default class PlanMain extends Component {
     const dayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const today = new Date();
     const year = today.getFullYear();
-    if ((year % 4) === 0) {
+    if (year % 4 === 0) {
       dayCount[1] = 29;
     }
     const month = today.getMonth();
@@ -67,46 +62,58 @@ export default class PlanMain extends Component {
       dateList.push(i.toString());
     }
 
-    this.setState({ timeList: timeList, periodList: periodList, dateList: dateList });
-  }
+    this.setState({
+      timeList: timeList,
+      periodList: periodList,
+      dateList: dateList,
+    });
+  };
 
   loadRulesFromServer = async () => {
-    await axios.get('http://49.50.172.58:3000/plan_templates').then((data) => {
-      const rulesFromServer = data.data.rows;
-      this.setState({ ruleListFromServer: rulesFromServer });
-      const ruleObject = {};
-      let defaultRule;
+    await axios
+      .get('http://49.50.172.58:3000/plan_templates')
+      .then(data => {
+        const rulesFromServer = data.data.rows;
+        this.setState({ ruleListFromServer: rulesFromServer });
+        const ruleObject = {};
+        let defaultRule;
 
-      for (let i = 0; i < rulesFromServer.length; i++) {
-        // eslint-disable-next-line eqeqeq
-        if (rulesFromServer[i].detailedCategory == this.props.route.params.planName) {
-          const tempList = [];
+        for (let i = 0; i < rulesFromServer.length; i++) {
+          // eslint-disable-next-line eqeqeq
+          if (
+            rulesFromServer[i].detailedCategory ==
+            this.props.route.params.planName
+          ) {
+            const tempList = [];
 
-          tempList.push(rulesFromServer[i].sub_rule_1);
-          tempList.push(rulesFromServer[i].sub_rule_2);
-          ruleObject[rulesFromServer[i].main_rule] = tempList;
+            tempList.push(rulesFromServer[i].sub_rule_1);
+            tempList.push(rulesFromServer[i].sub_rule_2);
+            ruleObject[rulesFromServer[i].main_rule] = tempList;
+          }
         }
-      }
-      // eslint-disable-next-line prefer-const
-      defaultRule = Object.keys(ruleObject)[0];
-      this.setState({ selectedMainRule: defaultRule, pictureRules: ruleObject });
+        // eslint-disable-next-line prefer-const
+        defaultRule = Object.keys(ruleObject)[0];
+        this.setState({
+          selectedMainRule: defaultRule,
+          pictureRules: ruleObject,
+        });
 
-      let certifyPhotoUri;
-      for (let i = 0; i < rulesFromServer.length; i++) {
-        if (rulesFromServer[i].main_rule === this.state.selectedMainRule) {
-          certifyPhotoUri = rulesFromServer[i].image_url;
+        let certifyPhotoUri;
+        for (let i = 0; i < rulesFromServer.length; i++) {
+          if (rulesFromServer[i].main_rule === this.state.selectedMainRule) {
+            certifyPhotoUri = rulesFromServer[i].image_url;
+          }
         }
-      }
-      this.setState({ certifyImageUri: certifyPhotoUri });
-    })
-      .catch((error) => {
+        this.setState({ certifyImageUri: certifyPhotoUri });
+      })
+      .catch(error => {
         console.log('서버로부터 template 가져오기 에러: ', error);
       });
-  }
+  };
 
-  mainRuleFilter = (pictureRules) => Object.keys(pictureRules)
+  mainRuleFilter = pictureRules => Object.keys(pictureRules);
 
-  updateCertifyPhoto = (selectedMainRule) => {
+  updateCertifyPhoto = selectedMainRule => {
     const ruleListFromServer = this.state.ruleListFromServer;
 
     let certifyPhotoUri;
@@ -116,7 +123,7 @@ export default class PlanMain extends Component {
       }
     }
     this.setState({ certifyImageUri: certifyPhotoUri });
-  }
+  };
 
   render() {
     const {
@@ -135,12 +142,14 @@ export default class PlanMain extends Component {
       <ScrollView style={styles.container}>
         <View style={styles.viewContainer}>
           <View style={styles.selectedInformContainer}>
-            <Image 
-              source={{ uri: this.props.route.params.uri }} 
+            <Image
+              source={{ uri: this.props.route.params.uri }}
               style={styles.imageStyle}
             />
             <View style={styles.infoTitle}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{this.props.route.params.category}</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+                {this.props.route.params.category}
+              </Text>
               <Text>{this.props.route.params.planName}</Text>
             </View>
           </View>
@@ -149,30 +158,38 @@ export default class PlanMain extends Component {
 
           <View style={styles.timesContainer}>
             <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>시간 선택</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                시간 선택
+              </Text>
             </View>
             <View style={styles.timePickerContainer}>
               <View style={styles.eachTimesContainer}>
                 <Text>시작일</Text>
-                <TimePicker 
+                <TimePicker
                   time={startDate}
-                  onValueChange={(itemValue) => this.setState({ startDate: itemValue })}
+                  onValueChange={itemValue =>
+                    this.setState({ startDate: itemValue })
+                  }
                   times={dateList}
                 />
               </View>
               <View style={styles.eachTimesContainer}>
                 <Text>도전 기간(주)</Text>
-                <TimePicker 
+                <TimePicker
                   time={endDate}
-                  onValueChange={(itemValue) => this.setState({ endDate: itemValue })}
+                  onValueChange={itemValue =>
+                    this.setState({ endDate: itemValue })
+                  }
                   times={periodList}
                 />
               </View>
               <View style={styles.eachTimesContainer}>
                 <Text>인증 시간(시)</Text>
-                <TimePicker 
+                <TimePicker
                   time={certifyTime}
-                  onValueChange={(itemValue) => this.setState({ certifyTime: itemValue })}
+                  onValueChange={itemValue =>
+                    this.setState({ certifyTime: itemValue })
+                  }
                   times={timeList}
                 />
               </View>
@@ -183,23 +200,27 @@ export default class PlanMain extends Component {
 
           <View style={styles.ruleContainer}>
             <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>인증 조건 선택</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                인증 조건 선택
+              </Text>
             </View>
-            <Image 
-              source={{ uri: certifyImageUri }} 
-              style={styles.certifyImageStyle}
-            />
-            <Text>인증 사진 예시</Text>
+            <View style={{ alignItems: 'center' }}>
+              <ImageModal
+                style={styles.certifyImageStyle}
+                source={{ uri: certifyImageUri }}
+              />
+              <Text>인증 사진 예시</Text>
+            </View>
             <View style={styles.lineDivider} />
             <View style={styles.rulePickContainer}>
-              <RulePicker 
+              <RulePicker
                 rule={selectedMainRule}
-                onValueChange={(itemValue) => {
+                onValueChange={itemValue => {
                   this.setState({ selectedMainRule: itemValue });
                   this.updateCertifyPhoto(itemValue);
                 }}
                 rules={this.mainRuleFilter(pictureRules)}
-                pickerWidth={width} 
+                pickerWidth={width}
               />
               <View style={styles.subRuleContainer}>
                 <Text>{pictureRules[selectedMainRule][0]}</Text>
@@ -212,20 +233,25 @@ export default class PlanMain extends Component {
 
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.props.navigation.navigate('MakePlanStep2',
-              {
+            onPress={() =>
+              this.props.navigation.navigate('MakePlanStep2', {
                 category: this.props.route.params.category,
                 planName: this.props.route.params.planName,
                 startDate: this.state.startDate,
                 endDate: this.state.endDate,
                 certifyTime: this.state.certifyTime,
                 selectedMainRule: this.state.selectedMainRule,
-                subRule1: this.state.pictureRules[this.state.selectedMainRule][0],
-                subRule2: this.state.pictureRules[this.state.selectedMainRule][1],
+                subRule1: this.state.pictureRules[
+                  this.state.selectedMainRule
+                ][0],
+                subRule2: this.state.pictureRules[
+                  this.state.selectedMainRule
+                ][1],
                 certifyImgUri: this.state.certifyImageUri,
                 userID: this.props.route.params.userID,
                 categoryUri: this.props.route.params.uri,
-              })}
+              })
+            }
           >
             <Text style={{ fontWeight: 'bold', color: 'white' }}>다음 단계로</Text>
           </TouchableOpacity>
