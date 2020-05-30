@@ -7,6 +7,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Text,
   FlatList,
   ImageBackground,
   Dimensions,
@@ -44,6 +45,11 @@ export default class Searching extends Component {
             data: data.plans,
             nowPage: this.state.nowPage + 1,
           });
+          if (data.plans.length === 0) {
+            this.setState({ searchStatus: 2 });
+          } else {
+            this.setState({ searchStatus: 1 });
+          }
         });
       this.flatList.scrollToOffset({ animated: true, offset: 0 });  
     } else {
@@ -55,6 +61,11 @@ export default class Searching extends Component {
             data: this.state.data.concat(data.plans),
             nowPage: this.state.nowPage + 1,
           });
+          if (data.plans.length === 0) {
+            this.setState({ searchStatus: 2 });
+          } else {
+            this.setState({ searchStatus: 1 });
+          }
         });    
       
       this.setState({ searchStatus: 1 });
@@ -64,9 +75,6 @@ export default class Searching extends Component {
   handleLoadMore = () => {
     this.getData();
   }
-
-
-  //  const url = 'http://49.50.172.58:3000/plans/search?query='+this.state.search + '&limit=10&page=' + this.state.nowPage;
 
   getData = () => {
     if (this.state.moreData === 0) {
@@ -102,7 +110,13 @@ export default class Searching extends Component {
   render() {
     let showSearched = null;
     if (this.state.searchStatus === 0) {
-      showSearched = <View />;
+      showSearched = (
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>
+            {'\n\n검색 gogo'}
+          </Text>        
+        </View>
+      );
     } else if (this.state.searchStatus === 1) {
       showSearched = (
         <FlatList 
@@ -114,6 +128,14 @@ export default class Searching extends Component {
           onEndReachedThreshold={1}
           ref={(ref) => { this.flatList = ref; }}
     />
+      );
+    } else if (this.state.searchStatus === 2) {
+      showSearched = (
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>
+            {'\n\n검색한 결과가 존재하지 않습니다.'}
+          </Text>        
+        </View>
       );
     }
 
