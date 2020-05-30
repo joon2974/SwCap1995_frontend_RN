@@ -30,9 +30,10 @@ import ImagePickScreen from './PlanScreens/ImagePickScreen';
 
 import { firebaseConfig } from '../firebaseConfig';
 import SearchScreen from './SearchScreens/SearchScreen';
-import PlanSearched from './SearchScreens/PlanSearched';
+import Searching from './SearchScreens/Searching';
 import CategoryList from './SearchScreens/CategoryList';
 import HotPlan from './SearchScreens/HotPlan';
+import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
 import Calendar from './SearchScreens/Calendar';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
@@ -87,10 +88,11 @@ function SearchStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <SearchStack.Screen name="Search" component={SearchScreen} />
-      <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
+      <SearchStack.Screen name="SearchScreen" component={SearchScreen} />
+      <SearchStack.Screen name="Searching" component={Searching} />
       <SearchStack.Screen name="CategoryList" component={CategoryList} />
       <SearchStack.Screen name="HotPlan" component={HotPlan} />
+      <SearchStack.Screen name="PlanList" component={PlanList} />
       <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
       <SearchStack.Screen name="Calendar" component={Calendar} />
       <SearchStack.Screen

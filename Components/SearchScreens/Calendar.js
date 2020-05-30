@@ -1,149 +1,93 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
+/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
+  Dimensions,
+  ImageBackground,
+  FlatList,
 } from 'react-native';
+import DayList from './TabList/DayList';
 
-export default class DetailPlan extends Component {
-  render() {
-    let pic = {
-      // uri : search
-      uri:
-        'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
-    };
+// eslint-disable-next-line no-unused-vars
+const { width, height } = Dimensions.get('window');
 
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <View>
-            <Text style={styles.recommendTitle}>지난 경과들에 대한 리스트</Text>
-            <Text style={styles.recommendSubTitle}>
-              아래엔 날짜에 맞는 인증자료들. 이걸 어떻게 표현할지는 좀더 논의.
-            </Text>
-          </View>
+export default class Calendar extends Component {
+    state = {
+    
+      // selectedAllCate: '',      
+      data: [],
+    }
 
-          <View style={styles.categoryUnitList}>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text>X월 X일</Text>
-              <TouchableOpacity
-                style={styles.category}
-                onPress={() => this.props.navigation.navigate('DaileyAuthentication')
-                }
-              >
-                <Image source={pic} style={styles.category} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
+
+    async componentDidMount() {
+      this.setParams();
+      this.getData();
+      //      this.getDataTest();
+    }
+
+    setParams = () => {
+      // this.setState({ selectedAllCate: this.props.route.params.selectedAllCate });
+    }
+
+    async getData() {
+      const url = 'http://49.50.172.58:3000/detailedCategories';
+      await fetch(url)
+        .then((r) => r.json())
+        .then((data) => {
+          this.setState({ 
+            data: this.state.data.concat(data.data.detailedCategoryGet),
+          });
+        });
+    }
+
+
+    handleLoadMore = () => {
+      this.getData();
+    }
+  
+       
+    renderItem = ({ item }) => (
+      <DayList 
+        item={item}
+        explore={() => this.props.navigation.navigate('DaileyAuthentication')} />    
     );
-  }
+
+
+    render() {
+      return (
+ 
+        <View style={styles.container}>
+          <ImageBackground source={require('./back6_reverse.png')} style={{ width: width }}>
+  
+            <FlatList 
+              style={{ marginTop: 30, width: width }}
+              data={this.state.data}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => item.id}
+
+              numColumns={2}
+              contentContainerStyle={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}     
+              
+            />
+          </ImageBackground>
+        </View>
+      );
+    }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-
-  recommendTitle: {
-    fontWeight: 'bold',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    fontSize: 24,
-  },
-  recommendSubTitle: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    fontSize: 16,
-  },
-
-  categoryUnitList: {
-    flexDirection: 'row',
-    padding: 5,
-  },
-  category: {
-    margin: 5,
-    width: 180,
-    height: 150,
+    width: width * 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
 });

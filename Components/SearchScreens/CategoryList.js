@@ -1,108 +1,93 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
+/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, 
+  View,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  FlatList,
 } from 'react-native';
+import SmallCate from './TabList/SmallCate';
+
+// eslint-disable-next-line no-unused-vars
+const { width, height } = Dimensions.get('window');
 
 export default class CategoryList extends Component {
-  render() {
-    const pic = {
-      // uri : search
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg',
-    };
-
-    return (
-          
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.recommendTitle}>
-            클릭된 분야의 카테고리들 리스트
-          </Text>
-          <Text style={styles.recommendSubTitle}>
-            클릭된 분야의 카테고리 리스트가 아래에 펼쳐짐~~~~~~~~
-            ex) 건강/운동 분야로 들어왔다면 조깅, 헬스, 물마시기 등 이런것들이 아래에 나열
-          </Text>
-        </View>
+    state = {
+    
+      // selectedAllCate: '',      
+      data: [],
+    }
 
 
-        <ScrollView>
+    async componentDidMount() {
+      this.setParams();
+      this.getData();
+      //      this.getDataTest();
+    }
 
+    setParams = () => {
+      // this.setState({ selectedAllCate: this.props.route.params.selectedAllCate });
+    }
+
+    async getData() {
+      const url = 'http://49.50.172.58:3000/detailedCategories';
+      await fetch(url)
+        .then((r) => r.json())
+        .then((data) => {
+          this.setState({ 
+            data: this.state.data.concat(data.data.detailedCategoryGet),
+          });
+        });
+    }
+
+
+    handleLoadMore = () => {
+      this.getData();
+    }
+  
        
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.categoryUnitList}>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress={() => this.props.navigation.navigate('DetailPlan')}>
-              <Image source={pic} style={styles.category} />
-            </TouchableOpacity>
-          </View>
-
-        </ScrollView>
-
-      </View>
-
+    renderItem = ({ item }) => (
+      <SmallCate 
+        item={item}
+        explore={() => this.props.navigation.navigate('PlanList')} />    
     );
-  }
+
+
+    render() {
+      return (
+ 
+        <View style={styles.container}>
+          <ImageBackground source={require('./back6_reverse.png')} style={{ width: width }}>
+  
+            <FlatList 
+              style={{ marginTop: 30, width: width }}
+              data={this.state.data}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => item.id}
+              
+              numColumns={2}
+              contentContainerStyle={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}     
+              
+            />
+          </ImageBackground>
+        </View>
+      );
+    }
 }
 
-
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-  },
-
-
-  recommendTitle: {
-    fontWeight: 'bold', 
-    paddingHorizontal: 10, 
-    paddingVertical: 20, 
-    fontSize: 24,
-  },
-  recommendSubTitle: {
-    paddingHorizontal: 10, 
-    paddingVertical: 10, 
-    fontSize: 16,
-  },
-
-  categoryUnitList: {
-    flexDirection: 'row',
-    padding: 5,
-  },
-  category: {
-    margin: 5,
-    width: 180,
-    height: 150,
+    width: width * 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
 });
