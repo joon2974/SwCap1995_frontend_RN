@@ -172,35 +172,35 @@ export default class PlanMain extends Component {
                   style={selectedCategory === '운동/건강' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
                   onPress={() => this.setPlanList('운동/건강', planListFromServer, uriListFromServer)}
                 >
-                  <Text>운동/건강</Text>
+                  <Text style={selectedCategory === '운동/건강' ? { color: 'white' } : { color: 'black' }}>운동/건강</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '감정관리' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
                   onPress={() => this.setPlanList('감정관리', planListFromServer, uriListFromServer)}
                 >
-                  <Text>감정관리</Text>
+                  <Text style={selectedCategory === '감정관리' ? { color: 'white' } : { color: 'black' }}>감정관리</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '생활습관' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
                   onPress={() => this.setPlanList('생활습관', planListFromServer, uriListFromServer)}
                 >
-                  <Text>생활습관</Text>
+                  <Text style={selectedCategory === '생활습관' ? { color: 'white' } : { color: 'black' }}>생활습관</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '자기계발' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
                   onPress={() => this.setPlanList('자기계발', planListFromServer, uriListFromServer)}
                 >
-                  <Text>자기계발</Text>
+                  <Text style={selectedCategory === '자기계발' ? { color: 'white' } : { color: 'black' }}>자기계발</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={selectedCategory === '기타' ? styles.selectedCategoryBtnStyle : styles.categoryBtnStyle}
                   onPress={() => this.setPlanList('기타', planListFromServer, uriListFromServer)}
                 >
-                  <Text>기타</Text>
+                  <Text style={selectedCategory === '기타' ? { color: 'white' } : { color: 'black' }}>기타</Text>
                 </TouchableOpacity>
               </View>
 
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F6CEEC',
+    backgroundColor: '#FD8A69',
     borderRadius: 5,
     margin: 1,
     ...Platform.select({
