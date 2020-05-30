@@ -60,7 +60,7 @@ export default class Calendar extends Component {
       return (
  
         <View style={styles.container}>
-          <ImageBackground source={require('./back6_reverse.png')} style={{ width: width }}>
+          <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
   
             <FlatList 
               style={{ marginTop: 30, width: width }}
