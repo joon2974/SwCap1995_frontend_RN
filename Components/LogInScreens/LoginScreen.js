@@ -25,11 +25,11 @@ export default class LoginScreen extends Component {
   };
 
   gotoSignUp = () => {
-    this.props.navigation.navigate('SignUp');
+    this.props.navigation.navigate('회원가입');
   };
 
   gotoFindPassword = () => {
-    this.props.navigation.navigate('FindPassword');
+    this.props.navigation.navigate('비밀번호 찾기');
   }
 
   sendLoginPath = (userID, isEmailLogin) => {

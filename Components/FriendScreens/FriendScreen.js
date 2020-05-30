@@ -151,7 +151,7 @@ export default class FriendScreen extends Component {
             <TouchableOpacity 
               style={styles.addBtnStyle}
               onPress={() => {
-                this.props.navigation.navigate('AddFriend', { userId: userId });
+                this.props.navigation.navigate('친구 추가', { userId: userId });
               }}
             >
               <Text>친구추가 하러 가기</Text>

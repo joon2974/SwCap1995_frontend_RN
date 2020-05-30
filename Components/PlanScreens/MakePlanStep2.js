@@ -205,7 +205,7 @@ export default class MakePlanStep2 extends Component {
           </View>
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.props.navigation.navigate('MakePlanStep3',
+            onPress={() => this.props.navigation.navigate('플랜 만들기: 3단계',
               {
                 category: this.props.route.params.category,
                 planName: this.props.route.params.planName,

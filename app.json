@@ -31,13 +31,8 @@
       "translucent": false
     },
     "android": {
-<<<<<<< HEAD
-      "package": "com.planA.planA"
-    }
-=======
       "package": "com.plana.plana"
     },
     "description": ""
->>>>>>> d24692baf7f11ca2bb8b0db510729b14d49eafd9
   }
 }

@@ -124,7 +124,7 @@ export default class DetailPlan extends Component {
                   {'\n'}
                 </Text>
 
-                <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('Calendar')}>
+                <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('달력')}>
                   <Image 
                     style={styles.calendarStyle}
                     source={{ uri: item.image_url }} 

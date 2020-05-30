@@ -157,7 +157,7 @@ export default class MyMenuScreen extends Component {
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.button}
-                    onPress={() => this.props.navigation.navigate('AddPoint', { onRefresh: this.onRefresh })}
+                    onPress={() => this.props.navigation.navigate('포인트 충전', { onRefresh: this.onRefresh })}
                     
                     
                   >
@@ -198,7 +198,7 @@ export default class MyMenuScreen extends Component {
           />
             <MyPageBtn 
               btnName="비밀번호 변경"
-              btnFunc={() => this.props.navigation.navigate('ChangePassword')}
+              btnFunc={() => this.props.navigation.navigate('비밀번호 변경')}
           />
 
             <MyPageBtn 
