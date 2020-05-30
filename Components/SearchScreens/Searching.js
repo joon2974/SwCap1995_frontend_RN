@@ -34,8 +34,9 @@ export default class Searching extends Component {
   sendSearch = () => {
     if (this.state.searchStatus === 1) {
       this.state.nowPage = 1;
+      this.state.moreData = 0;
 
-      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+      const url = 'http://49.50.172.58:3000/plans/search?query=' + this.state.search + '&limit=10&page=' + this.state.nowPage;
       fetch(url)
         .then((r) => r.json())
         .then((data) => {
@@ -45,7 +46,7 @@ export default class Searching extends Component {
           });
         });
     } else {
-      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+      const url = 'http://49.50.172.58:3000/plans/search?query=' + this.state.search + '&limit=10&page=' + this.state.nowPage;
       fetch(url)
         .then((r) => r.json())
         .then((data) => {
@@ -68,7 +69,7 @@ export default class Searching extends Component {
 
   getData = () => {
     if (this.state.moreData === 0) {
-      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+      const url = 'http://49.50.172.58:3000/plans/search?query=' + this.state.search + '&limit=10&page=' + this.state.nowPage;
       fetch(url)
         .then((r) => r.json())
         .then((data) => {
