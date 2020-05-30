@@ -7,6 +7,7 @@ import {
   AsyncStorage,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,15 +18,28 @@ const { width, height } = Dimensions.get('window');
 export default class FriendScreen extends Component {
   constructor(props) {
     super(props);
+    this.onRefresh=this.onRefresh.bind(this);
     this.state = {
-      friendData: [{ nickname: '1', email: '1', id: '1' }, { nickname: '2', email: '2', id: '2' }],
+      friendData: [],
       friendRequstData: [],
       userId: '1',
+      refreshing: false,
     };
   }
 
   componentDidMount() {
     this.loadUserID();
+  }
+
+  onRefresh = () => {
+    this.setState({
+      friendData: [],
+      friendRequstData: [],
+    });
+    this.setState({ refreshing: true });
+    this.getFriends(this.state.userId).then(() => {
+      this.setState({ refreshing: false });
+    });
   }
 
   loadUserID = async () => {
@@ -95,10 +109,24 @@ export default class FriendScreen extends Component {
         key={data.id}
         nickname={data.nickname}
         userId={userId}
+        onRefresh={this.onRefresh}
 />
     ));
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={(
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+            tintColor="#ff0000"
+            title="Loading..."
+            titleColor="#00ff00"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="white"
+      />
+    )}
+      >
         <View style={styles.buttonContainer}>
           <View style={styles.titleCotainer}>
             <View style={styles.titleContainerSmall}>

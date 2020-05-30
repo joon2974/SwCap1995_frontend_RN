@@ -17,17 +17,19 @@ export default class FriendRequestList extends Component {
         user_id: userId,
         nickname: targetNickname,
         is_accept: 'accept',
-      }).then(function () {
+      }).then(() => {
+        this.props.onRefresh();
       });
     }
 
     rejectRequet=(userId, targetNickname) => {
-      console.log('닉네임', targetNickname);
+      console.log(this.props);
       axios.patch('http://49.50.172.58:3000/friends/response', {
         user_id: userId,
         nickname: targetNickname,
         is_accept: 'reject',
-      }).then(function () {
+      }).then(() => {
+        this.props.onRefresh();
       });
     }
 
@@ -50,7 +52,8 @@ export default class FriendRequestList extends Component {
             <View style={styles.BtnContainer}>
               <TouchableOpacity 
                 style={styles.btnAcceptStyle}
-                onPress={() => this.acceptRequet(userId, nickname)}
+                onPress={() => this.acceptRequet(userId, nickname)
+                }
               >
                 <Text>수락</Text>
               </TouchableOpacity>
