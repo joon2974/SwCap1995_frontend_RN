@@ -47,9 +47,9 @@ const LoginStack = createStackNavigator();
 function LoginStackScreen() {
   return (
     <LoginStack.Navigator>
-      <LoginStack.Screen name="Login" component={LoginScreen} />
-      <LoginStack.Screen name="SignUp" component={SignUpScreen} />
-      <LoginStack.Screen name="FindPassword" component={FindPasswordScreen} />
+      <LoginStack.Screen name="로그인" component={LoginScreen} />
+      <LoginStack.Screen name="회원가입" component={SignUpScreen} />
+      <LoginStack.Screen name="비밀번호 찾기" component={FindPasswordScreen} />
     </LoginStack.Navigator>
   );
 }
@@ -68,7 +68,7 @@ function HomeStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <HomeStack.Screen name="Main" component={HomeMain} />
+      <HomeStack.Screen name="Plan A" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
     </HomeStack.Navigator>
@@ -89,16 +89,16 @@ function SearchStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <SearchStack.Screen name="SearchScreen" component={SearchScreen} />
-      <SearchStack.Screen name="Searching" component={Searching} />
-      <SearchStack.Screen name="CategoryList" component={CategoryList} />
-      <SearchStack.Screen name="HotPlan" component={HotPlan} />
-      <SearchStack.Screen name="PlanList" component={PlanList} />
-      <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
-      <SearchStack.Screen name="Joom" component={Joom} />
-      <SearchStack.Screen name="Calendar" component={Calendar} />
+      <SearchStack.Screen name="검색" component={SearchScreen} />
+      <SearchStack.Screen name="검색하기" component={Searching} />
+      <SearchStack.Screen name="카테고리" component={CategoryList} />
+      <SearchStack.Screen name="인기 플랜" component={HotPlan} />
+      <SearchStack.Screen name="플랜 목록" component={PlanList} />
+      <SearchStack.Screen name="줌" component={Joom} />
+      <SearchStack.Screen name="플랜 상세 정보" component={DetailPlan} />
+      <SearchStack.Screen name="달력" component={Calendar} />
       <SearchStack.Screen
-        name="DaileyAuthentication"
+        name="일일 인증"
         component={DaileyAuthentication}
       />
     </SearchStack.Navigator>
@@ -118,8 +118,8 @@ function FriendStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <FriendStack.Screen name="FriendScreen" component={FriendScreen} />
-      <FriendStack.Screen name="AddFriend" component={AddFriendScreen} />
+      <FriendStack.Screen name="친구 목록" component={FriendScreen} />
+      <FriendStack.Screen name="친구 추가" component={AddFriendScreen} />
     </FriendStack.Navigator>
   );
 }
@@ -137,12 +137,12 @@ function PlanStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <PlanStack.Screen name="PlanMain" component={PlanMain} />
-      <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
-      <PlanStack.Screen name="MakePlanStep2" component={MakePlanStep2} />
-      <PlanStack.Screen name="MakePlanStep3" component={MakePlanStep3} />
-      <PlanStack.Screen name="CameraScreen" component={CameraScreen} />
-      <PlanStack.Screen name="ImagePickScreen" component={ImagePickScreen} />
+      <PlanStack.Screen name="플랜" component={PlanMain} />
+      <PlanStack.Screen name="플랜 만들기: 1단계" component={MakePlanStep1} />
+      <PlanStack.Screen name="플랜 만들기: 2단계" component={MakePlanStep2} />
+      <PlanStack.Screen name="플랜 만들기: 3단계" component={MakePlanStep3} />
+      <PlanStack.Screen name="카메라" component={CameraScreen} />
+      <PlanStack.Screen name="갤러리 선택" component={ImagePickScreen} />
     </PlanStack.Navigator>
   );
 }
@@ -161,9 +161,9 @@ function MyMenuStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <MyMenuStack.Screen name="MyMenu" component={MyMenuScreen} />
-      <MyMenuStack.Screen name="AddPoint" component={AddPoint} />
-      <MyMenuStack.Screen name="ChangePassword" component={ChangePassword} />
+      <MyMenuStack.Screen name="내 정보" component={MyMenuScreen} />
+      <MyMenuStack.Screen name="포인트 충전" component={AddPoint} />
+      <MyMenuStack.Screen name="비밀번호 변경" component={ChangePassword} />
     </MyMenuStack.Navigator>
   );
 }

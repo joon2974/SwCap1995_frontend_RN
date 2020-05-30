@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window');
 export default class FriendScreen extends Component {
   constructor(props) {
     super(props);
-    this.onRefresh=this.onRefresh.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
     this.state = {
       friendData: [],
       friendRequstData: [],
@@ -77,12 +77,13 @@ export default class FriendScreen extends Component {
     const requestresponse = await axios.get(
       'http://49.50.172.58:3000/friends/waiting/' + userID,
     );
+    console.log(requestresponse.data);
     const requestcount = await requestresponse.data.count;
     const requestresponseJson = await requestresponse.data.rows;
     try {
       if (requestcount !== 0) {
         for (var k = 0; k < requestcount; k++) {
-          const obj = { nickname: requestresponseJson[k].nickname, id: responseJson[k].id };
+          const obj = { nickname: requestresponseJson[k].nickname, id: requestresponseJson[k].id };
           friendRequestarray.push(obj);
         }
         this.setState({
@@ -151,7 +152,7 @@ export default class FriendScreen extends Component {
             <TouchableOpacity 
               style={styles.addBtnStyle}
               onPress={() => {
-                this.props.navigation.navigate('AddFriend', { userId: userId });
+                this.props.navigation.navigate('친구 추가', { userId: userId });
               }}
             >
               <Text>친구추가 하러 가기</Text>

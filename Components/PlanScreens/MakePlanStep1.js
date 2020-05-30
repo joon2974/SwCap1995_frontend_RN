@@ -234,7 +234,7 @@ export default class PlanMain extends Component {
           <TouchableOpacity
             style={styles.nextStepBtn}
             onPress={() =>
-              this.props.navigation.navigate('MakePlanStep2', {
+              this.props.navigation.navigate('플랜 만들기: 2단계', {
                 category: this.props.route.params.category,
                 planName: this.props.route.params.planName,
                 startDate: this.state.startDate,

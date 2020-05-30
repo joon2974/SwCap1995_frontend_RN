@@ -25,11 +25,11 @@ export default class LoginScreen extends Component {
   };
 
   gotoSignUp = () => {
-    this.props.navigation.navigate('SignUp');
+    this.props.navigation.navigate('회원가입');
   };
 
   gotoFindPassword = () => {
-    this.props.navigation.navigate('FindPassword');
+    this.props.navigation.navigate('비밀번호 찾기');
   }
 
   sendLoginPath = (userID, isEmailLogin) => {
@@ -225,7 +225,7 @@ export default class LoginScreen extends Component {
         <View style={styles.logoContainer}>
           <Image
             source={{
-              uri: 'https://ifh.cc/g/BHltgC.jpg',
+              uri: 'https://kr.object.ncloudstorage.com/swcap1995/icon.png',
             }}
             style={styles.logoStyle}
           />
@@ -260,7 +260,7 @@ export default class LoginScreen extends Component {
           >
             <Image
               source={{
-                uri: 'https://ifh.cc/g/BHltgC.jpg',
+                uri: 'https://kr.object.ncloudstorage.com/swcap1995/icon.png',
               }}
               style={styles.ImageIconStyle}
             />

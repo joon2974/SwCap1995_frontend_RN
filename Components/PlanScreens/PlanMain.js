@@ -147,7 +147,7 @@ export default class PlanMain extends Component {
   }
 
   planSelected = (planName, selectedCategory, imgUri) => {
-    this.props.navigation.navigate('MakePlanStep1', {
+    this.props.navigation.navigate('플랜 만들기: 1단계', {
       planName: planName, category: selectedCategory, userID: this.state.userID, uri: imgUri, 
     });
   }
@@ -245,13 +245,13 @@ export default class PlanMain extends Component {
           <View style={styles.BtnContainer}>
             <TouchableOpacity 
               style={styles.registerBtn}
-              onPress={() => this.props.navigation.navigate('CameraScreen', { completeFunc: this.registerComplete.bind(this), userID: userID })}
+              onPress={() => this.props.navigation.navigate('카메라', { completeFunc: this.registerComplete.bind(this), userID: userID })}
             >
               <Text style={{ fontWeight: 'bold', fontSize: 22, color: '#848484' }}>카메라</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.registerBtn}
-              onPress={() => this.props.navigation.navigate('ImagePickScreen', { completeFunc: this.registerComplete.bind(this), userID: userID })}
+              onPress={() => this.props.navigation.navigate('갤러리 선택', { completeFunc: this.registerComplete.bind(this), userID: userID })}
             >
               <Text style={{ fontWeight: 'bold', fontSize: 22, color: '#848484' }}>갤러리</Text>
             </TouchableOpacity>

@@ -41,7 +41,7 @@ export default class FriendRequestList extends Component {
         <View style={styles.container}>
           <View style={styles.ImageContainer}>
             <Image 
-              source={{ uri: 'https://ifh.cc/g/BHltgC.jpg' }} 
+              source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU' }} 
               style={styles.imageStyle}
             />
           </View>

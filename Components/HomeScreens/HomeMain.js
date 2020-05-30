@@ -27,16 +27,22 @@ export default class HomeMain extends Component {
     planData: [],
     watchData: [],
     refreshing: false,
-  }; 
+  };
+ 
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
+    console.log('확인', currentUser);
     if (currentUser != null) {
       const email = currentUser.email;
       this.setState({ userEmail: email });
-      this.isInfoContain(email);
+      this.isInfoContain(email).then(() => {
+        this.loadUserID().then(() => {
+          console.log('렌더링', this.state.userId);
+          this.loadAllPlan(this.state.userId);
+        });
+      });
     }
-    this.loadUserID();
   }
 
   componentWillUnmount() {
@@ -63,8 +69,8 @@ export default class HomeMain extends Component {
 
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
-      this.state.userId = id;
-      this.loadAllPlan(id);
+      console.log('아이디', id);
+      this.setState({ userId: id });
     });
   };
 
@@ -79,6 +85,7 @@ export default class HomeMain extends Component {
     );
     const responseJson = await response.data.rows;
     const count = await response.data.count;
+    console.log('플랜데이터', response.data);
     var planarray;
     var watcharray;
     try {
@@ -104,9 +111,9 @@ export default class HomeMain extends Component {
     );
     const watchresponseJson = await watchresponse.data.rows;
     const watchcount = await watchresponse.data.count;
-    
+    console.log('감시', watchresponse.data);
     try {
-      if (count !== 0) {
+      if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
             title: watchresponseJson[l].title,
@@ -141,8 +148,18 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          console.log('데이터 이미 존재');
+          const ji = AsyncStorage.getItem('UserID').then(() => {
+            console.log('asdf', ji);
+          });
+       
           AsyncStorage.setItem('UserID', res.data.id.toString());
+          
+          const jj = AsyncStorage.getItem('UserID').then(() => {
+            console.log('ff', jj);
+          });
+          console.log('실행');
+          this.setState({ userId: res.data.id });
+          
           this.setState({ isInformChecked: true });
         } else {
           console.log(res);
@@ -294,6 +311,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     justifyContent: 'center',
     alignContent: 'center',
+    alignItems: 'center',
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',

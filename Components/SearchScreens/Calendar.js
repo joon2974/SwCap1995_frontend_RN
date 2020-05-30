@@ -52,7 +52,7 @@ export default class Calendar extends Component {
     renderItem = ({ item }) => (
       <DayList 
         item={item}
-        explore={() => this.props.navigation.navigate('DaileyAuthentication')} />    
+        explore={() => this.props.navigation.navigate('일일 인증')} />    
     );
 
 

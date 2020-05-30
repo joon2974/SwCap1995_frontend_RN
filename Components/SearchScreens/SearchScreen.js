@@ -72,7 +72,7 @@ export default class Searchscreen extends Component {
           
           <TouchableOpacity
             style={styles.searchBar}
-            onPress={() => this.props.navigation.navigate('Searching')}
+            onPress={() => this.props.navigation.navigate('검색하기')}
             >
             <FontAwesome name="search" size={20} style={{ marginLeft: 15 }} />
             <Text style={styles.searchTitle}>
@@ -154,7 +154,7 @@ export default class Searchscreen extends Component {
                 key={index}
                 index={index}
                 item={item}
-                explore={() => this.props.navigation.navigate('DetailPlan', { item: item })}
+                explore={() => this.props.navigation.navigate('플랜 상세 정보', { item: item })}
               />
             ))}
           </View>
@@ -162,7 +162,7 @@ export default class Searchscreen extends Component {
           <View style={{ wdith: width * 1, alignItems: 'center' }}>
             <TouchableOpacity
               style={styles.moreExplore}
-              onPress={() => this.props.navigation.navigate('HotPlan', { selectedRecommend: selectedRecommend })}
+              onPress={() => this.props.navigation.navigate('인기 플랜', { selectedRecommend: selectedRecommend })}
             >
               <Text>인기플랜 더보기</Text>
             </TouchableOpacity>
@@ -238,7 +238,7 @@ export default class Searchscreen extends Component {
                 key={index}
                 index={index}
                 item={item}
-                explore={() => this.props.navigation.navigate('PlanList', { selectedAllCate: selectedAllCate })}
+                explore={() => this.props.navigation.navigate('플랜 목록', { selectedAllCate: selectedAllCate })}
               />
             ))}
           </View>
@@ -246,7 +246,7 @@ export default class Searchscreen extends Component {
           <View style={{ wdith: width * 1, alignItems: 'center' }}>
             <TouchableOpacity
               style={styles.moreExplore}
-              onPress={() => this.props.navigation.navigate('CategoryList', { selectedAllCate: selectedAllCate })}
+              onPress={() => this.props.navigation.navigate('카테고리', { selectedAllCate: selectedAllCate })}
             >
               <Text>카테고리 더보기</Text>
             </TouchableOpacity>

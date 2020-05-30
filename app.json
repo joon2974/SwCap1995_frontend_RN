@@ -29,6 +29,10 @@
     "androidStatusBar": {
       "backgroundColor": "#FD8A69",
       "translucent": false
-    }
+    },
+    "android": {
+      "package": "com.plana.plana"
+    },
+    "description": ""
   }
 }

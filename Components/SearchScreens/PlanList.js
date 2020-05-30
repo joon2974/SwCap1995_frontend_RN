@@ -55,7 +55,7 @@ export default class PlanList extends Component {
   
        
     renderItem = ({ item }) => (
-      <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('DetailPlan', { item: item })}>
+      <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('플랜 상세 정보', { item: item })}>
         <CardFive
           title={item.title}
           subTitle={item.category}
