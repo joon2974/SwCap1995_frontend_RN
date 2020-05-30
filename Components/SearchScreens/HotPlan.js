@@ -65,7 +65,7 @@ export default class HotPlan extends Component {
       return (
  
         <View style={styles.container}>
-          <ImageBackground source={require('./back6.png')} style={{ width: width }}>
+          <ImageBackground source={require('./back8.png')} style={{ width: width }}>
   
             <FlatList 
               style={{ marginTop: 30, width: width }}

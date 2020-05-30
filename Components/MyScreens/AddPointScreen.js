@@ -36,8 +36,11 @@ export default class AddPointScreen extends Component {
         class: 'challenge',
         amount: selectedValue,
       },
-    ).then(function () {
+    ).then(() => {
+      console.log(this.props);
       alert(selectedValue + '원 충전신청이 되었습니다');
+      this.props.route.params.onRefresh();
+      this.props.navigation.popToTop();
     });
   }
 

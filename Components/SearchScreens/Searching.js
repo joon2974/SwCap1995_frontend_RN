@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
@@ -7,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ImageBackground,
   Dimensions,
   Button,
 } from 'react-native';
@@ -102,7 +104,7 @@ export default class Searching extends Component {
     } else if (this.state.searchStatus === 1) {
       showSearched = (
         <FlatList 
-          style={{ marginTop: 30, width: width }}
+          style={{ marginTop: 10, width: width }}
           data={this.state.data}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => item.id}
@@ -114,11 +116,12 @@ export default class Searching extends Component {
 
     return (
       <View style={styles.container}>
+        
         <View style={styles.searchContainer}>
           
           <View style={styles.searchBar}>
             <Input
-              placeholder="Type Here..."
+              placeholder="검색을 입력해주세요"
               onChangeText={(changedSearch) => {
                 this.updateSearch(changedSearch);
               }}
@@ -126,6 +129,7 @@ export default class Searching extends Component {
             <Button
               title="검색"
               type="solid"
+              color="#FD8A69"
               onPress={() => {
                 this.sendSearch();
               }}
@@ -133,8 +137,10 @@ export default class Searching extends Component {
           </View>
         </View>
 
-        <View style={styles.container}>
-          {showSearched}   
+        <View style={styles.searchedList}>
+          <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
+            {showSearched}   
+          </ImageBackground>
         </View>
       </View>
     );
@@ -147,90 +153,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingVertical: 10,
+  
   },
   searchContainer: {
-    width: width * 0.95,
+    marginTop: 20,
+    paddingTop: 5,
+    width: width * 0.97,
+    height: height / 14,
+    borderWidth: 3,
+    borderRadius: 5,
+    borderColor: '#FD8A69',
   },
-  searchTitle: {
-    marginLeft: 10,
-    marginTop: 5,
-  },
+
   searchBar: {
     width: width * 0.84,
     flexDirection: 'row',
-    marginTop: 5,
-    marginBottom: 15,
   },
-  scrollContainer: {
-    width: width * 1,
+  
+  searchedList: {
+    flex: 1,
   },
-  recommendTitle: {
-    fontWeight: 'bold',
-    marginHorizontal: 25,
-    marginTop: 25,
-    fontSize: 24,
-  },
-  recommendSubTitle: {
-    marginHorizontal: 25,
-    marginTop: 10,
-    fontSize: 16,
-  },
-  moreExplore: {
-    marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width * 0.75,
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10,
-    height: height * 0.04,
-  },
-  allCateTitle: {
-    fontWeight: 'bold',
-    marginHorizontal: 25,
-    marginTop: 65,
-    fontSize: 24,
-  },
-  allCateSubTitle: {
-    marginHorizontal: 25,
-    marginTop: 10,
-    fontSize: 16,
-  },
-
-  tabButtonContainer: {
-    width: width,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: 20,
-  },
-
-  planContainer: {
-    width: width,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 10,
-  },
-
-  categoryBtnStyle: {
-    width: width * 0.17,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    margin: 1,
-  },
-
-  selectedCategoryBtnStyle: {
-    width: width * 0.17,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#00FFFF',
-    borderRadius: 5,
-    margin: 1,
-  },
+  
 });

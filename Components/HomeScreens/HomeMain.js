@@ -6,7 +6,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Dimensions,
-  ScrollView, Image, TouchableOpacity, Platform,
+  ScrollView, Image, TouchableOpacity, Platform, RefreshControl,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -26,6 +26,7 @@ export default class HomeMain extends Component {
     userId: '',
     planData: [],
     watchData: [],
+    refreshing: false,
   }; 
 
   componentDidMount() {
@@ -43,30 +44,15 @@ export default class HomeMain extends Component {
     clearTimeout(isInformCheck);
   }
 
-  isInfoContain = async (eMail) => { 
-    isInformCheck = await axios
-      .post('http://49.50.172.58:3000/users/is_user', {
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-        email: eMail,
-      })
-      .then((res) => {
-        if (res.data.id) {
-          console.log('데이터 이미 존재');
-          AsyncStorage.setItem('UserID', res.data.id.toString());
-          this.setState({ isInformChecked: true });
-        } else {
-          console.log(res);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  informExistCheck = () => {
-    this.setState({ isInformChecked: true });
+  onRefresh = () => {
+    this.setState({
+      planData: [],
+      watchData: [],
+    });
+    this.setState({ refreshing: true });
+    this.loadAllPlan(this.state.userId).then(() => {
+      this.setState({ refreshing: false });
+    });
   }
 
   // Async 확인용
@@ -144,6 +130,29 @@ export default class HomeMain extends Component {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   }
 
+
+  isInfoContain = async (eMail) => { 
+    isInformCheck = await axios
+      .post('http://49.50.172.58:3000/users/is_user', {
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+        },
+        email: eMail,
+      })
+      .then((res) => {
+        if (res.data.id) {
+          console.log('데이터 이미 존재');
+          AsyncStorage.setItem('UserID', res.data.id.toString());
+          this.setState({ isInformChecked: true });
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   render() {
     const {
       isInformChecked, userEmail, planData, watchData, 
@@ -169,7 +178,19 @@ export default class HomeMain extends Component {
     ));
     if (isInformChecked) {
       return (
-        <ScrollView>
+        <ScrollView
+          refreshControl={(
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+              tintColor="#ff0000"
+              title="Loading..."
+              titleColor="#00ff00"
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="white"
+          />
+        )}
+        >
           <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
             <View style={styles.planContainer}>
               <ScrollView 
@@ -178,6 +199,7 @@ export default class HomeMain extends Component {
                 contentContainerStyle={{
                   alignItems: 'center',
                 }}
+               
               >
                 <View style={{ marginRight: 30, marginLeft: 10 }}>
                   <Text>도전중인</Text>
@@ -225,6 +247,13 @@ export default class HomeMain extends Component {
                 </View>
       
                 {watchplans}
+                {!(watchplans.length) && (
+                <View style={styles.addContainer}>
+             
+                  <Text>감시중인 플랜이 없습니다</Text>
+                 
+                </View>
+                )}
               </ScrollView>
             </View>
           </LinearGradient>
