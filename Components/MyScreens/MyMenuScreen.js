@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -21,6 +22,7 @@ const { height, width } = Dimensions.get('window');
 export default class MyMenuScreen extends Component {
   constructor(props) {
     super(props);
+    this.onRefresh = this.onRefresh.bind(this);
     this.state = {
       myPoint: '',
       userId: '1',
@@ -28,11 +30,23 @@ export default class MyMenuScreen extends Component {
       friend_count: '',
       email: '',
       planData: [],
+      
+      refreshing: false,
     };
   }
 
   componentDidMount() {
     this.loadUserID();
+  }
+
+  onRefresh = () => {
+    this.setState({
+      planData: [],
+    });
+    this.setState({ refreshing: true });
+    this.loadUserID().then(() => {
+      this.setState({ refreshing: false });
+    });
   }
 
   loadUserID = async () => {
@@ -100,7 +114,19 @@ export default class MyMenuScreen extends Component {
       />
     ));
     return (
-      <ScrollView>
+      <ScrollView
+        refreshControl={(
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+            tintColor="#ff0000"
+            title="Loading..."
+            titleColor="#00ff00"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="white"
+    />
+  )}
+      >
         <View style={styles.container}>
           <View style={styles.myInfoContainer}>
             <View style={styles.userInfoContainer}>
@@ -131,7 +157,9 @@ export default class MyMenuScreen extends Component {
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.button}
-                    onPress={() => this.props.navigation.navigate('AddPoint')}
+                    onPress={() => this.props.navigation.navigate('AddPoint', { onRefresh: this.onRefresh })}
+                    
+                    
                   >
                     <Text>충전</Text>
                   </TouchableOpacity>
