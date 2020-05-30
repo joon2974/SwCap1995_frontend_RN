@@ -203,7 +203,10 @@ export default class MyMenuScreen extends Component {
 
             <MyPageBtn 
               btnName="로그아웃"
-              btnFunc={() => firebase.auth().signOut()}
+              btnFunc={() => {
+                firebase.auth().signOut();
+                AsyncStorage.removeItem('UserID');
+              }}
           />
           </View>
         </View>
