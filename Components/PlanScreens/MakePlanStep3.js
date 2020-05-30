@@ -193,7 +193,7 @@ export default class MakePlanStep3 extends Component {
                     else this.setState({ isPublic: false });
                   }}
                 >
-                  <Text>플랜공개하기</Text>
+                  <Text style={isPublic ? { color: 'white' } : { color: 'black' }}>플랜공개하기</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -206,7 +206,7 @@ export default class MakePlanStep3 extends Component {
               this.props.navigation.popToTop();
             }}
           >
-            <Text>플랜 생성하기</Text>
+            <Text style={{ color: 'white' }}>플랜 생성하기</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 50,
     borderRadius: 10,
-    backgroundColor: '#00FF80',
+    backgroundColor: '#FFC0B0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   nextStepBtn: {
     width: width / 2,
     height: 40,
-    backgroundColor: '#00FF80',
+    backgroundColor: '#FD8A69',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,

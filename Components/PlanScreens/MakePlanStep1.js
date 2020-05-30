@@ -227,7 +227,7 @@ export default class PlanMain extends Component {
                 categoryUri: this.props.route.params.uri,
               })}
           >
-            <Text style={{ fontWeight: 'bold' }}>다음 단계로</Text>
+            <Text style={{ fontWeight: 'bold', color: 'white' }}>다음 단계로</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
   nextStepBtn: {
     width: width / 2,
     height: 40,
-    backgroundColor: '#00FF80',
+    backgroundColor: '#FD8A69',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,

@@ -220,7 +220,7 @@ export default class MakePlanStep2 extends Component {
                 percent: this.state.selectedPercent,
               })}
             >
-            <Text style={{ fontWeight: 'bold' }}>플랜 결과 확인</Text>
+            <Text style={{ fontWeight: 'bold', color: 'white' }}>플랜 결과 확인</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -355,13 +355,13 @@ const styles = StyleSheet.create({
     width: width * 0.4,
     height: height * 0.4,
     marginTop: 5,
-    backgroundColor: '#E0ECF8',
+    backgroundColor: '#F2F2F2',
     borderRadius: 10,
   },
   nextStepBtn: {
     width: width / 2,
     height: 40,
-    backgroundColor: '#00FF80',
+    backgroundColor: '#FD8A69',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,

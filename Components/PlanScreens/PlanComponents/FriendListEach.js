@@ -13,7 +13,7 @@ export default class FriendListEach extends Component {
         style={styles.container}
         onPress={this.props.friendSelectFunc}  
       >
-        <Text>{this.props.name}</Text>
+        <Text style={{ color: 'white' }}>{this.props.name}</Text>
       </TouchableOpacity>
     );
   }
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#A9F5A9',
+    backgroundColor: '#FFC0B0',
     borderRadius: 5,
     margin: 3,
     ...Platform.select({

@@ -38,8 +38,6 @@ export default class MyPlan extends Component {
               }}
               style={styles.photoStyle}
                 />
-          
-                
           </View>
           <View style={{
             justifyContent: 'space-evenly', height: 200,
@@ -94,11 +92,13 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flexDirection: 'row',
+    height: 40,
     justifyContent: 'space-between',
     padding: 10,
     backgroundColor: '#F2F2F2',
   },
   photoContainer: {
+    height: width / 1.6 - 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   photoStyle: {
     width: width * 0.4,
-    height: width / 1.5,
+    height: width / 1.6 - 40,
     resizeMode: 'cover',
   },
   btnContainer: {
