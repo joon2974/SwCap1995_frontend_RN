@@ -316,8 +316,8 @@ export class CardFour extends Component {
           margin: scale(10),
           alignSelf: 'center',
           flexDirection: 'column',
-          width: screenWidth - scale(20),
-          height: verticalScale(300),
+          width: screenWidth / 2.4,
+          height: screenHeight / 4.4,
           borderRadius: 12,
           elevation: 2,
           shadowColor: '#777',
@@ -337,10 +337,11 @@ export class CardFour extends Component {
           }}
         >
           <Text style={{
-            flex: 1, color: '#fff', fontSize: 17, margin: 20, 
+            flex: 1, color: '#fff', fontSize: 14, marginTop: 20, marginLeft: 20, 
           }}>
-            {this.props.date}
+            {this.props.date.toString()}
           </Text>
+
           <View
             style={{
               flex: 4,
@@ -351,15 +352,15 @@ export class CardFour extends Component {
           >
             <Text
               style={{
-                marginTop: scale(15),
+                marginTop: scale(25),
                 color: '#fff',
-                fontSize: scale(30),
+                fontSize: scale(20),
                 marginBottom: scale(20),
               }}
             >
               {this.props.off}
             </Text>
-            <Text
+            {/* <Text
               style={{
                 color: '#fff',
                 fontSize: scale(11),
@@ -368,7 +369,7 @@ export class CardFour extends Component {
               }}
             >
               {this.props.offText.substring(0, 100) + '.'}
-            </Text>
+            </Text> */}
           </View>
           <TouchableOpacity
             onPress={() => this.props.onClicked()}
@@ -378,8 +379,8 @@ export class CardFour extends Component {
                 zIndex: 3,
                 alignItems: 'center',
                 alignSelf: 'flex-end',
-                width: 150,
-                height: 40,
+                width: screenWidth / 4.8,
+                height: screenWidth / 16,
                 margin: 20,
                 shadowRadius: 5,
                 borderRadius: 40,
@@ -391,7 +392,7 @@ export class CardFour extends Component {
               <Text
                 style={{ color: '#ffffff', fontSize: 13, fontWeight: 'bold' }}
               >
-                BUY NOW
+                View More
               </Text>
             </View>
           </TouchableOpacity>

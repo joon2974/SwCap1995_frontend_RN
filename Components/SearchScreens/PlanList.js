@@ -49,7 +49,7 @@ export default class PlanList extends Component {
   
        
     renderItem = ({ item }) => (
-      <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('Calendar')}>
+      <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('DetailPlan', { item: item })}>
         <CardFive
           title={item.title}
           subTitle={item.category}

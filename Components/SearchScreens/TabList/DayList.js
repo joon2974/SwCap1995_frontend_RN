@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
 import {
   TouchableOpacity,
-  View,
-  Text,
   StyleSheet,
   Dimensions,
   Platform,
-  Image,
 } from 'react-native';
+import { CardFour } from '../Cards';
 
 const { width, height } = Dimensions.get('window');
 
 export default class DayList extends Component {
+  state={
+    date: '',
+  }
+
+  componentDidMount() {
+    this.time();
+  }
+
+  time = () => {
+    const date = new Date(this.props.item.updatedAt);
+    this.setState({ date: date });
+  }
+
   render() {
     return (
       <TouchableOpacity 
         style={styles.container}
         onPress={this.props.explore}
       >
-        <View style={{ alignItems: 'center' }}>
-          <Text>
-            ~월 ~일
-          </Text>
-          <Image 
-            source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} 
-            style={styles.imageStyle}
-            />
-          
-        </View>
+        <CardFour
+          image={{
+            uri:
+              this.props.item.image_url,
+          }}
+          date={this.state.date}
+          off="일일 인증"
+          offText="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          buttonText="BUY NOW!"
+          />
       </TouchableOpacity>
     );
   }
@@ -35,12 +46,12 @@ export default class DayList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.39,
-    height: height / 5,
+    width: width / 2.4,
+    height: height / 4.4,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    margin: 6,
+    margin: 12,
     borderRadius: 10,
     flexDirection: 'row',
 

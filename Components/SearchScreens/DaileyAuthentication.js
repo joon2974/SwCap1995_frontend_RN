@@ -1,7 +1,9 @@
+/* eslint-disable global-require */
 import React, { Component } from 'react';
 import {
   View,
   Text,
+  ImageBackground,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -15,22 +17,12 @@ const { width, height } = Dimensions.get('window');
 
 export default class DaileyAuthentication extends Component {
     state = {
-      // eslint-disable-next-line react/no-unused-state
-      nowPlanTitle: '1',
-      nowPlanImage: '2',
-      // eslint-disable-next-line react/no-unused-state
-      nowPlanDescription: '3',
-      // eslint-disable-next-line react/no-unused-state
-      nowWatcherList: 'A, B, C, D',
+
       nowCreatedAt: '',
       nowUpdatedAt: '',
     
       watchers: ['1', '2', '3', '4', '5'],
       watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
-    
-
-      // eslint-disable-next-line react/no-unused-state
-      para: this.props.route.params,
     
     }
 
@@ -60,72 +52,73 @@ export default class DaileyAuthentication extends Component {
       return (
           
         <View style={styles.container}>
-               
-          <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+          <ImageBackground source={require('./back7.png')} style={{ width: width }}>
+ 
+            <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
 
-            <TouchableOpacity 
-              style={styles.titleImageContainer}
+              <TouchableOpacity 
+                style={styles.titleImageContainer}
                     >
-              <Image 
-                style={styles.imageStyle}
-                source={{ uri: this.state.nowPlanImage }} 
+                <Image 
+                  style={styles.imageStyle}
+                  source={{ uri: this.state.nowPlanImage }} 
                         />
-              <Text>
-                위 사진은 인증사진으로
-              </Text>
-            </TouchableOpacity>
+                <Text>
+                  위 사진은 인증사진으로
+                </Text>
+              </TouchableOpacity>
 
-            <View style={styles.titleInfoContainer}>
+              <View style={styles.titleInfoContainer}>
 
-              <Text style={styles.titleStyle}>
-                일일 인증 타이틀
-              </Text>
+                <Text style={styles.titleStyle}>
+                  일일 인증 타이틀
+                </Text>
                         
                         
-              <Text style={styles.dateInfo}>
-                {'작성일 : ' + this.state.nowCreatedAt + '\n'}
-                {'수정일 : ' + this.state.nowUpdatedAt}
-              </Text>
+                <Text style={styles.dateInfo}>
+                  {'작성일 : ' + this.state.nowCreatedAt + '\n'}
+                  {'수정일 : ' + this.state.nowUpdatedAt}
+                </Text>
 
-              <Text style={styles.subTitleStyle}>
-                {'그날 인증에 대한 내용\n'}
-                {'그날 인증에 대한 내용\n'}
-                {'그날 인증에 대한 내용\n'}
-                {'그날 인증에 대한 내용'}
-              </Text>
+                <Text style={styles.subTitleStyle}>
+                  {'그날 인증에 대한 내용\n'}
+                  {'그날 인증에 대한 내용\n'}
+                  {'그날 인증에 대한 내용\n'}
+                  {'그날 인증에 대한 내용'}
+                </Text>
 
-              <View style={{ marginBottom: 10 }} />
+                <View style={{ marginBottom: 10 }} />
 
-            </View>
-            <View style={styles.titleInfoContainer}>
+              </View>
+              <View style={styles.titleInfoContainer}>
 
                         
-              <Text style={styles.titleStyle}>
-                인증 방법에 대해... 위와 비교하기 위한 리마인드용
-              </Text>
-              <Text style={styles.subTitleStyle}>
-                RULE 1 : ~~~~~~~~~
-                {'\n'}
-                RULE 2 : ~~~~~~~~~
-                {'\n'}
-                RULE 3 : ~~~~~~~~~
-                {'\n'}
-                RULE 4 : ~~~~~~~~~
-                {'\n'}
-              </Text>
+                <Text style={styles.titleStyle}>
+                  인증 방법에 대해... 위와 비교하기 위한 리마인드용
+                </Text>
+                <Text style={styles.subTitleStyle}>
+                  RULE 1 : ~~~~~~~~~
+                  {'\n'}
+                  RULE 2 : ~~~~~~~~~
+                  {'\n'}
+                  RULE 3 : ~~~~~~~~~
+                  {'\n'}
+                  RULE 4 : ~~~~~~~~~
+                  {'\n'}
+                </Text>
                                     
 
-              <View style={{ marginBottom: 10 }} />
+                <View style={{ marginBottom: 10 }} />
 
-            </View>
+              </View>
                     
-            <View style={styles.titleInfoContainer}>
-              <Text style={styles.titleStyle}>
-                이날 인증에 참여한 감시자들 리스트
-              </Text>
+              <View style={styles.titleInfoContainer}>
+                <Text style={styles.titleStyle}>
+                  이날 인증에 참여한 감시자들 리스트
+                </Text>
                         
-              <View>
-                {
+                <View>
+                  {
                             this.state.watchers.map((data, index) => (
                               <View>
                                 <Watcher 
@@ -139,22 +132,23 @@ export default class DaileyAuthentication extends Component {
                                 
                                 
                         }
-                <TouchableOpacity
-                  style={styles.moreExplore}
+                  <TouchableOpacity
+                    style={styles.moreExplore}
                             >
-                  <Text>감시자들 더보기</Text>
-                </TouchableOpacity>
+                    <Text>감시자들 더보기</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ marginBottom: 10 }} />
+
               </View>
-
-              <View style={{ marginBottom: 10 }} />
-
-            </View>
                    
 
-            <View style={{ marginVertical: 20 }} />
+              <View style={{ marginVertical: 20 }} />
 
-          </ScrollView>
+            </ScrollView>
 
+          </ImageBackground>
         </View>
 
       );

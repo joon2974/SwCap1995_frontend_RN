@@ -17,31 +17,28 @@ const { width, height } = Dimensions.get('window');
 export default class CategoryList extends Component {
     state = {
     
-      // selectedAllCate: '',
-      
+      // selectedAllCate: '',      
       data: [],
-      page: 1, 
     }
 
 
     async componentDidMount() {
       this.setParams();
       this.getData();
+      //      this.getDataTest();
     }
 
     setParams = () => {
       // this.setState({ selectedAllCate: this.props.route.params.selectedAllCate });
     }
 
-
     async getData() {
-      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.page;
+      const url = 'http://49.50.172.58:3000/detailedCategories';
       await fetch(url)
         .then((r) => r.json())
         .then((data) => {
           this.setState({ 
-            data: this.state.data.concat(data.plans),
-            page: this.state.page + 1,
+            data: this.state.data.concat(data.data.detailedCategoryGet),
           });
         });
     }
@@ -63,19 +60,16 @@ export default class CategoryList extends Component {
       return (
  
         <View style={styles.container}>
-          <ImageBackground source={require('./back6.png')} style={{ width: width }}>
+          <ImageBackground source={require('./back6_reverse.png')} style={{ width: width }}>
   
             <FlatList 
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => item.id}
-              onEndReached={this.handleLoadMore}
-              onEndReachedThreshold={1}
-        
+              
+              numColumns={2}
               contentContainerStyle={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}     
