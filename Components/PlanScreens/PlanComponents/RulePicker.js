@@ -14,6 +14,7 @@ export default class RulePicker extends Component {
         onValueChange={this.props.onValueChange}
         style={{ width: this.props.pickerWidth, height: 50, marginLeft: 5 }}
         itemStyle={{ height: 40 }}
+        mode="dropdown"
       >
         {this.props.rules.map((rule) => (
           <Picker.Item key={rule} label={rule} value={rule} />

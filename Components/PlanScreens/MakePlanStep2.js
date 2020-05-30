@@ -39,8 +39,7 @@ export default class MakePlanStep2 extends Component {
 
     friendList.splice(idx, 1);
     selectedFriendList.push(friend);
-    this.setState({ friends: friendList });
-    this.setState({ selectedFriends: selectedFriendList });
+    this.setState({ friends: friendList, selectedFriends: selectedFriendList });
   }
 
   restoreFriend = (friend, friendList, selectedFriendList) => {
@@ -48,8 +47,7 @@ export default class MakePlanStep2 extends Component {
 
     selectedFriendList.splice(idx, 1);
     friendList.push(friend);
-    this.setState({ selectedFriends: selectedFriendList });
-    this.setState({ friends: friendList });
+    this.setState({ friends: friendList, selectedFriends: selectedFriendList });
   }
 
   getFriends = async () => {

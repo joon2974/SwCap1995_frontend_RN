@@ -14,6 +14,7 @@ export default class TimePicker extends Component {
         onValueChange={this.props.onValueChange}
         style={{ width: 130, height: 50, marginLeft: 5 }}
         itemStyle={{ height: 40 }}
+        mode="dropdown"
       >
         {this.props.times.map((time) => (
           <Picker.Item key={time} label={time} value={time} />
