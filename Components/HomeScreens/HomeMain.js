@@ -6,21 +6,26 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Dimensions,
+<<<<<<< HEAD
   ScrollView,
   Image,
   TouchableOpacity,
   Platform,
+=======
+  ScrollView, Image, TouchableOpacity, Platform,
+>>>>>>> 4d45b58c74989cdd3b331920ba01ea5e4c6d5c6a
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
+console.disableYellowBox = true;
 let currentUser;
 let isInformCheck;
-
 const { width, height } = Dimensions.get('window');
 export default class HomeMain extends Component {
   state = { 
@@ -85,6 +90,10 @@ export default class HomeMain extends Component {
     });
   };
 
+  moveToPlan = () => {
+    this.props.navigation.dangerouslyGetParent().navigate('Plan');
+  }
+
   loadAllPlan = async (userId) => {
     console.log('유저아이디1', userId);
     const response = await axios.get(
@@ -126,6 +135,7 @@ export default class HomeMain extends Component {
             url: watchresponseJson[l].image_url, 
             picturetime: watchresponseJson[l].picture_time, 
             id: watchresponseJson[l].id,
+            nickname: watchresponseJson[l].user.nickname,
           };
           watcharray = this.state.watchData.concat(obj);
           this.setState({
@@ -162,6 +172,7 @@ export default class HomeMain extends Component {
         btnFunc={() => alert('더보기')}
         url={data.url}
         picturetime={data.picturetime}
+        nickname={data.nickname}
       />
     ));
     if (isInformChecked) {
@@ -222,6 +233,7 @@ export default class HomeMain extends Component {
                 </View>
       
                 {watchplans}
+<<<<<<< HEAD
                 <View style={styles.addContainer}>
                   <TouchableOpacity
                     style={styles.addBtnContainer}
@@ -231,6 +243,8 @@ export default class HomeMain extends Component {
                     <Text>플랜 만들러 가기</Text>
                   </TouchableOpacity>
                 </View>
+=======
+>>>>>>> 4d45b58c74989cdd3b331920ba01ea5e4c6d5c6a
               </ScrollView>
             </View>
           </LinearGradient>
