@@ -50,17 +50,17 @@ export default class Searchscreen extends Component {
     nowAllCateUri: ['1', '2', '3', '4'],
   };
 
-  updateSearch = changedSearch => {
+  updateSearch = (changedSearch) => {
     this.setState({ search: changedSearch });
   };
 
   async sendSearch() {
     await axios
       .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
-      .then(res => {
+      .then((res) => {
         //        alert(res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         //        alert(error);
       });
@@ -73,7 +73,7 @@ export default class Searchscreen extends Component {
     this.setPlanListAllCate('운동/건강');
   }
 
-  setPlanList = categoryName => {
+  setPlanList = (categoryName) => {
     this.setState({ selectedRecommend: categoryName });
 
     const planList = recommendListTemplate[categoryName];
@@ -81,16 +81,16 @@ export default class Searchscreen extends Component {
 
     axios
       .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
-      .then(res => {
+      .then((res) => {
         this.setState({ nowRecommendUri: res.data.data.categoryGet });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         alert(error);
       });
   };
 
-  setPlanListAllCate = categoryName => {
+  setPlanListAllCate = (categoryName) => {
     this.setState({ selectedAllCate: categoryName });
 
     const planListAllCate = allCateListTemplate[categoryName];
@@ -98,10 +98,10 @@ export default class Searchscreen extends Component {
 
     axios
       .get('http://49.50.172.58:3000/graphql?query={categoryGet{id,image_url}}')
-      .then(res => {
+      .then((res) => {
         this.setState({ nowAllCateUri: res.data.data.categoryGet });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         alert(error);
       });
@@ -127,7 +127,7 @@ export default class Searchscreen extends Component {
           <View style={styles.searchBar}>
             <Input
               placeholder="Type Here..."
-              onChangeText={changedSearch => {
+              onChangeText={(changedSearch) => {
                 this.updateSearch(changedSearch);
               }}
             />
@@ -158,7 +158,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanList('10대')}
             >
-              <Text>10대</Text>
+              <Text style={selectedRecommend === '10대' ? { color: 'white' } : { color: 'black' }}>10대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -169,7 +169,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanList('20대')}
             >
-              <Text>20대</Text>
+              <Text style={selectedRecommend === '20대' ? { color: 'white' } : { color: 'black' }}>20대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -180,7 +180,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanList('30대')}
             >
-              <Text>30대</Text>
+              <Text style={selectedRecommend === '30대' ? { color: 'white' } : { color: 'black' }}>30대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -191,7 +191,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanList('40~50대')}
             >
-              <Text>40~50대</Text>
+              <Text style={selectedRecommend === '40~50대' ? { color: 'white' } : { color: 'black' }}>40~50대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -202,7 +202,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanList('60대 이상')}
             >
-              <Text>60대 이상</Text>
+              <Text style={selectedRecommend === '60대 이상' ? { color: 'white' } : { color: 'black' }}>60대 이상</Text>
             </TouchableOpacity>
           </View>
 
@@ -243,7 +243,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanListAllCate('운동/건강')}
             >
-              <Text>운동/건강</Text>
+              <Text style={selectedAllCate === '운동/건강' ? { color: 'white' } : { color: 'black' }}>운동/건강</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -254,7 +254,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanListAllCate('생활습관')}
             >
-              <Text>생활습관</Text>
+              <Text style={selectedAllCate === '생활습관' ? { color: 'white' } : { color: 'black' }}>생활습관</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -265,7 +265,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanListAllCate('자기계발')}
             >
-              <Text>자기계발</Text>
+              <Text style={selectedAllCate === '자기계발' ? { color: 'white' } : { color: 'black' }}>자기계발</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -276,7 +276,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanListAllCate('감정관리')}
             >
-              <Text>감정관리</Text>
+              <Text style={selectedAllCate === '감정관리' ? { color: 'white' } : { color: 'black' }}>감정관리</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -287,7 +287,7 @@ export default class Searchscreen extends Component {
               }
               onPress={() => this.setPlanListAllCate('기타')}
             >
-              <Text>기타</Text>
+              <Text style={selectedAllCate === '기타' ? { color: 'white' } : { color: 'black' }}>기타</Text>
             </TouchableOpacity>
           </View>
 
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#00FFFF',
+    backgroundColor: '#FD8A69',
     borderRadius: 5,
     margin: 1,
   },

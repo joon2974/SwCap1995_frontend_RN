@@ -6,18 +6,18 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Dimensions,
-  ScrollView, Image,
+  ScrollView, Image, TouchableOpacity, Platform,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
-import GoMakePlan from './HomeComponents/GoMakePlan';
 
+console.disableYellowBox = true;
 let currentUser;
 let isInformCheck;
-
 const { width, height } = Dimensions.get('window');
 export default class HomeMain extends Component {
   state = { 
@@ -82,6 +82,10 @@ export default class HomeMain extends Component {
     });
   };
 
+  moveToPlan = () => {
+    this.props.navigation.dangerouslyGetParent().navigate('Plan');
+  }
+
   loadAllPlan = async (userId) => {
     console.log('유저아이디1', userId);
     const response = await axios.get(
@@ -125,6 +129,7 @@ export default class HomeMain extends Component {
             url: watchresponseJson[l].image_url, 
             picturetime: watchresponseJson[l].picture_time, 
             id: watchresponseJson[l].id,
+            nickname: watchresponseJson[l].user.nickname,
           };
           watcharray = this.state.watchData.concat(obj);
           this.setState({
@@ -157,6 +162,7 @@ export default class HomeMain extends Component {
         btnFunc={() => alert('더보기')}
         url={data.url}
         picturetime={data.picturetime}
+        nickname={data.nickname}
       />
     ));
     if (isInformChecked) {
@@ -183,7 +189,15 @@ export default class HomeMain extends Component {
           
                 </View>
                 {plans}
-                <GoMakePlan />
+                <View style={styles.addContainer}>
+                  <TouchableOpacity
+                    style={styles.addBtnContainer}
+                    onPress={this.moveToPlan}
+                  >
+                    <AntDesign name="pluscircleo" size={70} color="black" />
+                    <Text>플랜 만들러 가기</Text>
+                  </TouchableOpacity>
+                </View>
               </ScrollView>
             </View>
             <View style={styles.lineDivider} />
@@ -209,8 +223,6 @@ export default class HomeMain extends Component {
                 </View>
       
                 {watchplans}
-                
-                <GoMakePlan />
               </ScrollView>
             </View>
           </LinearGradient>
@@ -240,5 +252,34 @@ const styles = StyleSheet.create({
     width: width - 30,
     height: 1.5,
     marginLeft: 15,
+  },
+  addContainer: {
+    width: width * 0.7,
+    height: width / 1.6,
+    backgroundColor: 'white',
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 5,
+    marginRight: 20,
+    justifyContent: 'center',
+    alignContent: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  addBtnContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

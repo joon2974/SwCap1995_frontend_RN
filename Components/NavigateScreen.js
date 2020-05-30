@@ -55,7 +55,17 @@ function LoginStackScreen() {
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#FD8A69', 
+        
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTitleAlign: 'center', 
+    }}>
       <HomeStack.Screen name="Main" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
@@ -66,7 +76,17 @@ function HomeStackScreen() {
 const SearchStack = createStackNavigator();
 function SearchStackScreen() {
   return (
-    <SearchStack.Navigator>
+    <SearchStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#FD8A69', 
+        
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTitleAlign: 'center', 
+    }}>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen name="PlanSearched" component={PlanSearched} />
       <SearchStack.Screen name="CategoryList" component={CategoryList} />
@@ -83,7 +103,17 @@ function SearchStackScreen() {
 const FriendStack = createStackNavigator();
 function FriendStackScreen() {
   return (
-    <FriendStack.Navigator>
+    <FriendStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#FD8A69', 
+        
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTitleAlign: 'center', 
+    }}>
       <FriendStack.Screen name="FriendScreen" component={FriendScreen} />
       <FriendStack.Screen name="AddFriend" component={AddFriendScreen} />
     </FriendStack.Navigator>
@@ -92,7 +122,17 @@ function FriendStackScreen() {
 const PlanStack = createStackNavigator();
 function PlanStackScreen() {
   return (
-    <PlanStack.Navigator>
+    <PlanStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#FD8A69', 
+        
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTitleAlign: 'center', 
+    }}>
       <PlanStack.Screen name="PlanMain" component={PlanMain} />
       <PlanStack.Screen name="MakePlanStep1" component={MakePlanStep1} />
       <PlanStack.Screen name="MakePlanStep2" component={MakePlanStep2} />
@@ -106,7 +146,17 @@ function PlanStackScreen() {
 const MyMenuStack = createStackNavigator();
 function MyMenuStackScreen() {
   return (
-    <MyMenuStack.Navigator>
+    <MyMenuStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#FD8A69', 
+        
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTitleAlign: 'center', 
+    }}>
       <MyMenuStack.Screen name="MyMenu" component={MyMenuScreen} />
       <MyMenuStack.Screen name="AddPoint" component={AddPoint} />
       <MyMenuStack.Screen name="ChangePassword" component={ChangePassword} />
