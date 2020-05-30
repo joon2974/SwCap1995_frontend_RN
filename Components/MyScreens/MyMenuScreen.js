@@ -134,7 +134,7 @@ export default class MyMenuScreen extends Component {
                 <View style={styles.halfContainer}>
                   <Image
                     source={{
-                      uri: 'https://ifh.cc/g/BHltgC.jpg',
+                      uri: 'https://kr.object.ncloudstorage.com/swcap1995/icon.png',
                     }}
                     style={styles.profilePhotoStyle}
                 />
@@ -203,7 +203,10 @@ export default class MyMenuScreen extends Component {
 
             <MyPageBtn 
               btnName="로그아웃"
-              btnFunc={() => firebase.auth().signOut()}
+              btnFunc={() => {
+                firebase.auth().signOut();
+                AsyncStorage.removeItem('UserID');
+              }}
           />
           </View>
         </View>
