@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window');
 export default class FriendScreen extends Component {
   constructor(props) {
     super(props);
-    this.onRefresh=this.onRefresh.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
     this.state = {
       friendData: [],
       friendRequstData: [],
