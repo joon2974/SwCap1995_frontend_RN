@@ -45,6 +45,7 @@ export default class Searching extends Component {
             nowPage: this.state.nowPage + 1,
           });
         });
+      this.flatList.scrollToOffset({ animated: true, offset: 0 });  
     } else {
       const url = 'http://49.50.172.58:3000/plans/search?query=' + this.state.search + '&limit=10&page=' + this.state.nowPage;
       fetch(url)
@@ -80,7 +81,7 @@ export default class Searching extends Component {
           if (data.plans.length === 0) {
             this.setState({ moreData: 1 });
           }
-        });    
+        });
     }
   }
 
@@ -111,6 +112,7 @@ export default class Searching extends Component {
           keyExtractor={(item, index) => item.id}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={1}
+          ref={(ref) => { this.flatList = ref; }}
     />
       );
     }
