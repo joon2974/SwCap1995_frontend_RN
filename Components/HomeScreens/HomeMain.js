@@ -28,6 +28,8 @@ export default class HomeMain extends Component {
   }; 
 
   componentDidMount() {
+    const i = this.props.navigation.dangerouslyGetParent();
+    console.log('aa', i);
     currentUser = firebase.auth().currentUser;
     if (currentUser != null) {
       const email = currentUser.email;
@@ -86,7 +88,6 @@ export default class HomeMain extends Component {
     const response = await axios.get(
       'http://49.50.172.58:3000/plans/all/' + userId,
     );
-    console.log(response.data);
     const responseJson = await response.data.rows;
     const count = await response.data.count;
     var planarray;
@@ -112,7 +113,6 @@ export default class HomeMain extends Component {
     const watchresponse = await axios.get(
       'http://49.50.172.58:3000/plans/watchingAll/' + userId,
     );
-    console.log(watchresponse.data);
     const watchresponseJson = await watchresponse.data.rows;
     const watchcount = await watchresponse.data.count;
     
@@ -134,7 +134,6 @@ export default class HomeMain extends Component {
     } catch (error) {
       console.error(error);
     }
-    console.log('플랜데이터', this.state.planData[0].url);
   };
 
   render() {
