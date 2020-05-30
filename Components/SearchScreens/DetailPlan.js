@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 /* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
@@ -13,6 +14,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Watcher from './TabList/Watcher';
+import Joom from './TabList/Joom';
 
 const { width, height } = Dimensions.get('window');
 
@@ -47,6 +49,8 @@ export default class DetailPlan extends Component {
 
               <TouchableOpacity 
                 style={styles.titleImageContainer}
+                onPress={() => this.props.navigation.navigate('Joom', { image_url: item.image_url })}
+                
                     >
                 <Image 
                   style={styles.imageStyle}
@@ -60,7 +64,7 @@ export default class DetailPlan extends Component {
                 </Text>
                         
                 <Text style={styles.subTitleStyle}>
-                  {'부제 : ' + item.title}
+                  {'부제 : ' + item.custom_picture_rule_3}
                 </Text>
                         
                 <Text style={styles.dateInfo}>

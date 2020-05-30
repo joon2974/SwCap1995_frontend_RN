@@ -35,6 +35,7 @@ import CategoryList from './SearchScreens/CategoryList';
 import HotPlan from './SearchScreens/HotPlan';
 import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
+import Joom from './SearchScreens/TabList/Joom';
 import Calendar from './SearchScreens/Calendar';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
@@ -94,6 +95,7 @@ function SearchStackScreen() {
       <SearchStack.Screen name="HotPlan" component={HotPlan} />
       <SearchStack.Screen name="PlanList" component={PlanList} />
       <SearchStack.Screen name="DetailPlan" component={DetailPlan} />
+      <SearchStack.Screen name="Joom" component={Joom} />
       <SearchStack.Screen name="Calendar" component={Calendar} />
       <SearchStack.Screen
         name="DaileyAuthentication"
