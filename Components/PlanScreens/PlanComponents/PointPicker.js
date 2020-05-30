@@ -12,11 +12,14 @@ export default class PointPicker extends Component {
       <Picker
         selectedValue={this.props.point}
         onValueChange={this.props.onValueChange}
-        style={{ width: this.props.pickerWidth, height: 50, marginLeft: 5 }}
+        style={{
+          width: this.props.pickerWidth, height: 45, marginLeft: 5, borderRadius: 15,
+        }}
         itemStyle={{ height: 40 }}
+        mode="dropdown"
       >
         {this.props.points.map((point) => (
-          <Picker.Item key={point} label={point} value={point} />
+          <Picker.Item key={point} label={point} value={point} style={{ alignText: 'center' }} />
         ))}
       </Picker>
     );

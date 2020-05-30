@@ -12,6 +12,7 @@ import {
 import axios from 'axios';
 import PointPicker from './PlanComponents/PointPicker';
 import FriendListEach from './PlanComponents/FriendListEach';
+import SelectedFriendListEach from './PlanComponents/SelectedFriendListEach';
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,7 +22,7 @@ export default class MakePlanStep2 extends Component {
     challPoint: 0,
     friends: ['5882', '닉네임', '닉네임2'],
     selectedFriends: [],
-    userBetPoint: '0',
+    userBetPoint: '',
     selectedPercent: '5%',
     selectedDist: '공평하게 n분의 1',
     percentList: ['5', '10', '20'],
@@ -129,18 +130,22 @@ export default class MakePlanStep2 extends Component {
             </View>
 
             <View style={styles.challengePoint}>
-              <Text style={{ fontSize: 20 }}>도전 금액:</Text>
+              <View style={styles.infoTitlesStyles}>
+                <Text>도전 금액</Text>
+              </View>
               <TextInput
                 value={userBetPoint}
                 onChangeText={(Point) => this.setState({ userBetPoint: Point })}
                 style={styles.betInput}
                 placeholder="도전에 걸 금액"
               />
-              <Text style={{ fontSize: 10 }}>최소 5000원 ~ 최대 50,000원</Text>
+              <Text style={{ fontSize: 10 }}>(5000 ~ 50,000)</Text>
             </View>
             <View style={styles.distribPoint}>
               <View style={styles.distribPointEach}>
-                <Text>실패시 차감 %</Text>
+                <View style={styles.infoTitlesStyles}>
+                  <Text>실패시 차감 % </Text>
+                </View>
                 <PointPicker
                   point={selectedPercent}
                   onValueChange={(itemValue) => this.setState({ selectedPercent: itemValue })}
@@ -149,7 +154,9 @@ export default class MakePlanStep2 extends Component {
                 />
               </View>
               <View style={styles.distribPointEach}>
-                <Text>실패 포인트 분배 방식</Text>
+                <View style={styles.infoTitlesStyles}>
+                  <Text>실패 포인트 분배 방식</Text>
+                </View>
                 <PointPicker
                   point={selectedDist}
                   onValueChange={(itemValue) => this.setState({ selectedDist: itemValue })}
@@ -186,7 +193,7 @@ export default class MakePlanStep2 extends Component {
                 <ScrollView style={styles.friendScrollViewContainer}>
                   <View style={styles.friendSelectContainer}>
                     {selectedFriends.map((friend) => (
-                      <FriendListEach 
+                      <SelectedFriendListEach 
                         key={friend}
                         name={friend}
                         // eslint-disable-next-line max-len
@@ -260,7 +267,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width,
     height: height * 0.4,
-    marginTop: 25,
+    marginTop: 5,
     marginBottom: 10,
   },
   currentPoint: {
@@ -286,28 +293,32 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   challengePoint: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     width: width,
-    height: height * 0.1,
+    height: height * 0.05,
     flexDirection: 'row',
   },
   betInput: {
-    width: width * 0.3,
-    height: height * 0.1,
-    marginLeft: 10,
+    width: width * 0.35,
+    height: height * 0.05,
+    borderRadius: 10,
+    marginRight: 5,
+    marginLeft: 12,
+    paddingLeft: 5,
+    borderBottomWidth: 0.5,
   },
   distribPoint: {
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
-    height: height * 0.2,
+    height: height * 0.17,
   },
   distribPointEach: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     width: width,
-    height: height * 0.1,
+    height: height * 0.08,
     flexDirection: 'row',
   },
   friendContainer: {
@@ -381,5 +392,9 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
+  },
+  infoTitlesStyles: {
+    width: width / 3.5,
+    marginLeft: 20,
   },
 });
