@@ -27,7 +27,8 @@ export default class HomeMain extends Component {
     planData: [],
     watchData: [],
     refreshing: false,
-  }; 
+  };
+ 
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
@@ -35,8 +36,12 @@ export default class HomeMain extends Component {
     if (currentUser != null) {
       const email = currentUser.email;
       this.setState({ userEmail: email });
-      this.isInfoContain(email);
-      this.loadUserID();
+      this.isInfoContain(email).then(() => {
+        this.loadUserID().then(() => {
+          console.log('렌더링', this.state.userId);
+          this.loadAllPlan(this.state.userId);
+        });
+      });
     }
   }
 
@@ -66,7 +71,6 @@ export default class HomeMain extends Component {
     await AsyncStorage.getItem('UserID').then((id) => {
       console.log('아이디', id);
       this.setState({ userId: id });
-      this.loadAllPlan(id);
     });
   };
 
@@ -143,7 +147,7 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          console.log('데이터 시작');
+          console.log(res.data.id);
           
           const ji = AsyncStorage.getItem('UserID').then(() => {
             console.log('asdf', ji);
@@ -157,7 +161,7 @@ export default class HomeMain extends Component {
           });
           console.log('실행');
           this.setState({ userId: res.data.id });
-          console.log('완료');
+          console.log('유저아이디세팅', this.state.userId);
           
           this.setState({ isInformChecked: true });
         } else {
