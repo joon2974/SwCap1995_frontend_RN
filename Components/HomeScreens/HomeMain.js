@@ -31,12 +31,13 @@ export default class HomeMain extends Component {
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
+    console.log('확인', currentUser);
     if (currentUser != null) {
       const email = currentUser.email;
       this.setState({ userEmail: email });
       this.isInfoContain(email);
+      this.loadUserID();
     }
-    this.loadUserID();
   }
 
   componentWillUnmount() {
@@ -63,7 +64,8 @@ export default class HomeMain extends Component {
 
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
-      this.state.userId = id;
+      console.log('아이디', id);
+      this.setState({ userId: id });
       this.loadAllPlan(id);
     });
   };
@@ -141,8 +143,22 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
+          console.log('데이터 시작');
+          
+          const ji = AsyncStorage.getItem('UserID').then(() => {
+            console.log('asdf', ji);
+          });
+       
           console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
+          
+          const jj = AsyncStorage.getItem('UserID').then(() => {
+            console.log('ff', jj);
+          });
+          console.log('실행');
+          this.setState({ userId: res.data.id });
+          console.log('완료');
+          
           this.setState({ isInformChecked: true });
         } else {
           console.log(res);
@@ -294,6 +310,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     justifyContent: 'center',
     alignContent: 'center',
+    alignItems: 'center',
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
