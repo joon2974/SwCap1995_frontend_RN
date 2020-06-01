@@ -10,7 +10,7 @@ import {
 
 } from 'react-native'; 
 import {
-  Feather, MaterialIcons, AntDesign, FontAwesome5, 
+  Feather, MaterialIcons, AntDesign, FontAwesome5, FontAwesome,
 } from '@expo/vector-icons'; 
 
 
@@ -60,6 +60,16 @@ export default class MyPlan extends Component {
 =======
               <Text style={{ marginLeft: 5, fontSize: 22 }}>{this.props.nickname}</Text>
 >>>>>>> 784f9adefcac3575cd38338c5ff9a0004b1d747d
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              {(this.props.status === 'waiting') && (
+              <>
+                <FontAwesome name="pause-circle" size={24} color="black" /> 
+               
+                <Text style={{ marginLeft: 5, fontsize: 22 }}>대기 중</Text>
+              </>
+              )}
+              
             </View>
           </View>
         </View>

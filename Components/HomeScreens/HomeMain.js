@@ -93,6 +93,7 @@ export default class HomeMain extends Component {
             url: responseJson[i].image_url,
             picturetime: responseJson[i].picture_time,
             id: responseJson[i].id,
+            status: responseJson[i].status,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -118,6 +119,7 @@ export default class HomeMain extends Component {
             picturetime: watchresponseJson[l].picture_time,
             id: watchresponseJson[l].id,
             nickname: watchresponseJson[l].user.nickname,
+            status: watchresponseJson[l].status,
           };
           watcharray = this.state.watchData.concat(obj);
           this.setState({
@@ -186,6 +188,7 @@ export default class HomeMain extends Component {
         btnFunc={() => alert('더보기')}
         url={data.url}
         picturetime={data.picturetime}
+        status={data.status}
       />
     ));
     const watchplans = watchData.map((data) => (
@@ -196,6 +199,7 @@ export default class HomeMain extends Component {
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
+        status={data.status}
       />
     ));
     return (
