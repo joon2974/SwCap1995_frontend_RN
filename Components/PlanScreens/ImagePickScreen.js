@@ -78,7 +78,7 @@ export default class ImagePickScreen extends Component {
         { image && (
         <Image 
           source={{ uri: image }} 
-          style={{ width: width - 20, height: width - 20 }} />
+          style={{ width: width - 40, height: (width - 40) * 1.3 }} />
         )}
         <TouchableOpacity 
           style={styles.uploadBtn}

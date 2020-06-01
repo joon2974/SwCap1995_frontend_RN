@@ -9,9 +9,14 @@ import {
   AsyncStorage,
   ScrollView,
   Image,
+  YellowBox,
 } from 'react-native';
 import axios from 'axios';
 import PlanListEach from './PlanComponents/PlanListEach';
+
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 let isRegisterdCheck;
 const { height, width } = Dimensions.get('window');
@@ -121,7 +126,7 @@ export default class PlanMain extends Component {
         }
       })
       .catch((error) => {
-        console.log('얼굴인증 확인 실패', error);
+        console.log('얼굴인증 안됨', error);
       });
   }
 

@@ -7,11 +7,11 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const { height, width } = Dimensions.get('window');
@@ -128,7 +128,7 @@ export default class CameraScreen extends Component {
             <Text>찍은 사진</Text>
             <Image 
               source={{ uri: imageUri }} 
-              style={{ width: width - 20, height: width - 20 }} 
+              style={{ width: width - 40, height: (width - 40) * 1.3 }} 
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
@@ -144,12 +144,9 @@ export default class CameraScreen extends Component {
             <View style={styles.btnContainer}>
               <TouchableOpacity
                 onPress={this.switchCameraType}
+                style={styles.rotateBtn}
               >
-                <Ionicons 
-                  name="ios-reverse-camera"
-                  size={40}
-                  color="black"
-                />
+                <Text>카메라 전환</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.cameraContainer}>
@@ -163,10 +160,9 @@ export default class CameraScreen extends Component {
               <TouchableOpacity
                 onPress={this.takePhoto}
               >
-                <Ionicons 
-                  name="ios-add-circle-outline"
-                  size={40}
-                  color="black"
+                <Image 
+                  source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png' }} 
+                  style={{ width: 40, height: 40 }} 
                 />
               </TouchableOpacity>
             </View>
@@ -190,7 +186,7 @@ const styles = StyleSheet.create({
   },
   cameraStyle: {
     width: width - 40,
-    height: width - 40,
+    height: (width - 40) * 1.3,
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -205,14 +201,13 @@ const styles = StyleSheet.create({
     height: height * 0.1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 5,
   },
   shutterBtnContainer: {
     width: width,
     height: height * 0.1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 15,
+    marginTop: 5,
   },
   uploadBtn: {
     width: width * 0.6,
@@ -222,5 +217,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     borderRadius: 10,
+  },
+  rotateBtn: {
+    width: width / 3,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFC0B0',
+    borderRadius: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
 });
