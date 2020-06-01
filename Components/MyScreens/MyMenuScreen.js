@@ -85,7 +85,6 @@ export default class MyMenuScreen extends Component {
     } catch (error) {
       console.error(error);
     }
-    console.log('플랜데이터', this.state.planData[0].url);
   };
 
   getUserPoint = async (userID) => {

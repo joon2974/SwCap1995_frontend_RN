@@ -55,7 +55,11 @@ export default class MyPlan extends Component {
             </View>
             <View style={{ flexDirection: 'row' }}>
               {this.props.nickname && <FontAwesome5 name="user-friends" size={18} color="black" />}
+<<<<<<< HEAD
               <Text style={styles.textstyle}>{this.props.nickname}</Text>
+=======
+              <Text style={{ marginLeft: 5, fontSize: 22 }}>{this.props.nickname}</Text>
+>>>>>>> 784f9adefcac3575cd38338c5ff9a0004b1d747d
             </View>
           </View>
         </View>

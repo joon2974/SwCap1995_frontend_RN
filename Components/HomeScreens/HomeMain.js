@@ -1,44 +1,44 @@
 import React, { Component } from 'react';
-import { 
+import {
   View,
   Text,
   StyleSheet,
   AsyncStorage,
-  ActivityIndicator,
   Dimensions,
-  ScrollView, Image, TouchableOpacity, Platform, RefreshControl,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Platform,
+  RefreshControl,
+  Modal,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
-console.disableYellowBox = true;
 let currentUser;
 let isInformCheck;
 const { width, height } = Dimensions.get('window');
 export default class HomeMain extends Component {
-  state = { 
-    isInformChecked: false,
+  state = {
     userEmail: '',
     userId: '',
     planData: [],
     watchData: [],
     refreshing: false,
+    modalVisible: false,
   };
- 
 
   componentDidMount() {
     currentUser = firebase.auth().currentUser;
-    console.log('확인', currentUser);
     if (currentUser != null) {
       const email = currentUser.email;
       this.setState({ userEmail: email });
       this.isInfoContain(email).then(() => {
         this.loadUserID().then(() => {
-          console.log('렌더링', this.state.userId);
           this.loadAllPlan(this.state.userId);
         });
       });
@@ -59,27 +59,25 @@ export default class HomeMain extends Component {
     this.loadAllPlan(this.state.userId).then(() => {
       this.setState({ refreshing: false });
     });
-  }
+  };
 
   // Async 확인용
   checkAsync = async () => {
     const ji = await AsyncStorage.getItem('UserID');
     console.log('asdf', ji);
-  }
+  };
 
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
-      console.log('아이디', id);
       this.setState({ userId: id });
     });
   };
 
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
-  }
+  };
 
   loadAllPlan = async (userId) => {
-    console.log('유저아이디1', userId);
     const response = await axios.get(
       'http://49.50.172.58:3000/plans/all/' + userId,
     );
@@ -92,8 +90,8 @@ export default class HomeMain extends Component {
         for (var i = 0; i < count; i++) {
           const obj = {
             title: responseJson[i].title,
-            url: responseJson[i].image_url, 
-            picturetime: responseJson[i].picture_time, 
+            url: responseJson[i].image_url,
+            picturetime: responseJson[i].picture_time,
             id: responseJson[i].id,
           };
           planarray = this.state.planData.concat(obj);
@@ -116,8 +114,8 @@ export default class HomeMain extends Component {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
             title: watchresponseJson[l].title,
-            url: watchresponseJson[l].image_url, 
-            picturetime: watchresponseJson[l].picture_time, 
+            url: watchresponseJson[l].image_url,
+            picturetime: watchresponseJson[l].picture_time,
             id: watchresponseJson[l].id,
             nickname: watchresponseJson[l].user.nickname,
           };
@@ -134,10 +132,13 @@ export default class HomeMain extends Component {
 
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
-  }
+  };
 
+  setModalInvisible = () => {
+    this.setState({ modalVisible: false });
+  };
 
-  isInfoContain = async (eMail) => { 
+  isInfoContain = async (eMail) => {
     isInformCheck = await axios
       .post('http://49.50.172.58:3000/users/is_user', {
         headers: {
@@ -155,17 +156,15 @@ export default class HomeMain extends Component {
        
           console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
-          
+
           const jj = AsyncStorage.getItem('UserID').then(() => {
             console.log('ff', jj);
           });
-          console.log('실행');
           this.setState({ userId: res.data.id });
           console.log('유저아이디세팅', this.state.userId);
-          
-          this.setState({ isInformChecked: true });
         } else {
-          console.log(res);
+          console.log('이거', res);
+          this.setState({ modalVisible: true });
         }
       })
       .catch((error) => {
@@ -175,7 +174,10 @@ export default class HomeMain extends Component {
 
   render() {
     const {
-      isInformChecked, userEmail, planData, watchData, 
+      userEmail,
+      planData,
+      watchData,
+      modalVisible,
     } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
@@ -196,94 +198,98 @@ export default class HomeMain extends Component {
         nickname={data.nickname}
       />
     ));
-    if (isInformChecked) {
-      return (
-        <ScrollView
-          refreshControl={(
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
-              tintColor="#ff0000"
-              title="Loading..."
-              titleColor="#00ff00"
-              colors={['#ff0000', '#00ff00', '#0000ff']}
-              progressBackgroundColor="white"
+    return (
+      <ScrollView
+        refreshControl={(
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+            tintColor="#ff0000"
+            title="Loading..."
+            titleColor="#00ff00"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="white"
           />
         )}
+      >
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}
         >
-          <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
-            <View style={styles.planContainer}>
-              <ScrollView 
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: 'center',
-                }}
-               
-              >
-                <View style={{ marginRight: 30, marginLeft: 10 }}>
-                  <Text>도전중인</Text>
-                  <Text>플랜</Text>
-                  <Image
-                    source={{
-                      uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
-                    }}
-                    style={{ width: 50, height: 50, marginTop: 20 }}
+          <InputInfo
+            modalCloseFunc={this.setModalInvisible}
+            userEmail={userEmail}
+          />
+        </Modal>
+        <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
+          <View style={styles.planContainer}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+              }}
+            >
+              <View style={{ marginRight: 30, marginLeft: 10 }}>
+                <Text>도전중인</Text>
+                <Text>플랜</Text>
+                <Image
+                  source={{
+                    uri:
+                      'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
+                  }}
+                  style={{ width: 50, height: 50, marginTop: 20 }}
                 />
-          
-                </View>
-                {plans}
+              </View>
+              {plans}
+              <View style={styles.addContainer}>
+                <TouchableOpacity
+                  style={styles.addBtnContainer}
+                  onPress={this.moveToPlan}
+                >
+                  <AntDesign name="pluscircleo" size={70} color="black" />
+                  <Text>플랜 만들러 가기</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.lineDivider} />
+          <View style={styles.planContainer}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+                paddingEnd: 5,
+              }}
+            >
+              <View style={{ marginRight: 30, marginLeft: 10 }}>
+                <Text>감시중인</Text>
+                <Text>플랜</Text>
+                <Image
+                  source={{
+                    uri:
+                      'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
+                  }}
+                  style={{ width: 50, height: 50, marginTop: 20 }}
+                />
+              </View>
+
+              {watchplans}
+              {!watchplans.length && (
                 <View style={styles.addContainer}>
-                  <TouchableOpacity
-                    style={styles.addBtnContainer}
-                    onPress={this.moveToPlan}
-                  >
-                    <AntDesign name="pluscircleo" size={70} color="black" />
-                    <Text>플랜 만들러 가기</Text>
-                  </TouchableOpacity>
-                </View>
-              </ScrollView>
-            </View>
-            <View style={styles.lineDivider} />
-            <View style={styles.planContainer}>
-              
-              <ScrollView 
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: 'center',
-                  paddingEnd: 5,
-                }}
-              >   
-                <View style={{ marginRight: 30, marginLeft: 10 }}>
-                  <Text>감시중인</Text>
-                  <Text>플랜</Text>
-                  <Image
-                    source={{
-                      uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
-                    }}
-                    style={{ width: 50, height: 50, marginTop: 20 }}
-            />
-                </View>
-      
-                {watchplans}
-                {!(watchplans.length) && (
-                <View style={styles.addContainer}>
-             
                   <Text>감시중인 플랜이 없습니다</Text>
-                 
                 </View>
-                )}
-              </ScrollView>
-            </View>
-          </LinearGradient>
-        </ScrollView>
-      );
-    } else if (isInformChecked === false) {
-      return <InputInfo checkFunc={this.informExistCheck} userEmail={userEmail} />;
-    } else {
-      return <ActivityIndicator />;
-    }
+              )}
+            </ScrollView>
+          </View>
+        </LinearGradient>
+      </ScrollView>
+    );
   }
 }
 
@@ -297,7 +303,7 @@ const styles = StyleSheet.create({
   planContainer: {
     width: width,
     height: height * 0.403,
-  },  
+  },
   lineDivider: {
     backgroundColor: '#F2F2F2',
     width: width - 30,
