@@ -166,7 +166,7 @@ export default class MyMenuScreen extends Component {
                 </View>
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
-                  <Text>0</Text>
+                  <Text>12</Text>
                   
                   <View style={{ height: 35 }} />
                 </View>

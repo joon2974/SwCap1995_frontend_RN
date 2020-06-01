@@ -85,7 +85,6 @@ export default class HomeMain extends Component {
     );
     const responseJson = await response.data.rows;
     const count = await response.data.count;
-    console.log('플랜데이터', response.data);
     var planarray;
     var watcharray;
     try {
@@ -111,9 +110,9 @@ export default class HomeMain extends Component {
     );
     const watchresponseJson = await watchresponse.data.rows;
     const watchcount = await watchresponse.data.count;
-    console.log('감시', watchresponse.data);
+    
     try {
-      if (watchcount !== 0) {
+      if (count !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
             title: watchresponseJson[l].title,
@@ -148,10 +147,13 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
+          console.log(res.data.id);
+          
           const ji = AsyncStorage.getItem('UserID').then(() => {
             console.log('asdf', ji);
           });
        
+          console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
           
           const jj = AsyncStorage.getItem('UserID').then(() => {
@@ -159,6 +161,7 @@ export default class HomeMain extends Component {
           });
           console.log('실행');
           this.setState({ userId: res.data.id });
+          console.log('유저아이디세팅', this.state.userId);
           
           this.setState({ isInformChecked: true });
         } else {

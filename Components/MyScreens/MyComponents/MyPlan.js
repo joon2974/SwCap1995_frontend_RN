@@ -51,11 +51,11 @@ export default class MyPlan extends Component {
             </View>
             <View style={{ flexDirection: 'row' }}>
               <AntDesign name="piechart" size={20} color="black" />
-              <Text style={styles.textstyle}>0.0%</Text>
+              <Text style={styles.textstyle}>77.11%</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
               {this.props.nickname && <FontAwesome5 name="user-friends" size={18} color="black" />}
-              <Text style={{ marginLeft: 5, fontsize: 22 }}>{this.props.nickname}</Text>
+              <Text style={styles.textstyle}>{this.props.nickname}</Text>
             </View>
           </View>
         </View>
