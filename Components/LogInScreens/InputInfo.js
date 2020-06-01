@@ -132,7 +132,7 @@ export default class InputInfo extends Component {
           })
           .then((res) => {
             console.log('정보 입력 성공코드', res.status);
-            this.props.checkFunc();
+            this.props.modalCloseFunc();
           })
           .catch((error) => {
             console.log(error);
