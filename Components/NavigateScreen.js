@@ -161,7 +161,7 @@ function MyMenuStackScreen() {
       },
       headerTitleAlign: 'center', 
     }}>
-      <MyMenuStack.Screen name="내 정보" component={MyMenuScreen} />
+      <MyMenuStack.Screen name="마이 매뉴" component={MyMenuScreen} />
       <MyMenuStack.Screen name="포인트 충전" component={AddPoint} />
       <MyMenuStack.Screen name="비밀번호 변경" component={ChangePassword} />
     </MyMenuStack.Navigator>
