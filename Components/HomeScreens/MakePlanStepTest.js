@@ -11,6 +11,7 @@ import {
   TextInput,
 } from 'react-native';
 import axios from 'axios';
+import { CardNine } from '../SearchScreens/Cards';
 import SpectorIcon from '../PlanScreens/PlanComponents/SpectorIcon';
 
 const { width, height } = Dimensions.get('window');
@@ -62,19 +63,20 @@ export default class MakePlanStepTest extends Component {
 
     return (
       <ScrollView style={styles.scrollViewStyle}>
+       
         <View style={styles.container}>
-          <View style={styles.categoryContainer}>
-            <View style={styles.categoryImgContainer}>
-              <Image 
-                source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} 
-                style={styles.imageStyle}
-              />
-            </View>
-            <View style={styles.categoryInfoContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 25 }}>ffffffffffff</Text>
-              <Text>ggggggggggggg</Text>
-            </View>
-          </View>
+          <CardNine
+            title="카테고리 이름"
+            subTitle="Lorem ipsum dolor sit amet, consectetuer adipiscin elit, sed diam nonummy nibh euismod"
+            image={{
+              uri:
+                'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+            }}
+            price={33.5}
+            onClicked={() => {
+              alert('Hello!');
+            }}
+          />
 
           <View style={styles.lineDivider} />
 
@@ -110,24 +112,18 @@ export default class MakePlanStepTest extends Component {
 
           <View style={styles.lineDivider} />
 
-          <View style={styles.ruleContainer}>
-            <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>인증 Rule</Text>
-            </View>
-            <View style={styles.rulesContainerStyle}>
-              <View style={styles.categoryImgContainer}>
-                <Image 
-                  source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} 
-                  style={styles.imageStyle}
-                />
-              </View>
-              <View style={styles.categoryInfoContainer}>
-                <Text>qqqqqqqqqqqqqq</Text>
-                <Text>wwwwwwwwwwwww</Text>
-                <Text>eeeeeeeeeeeeeeeee</Text>
-              </View>
-            </View>
-          </View>
+          <CardNine
+            title="Rule 인증"
+            subTitle="Lorem ipsum dolor sit amet, consectetuer adipiscin elit, sed diam nonummy nibh euismod"
+            image={{
+              uri:
+                'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+            }}
+            price={33.5}
+            onClicked={() => {
+              alert('Hello!');
+            }}
+          />
 
           <View style={styles.lineDivider} />
 

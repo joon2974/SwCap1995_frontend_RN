@@ -14,7 +14,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Watcher from './TabList/Watcher';
-import Joom from './TabList/Joom';
+import { CardNine } from './Cards';
 
 const { width, height } = Dimensions.get('window');
 
@@ -37,26 +37,35 @@ export default class DetailPlan extends Component {
 
     render() {
       const { item } = this.state;
-      
 
+      
       return (
           
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
        
 
-            <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop: 10 }}>
 
-              <TouchableOpacity 
+
+              <CardNine
+                title={item.category}
+                subTitle={item.detailedCategory}
+                description={item.custom_picture_rule_3}
+                image={{ uri: item.image_url }}
+                explore={() => this.props.navigation.navigate('줌', { item: item.image_url })}
+            />
+
+              {/* <TouchableOpacity 
                 style={styles.titleImageContainer}
-                onPress={() => this.props.navigation.navigate('Joom', { image_url: item.image_url })}
+                onPress={() => this.props.navigation.navigate('줌', { image_url: item.image_url })}
                 
                     >
                 <Image 
                   style={styles.imageStyle}
                   source={{ uri: item.image_url }} 
                         />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
