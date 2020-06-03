@@ -593,15 +593,22 @@ export class CardSix extends Component {
             height: verticalScale(300),
           }}
         >
-          <Image
-            borderRadius={12}
-            source={this.props.image}
+          <TouchableOpacity
             style={{
               width: screenWidth - scale(20),
               height: verticalScale(300),
-              resizeMode: 'cover',
             }}
+            onPress={this.props.switchShowing}>
+            <Image
+              borderRadius={12}
+              source={this.props.image}
+              style={{
+                width: screenWidth - scale(20),
+                height: verticalScale(300),
+                resizeMode: 'cover',
+              }}
           />
+          </TouchableOpacity>
         </View>
 
         <View
@@ -708,6 +715,7 @@ export class CardSix extends Component {
   }
 }
 
+
 export class CardSeven extends Component {
   render() {
     return (
@@ -741,14 +749,21 @@ export class CardSeven extends Component {
             flex: 2,
           }}
         >
-          <Image
-            source={this.props.image}
+          <TouchableOpacity
             style={{
               height: verticalScale(120),
-              width: scale(120),
-              resizeMode: 'cover',
+              width: scale(120), 
             }}
+            onPress={this.props.switchShowing}>
+            <Image
+              source={this.props.image}
+              style={{
+                height: verticalScale(120),
+                width: scale(120),
+                resizeMode: 'cover',
+              }}
           />
+          </TouchableOpacity>
         </View>
 
         <View
@@ -938,24 +953,26 @@ export class CardNine extends Component {
   render() {
     return (
       <View style={{
-        width: screenWidth, backgroundColor: 'red', justifyContent: 'center', flexDirection: 'row', 
+        width: screenWidth, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', 
       }}>
-     
 
         <TouchableOpacity
-          sytle={{ backgroundColor: 'blue', width: screenWidth / 3.5 }}
-        
-       />
+          style={{
+            height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, 
+          }}
+          onPress={this.props.explore}
+        />
 
         <View
           style={{
-            margin: scale(10),
+            marginVertical: 10,
             alignSelf: 'flex-end',
             width: screenWidth / 1.4,
             height: screenHeight / 4,
             borderRadius: 12,
             elevation: 3,
-          
+            flexDirection: 'row',
+            
             shadowColor: '#000',
             shadowOpacity: 0.2,
             shadowRadius: 4,
@@ -966,75 +983,71 @@ export class CardNine extends Component {
             borderRadius: 6,
             backgroundColor: '#ffffff',
             justifyContent: 'center',
-            alignItems: 'flex-start',
+            alignItems: 'center',
           }}
       >
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-        >
-            <TouchableOpacity
-              onPress={this.props.explore}
+      
+          <TouchableOpacity
+            onPress={this.props.explore}
             
+            borderRadius={10}
+            style={{
+              width: screenWidth / 2.8,
+              height: screenHeight / 5,
+              marginLeft: -(screenWidth / 4.5),
+            }}
+          >
+            <Image
+              source={this.props.image}
               borderRadius={10}
               style={{
                 width: screenWidth / 2.8,
                 height: screenHeight / 5,
-                marginLeft: -(screenWidth / 4.5),
               }}
-          >
-              <Image
-                source={this.props.image}
-                borderRadius={10}
-                style={{
-                  width: screenWidth / 2.8,
-                  height: screenHeight / 5,
-                }}
            />
-            </TouchableOpacity>
-            <View style={{ marginLeft: 10 }}>
-              <Text
-                style={{
-                  color: '#404852',
-                  marginTop: scale(20),
-                  marginLeft: scale(20),
-                  fontSize: scale(20),
-                  fontWeight: '700',
-                  letterSpacing: -0.36,
-                  lineHeight: scale(20),
-                }}
+          </TouchableOpacity>
+          <View style={{ marginLeft: 10 }}>
+            <Text
+              style={{
+                color: '#404852',
+                marginTop: scale(20),
+                marginLeft: scale(20),
+                fontSize: scale(20),
+                fontWeight: '700',
+                letterSpacing: -0.36,
+                lineHeight: scale(20),
+              }}
             >
-                {this.props.title}
-              </Text>
+              {this.props.title}
+            </Text>
 
-              <Text
-                style={{
-                  color: '#5A6464',
-                  marginTop: scale(6),
-                  marginLeft: scale(30),
-                  fontSize: scale(12),
-                  fontWeight: '200',
-                  letterSpacing: -0.36,
-                }}
+            <Text
+              style={{
+                color: '#5A6464',
+                marginTop: scale(6),
+                marginLeft: scale(30),
+                fontSize: scale(12),
+                fontWeight: '200',
+                letterSpacing: -0.36,
+              }}
             >
-                {this.props.subTitle}
-              </Text>
-              <Text
-                style={{
-                  width: screenWidth / 2.2,
-                  color: '#adb3bf',
-                  fontSize: 12,
-                  fontWeight: '400',
-                  letterSpacing: -0.29,
-                  marginTop: scale(20),
-                  marginLeft: scale(20),
-                  marginBottom: scale(10),
-                }}
+              {this.props.subTitle}
+            </Text>
+            <Text
+              style={{
+                width: screenWidth / 2.2,
+                color: '#adb3bf',
+                fontSize: 12,
+                fontWeight: '400',
+                letterSpacing: -0.29,
+                marginTop: scale(20),
+                marginLeft: scale(20),
+                marginBottom: scale(10),
+              }}
             >
-                {this.props.description}
-              </Text>
-              {/* <View
+              {this.props.description}
+            </Text>
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -1085,8 +1098,8 @@ export class CardNine extends Component {
                 </Text>
               </TouchableOpacity>
             </View>  */}
-            </View>
           </View>
+      
         </View>
       </View>
     );

@@ -65,7 +65,7 @@ export default class DetailPlan extends Component {
                   style={styles.imageStyle}
                   source={{ uri: item.image_url }} 
                         />
-              </TouchableOpacity> */}
+              </TouchableOpacity> */} 
 
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>

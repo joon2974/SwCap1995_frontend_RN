@@ -12,15 +12,16 @@ import {
   TextInput,
 } from 'react-native';
 import axios from 'axios';
-import { CardNine } from '../SearchScreens/Cards';
 import SpectorIcon from '../PlanScreens/PlanComponents/SpectorIcon';
+import VariableCard from './VariableCard';
 
 const { width, height } = Dimensions.get('window');
 
-export default class MakePlanStepTest extends Component {
+export default class MakePlanStepTest2 extends Component {
   state = {
     title: '',
     isPublic: false,
+    data: [1, 2, 3, 4],
   }
 
   // sendPlanInfo = () => {
@@ -59,6 +60,7 @@ export default class MakePlanStepTest extends Component {
   //     });
   // };
 
+
   render() {
     const { title, isPublic } = this.state;
 
@@ -66,129 +68,11 @@ export default class MakePlanStepTest extends Component {
       <ScrollView style={styles.scrollViewStyle}>
        
         <View style={styles.container}>
-     
-          <CardNine
-            title="카테고리 이름"
-            subTitle="서브 타이틀"
-            description="설명"
-            image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
-             />
-
+          {
+            this.state.data.map((data, index) => (<VariableCard />))
+          }
           <View style={styles.lineDivider} />
 
-          <View style={styles.timeContainer}>
-            <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>날짜 / 시간</Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
-              <Text>
-                ffffffffffffffffff
-                {' '}
-                일
-              </Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <Text style={{ fontWeight: '800', fontSize: 15 }}>플랜 기간:  </Text>
-              <Text>
-                aaaaaaaaaaaaa
-                {' '}
-                주
-              </Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <Text style={{ fontWeight: '800', fontSize: 15 }}>인증 시간:  </Text>
-              <Text>
-                ssssssssssssssssssssss
-                {' '}
-                시(앞 뒤로 30분의 여유시간이 주어집니다)
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.lineDivider} />
-
-     
-          <CardNine
-            title="인증 룰"
-            subTitle="룰 서브"
-            description="설명"
-            image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
-             />
-
-
-          <View style={styles.lineDivider} />
-
-          <View style={styles.pointContainer}>
-            <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>포인트</Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <Text style={{ fontWeight: '800', fontSize: 17 }}>도전 포인트:  </Text>
-              <Text>fffffffffffff</Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <Text style={{ fontWeight: '800', fontSize: 17 }}>차감 %:  </Text>
-              <Text>wwwwwwwwwwww</Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <Text style={{ fontWeight: '800', fontSize: 17 }}>분배 방식:  </Text>
-              <Text>eeeeeeeeeeeeeeeee</Text>
-            </View>
-          </View>
-
-          <View style={styles.lineDivider} />
-
-          <View style={styles.friendsContainer}>
-            <View style={styles.friendtitle}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>감시자  </Text>
-            </View>
-            <View style={styles.friends} />
-          </View>
-
-          <View style={styles.lineDivider} />
-
-          <View style={styles.additionalInfoContainer}>
-            <View style={styles.titleContainer}>
-              <View style={styles.titleStyle}>
-                <Text>나만의 플랜 제목 설정: </Text>
-              </View>
-              <TextInput
-                value={title}
-                onChangeText={(title) => this.setState({ title })}
-                style={styles.input}
-                placeholder="ex) 또 한번 술마시면 내가 개다"
-                keyboardType="email-address"
-              />
-            </View>
-            <View style={styles.isPublicSelectContainer}>
-              <View style={styles.titleStyle}>
-                <Text>플랜 공개 설정: </Text>
-                <Text>(선택 시 공개됩니다)</Text>
-              </View>
-              <View style={styles.isPublicStyle}>
-                <TouchableOpacity
-                  style={isPublic ? styles.selectedBtnStyle : styles.unselectedBtmStyle}
-                  onPress={() => {
-                    if (isPublic === false) this.setState({ isPublic: true });
-                    else this.setState({ isPublic: false });
-                  }}
-                >
-                  <Text style={isPublic ? { color: 'white' } : { color: 'black' }}>플랜공개하기</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          <TouchableOpacity
-            style={styles.nextStepBtn}
-            onPress={() => {
-              this.sendPlanInfo();
-              this.props.navigation.popToTop();
-            }}
-          >
-            <Text style={{ color: 'white' }}>플랜 생성하기</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     );

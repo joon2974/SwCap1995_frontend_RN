@@ -289,7 +289,7 @@ export default class HomeMain extends Component {
                   <Text>감시중인 플랜이 없습니다</Text>
                   <TouchableOpacity
                     style={{ height: 50, width: 50, backgroundColor: 'red' }}
-                    onPress={() => this.props.navigation.navigate('MakePlanStepTest')}
+                    onPress={() => this.props.navigation.navigate('MakePlanStepTest2')}
                   />
                 </View>
               )}
