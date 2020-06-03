@@ -22,6 +22,7 @@ export default class MakePlanStepTest2 extends Component {
     title: '',
     isPublic: false,
     data: [1, 2, 3, 4],
+    onOff:0,
   }
 
   // sendPlanInfo = () => {
@@ -61,6 +62,8 @@ export default class MakePlanStepTest2 extends Component {
   // };
 
 
+
+
   render() {
     const { title, isPublic } = this.state;
 
@@ -69,7 +72,15 @@ export default class MakePlanStepTest2 extends Component {
        
         <View style={styles.container}>
           {
-            this.state.data.map((data, index) => (<VariableCard />))
+            this.state.data.map((data, index) => (
+            <VariableCard 
+              index={index} 
+              onOff={this.state.onOff}
+              changeShowing={() => {
+                this.setState({onOff:index})
+                console.log('bbbbbbbbbbbbbb')
+              }} 
+            />))
           }
           <View style={styles.lineDivider} />
 

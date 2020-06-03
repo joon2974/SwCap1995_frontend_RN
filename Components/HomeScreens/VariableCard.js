@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import {CardSix, CardSeven} from '../SearchScreens/Cards';
+import { CardSix, CardSeven } from '../SearchScreens/Cards';
 
 export default class VariableCard extends Component {
- 
-    state={
-        onOff:0,
-    }
- 
-    render() {
+
+    
+
+  render() {
 
     let testVari = null;
-    if (this.state.onOff === 0) {
+    if (this.props.onOff === this.props.index) {
       testVari = (
         <CardSix
           title="Vinny’s Barber"
@@ -27,50 +25,46 @@ export default class VariableCard extends Component {
           icon1="star"
           iconColor1="#fff"
           iconBackground1="red"
-          switchShowing={() => {
-            this.setState({ onOff: 1 });
-          }}
-
+          switchShowing={this.props.changeShowing}
           icon2="rocket"
           iconColor2="#fff"
           iconBackground2="purple"
          
       />
       );
-    } else if (this.state.onOff === 1) {
+    } else {
       testVari = (
 
         <TouchableOpacity
-        style = {{height:50, width:50, backgroundColor:'red'}} onPress={()=>this.setState({onOff:0})} >
-
-        </TouchableOpacity>
-    //     <CardSeven
-    //       title="Vinny’s Barber"
-    //       subTitle="852 N Virgil Ave, Beverly Hills"
-    //       image={{
-    //         uri:
-    //         'https://idinterdesign.ca/wp-content/uploads/2016/07/paysage-ID-02-750x468.jpg',
-    //       }}
-    //       icon1="share"
-    //       iconColor1="#fff"
-    //       iconBackground1="purple"
-    //       switchShowing={() => {
-    //         this.setState({ onOff: 0 });
-    //       }}
-    //       icon2="heart"
-    //       iconColor2="#fff"
-    //       iconBackground2="red"
-    //       onClicked2={() => {
-    //         alert('Hello!');
-    //       }}
-    //   />
+          style={{ height: 50, width: 50, backgroundColor: 'red'}} onPress={this.props.changeShowing} />
+//          onPress={() => this.setState({ onOff: this.props.index })} />
+        //     <CardSeven
+        //       title="Vinny’s Barber"
+        //       subTitle="852 N Virgil Ave, Beverly Hills"
+        //       image={{
+        //         uri:
+        //         'https://idinterdesign.ca/wp-content/uploads/2016/07/paysage-ID-02-750x468.jpg',
+        //       }}
+        //       icon1="share"
+        //       iconColor1="#fff"
+        //       iconBackground1="purple"
+        //       switchShowing={() => {
+        //         this.setState({ onOff: 0 });
+        //       }}
+        //       icon2="heart"
+        //       iconColor2="#fff"
+        //       iconBackground2="red"
+        //       onClicked2={() => {
+        //         alert('Hello!');
+        //       }}
+        //   />
       );
     } 
 
     return (
 
       <View>
-          {testVari}
+        {testVari}
       </View>
       
     );
