@@ -1,18 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   ScrollView,
   Dimensions,
-  Image,
-  TouchableOpacity,
   Platform,
-  TextInput,
 } from 'react-native';
 import axios from 'axios';
-import SpectorIcon from '../PlanScreens/PlanComponents/SpectorIcon';
 import VariableCard from './VariableCard';
 
 const { width, height } = Dimensions.get('window');
@@ -21,8 +16,8 @@ export default class MakePlanStepTest2 extends Component {
   state = {
     title: '',
     isPublic: false,
-    data: [1, 2, 3, 4],
-    onOff:0,
+    data: [1, 2, 3, 4, 5, 6],
+    onOff: 0,
   }
 
   // sendPlanInfo = () => {
@@ -62,8 +57,6 @@ export default class MakePlanStepTest2 extends Component {
   // };
 
 
-
-
   render() {
     const { title, isPublic } = this.state;
 
@@ -73,14 +66,14 @@ export default class MakePlanStepTest2 extends Component {
         <View style={styles.container}>
           {
             this.state.data.map((data, index) => (
-            <VariableCard 
-              index={index} 
-              onOff={this.state.onOff}
-              changeShowing={() => {
-                this.setState({onOff:index})
-                console.log('bbbbbbbbbbbbbb')
-              }} 
-            />))
+              <VariableCard 
+                index={index} 
+                onOff={this.state.onOff}
+                changeShowing={() => {
+                  this.setState({ onOff: index });
+                }} 
+            />
+            ))
           }
           <View style={styles.lineDivider} />
 
