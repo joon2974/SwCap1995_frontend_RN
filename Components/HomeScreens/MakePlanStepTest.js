@@ -196,9 +196,7 @@ export default class MakePlanStepTest extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollViewStyle: {
-    flex: 1,
-  },
+
   container: {
     alignItems: 'center',
     justifyContent: 'center',
