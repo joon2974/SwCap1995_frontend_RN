@@ -25,30 +25,33 @@ export default class MakePlanStep3 extends Component {
     const today = new Date();
     today.setDate(Number(this.props.route.params.startDate));
 
+    const formData = new FormData();
+    formData.append('photo', { uri: this.props.route.params.certifyImgUri, name: 'photo.jpg', type: 'image/jpeg' });
+    formData.append('user_id', Number(this.props.route.params.userID));
+    formData.append('title', this.state.title);
+    formData.append('category', this.props.route.params.category);
+    formData.append('detailedCategory', this.props.route.params.planName);
+    formData.append('picture_rule_1', this.props.route.params.picture_rule_1);
+    formData.append('picture_rule_2', this.props.route.params.picture_rule_2);
+    formData.append('picture_rule_3', this.props.route.params.picture_rule_3);
+    formData.append('custom_picture_rule_1', this.props.route.params.custom_picture_rule_1);
+    formData.append('custom_picture_rule_2', this.props.route.params.custom_picture_rule_2);
+    formData.append('custom_picture_rule_3', this.props.route.params.custom_picture_rule_3);
+    formData.append('plan_period', Number(this.props.route.params.endDate));
+    formData.append('picture_time', Number(this.props.route.params.certifyTime));
+    formData.append('plan_start_day', today.toString());
+    formData.append('bet_money', Number(this.props.route.params.challPoint));
+    formData.append('is_public', this.state.isPublic);
+    formData.append('percent', Number(this.props.route.params.percent));
+    formData.append('spectors', this.props.route.params.spectors.join());
+    formData.append('distrib_method', this.props.route.params.distribMethod);
+    formData.append('is_custom', this.props.route.params.is_custom);
+
     axios
-      .post('http://49.50.172.58:3000/plans', {
+      .post('http://49.50.172.58:3000/plans', formData, {
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
+          'content-type': 'multipart/form-data',
         },
-        user_id: Number(this.props.route.params.userID),
-        title: this.state.title,
-        category: this.props.route.params.category,
-        detailedCategory: this.props.route.params.planName,
-        picture_rule_1: this.props.route.params.picture_rule_1,
-        picture_rule_2: this.props.route.params.picture_rule_2,
-        picture_rule_3: this.props.route.params.picture_rule_3,
-        custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
-        custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
-        custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
-        plan_period: Number(this.props.route.params.endDate),
-        picture_time: Number(this.props.route.params.certifyTime),
-        plan_start_day: today,
-        bet_money: Number(this.props.route.params.challPoint),
-        is_public: this.state.isPublic,
-        percent: Number(this.props.route.params.percent),
-        spectors: this.props.route.params.spectors.join(),
-        distribMethod: this.props.route.params.distribMethod,
-        is_custom: this.props.route.params.is_custom,
       })
       .then((res) => {
         console.log(res.status);

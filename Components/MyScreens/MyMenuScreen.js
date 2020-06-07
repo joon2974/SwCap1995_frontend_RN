@@ -10,6 +10,7 @@ import {
   AsyncStorage,
   Platform,
   RefreshControl,
+  Button,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -30,7 +31,6 @@ export default class MyMenuScreen extends Component {
       friend_count: '',
       email: '',
       planData: [],
-      
       refreshing: false,
     };
   }
@@ -157,8 +157,6 @@ export default class MyMenuScreen extends Component {
                     activeOpacity={0.8}
                     style={styles.button}
                     onPress={() => this.props.navigation.navigate('포인트 충전', { onRefresh: this.onRefresh })}
-                    
-                    
                   >
                     <Text>충전</Text>
                   </TouchableOpacity>
@@ -166,7 +164,7 @@ export default class MyMenuScreen extends Component {
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
                   <Text>12</Text>
-                  
+                  <Button title="테스트" onPress={() => this.props.navigation.navigate('카메라 테스트')} />
                   <View style={{ height: 35 }} />
                 </View>
               </View>

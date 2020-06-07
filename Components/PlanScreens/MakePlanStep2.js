@@ -20,10 +20,10 @@ export default class MakePlanStep2 extends Component {
   state = {
     point: 0,
     challPoint: 0,
-    friends: ['5882', '닉네임', '닉네임2'],
+    friends: [],
     selectedFriends: [],
     userBetPoint: '',
-    selectedPercent: '5%',
+    selectedPercent: '5',
     selectedDist: '공평하게 n분의 1',
     percentList: ['5', '10', '20'],
     distribList: ['공평하게 n분의 1', '선착순', '추첨'],

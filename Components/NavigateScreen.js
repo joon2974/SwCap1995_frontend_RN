@@ -17,6 +17,7 @@ import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
+import CameraTestScreen from './MyScreens/CameraTestScreen';
 
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
@@ -168,6 +169,7 @@ function MyMenuStackScreen() {
       <MyMenuStack.Screen name="마이 매뉴" component={MyMenuScreen} />
       <MyMenuStack.Screen name="포인트 충전" component={AddPoint} />
       <MyMenuStack.Screen name="비밀번호 변경" component={ChangePassword} />
+      <MyMenuStack.Screen name="카메라 테스트" component={CameraTestScreen} />
     </MyMenuStack.Navigator>
   );
 }
