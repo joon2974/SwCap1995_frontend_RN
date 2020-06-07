@@ -23,6 +23,7 @@ export default class PlanList extends Component {
       data: [],
       nowPage: 1,
 
+      moreData: 0,
       // nowRecommended: this.props.route.params,  이거 마지막으로 api연동 해줘야함
     }
 
@@ -32,15 +33,20 @@ export default class PlanList extends Component {
     }
  
     getData = () => {
-      const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
-      fetch(url)
-        .then((r) => r.json())
-        .then((data) => {
-          this.setState({ 
-            data: this.state.data.concat(data.plans),
-            nowPage: this.state.nowPage + 1,
-          });
-        });      
+      if (this.state.moreData === 0) {
+        const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+        fetch(url)
+          .then((r) => r.json())
+          .then((data) => {
+            this.setState({ 
+              data: this.state.data.concat(data.plans),
+              nowPage: this.state.nowPage + 1,
+            });
+            if (data.plans.length === 0) {
+              this.setState({ moreData: 1 });
+            }
+          });      
+      }
     }
   
     handleLoadMore = () => {

@@ -16,6 +16,7 @@ import MyMenuScreen from './MyScreens/MyMenuScreen';
 import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
+import WatcherPage from './HomeScreens/WatcherPage';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
 import CameraTestScreen from './MyScreens/CameraTestScreen';
 
@@ -39,6 +40,7 @@ import CategoryList from './SearchScreens/CategoryList';
 import HotPlan from './SearchScreens/HotPlan';
 import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
+import Joom from './SearchScreens/TabList/Joom';
 import Calendar from './SearchScreens/Calendar';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
@@ -73,6 +75,7 @@ function HomeStackScreen() {
     }}>
       <HomeStack.Screen name="Plan A" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
+      <HomeStack.Screen name="WatcherPage" component={WatcherPage} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
     </HomeStack.Navigator>
   );
@@ -97,6 +100,7 @@ function SearchStackScreen() {
       <SearchStack.Screen name="카테고리" component={CategoryList} />
       <SearchStack.Screen name="인기 플랜" component={HotPlan} />
       <SearchStack.Screen name="플랜 목록" component={PlanList} />
+      <SearchStack.Screen name="줌" component={Joom} />
       <SearchStack.Screen name="플랜 상세 정보" component={DetailPlan} />
       <SearchStack.Screen name="달력" component={Calendar} />
       <SearchStack.Screen

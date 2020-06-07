@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 /* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
@@ -13,6 +14,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Watcher from './TabList/Watcher';
+import { CardNine } from './Cards';
 
 const { width, height } = Dimensions.get('window');
 
@@ -35,24 +37,35 @@ export default class DetailPlan extends Component {
 
     render() {
       const { item } = this.state;
-      
 
+      
       return (
           
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
        
 
-            <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop: 10 }}>
 
-              <TouchableOpacity 
+
+              <CardNine
+                title={item.category}
+                subTitle={item.detailedCategory}
+                description={item.custom_picture_rule_3}
+                image={{ uri: item.image_url }}
+                explore={() => this.props.navigation.navigate('줌', { item: item.image_url })}
+            />
+
+              {/* <TouchableOpacity 
                 style={styles.titleImageContainer}
+                onPress={() => this.props.navigation.navigate('줌', { image_url: item.image_url })}
+                
                     >
                 <Image 
                   style={styles.imageStyle}
                   source={{ uri: item.image_url }} 
                         />
-              </TouchableOpacity>
+              </TouchableOpacity> */} 
 
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
@@ -60,7 +73,7 @@ export default class DetailPlan extends Component {
                 </Text>
                         
                 <Text style={styles.subTitleStyle}>
-                  {'부제 : ' + item.title}
+                  {'부제 : ' + item.custom_picture_rule_3}
                 </Text>
                         
                 <Text style={styles.dateInfo}>
@@ -71,7 +84,7 @@ export default class DetailPlan extends Component {
                 <View style={{ marginBottom: 10 }} />
 
               </View>
-                    
+          
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
                   감시자들

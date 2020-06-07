@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get('window');
 
 export default class Watcher extends Component {
   render() {
-    const uri = 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg';
+    const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU';
 
     return (
       <TouchableOpacity 
