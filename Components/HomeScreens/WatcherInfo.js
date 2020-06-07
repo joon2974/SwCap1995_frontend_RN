@@ -6,21 +6,14 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  Image,
-  TouchableOpacity,
-  Platform,
-  TextInput,
 } from 'react-native';
 import axios from 'axios';
 import { CardNine } from '../SearchScreens/Cards';
-import SpectorIcon from '../PlanScreens/PlanComponents/SpectorIcon';
 
 const { width, height } = Dimensions.get('window');
 
 export default class WatcherInfo extends Component {
   state = {
-    title: '',
-    isPublic: false,
   }
 
   // sendPlanInfo = () => {
@@ -60,8 +53,6 @@ export default class WatcherInfo extends Component {
   // };
 
   render() {
-    const { title, isPublic } = this.state;
-
     return (
       <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
        
@@ -210,59 +201,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width,
   },
-  additionalInfoContainer: {
-    width: width,
-    height: height * 0.2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   titleContainer: {
     width: width,
     height: height * 0.1,
     alignItems: 'flex-start',
     justifyContent: 'center',
     flexDirection: 'row',
-  },
-  isPublicStyle: {
-    width: width - 140,
-    height: height * 0.1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  isPublicSelectContainer: {
-    width: width,
-    height: height * 0.1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  titleStyle: {
-    width: 130,
-    height: height * 0.1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: width - 140,
-    height: height * 0.1,
-    borderRadius: 10,
-    fontSize: 16,
-    paddingLeft: 5,
-  },
-  selectedBtnStyle: {
-    width: 80,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: '#FFC0B0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  unselectedBtmStyle: {
-    width: 80,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
