@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Platform,
   TextInput,
+  Modal,
 } from 'react-native';
 import ImageModal from 'react-native-image-modal';
 import TimePicker from './PlanComponents/TimePicker';
@@ -28,6 +29,7 @@ export default class CustomMakePlanStep1 extends Component {
     dateList: [],
     planTitle: '',
     customImgUri: '',
+    modalVisible: false,
   };
 
   componentDidMount() {
@@ -116,11 +118,53 @@ export default class CustomMakePlanStep1 extends Component {
       mainRule,
       subRule1,
       subRule2,
+      modalVisible,
     } = this.state;
 
     return (
       <ScrollView style={styles.container}>
         <View style={styles.viewContainer}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              alert('Modal has been closed.');
+            }}
+          >
+            <View>
+              <View style={styles.modalHeaderStyle}>
+                <TouchableOpacity
+                  onPress={() => this.setState({ modalVisible: false })}
+                  style={{ marginRight: 20 }}
+                >
+                  <Text>도움말 닫기</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.modalTopContainerStyle}>
+                <Text>a</Text>
+              </View>
+              <View style={styles.modalMiddleContainerStyle}>
+                <Text>b</Text>
+              </View>
+              <View style={styles.modalBottomContainerStyle}>
+                <Text>c</Text>
+              </View>
+            </View>
+          </Modal>
+          <View style={{
+            justifyContent: 'center', alignItems: 'flex-end', width: width, height: 20,
+          }}>
+            <TouchableOpacity
+              style={{ marginRight: 15, marginTop: 20 }}
+              onPress={() => this.setState({ modalVisible: true })}
+            >
+              <Image
+                source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png' }}
+                style={{ width: 25, height: 25 }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.selectedInformContainer}>
             <Image
               source={{ uri: this.props.route.params.uri }}
@@ -431,5 +475,37 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginLeft: 10,
+  },
+  modalHeaderStyle: {
+    backgroundColor: '#F2F2F2',
+    width: width,
+    height: height * 0.08,
+    opacity: 0.95,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  modalTopContainerStyle: {
+    width: width,
+    height: height / 6 + 50,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#F2F2F2',
+    opacity: 0.7,
+  },
+  modalMiddleContainerStyle: {
+    width: width,
+    height: height / 4 + 30,
+    backgroundColor: '#F2F2F2',
+    opacity: 0.7,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  modalBottomContainerStyle: {
+    width: width,
+    height: height / 3.5,
+    backgroundColor: '#F2F2F2',
+    opacity: 0.7,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
