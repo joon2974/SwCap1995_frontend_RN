@@ -1,23 +1,26 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
+  Text,
   View,
   StyleSheet,
   ScrollView,
   Dimensions,
+  Image,
+  TouchableOpacity,
   Platform,
+  TextInput,
 } from 'react-native';
 import axios from 'axios';
-import VariableCard from './VariableCard';
+import { CardNine } from '../SearchScreens/Cards';
+import SpectorIcon from '../PlanScreens/PlanComponents/SpectorIcon';
 
 const { width, height } = Dimensions.get('window');
 
-export default class MakePlanStepTest2 extends Component {
+export default class WatcherInfo extends Component {
   state = {
     title: '',
     isPublic: false,
-    data: [1, 2, 3, 4, 5, 6],
-    onOff: 0,
   }
 
   // sendPlanInfo = () => {
@@ -56,38 +59,107 @@ export default class MakePlanStepTest2 extends Component {
   //     });
   // };
 
-
   render() {
     const { title, isPublic } = this.state;
 
     return (
-      <ScrollView style={styles.scrollViewStyle}>
+      <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
        
-        <View style={styles.container}>
-          {
-            this.state.data.map((data, index) => (
-              <VariableCard 
-                index={index} 
-                onOff={this.state.onOff}
-                changeShowing={() => {
-                  this.setState({ onOff: index });
-                }} 
-            />
-            ))
-          }
-          <View style={styles.lineDivider} />
+        <CardNine
+          title="카테고리 이름"
+          subTitle="서브 타이틀"
+          description="설명"
+          image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
+             />
 
+        <View style={styles.lineDivider} />
+
+        <View style={styles.timeContainer}>
+          <View style={styles.componentTitleContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>날짜 / 시간</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
+            <Text>
+              ffffffffffffffffff
+              {' '}
+              일
+            </Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 15 }}>플랜 기간:  </Text>
+            <Text>
+              aaaaaaaaaaaaa
+              {' '}
+              주
+            </Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 15 }}>인증 시간:  </Text>
+            <Text>
+              ssssssssssssssssssssss
+              {' '}
+              시(앞 뒤로 30분의 여유시간이 주어집니다)
+            </Text>
+          </View>
         </View>
+
+        <View style={styles.lineDivider} />
+
+
+        <CardNine
+          title="인증 룰"
+          subTitle="룰 서브"
+          description="설명"
+          image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
+             />
+
+
+        <View style={styles.lineDivider} />
+
+        <View style={styles.pointContainer}>
+          <View style={styles.componentTitleContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>포인트</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17 }}>도전 포인트:  </Text>
+            <Text>fffffffffffff</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17 }}>차감 %:  </Text>
+            <Text>wwwwwwwwwwww</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17 }}>분배 방식:  </Text>
+            <Text>eeeeeeeeeeeeeeeee</Text>
+          </View>
+        </View>
+
+        <View style={styles.lineDivider} />
+
+        <View style={styles.friendsContainer}>
+          <View style={styles.friendtitle}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>감시자  </Text>
+          </View>
+          <View>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+              {'\n내용내용내용내용\n내용내용내용내용'}
+            </Text>
+          </View>
+          
+        </View>
+
+        <View style={styles.lineDivider} />
+
+
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   scrollViewStyle: {
-    flex: 1,
-  },
-  container: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
@@ -109,31 +181,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
-  categoryContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width,
-    height: height * 0.2,
-    flexDirection: 'row',
-  },
-  categoryImgContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width * 0.3,
-    height: height * 0.2,
-  },
-  imageStyle: {
-    width: width * 0.3,
-    height: width * 0.3,
-    borderRadius: 20,
-    marginLeft: 20,
-  },
-  categoryInfoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width * 0.7,
-    height: height * 0.2,
-  },
   timeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -153,29 +200,6 @@ const styles = StyleSheet.create({
     height: 40,
     marginLeft: 5,
   },
-  friends: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: width - 100,
-    height: height / 12,
-    flexDirection: 'row',
-    marginLeft: 10,
-    flexWrap: 'wrap',
-  },
-  ruleContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width,
-    height: height * 0.2,
-    marginTop: 5,
-  },
-  rulesContainerStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width,
-    height: height * 0.2,
-    flexDirection: 'row',
-  },
   pointContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -183,11 +207,8 @@ const styles = StyleSheet.create({
     height: height * 0.2,
   },
   friendsContainer: {
-    alignItems: 'center',
     justifyContent: 'center',
     width: width,
-    height: height * 0.10,
-    flexDirection: 'row',
   },
   additionalInfoContainer: {
     width: width,
@@ -243,29 +264,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  nextStepBtn: {
-    width: width / 2,
-    height: 40,
-    backgroundColor: '#FD8A69',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
-    marginTop: 20,
-    marginBottom: 10,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgb(50, 50, 50)',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: {
-          height: -1,
-          width: 0,
-        },
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
   },
 });

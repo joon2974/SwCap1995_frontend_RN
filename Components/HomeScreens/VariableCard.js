@@ -7,6 +7,7 @@ export default class VariableCard extends Component {
     let testVari = null;
     if (this.props.onOff === this.props.index) {
       testVari = (
+
         <CardSix
           title="Vinny’s Barber"
           subTitle="852 N Virgil Ave, Beverly Hills"

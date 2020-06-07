@@ -84,7 +84,7 @@ export default class DetailPlan extends Component {
                 <View style={{ marginBottom: 10 }} />
 
               </View>
-                    
+          
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
                   감시자들

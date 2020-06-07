@@ -16,8 +16,7 @@ import MyMenuScreen from './MyScreens/MyMenuScreen';
 import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
-import MakePlanStepTest from './HomeScreens/MakePlanStepTest';
-import MakePlanStepTest2 from './HomeScreens/MakePlanStepTest2';
+import WatcherPage from './HomeScreens/WatcherPage';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
 
 import FriendScreen from './FriendScreens/FriendScreen';
@@ -72,8 +71,7 @@ function HomeStackScreen() {
     }}>
       <HomeStack.Screen name="Plan A" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
-      <HomeStack.Screen name="MakePlanStepTest" component={MakePlanStepTest} />
-      <HomeStack.Screen name="MakePlanStepTest2" component={MakePlanStepTest2} />
+      <HomeStack.Screen name="WatcherPage" component={WatcherPage} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
     </HomeStack.Navigator>
   );

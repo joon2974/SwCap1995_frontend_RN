@@ -568,136 +568,181 @@ export class CardFive extends Component {
 export class CardSix extends Component {
   render() {
     return (
-      <View
-        style={{
-          height: screenHeight / 1.6,
-          width: screenWidth / 1.05,
-          margin: scale(10),
-          flexDirection: 'column',
-          borderRadius: 12,
-          elevation: 2,
-          shadowColor: '#777',
-          shadowOpacity: 0.16,
-          shadowRadius: 2,
-          shadowOffset: {
-            height: 1,
-            width: 0,
-          },
-        }}
+      <View>
+        <View
+          style={{
+            height: screenHeight / 1.6,
+            width: screenWidth / 1.05,
+            marginTop: scale(10),
+            marginHorizontal: scale(10),
+            flexDirection: 'column',
+            borderRadius: 12,
+            elevation: 2,
+            shadowColor: '#777',
+            shadowOpacity: 0.16,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 0,
+            },
+          }}
       >
 
-        <TouchableOpacity
-          style={{
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
-            width: screenWidth / 1.05,
-            height: screenHeight / 2.1,
-          }}
-          onPress={this.props.switchShowing}>
-          <Image
-            borderRadius={12}
-            source={this.props.image}
+          <TouchableOpacity
             style={{
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
               width: screenWidth / 1.05,
               height: screenHeight / 2.1,
-              resizeMode: 'cover',
             }}
+            onPress={this.props.switchShowing}>
+            <Image
+              borderRadius={12}
+              source={this.props.image}
+              style={{
+                width: screenWidth / 1.05,
+                height: screenHeight / 2.1,
+                resizeMode: 'cover',
+              }}
           />
-        </TouchableOpacity>
+          </TouchableOpacity>
 
+
+          <View
+            style={{
+              backgroundColor: '#fff',
+              height: screenHeight / 6.2,
+              width: screenWidth / 1.05,
+              padding: scale(5),
+              marginTop: scale(-10),
+              borderBottomLeftRadius: 12,
+              borderBottomRightRadius: 12,
+            }}
+        >
+            <View
+              style={{
+                flexDirection: 'row',
+                height: screenHeight / 13.5,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+          >
+              <Text
+                style={{ color: '#000', margin: scale(3), fontSize: scale(17) }}
+              >
+                {this.props.title}
+              </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={() => this.props.onClicked1()}
+                  style={[
+                    {
+                      justifyContent: 'center',
+                      zIndex: 3,
+                      alignItems: 'center',
+                      width: scale(50),
+                      height: scale(50),
+                      margin: 10,
+                      shadowRadius: 5,
+                      borderRadius: scale(40),
+                      backgroundColor: this.props.iconBackground1,
+                    },
+                  ]}
+            >
+                  <Icon
+                    name={this.props.icon1}
+                    color={this.props.iconColor1}
+                    size={scale(20)}
+              />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.onClicked2()}
+                  style={[
+                    {
+                      justifyContent: 'center',
+                      zIndex: 3,
+                      alignItems: 'center',
+                      width: scale(50),
+                      height: scale(50),
+                      margin: 10,
+                      shadowRadius: 5,
+                      borderRadius: scale(40),
+                      backgroundColor: this.props.iconBackground2,
+                    },
+                  ]}
+            >
+                  <Icon
+                    name={this.props.icon2}
+                    color={this.props.iconColor2}
+                    size={scale(20)}
+              />
+                </TouchableOpacity>
+              </View>
+            </View>
+          
+            <View
+              style={{
+                backgroundColor: 'transparent',
+                height: screenHeight / 13,
+              }}
+            >
+             
+              <Text
+                style={{
+                  color: '#888',
+                  textAlign: 'justify',
+                  margin: scale(3),
+                  fontSize: scale(12),
+                }}
+              >
+                {this.props.subTitle}
+              </Text>
+            </View>
+     
+          </View>
+        </View>
 
         <View
           style={{
-            backgroundColor: '#fff',
-            height: screenHeight / 6.2,
+            height: screenHeight / 5,
             width: screenWidth / 1.05,
-            padding: scale(5),
-            marginTop: scale(-10),
-            borderBottomLeftRadius: 12,
-            borderBottomRightRadius: 12,
-          }}
-        >
+            marginHorizontal: 10,
+            borderRadius: 12,
+            elevation: 2,
+            shadowColor: '#777',
+            shadowOpacity: 0.16,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 0,
+            },
+          }}>
           <View
             style={{
-              flexDirection: 'row',
-              height: screenHeight / 13.5,
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              backgroundColor: '#fff',
+              height: screenHeight / 5,
+              width: screenWidth / 1.05,
+              borderRadius: 12,  
+              justifyContent: 'center',
+              paddingLeft: 20,
             }}
-          >
-            <Text
-              style={{ color: '#000', margin: scale(3), fontSize: scale(17) }}
-              >
-              {this.props.title}
+         >
+            <Text>
+              Rule 1: ~~~~~~~~~~
+              {'\n'} 
             </Text>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={() => this.props.onClicked1()}
-                style={[
-                  {
-                    justifyContent: 'center',
-                    zIndex: 3,
-                    alignItems: 'center',
-                    width: scale(50),
-                    height: scale(50),
-                    margin: 10,
-                    shadowRadius: 5,
-                    borderRadius: scale(40),
-                    backgroundColor: this.props.iconBackground1,
-                  },
-                ]}
-            >
-                <Icon
-                  name={this.props.icon1}
-                  color={this.props.iconColor1}
-                  size={scale(20)}
-              />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => this.props.onClicked2()}
-                style={[
-                  {
-                    justifyContent: 'center',
-                    zIndex: 3,
-                    alignItems: 'center',
-                    width: scale(50),
-                    height: scale(50),
-                    margin: 10,
-                    shadowRadius: 5,
-                    borderRadius: scale(40),
-                    backgroundColor: this.props.iconBackground2,
-                  },
-                ]}
-            >
-                <Icon
-                  name={this.props.icon2}
-                  color={this.props.iconColor2}
-                  size={scale(20)}
-              />
-              </TouchableOpacity>
-            </View>
-          </View>
-          
-          <View
-            style={{
-              backgroundColor: 'transparent',
-              height: screenHeight / 13,
-            }}
-            >
-             
-            <Text
-              style={{
-                color: '#888',
-                textAlign: 'justify',
-                margin: scale(3),
-                fontSize: scale(12),
-              }}
-              >
-              {this.props.subTitle}
+            <Text>
+              Rule 2: ~~~~~~~~~~
+              {'\n'}
+            </Text>
+            <Text>
+              Rule 3: ~~~~~~~~~~
             </Text>
           </View>
-     
+              
         </View>
+              
+
       </View>
     );
   }
