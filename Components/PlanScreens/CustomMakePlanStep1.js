@@ -71,6 +71,38 @@ export default class CustomMakePlanStep1 extends Component {
     this.setState({ customImgUri: uri });
   }
 
+  goToNextStep = (planTitle, customImgUri, mainRule, subRule1, subRule2) => {
+    if (planTitle.length === 0) {
+      alert('플랜 카테고리 이름을 입력해 주세요!');
+    } else if (customImgUri.length === 0) {
+      alert('인증 사진을 등록해 주세요!');
+    } else if (mainRule.length === 0) {
+      alert('메인 룰을 입력해 주세요!');
+    } else if (subRule1.length === 0) {
+      alert('서브룰1을 입력해 주세요!');
+    } else if (subRule2.length === 0) {
+      alert('서브룰2를 입력해 주세요!');
+    } else {
+      this.props.navigation.navigate('플랜 만들기: 2단계', {
+        category: this.props.route.params.category,
+        planName: this.state.planTitle,
+        startDate: this.state.startDate,
+        endDate: this.state.endDate,
+        certifyTime: this.state.certifyTime,
+        picture_rule_1: null,
+        picture_rule_2: null,
+        picture_rule_3: null,
+        custom_picture_rule_1: this.state.mainRule,
+        custom_picture_rule_2: this.state.subRule1,
+        custom_picture_rule_3: this.state.subRule2,
+        certifyImgUri: this.state.customImgUri,
+        userID: this.props.route.params.userID,
+        categoryUri: this.props.route.params.uri,
+        is_custom: true,
+      });
+    }
+  }
+
   render() {
     const {
       startDate,
@@ -193,7 +225,7 @@ export default class CustomMakePlanStep1 extends Component {
                 인증 룰 입력
               </Text>
               <View style={styles.ruleLineContainer}>
-                <Text style={{ marginLeft: 10 }}>메인 룰: </Text>
+                <Text style={{ marginLeft: 3 }}>메인 룰 : </Text>
                 <TextInput
                   value={mainRule}
                   onChangeText={(rule) => this.setState({ mainRule: rule })}
@@ -202,7 +234,7 @@ export default class CustomMakePlanStep1 extends Component {
                 />
               </View>
               <View style={styles.ruleLineContainer}>
-                <Text style={{ marginLeft: 10 }}>서브 룰1: </Text>
+                <Text style={{ marginLeft: 3 }}>서브 룰1: </Text>
                 <TextInput
                   value={subRule1}
                   onChangeText={(rule) => this.setState({ subRule1: rule })}
@@ -211,7 +243,7 @@ export default class CustomMakePlanStep1 extends Component {
                 />
               </View>
               <View style={styles.ruleLineContainer}>
-                <Text style={{ marginLeft: 10 }}>서브 룰2: </Text>
+                <Text style={{ marginLeft: 3 }}>서브 룰2: </Text>
                 <TextInput
                   value={subRule2}
                   onChangeText={(rule) => this.setState({ subRule2: rule })}
@@ -224,24 +256,7 @@ export default class CustomMakePlanStep1 extends Component {
 
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.props.navigation.navigate('플랜 만들기: 2단계', {
-              category: this.props.route.params.category,
-              planName: this.state.planTitle,
-              startDate: this.state.startDate,
-              endDate: this.state.endDate,
-              certifyTime: this.state.certifyTime,
-              picture_rule_1: null,
-              picture_rule_2: null,
-              picture_rule_3: null,
-              custom_picture_rule_1: this.state.mainRule,
-              custom_picture_rule_2: this.state.subRule1,
-              custom_picture_rule_3: this.state.subRule2,
-              certifyImgUri: this.state.customImgUri,
-              userID: this.props.route.params.userID,
-              categoryUri: this.props.route.params.uri,
-              is_custom: true,
-            })
-            }
+            onPress={() => this.goToNextStep(planTitle, customImgUri, mainRule, subRule1, subRule2)}
           >
             <Text style={{ fontWeight: 'bold', color: 'white' }}>다음 단계로</Text>
           </TouchableOpacity>
@@ -395,23 +410,25 @@ const styles = StyleSheet.create({
     }),
   },
   mainRuleInput: {
-    width: width - 50,
+    width: width - 100,
     marginLeft: 5,
     height: 35,
-    paddingLeft: 20,
+    paddingLeft: 10,
+    borderBottomWidth: 0.3,
   },
   subRuleInput: {
-    width: width - 50,
+    width: width - 100,
     marginLeft: 5,
     height: 35,
-    paddingLeft: 20,
+    paddingLeft: 10,
+    borderBottomWidth: 0.3,
   },
   ruleLineContainer: {
     width: width - 20,
     height: 40,
     marginTop: 5,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginLeft: 10,
   },

@@ -83,6 +83,38 @@ export default class MakePlanStep2 extends Component {
     });
   };
 
+  goToNextStep = (selectedFriends, userBetPoint) => {
+    if (Number(userBetPoint) < 5000 || Number(userBetPoint) > 50000) {
+      alert('포인트는 5000 ~ 50000 사이로 설정해 주세요!');
+    } else if (selectedFriends.length < 3) {
+      alert('감시자는 3명 이상이어야 합니다!');
+    } else {
+      this.props.navigation.navigate('플랜 만들기: 3단계',
+        {
+          category: this.props.route.params.category,
+          planName: this.props.route.params.planName,
+          startDate: this.props.route.params.startDate,
+          endDate: this.props.route.params.endDate,
+          certifyTime: this.props.route.params.certifyTime,
+          picture_rule_1: this.props.route.params.picture_rule_1,
+          picture_rule_2: this.props.route.params.picture_rule_2,
+          picture_rule_3: this.props.route.params.picture_rule_3,
+          custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
+          custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
+          custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
+          challPoint: this.state.userBetPoint,
+          minusPercent: this.state.selectedPercent,
+          distribMethod: this.state.selectedDist,
+          spectors: this.state.selectedFriends,
+          certifyImgUri: this.props.route.params.certifyImgUri,
+          categoryUri: this.props.route.params.categoryUri,
+          userID: this.props.route.params.userID,
+          percent: this.state.selectedPercent,
+          is_custom: this.props.route.params.is_custom,
+        });
+    }
+  }
+
   render() {
     const {
       point,
@@ -205,29 +237,7 @@ export default class MakePlanStep2 extends Component {
           </View>
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.props.navigation.navigate('플랜 만들기: 3단계',
-              {
-                category: this.props.route.params.category,
-                planName: this.props.route.params.planName,
-                startDate: this.props.route.params.startDate,
-                endDate: this.props.route.params.endDate,
-                certifyTime: this.props.route.params.certifyTime,
-                picture_rule_1: this.props.route.params.picture_rule_1,
-                picture_rule_2: this.props.route.params.picture_rule_2,
-                picture_rule_3: this.props.route.params.picture_rule_3,
-                custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
-                custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
-                custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
-                challPoint: this.state.userBetPoint,
-                minusPercent: this.state.selectedPercent,
-                distribMethod: this.state.selectedDist,
-                spectors: this.state.selectedFriends,
-                certifyImgUri: this.props.route.params.certifyImgUri,
-                categoryUri: this.props.route.params.categoryUri,
-                userID: this.props.route.params.userID,
-                percent: this.state.selectedPercent,
-                is_custom: this.props.route.params.is_custom,
-              })}
+            onPress={() => this.goToNextStep(selectedFriends, userBetPoint)}
             >
             <Text style={{ fontWeight: 'bold', color: 'white' }}>플랜 결과 확인</Text>
           </TouchableOpacity>
