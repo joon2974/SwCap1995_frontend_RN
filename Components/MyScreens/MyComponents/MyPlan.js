@@ -20,7 +20,8 @@ export default class MyPlan extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.topContainer}>
+        {/* <View style={styles.topContainer}> */}
+        <View style={this.props.status === 'waiting' ? styles.watingtopContainer : styles.completetopContainer}>
           <Text style={{ fontWeight: 'bold' }}>{this.props.title}</Text>
 
           <TouchableOpacity
@@ -100,12 +101,19 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  topContainer: {
+  watingtopContainer: {
     flexDirection: 'row',
     height: 40,
     justifyContent: 'space-between',
     padding: 10,
     backgroundColor: '#F2F2F2',
+  },
+  completetopContainer: {
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#64FE2E',
   },
   photoContainer: {
     height: width / 1.6 - 40,
