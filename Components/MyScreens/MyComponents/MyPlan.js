@@ -62,7 +62,7 @@ export default class MyPlan extends Component {
               <>
                 <FontAwesome name="pause-circle" size={24} color="black" /> 
                
-                <Text style={{ marginLeft: 5, fontsize: 22 }}>대기 중</Text>
+                <Text style={{ marginLeft: 5, fontSize: 22 }}>대기 중</Text>
               </>
               )}
               

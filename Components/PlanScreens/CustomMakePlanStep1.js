@@ -8,39 +8,35 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  TextInput,
 } from 'react-native';
-import axios from 'axios';
 import ImageModal from 'react-native-image-modal';
 import TimePicker from './PlanComponents/TimePicker';
-import RulePicker from './PlanComponents/RulePicker';
 
 const { height, width } = Dimensions.get('window');
 
-export default class PlanMain extends Component {
+export default class CustomMakePlanStep1 extends Component {
   state = {
-    startDate: '05-23',
-    endDate: '1주',
-    certifyTime: '09시 ~ 11시',
-    certifyImageUri: 'https://ifh.cc/g/BHltgC.jpg',
-    pictureRules: {
-      '찬물에 손 씻기': ['자신의 손이 보일 것', '차가울 물임을 증명할 것'],
-      '메모지에 시간과 글 쓰기': ['손글씨 일 것', '일어났을 때의 시간을 쓸 것'],
-    },
-    selectedMainRule: '찬물에 손 씻기',
+    startDate: '',
+    endDate: '',
+    certifyTime: '',
+    mainRule: '',
+    subRule1: '',
+    subRule2: '',
     timeList: [],
     periodList: [],
     dateList: [],
-    ruleListFromServer: [],
+    planTitle: '',
+    customImgUri: '',
   };
 
   componentDidMount() {
     this.setDateData();
-    this.loadRulesFromServer();
   }
 
   setDateData = async () => {
     const timeList = [];
-    for (let i = 0; i < 23; i++) {
+    for (let i = 0; i < 24; i++) {
       timeList.push(i.toString());
     }
 
@@ -69,73 +65,25 @@ export default class PlanMain extends Component {
     });
   };
 
-  loadRulesFromServer = async () => {
-    await axios
-      .get('http://49.50.172.58:3000/plan_templates')
-      .then((data) => {
-        const rulesFromServer = data.data.rows;
-        this.setState({ ruleListFromServer: rulesFromServer });
-        const ruleObject = {};
-        let defaultRule;
-
-        for (let i = 0; i < rulesFromServer.length; i++) {
-          if (
-            rulesFromServer[i].detailedCategory
-            // eslint-disable-next-line eqeqeq
-            == this.props.route.params.planName
-          ) {
-            const tempList = [];
-
-            tempList.push(rulesFromServer[i].sub_rule_1);
-            tempList.push(rulesFromServer[i].sub_rule_2);
-            ruleObject[rulesFromServer[i].main_rule] = tempList;
-          }
-        }
-        // eslint-disable-next-line prefer-const
-        defaultRule = Object.keys(ruleObject)[0];
-        this.setState({
-          selectedMainRule: defaultRule,
-          pictureRules: ruleObject,
-        });
-
-        let certifyPhotoUri;
-        for (let i = 0; i < rulesFromServer.length; i++) {
-          if (rulesFromServer[i].main_rule === this.state.selectedMainRule) {
-            certifyPhotoUri = rulesFromServer[i].image_url;
-          }
-        }
-        this.setState({ certifyImageUri: certifyPhotoUri });
-      })
-      .catch((error) => {
-        console.log('서버로부터 template 가져오기 에러: ', error);
-      });
-  };
-
   mainRuleFilter = (pictureRules) => Object.keys(pictureRules);
 
-  updateCertifyPhoto = (selectedMainRule) => {
-    const ruleListFromServer = this.state.ruleListFromServer;
-
-    let certifyPhotoUri;
-    for (let i = 0; i < ruleListFromServer.length; i++) {
-      if (ruleListFromServer[i].main_rule === selectedMainRule) {
-        certifyPhotoUri = ruleListFromServer[i].image_url;
-      }
-    }
-    this.setState({ certifyImageUri: certifyPhotoUri });
-  };
+  updateCustomImgUri = (uri) => {
+    this.setState({ customImgUri: uri });
+  }
 
   render() {
     const {
       startDate,
       endDate,
       certifyTime,
-      certifyImageUri,
-      pictureRules,
-      selectedMainRule,
       timeList,
       periodList,
       dateList,
+      planTitle,
+      customImgUri,
+      mainRule,
+      subRule1,
+      subRule2,
     } = this.state;
 
     return (
@@ -150,7 +98,13 @@ export default class PlanMain extends Component {
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                 {this.props.route.params.category}
               </Text>
-              <Text>{this.props.route.params.planName}</Text>
+              <TextInput
+                value={planTitle}
+                onChangeText={(title) => this.setState({ planTitle: title })}
+                style={styles.input}
+                placeholder="플랜 이름을 작성해주세요"
+                keyboardType="email-address"
+              />
             </View>
           </View>
 
@@ -201,29 +155,69 @@ export default class PlanMain extends Component {
                 인증 조건 선택
               </Text>
             </View>
-            <View style={{ alignItems: 'center' }}>
-              <ImageModal
-                style={styles.certifyImageStyle}
-                source={{ uri: certifyImageUri }}
-              />
-              <Text>인증 사진 예시</Text>
-            </View>
+            {(customImgUri.length !== 0) 
+              ? (
+                <View style={{ alignItems: 'center' }}>
+                  <ImageModal
+                    style={styles.certifyImageStyle}
+                    source={{ uri: customImgUri }}
+                  />
+                  <Text>인증 사진 예시</Text>
+                </View>
+              ) 
+              : (
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={{ marginBottom: 10, marginTop: 10 }}>인증 사진을 등록해 주세요!</Text>
+                  <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                    <TouchableOpacity 
+                      style={styles.registerBtn}
+                      onPress={() => this.props.navigation.navigate('카메라(인증사진 등록)', { completeFunc: this.updateCustomImgUri })}
+                    >
+                      <Text style={{ fontWeight: 'bold', fontSize: 22, color: '#848484' }}>카메라</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                      style={styles.registerBtn}
+                      onPress={() => this.props.navigation.navigate('갤러리 선택(인증사진 등록)', { completeFunc: this.updateCustomImgUri })}
+                    >
+                      <Text style={{ fontWeight: 'bold', fontSize: 22, color: '#848484' }}>갤러리</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )  
+            }
             <View style={styles.lineDivider} />
             <View style={styles.rulePickContainer}>
-              <RulePicker
-                rule={selectedMainRule}
-                onValueChange={(itemValue) => {
-                  this.setState({ selectedMainRule: itemValue });
-                  this.updateCertifyPhoto(itemValue);
-                }}
-                rules={this.mainRuleFilter(pictureRules)}
-                pickerWidth={width}
-              />
-              <View style={styles.subRuleContainer}>
-                <Text>{pictureRules[selectedMainRule][0]}</Text>
+              <Text style={{
+                fontWeight: 'bold', fontSize: 20, alignSelf: 'flex-start', marginLeft: 10, 
+              }}>
+                인증 룰 입력
+              </Text>
+              <View style={styles.ruleLineContainer}>
+                <Text style={{ marginLeft: 10 }}>메인 룰: </Text>
+                <TextInput
+                  value={mainRule}
+                  onChangeText={(rule) => this.setState({ mainRule: rule })}
+                  style={styles.mainRuleInput}
+                  placeholder="Sub Rule을 포함하는 메인룰을 작성해 주세요"
+                />
               </View>
-              <View style={styles.subRuleContainer}>
-                <Text>{pictureRules[selectedMainRule][1]}</Text>
+              <View style={styles.ruleLineContainer}>
+                <Text style={{ marginLeft: 10 }}>서브 룰1: </Text>
+                <TextInput
+                  value={subRule1}
+                  onChangeText={(rule) => this.setState({ subRule1: rule })}
+                  style={styles.subRuleInput}
+                  placeholder="Sub Rule1을 작성해 주세요"
+                />
+              </View>
+              <View style={styles.ruleLineContainer}>
+                <Text style={{ marginLeft: 10 }}>서브 룰2: </Text>
+                <TextInput
+                  value={subRule2}
+                  onChangeText={(rule) => this.setState({ subRule2: rule })}
+                  style={styles.subRuleInput}
+                  placeholder="Sub Rule2를 작성해 주세요"
+                />
               </View>
             </View>
           </View>
@@ -232,24 +226,20 @@ export default class PlanMain extends Component {
             style={styles.nextStepBtn}
             onPress={() => this.props.navigation.navigate('플랜 만들기: 2단계', {
               category: this.props.route.params.category,
-              planName: this.props.route.params.planName,
+              planName: this.state.planTitle,
               startDate: this.state.startDate,
               endDate: this.state.endDate,
               certifyTime: this.state.certifyTime,
-              picture_rule_1: this.state.selectedMainRule,
-              picture_rule_2: this.state.pictureRules[
-                this.state.selectedMainRule
-              ][0],
-              picture_rule_3: this.state.pictureRules[
-                this.state.selectedMainRule
-              ][1],
-              custom_picture_rule_1: null,
-              custom_picture_rule_2: null,
-              custom_picture_rule_3: null,
-              certifyImgUri: this.state.certifyImageUri,
+              picture_rule_1: null,
+              picture_rule_2: null,
+              picture_rule_3: null,
+              custom_picture_rule_1: this.state.mainRule,
+              custom_picture_rule_2: this.state.subRule1,
+              custom_picture_rule_3: this.state.subRule2,
+              certifyImgUri: this.state.customImgUri,
               userID: this.props.route.params.userID,
               categoryUri: this.props.route.params.uri,
-              is_custom: false,
+              is_custom: true,
             })
             }
           >
@@ -338,7 +328,7 @@ const styles = StyleSheet.create({
   },
   rulePickContainer: {
     width: width,
-    height: height * 0.3,
+    height: height * 0.35,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
@@ -355,7 +345,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    marginTop: 30,
+    marginTop: 65,
     marginBottom: 10,
     ...Platform.select({
       ios: {
@@ -371,5 +361,58 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
+  },
+  input: {
+    width: 180,
+    height: 45,
+    borderRadius: 10,
+    fontSize: 16,
+    paddingLeft: 5,
+    borderBottomWidth: 0.5,
+  },
+  registerBtn: {
+    width: 120,
+    height: 120,
+    borderRadius: 20,
+    backgroundColor: '#FFC0B0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
+    marginTop: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  mainRuleInput: {
+    width: width - 50,
+    marginLeft: 5,
+    height: 35,
+    paddingLeft: 20,
+  },
+  subRuleInput: {
+    width: width - 50,
+    marginLeft: 5,
+    height: 35,
+    paddingLeft: 20,
+  },
+  ruleLineContainer: {
+    width: width - 20,
+    height: 40,
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
   },
 });

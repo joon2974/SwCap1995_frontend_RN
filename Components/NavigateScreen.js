@@ -25,8 +25,11 @@ import PlanMain from './PlanScreens/PlanMain';
 import MakePlanStep1 from './PlanScreens/MakePlanStep1';
 import MakePlanStep2 from './PlanScreens/MakePlanStep2';
 import MakePlanStep3 from './PlanScreens/MakePlanStep3';
+import CustomMakePlanStep1 from './PlanScreens/CustomMakePlanStep1';
 import CameraScreen from './PlanScreens/CameraScreen';
 import ImagePickScreen from './PlanScreens/ImagePickScreen';
+import CustomCameraScreen from './PlanScreens/CustomCameraScreen';
+import CustomImagePickScreen from './PlanScreens/CustomImagePickScreen';
 
 import { firebaseConfig } from '../firebaseConfig';
 import SearchScreen from './SearchScreens/SearchScreen';
@@ -139,8 +142,11 @@ function PlanStackScreen() {
       <PlanStack.Screen name="플랜 만들기: 1단계" component={MakePlanStep1} />
       <PlanStack.Screen name="플랜 만들기: 2단계" component={MakePlanStep2} />
       <PlanStack.Screen name="플랜 만들기: 3단계" component={MakePlanStep3} />
+      <PlanStack.Screen name="플랜 만들기: 1단계(커스텀)" component={CustomMakePlanStep1} />
       <PlanStack.Screen name="카메라" component={CameraScreen} />
       <PlanStack.Screen name="갤러리 선택" component={ImagePickScreen} />
+      <PlanStack.Screen name="카메라(인증사진 등록)" component={CustomCameraScreen} />
+      <PlanStack.Screen name="갤러리 선택(인증사진 등록)" component={CustomImagePickScreen} />
     </PlanStack.Navigator>
   );
 }

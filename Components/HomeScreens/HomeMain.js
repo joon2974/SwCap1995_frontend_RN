@@ -150,22 +150,18 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          console.log(res.data.id);
-          
           const ji = AsyncStorage.getItem('UserID').then(() => {
-            console.log('asdf', ji);
+            console.log('userID', ji);
           });
        
           console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
 
           const jj = AsyncStorage.getItem('UserID').then(() => {
-            console.log('ff', jj);
+            console.log('userID', jj);
           });
           this.setState({ userId: res.data.id });
-          console.log('유저아이디세팅', this.state.userId);
         } else {
-          console.log('이거', res);
           this.setState({ modalVisible: true });
         }
       })

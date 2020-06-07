@@ -157,6 +157,12 @@ export default class PlanMain extends Component {
     });
   }
 
+  makeCustomPlan = (selectedCategory) => {
+    this.props.navigation.navigate('플랜 만들기: 1단계(커스텀)', {
+      category: selectedCategory, userID: this.state.userID, uri: 'https://kr.object.ncloudstorage.com/swcap1995/icon.png', 
+    });
+  }
+
   render() {
     const {
       isFaceRegisterd,
@@ -220,6 +226,11 @@ export default class PlanMain extends Component {
                     planSelectFunc={() => this.planSelected(data.name, selectedCategory, data.uri)}
                   />
                 ))}
+                <PlanListEach 
+                  name="내가 만들기"
+                  uri="https://kr.object.ncloudstorage.com/swcap1995/icon.png"
+                  planSelectFunc={() => this.makeCustomPlan(selectedCategory)}
+                />
               </View>
             </View>
           </View>

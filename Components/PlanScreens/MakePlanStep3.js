@@ -34,12 +34,12 @@ export default class MakePlanStep3 extends Component {
         title: this.state.title,
         category: this.props.route.params.category,
         detailedCategory: this.props.route.params.planName,
-        picture_rule_1: this.props.route.params.selectedMainRule,
-        picture_rule_2: this.props.route.params.subRule1,
-        picture_rule_3: this.props.route.params.subRule2,
-        custom_picture_rule_1: '없음',
-        custom_picture_rule_2: '없음',
-        custom_picture_rule_3: '없음',
+        picture_rule_1: this.props.route.params.picture_rule_1,
+        picture_rule_2: this.props.route.params.picture_rule_2,
+        picture_rule_3: this.props.route.params.picture_rule_3,
+        custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
+        custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
+        custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
         plan_period: Number(this.props.route.params.endDate),
         picture_time: Number(this.props.route.params.certifyTime),
         plan_start_day: today,
@@ -48,6 +48,7 @@ export default class MakePlanStep3 extends Component {
         percent: Number(this.props.route.params.percent),
         spectors: this.props.route.params.spectors.join(),
         distribMethod: this.props.route.params.distribMethod,
+        is_custom: this.props.route.params.is_custom,
       })
       .then((res) => {
         console.log(res.status);

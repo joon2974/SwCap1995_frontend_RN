@@ -212,9 +212,12 @@ export default class MakePlanStep2 extends Component {
                 startDate: this.props.route.params.startDate,
                 endDate: this.props.route.params.endDate,
                 certifyTime: this.props.route.params.certifyTime,
-                selectedMainRule: this.props.route.params.selectedMainRule,
-                subRule1: this.props.route.params.subRule1,
-                subRule2: this.props.route.params.subRule2,
+                picture_rule_1: this.props.route.params.picture_rule_1,
+                picture_rule_2: this.props.route.params.picture_rule_2,
+                picture_rule_3: this.props.route.params.picture_rule_3,
+                custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
+                custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
+                custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
                 challPoint: this.state.userBetPoint,
                 minusPercent: this.state.selectedPercent,
                 distribMethod: this.state.selectedDist,
@@ -223,6 +226,7 @@ export default class MakePlanStep2 extends Component {
                 categoryUri: this.props.route.params.categoryUri,
                 userID: this.props.route.params.userID,
                 percent: this.state.selectedPercent,
+                is_custom: this.props.route.params.is_custom,
               })}
             >
             <Text style={{ fontWeight: 'bold', color: 'white' }}>플랜 결과 확인</Text>
