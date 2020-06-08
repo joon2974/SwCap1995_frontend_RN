@@ -10,6 +10,8 @@ import {
   Text,
   FlatList,
   ImageBackground,
+  Keyboard,
+  TouchableWithoutFeedback,
   Dimensions,
   Button,
 } from 'react-native';
@@ -140,34 +142,37 @@ export default class Searching extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
         
-        <View style={styles.searchContainer}>
+          <View style={styles.searchContainer}>
           
-          <View style={styles.searchBar}>
-            <Input
-              placeholder="검색을 입력해주세요"
-              onChangeText={(changedSearch) => {
-                this.updateSearch(changedSearch);
-              }}
+            <View style={styles.searchBar}>
+              <Input
+                placeholder="검색을 입력해주세요"
+                onChangeText={(changedSearch) => {
+                  this.updateSearch(changedSearch);
+                }}
             />
-            <Button
-              title="검색"
-              type="solid"
-              color="#FD8A69"
-              onPress={() => {
-                this.sendSearch();
-              }}
+              <Button
+                title="검색"
+                type="solid"
+                color="#FD8A69"
+                onPress={() => {
+                  this.sendSearch();
+                }}
             />
+            </View>
+          </View>
+
+          <View style={styles.searchedList}>
+            <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
+              {showSearched}   
+            </ImageBackground>
           </View>
         </View>
 
-        <View style={styles.searchedList}>
-          <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
-            {showSearched}   
-          </ImageBackground>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
