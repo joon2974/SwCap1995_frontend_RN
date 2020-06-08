@@ -12,7 +12,6 @@ import {
   Feather, MaterialIcons, AntDesign, FontAwesome5, FontAwesome,
 } from '@expo/vector-icons'; 
 
-
 const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
@@ -23,12 +22,11 @@ export default class MyPlan extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={styles.topContainer}> */}
         <View style={this.props.status === 'waiting' ? styles.watingtopContainer : styles.completetopContainer}>
           <Text style={{ fontWeight: 'bold' }}>{this.props.title}</Text>
 
           <TouchableOpacity
-            onPress={this.props.btnFunc}
+            onPress={() => this.props.btnFunc(this.props.id)}
             style={styles.btnContainer}>
            
             <Feather name="more-horizontal" size={24} color="black" />

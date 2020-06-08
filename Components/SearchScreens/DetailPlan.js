@@ -12,7 +12,9 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  TouchableOpacityBase,
 } from 'react-native';
+import PureChart from 'react-native-pure-chart';
 import Watcher from './TabList/Watcher';
 import { CardNine } from './Cards';
 
@@ -37,7 +39,31 @@ export default class DetailPlan extends Component {
 
     render() {
       const { item } = this.state;
+     
+      const sampleData = [
+        { x: '2018-01-01', y: 30 },
+        { x: '2018-01-02', y: 200 },
+        { x: '2018-01-03', y: 170 },
+        { x: '2018-01-04', y: 250 },
+        { x: '2018-01-05', y: 10 },
+      ];
 
+      const sampleData2 = [
+        {
+          value: 50,
+          label: 'Marketing',
+          color: 'red',
+        }, {
+          value: 40,
+          label: 'Sales',
+          color: 'blue',
+        }, {
+          value: 25,
+          label: 'Support',
+          color: 'green',
+        },
+     
+      ];
       
       return (
           
@@ -85,6 +111,41 @@ export default class DetailPlan extends Component {
 
               </View>
           
+              <View style={{ alignItems: 'center', marginVertical: 30 }}>
+                <View style={styles.lineDivider} />
+               
+                <PureChart data={sampleData} type="line" />
+                
+                <TouchableOpacity 
+                  style={styles.moreExploreBar}
+                  onPress={() => { this.props.navigation.navigate('인증'); }}
+                >
+                  <Text>인증 더 보기</Text>
+                </TouchableOpacity>
+
+                <View style={styles.lineDivider} />
+
+                <PureChart data={sampleData2} type="pie" />
+              </View>
+
+
+              <View style={styles.titleInfoContainer}>
+                <Text style={styles.titleStyle}>
+                  인증 방법에 대해...
+                </Text>
+                <Text style={styles.subTitleStyle}>
+                  {'Rule1: ' + item.picture_rule_1 + '\n'}
+                  {'Rule2: ' + item.picture_rule_2 + '\n'}
+                  {'Rule3: ' + item.picture_rule_3}
+                </Text>
+
+                <View style={{ marginBottom: 10 }} />
+
+              </View>
+
+
+              <View style={styles.lineDivider} />
+
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
                   감시자들
@@ -112,42 +173,6 @@ export default class DetailPlan extends Component {
                 <View style={{ marginBottom: 10 }} />
 
               </View>
-                
-
-              <View style={styles.titleInfoContainer}>
-                <Text style={styles.titleStyle}>
-                  인증 방법에 대해...
-                </Text>
-                <Text style={styles.subTitleStyle}>
-                  {'Rule1: ' + item.picture_rule_1 + '\n'}
-                  {'Rule2: ' + item.picture_rule_2 + '\n'}
-                  {'Rule3: ' + item.picture_rule_3}
-                </Text>
-
-                <View style={{ marginBottom: 10 }} />
-
-              </View>
-
-              <View style={styles.titleInfoContainer}>
-                <Text style={styles.titleStyle}>
-                  지난 경과들...
-                </Text>
-                <Text style={styles.subTitleStyle}>
-                  지난 인증 결과에 대해 궁금하시다면 아래의 달력을 클릭해 보세요
-                  {'\n'}
-                </Text>
-
-                <TouchableOpacity style={styles.calendarStyle} onPress={() => this.props.navigation.navigate('달력')}>
-                  <Image 
-                    style={styles.calendarStyle}
-                    source={{ uri: item.image_url }} 
-                            />
-                </TouchableOpacity>
-                        
-                <View style={{ marginBottom: 10 }} />
-
-              </View>
-                   
 
               <View style={{ marginVertical: 20 }} />
 
@@ -172,6 +197,33 @@ const styles = StyleSheet.create({
   titleImageContainer: {
     width: width * 0.9,
     height: height / 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+    margin: 6,
+    marginTop: 20,
+
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+
+  moreExploreBar: {
+
+    width: width * 0.8,
+    height: height / 15,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F2F2F2',
@@ -266,5 +318,12 @@ const styles = StyleSheet.create({
   calendar: {
     width: 360,
     height: 200,
+  },
+  lineDivider: {
+    backgroundColor: '#F2F2F2',
+    width: width - 30,
+    height: 1.5,
+    marginLeft: 15,
+    marginVertical: 20,
   },
 });
