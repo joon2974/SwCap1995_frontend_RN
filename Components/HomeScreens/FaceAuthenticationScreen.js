@@ -68,13 +68,36 @@ export default class FaceAuthenticationScreen extends Component {
   }
 
   sendImage = (uri) => {
-    // 서버로 Image 보내서 얼굴 일치 여부 받아오는 코드 구현
-    alert('인증 됨!');
-    if (this.props.route.params.certifyMethod === 0) {
-      this.props.route.params.galaryCertify(this.props.route.params.planID);
-    } else {
-      this.props.route.params.cameraCertify(this.props.route.params.planID);
-    }
+    const uriParts = uri.split('.');
+    const fileType = uriParts[uriParts.length - 1];
+
+    const formData = new FormData();
+    formData.append('photo', {
+      uri: uri,
+      name: `photo.${fileType}`,
+      type: 'image/jpeg',
+    });
+    formData.append('user_id', this.props.route.params.userID);
+
+    axios
+      .post('http://49.50.172.58:3000/daily_authentications/face_detection', formData, {
+        header: {
+          'content-type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          if (this.props.route.params.certifyMethod === 0) {
+            this.props.route.params.galaryCertify(this.props.route.params.planID);
+          } else {
+            this.props.route.params.cameraCertify(this.props.route.params.planID);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {

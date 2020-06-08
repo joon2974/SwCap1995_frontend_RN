@@ -16,7 +16,11 @@ const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
   goToCertifyPage = () => {
-    this.props.faceAuthentication(this.props.planId, this.props.certifyMethod);
+    if (this.props.today_auth === false) {
+      this.props.faceAuthentication(this.props.planId, this.props.certifyMethod);
+    } else {
+      alert('이미 일일 인증을 했습니다!');
+    }
   }
 
   render() {

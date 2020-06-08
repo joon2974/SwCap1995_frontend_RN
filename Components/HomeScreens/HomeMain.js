@@ -96,6 +96,7 @@ export default class HomeMain extends Component {
             id: responseJson[i].id,
             status: responseJson[i].status,
             authentication_way: responseJson[i].authentication_way,
+            today_auth: responseJson[i].today_auth,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -218,6 +219,7 @@ export default class HomeMain extends Component {
         status={data.status}
         certifyMethod={data.authentication_way}
         faceAuthentication={this.faceAuthentication}
+        today_auth={data.today_auth}
       />
     ));
     const watchplans = watchData.map((data) => (

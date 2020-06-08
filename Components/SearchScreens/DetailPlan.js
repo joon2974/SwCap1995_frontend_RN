@@ -141,7 +141,7 @@ export default class DetailPlan extends Component {
                   this.state.watchers.map((data, index) => (
                     <View>
                       <Watcher 
-                        key={data}
+                        key={index}
                         index={index}
                         comment={this.state.watchersComment}
                       />
