@@ -90,6 +90,10 @@ export default class VariableCard extends Component {
                   onChangeText={(changedComment) => {
                     this.updateComment(changedComment);
                   }}
+                  onSubmitEditing={() => {
+                    this.toggleModal2();
+                    this.sendComment();
+                  }}
             />
              
                 <View style={{ marginBottom: 10 }}>
@@ -158,6 +162,10 @@ export default class VariableCard extends Component {
                   placeholder="코멘트를 입력해 주세요"
                   onChangeText={(changedComment) => {
                     this.updateComment(changedComment);
+                  }}  
+                  onSubmitEditing={() => {
+                    this.toggleModal2();
+                    this.sendComment();
                   }}
             />
 

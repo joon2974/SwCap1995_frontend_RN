@@ -153,6 +153,9 @@ export default class Searching extends Component {
                 onChangeText={(changedSearch) => {
                   this.updateSearch(changedSearch);
                 }}
+                onSubmitEditing={() => {
+                  this.sendSearch();
+                }}
             />
               <Button
                 title="검색"
