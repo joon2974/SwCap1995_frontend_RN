@@ -9,10 +9,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  Image,
   Dimensions,
   ScrollView,
-  TouchableOpacityBase,
 } from 'react-native';
 import PureChart from 'react-native-pure-chart';
 import Watcher from './TabList/Watcher';
@@ -22,9 +20,7 @@ const { width, height } = Dimensions.get('window');
 
 export default class DetailPlan extends Component {
     state = {
-      
       item: [],
-    
       watchers: ['1', '2', '3', '4', '5'],
       watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
     }
@@ -66,14 +62,9 @@ export default class DetailPlan extends Component {
       ];
       
       return (
-          
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
-       
-
             <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop: 10 }}>
-
-
               <CardNine
                 title={item.category}
                 subTitle={item.detailedCategory}
@@ -81,7 +72,6 @@ export default class DetailPlan extends Component {
                 image={{ uri: item.image_url }}
                 explore={() => this.props.navigation.navigate('줌', { item: item.image_url })}
             />
-
               {/* <TouchableOpacity 
                 style={styles.titleImageContainer}
                 onPress={() => this.props.navigation.navigate('줌', { image_url: item.image_url })}
@@ -108,7 +98,6 @@ export default class DetailPlan extends Component {
                 </Text>
 
                 <View style={{ marginBottom: 10 }} />
-
               </View>
           
               <View style={{ alignItems: 'center', marginVertical: 30 }}>
@@ -128,7 +117,6 @@ export default class DetailPlan extends Component {
                 <PureChart data={sampleData2} type="pie" />
               </View>
 
-
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
                   인증 방법에 대해...
@@ -138,11 +126,8 @@ export default class DetailPlan extends Component {
                   {'Rule2: ' + item.picture_rule_2 + '\n'}
                   {'Rule3: ' + item.picture_rule_3}
                 </Text>
-
                 <View style={{ marginBottom: 10 }} />
-
               </View>
-
 
               <View style={styles.lineDivider} />
 
@@ -156,10 +141,10 @@ export default class DetailPlan extends Component {
                   this.state.watchers.map((data, index) => (
                     <View>
                       <Watcher 
-                        key={index}
+                        key={data}
                         index={index}
                         comment={this.state.watchersComment}
-                                     />
+                      />
                     </View>
                   ))                                
                 }
@@ -171,13 +156,10 @@ export default class DetailPlan extends Component {
                 </View>
 
                 <View style={{ marginBottom: 10 }} />
-
               </View>
 
               <View style={{ marginVertical: 20 }} />
-
             </ScrollView>
-
           </ImageBackground>
         </View>
 
@@ -193,7 +175,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   titleImageContainer: {
     width: width * 0.9,
     height: height / 4,
@@ -203,7 +184,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
     marginTop: 20,
-
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -219,9 +199,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-
   moreExploreBar: {
-
     width: width * 0.8,
     height: height / 15,
     alignItems: 'center',
@@ -230,7 +208,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
     marginTop: 20,
-
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -246,20 +223,17 @@ const styles = StyleSheet.create({
       },
     }),
   },
-
   imageStyle: {
     width: width * 0.75,
     height: height * 0.2,
     borderRadius: 10,
   },
-  
   calendarStyle: {
     width: width * 0.75,
     height: height * 0.2,
     borderRadius: 10,
     marginLeft: 10,
   },
-
   titleInfoContainer: {
     backgroundColor: '#F2F2F2',
     width: width * 0.9,
@@ -267,7 +241,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
     padding: 10,
-
     // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
@@ -284,20 +257,15 @@ const styles = StyleSheet.create({
       },
     }),
   },
-
   titleStyle: {
     fontWeight: 'bold',
     fontSize: 20,
     marginVertical: 10,
-
   },
-
   subTitleStyle: {
     fontSize: 14,
     marginTop: 5,
   },
-
-  
   moreExplore: {
     marginTop: 15,
     alignItems: 'center',
@@ -308,13 +276,11 @@ const styles = StyleSheet.create({
     height: height * 0.04,
     marginLeft: 24,
   },
-
   dateInfo: {
     fontSize: 12,
     marginTop: 15,
     marginLeft: 10,
   },
-
   calendar: {
     width: 360,
     height: 200,
