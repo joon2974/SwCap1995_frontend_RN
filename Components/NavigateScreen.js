@@ -18,7 +18,11 @@ import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
 import WatcherPage from './HomeScreens/WatcherPage';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
+<<<<<<< HEAD
 import CameraTestScreen from './MyScreens/CameraTestScreen';
+=======
+import Estimate from './HomeScreens/EstimatePlan';
+>>>>>>> estimatePlan
 
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
@@ -77,6 +81,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
       <HomeStack.Screen name="WatcherPage" component={WatcherPage} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
+      <HomeStack.Screen name="플랜평가하기" component={Estimate} />
     </HomeStack.Navigator>
   );
 }

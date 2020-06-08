@@ -76,6 +76,7 @@ export default class HomeMain extends Component {
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
+  
 
   loadAllPlan = async (userId) => {
     const response = await axios.get(
@@ -136,6 +137,10 @@ export default class HomeMain extends Component {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
 
+  moveToEstimate = (id) => {
+    this.props.navigation.navigate('플랜평가하기', { id: id });
+  };
+
   setModalInvisible = () => {
     this.setState({ modalVisible: false });
   };
@@ -181,7 +186,7 @@ export default class HomeMain extends Component {
       <MyPlan
         key={data.id}
         title={data.title}
-        btnFunc={() => alert('더보기')}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
@@ -191,7 +196,8 @@ export default class HomeMain extends Component {
       <MyPlan
         key={data.id}
         title={data.title}
-        btnFunc={() => alert('더보기')}
+        id={data.id}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
