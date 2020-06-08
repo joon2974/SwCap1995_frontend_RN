@@ -19,6 +19,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
+import ImageModal from 'react-native-image-modal';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -973,6 +974,12 @@ export class CardNine extends Component {
         width: screenWidth, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', 
       }}>
 
+        {/* <ImageModal
+              source={this.props.image}
+              style={{
+                height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, 
+              }}
+           /> */}
         <TouchableOpacity
           style={{
             height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, 
@@ -1004,9 +1011,7 @@ export class CardNine extends Component {
           }}
       >
       
-          <TouchableOpacity
-            onPress={this.props.explore}
-            
+          <View  
             borderRadius={10}
             style={{
               width: screenWidth / 2.8,
@@ -1014,7 +1019,7 @@ export class CardNine extends Component {
               marginLeft: -(screenWidth / 4.5),
             }}
           >
-            <Image
+            <ImageModal
               source={this.props.image}
               borderRadius={10}
               style={{
@@ -1022,7 +1027,7 @@ export class CardNine extends Component {
                 height: screenHeight / 5,
               }}
            />
-          </TouchableOpacity>
+          </View>
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{

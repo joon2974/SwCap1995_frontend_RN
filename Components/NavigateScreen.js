@@ -41,7 +41,7 @@ import HotPlan from './SearchScreens/HotPlan';
 import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
 import Joom from './SearchScreens/TabList/Joom';
-import Calendar from './SearchScreens/Calendar';
+import AuthenticationPage from './SearchScreens/AuthenticationPage';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 if (!firebase.apps.length) {
@@ -102,7 +102,7 @@ function SearchStackScreen() {
       <SearchStack.Screen name="플랜 목록" component={PlanList} />
       <SearchStack.Screen name="줌" component={Joom} />
       <SearchStack.Screen name="플랜 상세 정보" component={DetailPlan} />
-      <SearchStack.Screen name="달력" component={Calendar} />
+      <SearchStack.Screen name="인증" component={AuthenticationPage} />
       <SearchStack.Screen
         name="일일 인증"
         component={DaileyAuthentication}
