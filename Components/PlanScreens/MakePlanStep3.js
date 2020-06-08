@@ -46,6 +46,7 @@ export default class MakePlanStep3 extends Component {
     formData.append('spectors', this.props.route.params.spectors.join());
     formData.append('distrib_method', this.props.route.params.distribMethod);
     formData.append('is_custom', this.props.route.params.is_custom);
+    formData.append('authentication_way', this.props.route.params.authentication_way);
 
     axios
       .post('http://49.50.172.58:3000/plans', formData, {

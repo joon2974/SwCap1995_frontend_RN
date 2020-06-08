@@ -30,6 +30,7 @@ export default class CustomMakePlanStep1 extends Component {
     planTitle: '',
     customImgUri: '',
     modalVisible: false,
+    authenticationWay: null,
   };
 
   componentDidMount() {
@@ -73,11 +74,13 @@ export default class CustomMakePlanStep1 extends Component {
     this.setState({ customImgUri: uri });
   }
 
-  goToNextStep = (planTitle, customImgUri, mainRule, subRule1, subRule2) => {
+  goToNextStep = (planTitle, customImgUri, mainRule, subRule1, subRule2, authenticationWay) => {
     if (planTitle.length === 0) {
       alert('플랜 카테고리 이름을 입력해 주세요!');
     } else if (customImgUri.length === 0) {
       alert('인증 사진을 등록해 주세요!');
+    } else if (authenticationWay === null) {
+      alert('일일 인증 수단을 선택해 주세요!');
     } else if (mainRule.length === 0) {
       alert('메인 룰을 입력해 주세요!');
     } else if (subRule1.length === 0) {
@@ -101,6 +104,7 @@ export default class CustomMakePlanStep1 extends Component {
         userID: this.props.route.params.userID,
         categoryUri: this.props.route.params.uri,
         is_custom: true,
+        authentication_way: this.state.authenticationWay,
       });
     }
   }
@@ -119,6 +123,7 @@ export default class CustomMakePlanStep1 extends Component {
       subRule1,
       subRule2,
       modalVisible,
+      authenticationWay,
     } = this.state;
 
     return (
@@ -233,12 +238,32 @@ export default class CustomMakePlanStep1 extends Component {
             </View>
             {(customImgUri.length !== 0) 
               ? (
-                <View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                   <ImageModal
                     style={styles.certifyImageStyle}
                     source={{ uri: customImgUri }}
                   />
                   <Text>인증 사진 예시</Text>
+                  <View style={{
+                    width: width, height: 50, alignItems: 'center', justifyContent: 'center', flexDirection: 'row',
+                  }}>
+                    <TouchableOpacity
+                      style={(authenticationWay === 1) 
+                        ? styles.authenticationSelectedBtn 
+                        : styles.authenticationUnselectedBtn}
+                      onPress={() => this.setState({ authenticationWay: 1 })}
+                    >
+                      <Text>카메라 인증</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={(authenticationWay === 0) 
+                        ? styles.authenticationSelectedBtn 
+                        : styles.authenticationUnselectedBtn}
+                      onPress={() => this.setState({ authenticationWay: 0 })}
+                    >
+                      <Text>갤러리 인증</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               ) 
               : (
@@ -300,7 +325,8 @@ export default class CustomMakePlanStep1 extends Component {
 
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.goToNextStep(planTitle, customImgUri, mainRule, subRule1, subRule2)}
+            onPress={() => this.goToNextStep(planTitle,
+              customImgUri, mainRule, subRule1, subRule2, authenticationWay)}
           >
             <Text style={{ fontWeight: 'bold', color: 'white' }}>다음 단계로</Text>
           </TouchableOpacity>
@@ -380,10 +406,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   certifyImageStyle: {
-    width: width * 0.4,
-    height: width * 0.4,
+    width: width - 200,
+    height: width - 200,
     borderRadius: 20,
     marginTop: 10,
+    marginLeft: 100,
   },
   rulePickContainer: {
     width: width,
@@ -404,7 +431,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    marginTop: 65,
+    marginTop: 120,
     marginBottom: 10,
     ...Platform.select({
       ios: {
@@ -507,5 +534,23 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  authenticationSelectedBtn: {
+    width: 100,
+    height: 40,
+    backgroundColor: '#FFC0B0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  authenticationUnselectedBtn: {
+    width: 100,
+    height: 40,
+    backgroundColor: '#F2F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginRight: 10,
   },
 });

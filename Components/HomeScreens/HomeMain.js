@@ -76,6 +76,7 @@ export default class HomeMain extends Component {
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
+  
 
   loadAllPlan = async (userId) => {
     const response = await axios.get(
@@ -94,6 +95,8 @@ export default class HomeMain extends Component {
             picturetime: responseJson[i].picture_time,
             id: responseJson[i].id,
             status: responseJson[i].status,
+            authentication_way: responseJson[i].authentication_way,
+            today_auth: responseJson[i].today_auth,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -136,6 +139,10 @@ export default class HomeMain extends Component {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
 
+  moveToEstimate = (id) => {
+    this.props.navigation.navigate('플랜평가하기', { id: id });
+  };
+
   setModalInvisible = () => {
     this.setState({ modalVisible: false });
   };
@@ -170,6 +177,30 @@ export default class HomeMain extends Component {
       });
   };
 
+  cameraCertify = (planId) => {
+    this.props.navigation.navigate('일일인증: 카메라', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
+  }
+
+  galaryCertify = (planId) => {
+    this.props.navigation.navigate('일일인증: 갤러리', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
+  }
+
+  faceAuthentication = (planId, authMethod) => {
+    this.props.navigation.navigate('일일인증: 본인인증', 
+      {
+        cameraCertify: this.cameraCertify,
+        galaryCertify: this.galaryCertify,
+        userID: this.state.userId,
+        planID: planId,
+        certifyMethod: authMethod,
+      });
+  }
+
+  returnToTop = () => {
+    this.props.navigation.popToTop();
+    this.onRefresh();
+  }
+
   render() {
     const {
       userEmail,
@@ -180,18 +211,23 @@ export default class HomeMain extends Component {
     const plans = planData.map((data) => (
       <MyPlan
         key={data.id}
+        planId={data.id}
         title={data.title}
-        btnFunc={() => alert('더보기')}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
+        certifyMethod={data.authentication_way}
+        faceAuthentication={this.faceAuthentication}
+        today_auth={data.today_auth}
       />
     ));
     const watchplans = watchData.map((data) => (
       <MyPlan
         key={data.id}
         title={data.title}
-        btnFunc={() => alert('더보기')}
+        id={data.id}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
