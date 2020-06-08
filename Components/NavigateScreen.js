@@ -17,6 +17,7 @@ import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
+import Estimate from './HomeScreens/EstimatePlan';
 
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
@@ -70,6 +71,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Plan A" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
+      <HomeStack.Screen name="플랜평가하기" component={Estimate} />
     </HomeStack.Navigator>
   );
 }
