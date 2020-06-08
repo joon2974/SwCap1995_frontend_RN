@@ -9,6 +9,7 @@ import {
   Dimensions,
   Text,
   Platform,
+  TouchableOpacityBase,
 } from 'react-native';
 import axios from 'axios';
 import VariableCard from './VariableCard';
@@ -94,7 +95,8 @@ export default class WatcherPage extends Component {
         {this.state.tabState === 0 ? (
 
           <ScrollView style={{ marginBottom: 40 }}>
-       
+          
+
             <View style={styles.container}>
               {
                 this.state.data.map((data, index) => (
@@ -110,6 +112,7 @@ export default class WatcherPage extends Component {
               <View style={styles.lineDivider} />
 
             </View>
+
           </ScrollView>
         ) : (<WatcherInfo />) }
        

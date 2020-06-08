@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import ImageModal from 'react-native-image-modal';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const screenWidth = Dimensions.get('window').width;
@@ -568,6 +567,75 @@ export class CardFive extends Component {
 
 export class CardSix extends Component {
   render() {
+    let checkBox = null;
+    if (this.props.checkBoxStatus === 0) { 
+      checkBox = (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity
+            onPress={() => this.props.onClicked1()}
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(50),
+                height: scale(50),
+                margin: 10,
+                shadowRadius: 5,
+                borderRadius: scale(40),
+                backgroundColor: this.props.iconBackground1,
+              },
+            ]}
+           >
+            <Icon
+              name={this.props.icon1}
+              color={this.props.iconColor1}
+              size={scale(20)}
+             />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.onClicked2()}
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(50),
+                height: scale(50),
+                margin: 10,
+                shadowRadius: 5,
+                borderRadius: scale(40),
+                backgroundColor: this.props.iconBackground2,
+              },
+            ]}
+           >
+            <Icon
+              name={this.props.icon2}
+              color={this.props.iconColor2}
+              size={scale(20)}
+             />
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (this.props.checkBoxStatus === 1) { 
+      checkBox = (
+        <View>
+          <Text>
+            인증 동의
+          </Text>
+        </View>
+      );
+    } else { 
+      checkBox = (
+        <View>
+          <Text>
+            인증 비동의
+          </Text>
+        </View>
+      );
+    }
+
+
     return (
       <View>
         <View
@@ -634,50 +702,7 @@ export class CardSix extends Component {
                 {this.props.title}
               </Text>
               <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity
-                  onPress={() => this.props.onClicked1()}
-                  style={[
-                    {
-                      justifyContent: 'center',
-                      zIndex: 3,
-                      alignItems: 'center',
-                      width: scale(50),
-                      height: scale(50),
-                      margin: 10,
-                      shadowRadius: 5,
-                      borderRadius: scale(40),
-                      backgroundColor: this.props.iconBackground1,
-                    },
-                  ]}
-            >
-                  <Icon
-                    name={this.props.icon1}
-                    color={this.props.iconColor1}
-                    size={scale(20)}
-              />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.props.onClicked2()}
-                  style={[
-                    {
-                      justifyContent: 'center',
-                      zIndex: 3,
-                      alignItems: 'center',
-                      width: scale(50),
-                      height: scale(50),
-                      margin: 10,
-                      shadowRadius: 5,
-                      borderRadius: scale(40),
-                      backgroundColor: this.props.iconBackground2,
-                    },
-                  ]}
-            >
-                  <Icon
-                    name={this.props.icon2}
-                    color={this.props.iconColor2}
-                    size={scale(20)}
-              />
-                </TouchableOpacity>
+                {checkBox}
               </View>
             </View>
           
@@ -752,6 +777,84 @@ export class CardSix extends Component {
 
 export class CardSeven extends Component {
   render() {
+    let checkBox = null;
+    if (this.props.checkBoxStatus === 0) { 
+      checkBox = (
+        <View
+          style={{
+            flexDirection: 'row',
+            height: screenHeight / 22,
+            zIndex: scale(4),
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}
+              >
+          <TouchableOpacity
+            onPress={() => this.props.onClicked1()}
+            style={[
+              {
+                    
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(30),
+                height: scale(30),
+                margin: 10,
+                shadowRadius: 5,
+                borderRadius: scale(15),
+                backgroundColor: this.props.iconBackground1,
+              },
+            ]}
+                >
+            <Icon
+              name={this.props.icon1}
+              color={this.props.iconColor1}
+              size={scale(15)}
+                  />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.onClicked2()}
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(30),
+                height: scale(30),
+                margin: 10,
+                shadowRadius: 5,
+                borderRadius: scale(15),
+                backgroundColor: this.props.iconBackground2,
+              },
+            ]}
+                >
+            <Icon
+              name={this.props.icon2}
+              color={this.props.iconColor2}
+              size={scale(15)}
+                  />
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (this.props.checkBoxStatus === 1) { 
+      checkBox = (
+        <View>
+          <Text>
+            인증 동의
+          </Text>
+        </View>
+      );
+    } else { 
+      checkBox = (
+        <View>
+          <Text>
+            인증 비동의
+          </Text>
+        </View>
+      );
+    }
+
+
     return (
       <View
         style={{
@@ -824,61 +927,9 @@ export class CardSeven extends Component {
               {this.props.subTitle}
             </Text>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              height: screenHeight / 22,
-              zIndex: scale(4),
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-            }}
-              >
-            <TouchableOpacity
-              onPress={() => this.props.onClicked1()}
-              style={[
-                {
-                    
-                  justifyContent: 'center',
-                  zIndex: 3,
-                  alignItems: 'center',
-                  width: scale(30),
-                  height: scale(30),
-                  margin: 10,
-                  shadowRadius: 5,
-                  borderRadius: scale(15),
-                  backgroundColor: this.props.iconBackground1,
-                },
-              ]}
-                >
-              <Icon
-                name={this.props.icon1}
-                color={this.props.iconColor1}
-                size={scale(15)}
-                  />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.props.onClicked2()}
-              style={[
-                {
-                  justifyContent: 'center',
-                  zIndex: 3,
-                  alignItems: 'center',
-                  width: scale(30),
-                  height: scale(30),
-                  margin: 10,
-                  shadowRadius: 5,
-                  borderRadius: scale(15),
-                  backgroundColor: this.props.iconBackground2,
-                },
-              ]}
-                >
-              <Icon
-                name={this.props.icon2}
-                color={this.props.iconColor2}
-                size={scale(15)}
-                  />
-            </TouchableOpacity>
-          </View>
+        
+        
+          {checkBox}
          
         </View>
       </View>
