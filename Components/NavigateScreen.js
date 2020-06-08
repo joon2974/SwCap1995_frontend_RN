@@ -15,11 +15,13 @@ import FindPasswordScreen from './LogInScreens/FindPasswordScreen';
 import MyMenuScreen from './MyScreens/MyMenuScreen';
 import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
+
 import HomeMain from './HomeScreens/HomeMain';
 import WatcherPage from './HomeScreens/WatcherPage';
 import DailyCertifyCamera from './HomeScreens/DailyCertifyCamera';
 import DailyCertifyGalary from './HomeScreens/DailyCertifyGalary';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
+import FaceAuthenticationScreen from './HomeScreens/FaceAuthenticationScreen';
 import CameraTestScreen from './MyScreens/CameraTestScreen';
 
 import FriendScreen from './FriendScreens/FriendScreen';
@@ -81,6 +83,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
       <HomeStack.Screen name="일일인증: 카메라" component={DailyCertifyCamera} />
       <HomeStack.Screen name="일일인증: 갤러리" component={DailyCertifyGalary} />
+      <HomeStack.Screen name="일일인증: 본인인증" component={FaceAuthenticationScreen} />
     </HomeStack.Navigator>
   );
 }

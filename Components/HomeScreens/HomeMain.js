@@ -171,12 +171,23 @@ export default class HomeMain extends Component {
       });
   };
 
-  cameraCertify = (planID) => {
-    this.props.navigation.navigate('일일인증: 카메라', { returnFunc: this.returnToTop, userID: this.state.userId, planID: planID });
+  cameraCertify = (planId) => {
+    this.props.navigation.navigate('일일인증: 카메라', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
   }
 
-  galaryCertify = (planID) => {
-    this.props.navigation.navigate('일일인증: 갤러리', { returnFunc: this.returnToTop, userID: this.state.userId, planID: planID });
+  galaryCertify = (planId) => {
+    this.props.navigation.navigate('일일인증: 갤러리', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
+  }
+
+  faceAuthentication = (planId, authMethod) => {
+    this.props.navigation.navigate('일일인증: 본인인증', 
+      {
+        cameraCertify: this.cameraCertify,
+        galaryCertify: this.galaryCertify,
+        userID: this.state.userId,
+        planID: planId,
+        certifyMethod: authMethod,
+      });
   }
 
   returnToTop = () => {
@@ -201,8 +212,7 @@ export default class HomeMain extends Component {
         picturetime={data.picturetime}
         status={data.status}
         certifyMethod={data.authentication_way}
-        cameraCertify={this.cameraCertify}
-        galaryCertify={this.galaryCertify}
+        faceAuthentication={this.faceAuthentication}
       />
     ));
     const watchplans = watchData.map((data) => (

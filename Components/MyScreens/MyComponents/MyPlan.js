@@ -17,11 +17,7 @@ const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
   goToCertifyPage = () => {
-    if (this.props.certifyMethod === 0) {
-      this.props.galaryCertify(this.props.planId);
-    } else {
-      this.props.cameraCertify(this.props.planId);
-    }
+    this.props.faceAuthentication(this.props.planId, this.props.certifyMethod);
   }
 
   render() {
