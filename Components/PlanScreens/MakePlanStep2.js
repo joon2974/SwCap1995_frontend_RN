@@ -111,6 +111,7 @@ export default class MakePlanStep2 extends Component {
           userID: this.props.route.params.userID,
           percent: this.state.selectedPercent,
           is_custom: this.props.route.params.is_custom,
+          authentication_way: this.props.route.params.authentication_way,
         });
     }
   }

@@ -16,42 +16,6 @@ export default class WatcherInfo extends Component {
   state = {
   }
 
-  // sendPlanInfo = () => {
-  //   const today = new Date();
-  //   today.setDate(Number(this.props.route.params.startDate));
-
-  //   axios
-  //     .post('http://49.50.172.58:3000/plans', {
-  //       headers: {
-  //         'Content-type': 'application/x-www-form-urlencoded',
-  //       },
-  //       user_id: Number(this.props.route.params.userID),
-  //       title: this.state.title,
-  //       category: this.props.route.params.category,
-  //       detailedCategory: this.props.route.params.planName,
-  //       picture_rule_1: this.props.route.params.selectedMainRule,
-  //       picture_rule_2: this.props.route.params.subRule1,
-  //       picture_rule_3: this.props.route.params.subRule2,
-  //       custom_picture_rule_1: '없음',
-  //       custom_picture_rule_2: '없음',
-  //       custom_picture_rule_3: '없음',
-  //       plan_period: Number(this.props.route.params.endDate),
-  //       picture_time: Number(this.props.route.params.certifyTime),
-  //       plan_start_day: today,
-  //       bet_money: Number(this.props.route.params.challPoint),
-  //       is_public: this.state.isPublic,
-  //       percent: Number(this.props.route.params.percent),
-  //       spectors: this.props.route.params.spectors.join(),
-  //       distribMethod: this.props.route.params.distribMethod,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.status);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   render() {
     return (
       <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
@@ -61,7 +25,7 @@ export default class WatcherInfo extends Component {
           subTitle="서브 타이틀"
           description="설명"
           image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
-             />
+        />
 
         <View style={styles.lineDivider} />
 

@@ -94,6 +94,7 @@ export default class HomeMain extends Component {
             picturetime: responseJson[i].picture_time,
             id: responseJson[i].id,
             status: responseJson[i].status,
+            authentication_way: responseJson[i].authentication_way,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -170,6 +171,19 @@ export default class HomeMain extends Component {
       });
   };
 
+  cameraCertify = (planID) => {
+    this.props.navigation.navigate('일일인증: 카메라', { returnFunc: this.returnToTop, userID: this.state.userId, planID: planID });
+  }
+
+  galaryCertify = (planID) => {
+    this.props.navigation.navigate('일일인증: 갤러리', { returnFunc: this.returnToTop, userID: this.state.userId, planID: planID });
+  }
+
+  returnToTop = () => {
+    this.props.navigation.popToTop();
+    this.onRefresh();
+  }
+
   render() {
     const {
       userEmail,
@@ -180,11 +194,15 @@ export default class HomeMain extends Component {
     const plans = planData.map((data) => (
       <MyPlan
         key={data.id}
+        planId={data.id}
         title={data.title}
         btnFunc={() => alert('더보기')}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
+        certifyMethod={data.authentication_way}
+        cameraCertify={this.cameraCertify}
+        galaryCertify={this.galaryCertify}
       />
     ));
     const watchplans = watchData.map((data) => (

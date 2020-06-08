@@ -7,7 +7,6 @@ import {
   Dimensions,
   Image,
   Platform,
-
 } from 'react-native'; 
 import {
   Feather, MaterialIcons, AntDesign, FontAwesome5, FontAwesome,
@@ -17,6 +16,14 @@ import {
 const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
+  goToCertifyPage = () => {
+    if (this.props.certifyMethod === 0) {
+      this.props.galaryCertify(this.props.planId);
+    } else {
+      this.props.cameraCertify(this.props.planId);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -45,7 +52,7 @@ export default class MyPlan extends Component {
           }}> 
             <View style={{ flexDirection: 'row' }}>
               <MaterialIcons name="access-time" size={24} color="black" />
-              <Text style={styles.textstyle}> 
+              <Text style={styles.textstyle}>
                 {this.props.picturetime}
                 :00   
               </Text>
@@ -61,12 +68,22 @@ export default class MyPlan extends Component {
             <View style={{ flexDirection: 'row' }}>
               {(this.props.status === 'waiting') && (
               <>
-                <FontAwesome name="pause-circle" size={24} color="black" /> 
+                <FontAwesome name="pause-circle" size={20} color="black" /> 
                
                 <Text style={{ marginLeft: 5, fontSize: 18 }}>대기 중</Text>
               </>
               )}
-              
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              {(this.props.certifyMethod === 0 || this.props.certifyMethod === 1) && (
+              <TouchableOpacity 
+                style={{ flexDirection: 'row' }}
+                onPress={() => this.goToCertifyPage()}
+              >
+                <FontAwesome name="camera" size={18} color="black" /> 
+                <Text style={{ marginLeft: 5, fontSize: 14 }}>인증하기</Text>
+              </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>

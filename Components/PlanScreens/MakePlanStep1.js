@@ -31,6 +31,7 @@ export default class PlanMain extends Component {
     periodList: [],
     dateList: [],
     ruleListFromServer: [],
+    authenticationWay: null,
   };
 
   componentDidMount() {
@@ -99,12 +100,14 @@ export default class PlanMain extends Component {
         });
 
         let certifyPhotoUri;
+        let authentication;
         for (let i = 0; i < rulesFromServer.length; i++) {
           if (rulesFromServer[i].main_rule === this.state.selectedMainRule) {
             certifyPhotoUri = rulesFromServer[i].image_url;
+            authentication = rulesFromServer[i].authentication_way;
           }
         }
-        this.setState({ certifyImageUri: certifyPhotoUri });
+        this.setState({ certifyImageUri: certifyPhotoUri, authenticationWay: authentication });
       })
       .catch((error) => {
         console.log('서버로부터 template 가져오기 에러: ', error);
@@ -115,14 +118,17 @@ export default class PlanMain extends Component {
 
   updateCertifyPhoto = (selectedMainRule) => {
     const ruleListFromServer = this.state.ruleListFromServer;
+    console.log('룰 리스트 확인', ruleListFromServer);
 
     let certifyPhotoUri;
+    let authentication;
     for (let i = 0; i < ruleListFromServer.length; i++) {
       if (ruleListFromServer[i].main_rule === selectedMainRule) {
         certifyPhotoUri = ruleListFromServer[i].image_url;
+        authentication = ruleListFromServer[i].authentication_way;
       }
     }
-    this.setState({ certifyImageUri: certifyPhotoUri });
+    this.setState({ certifyImageUri: certifyPhotoUri, authenticationWay: authentication });
   };
 
   render() {
@@ -250,6 +256,7 @@ export default class PlanMain extends Component {
               userID: this.props.route.params.userID,
               categoryUri: this.props.route.params.uri,
               is_custom: false,
+              authentication_way: this.state.authenticationWay,
             })
             }
           >

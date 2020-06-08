@@ -17,6 +17,8 @@ import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import HomeMain from './HomeScreens/HomeMain';
 import WatcherPage from './HomeScreens/WatcherPage';
+import DailyCertifyCamera from './HomeScreens/DailyCertifyCamera';
+import DailyCertifyGalary from './HomeScreens/DailyCertifyGalary';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
 import CameraTestScreen from './MyScreens/CameraTestScreen';
 
@@ -77,6 +79,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
       <HomeStack.Screen name="WatcherPage" component={WatcherPage} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
+      <HomeStack.Screen name="일일인증: 카메라" component={DailyCertifyCamera} />
+      <HomeStack.Screen name="일일인증: 갤러리" component={DailyCertifyGalary} />
     </HomeStack.Navigator>
   );
 }
