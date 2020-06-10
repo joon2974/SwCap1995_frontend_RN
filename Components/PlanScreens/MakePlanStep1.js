@@ -96,7 +96,6 @@ export default class PlanMain extends Component {
         }
         // eslint-disable-next-line prefer-const
         defaultRule = Object.keys(ruleObject)[0];
-        console.log('디폴트 롤', defaultRule);
         this.setState({
           selectedMainRule: defaultRule,
           pictureRules: ruleObject,

@@ -47,5 +47,6 @@ module.exports = {
     'no-trailing-spaces': 0,
     'import/prefer-default-export': 0,
     'no-unescaped-entities': 0,
+    'global-require': 0,
   },
 };

@@ -26,7 +26,6 @@ export default class Searchscreen extends Component {
     
   };
   
-  
   componentDidMount() {
     this.setPlanList('10대');
     this.setPlanListAllCate('운동/건강');
@@ -48,7 +47,6 @@ export default class Searchscreen extends Component {
   setPlanListAllCate = (categoryName) => {
     this.setState({ selectedAllCate: categoryName });
 
-    
     axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
       this.setState({ nowAllCate: res.data.plans });
     
@@ -65,7 +63,6 @@ export default class Searchscreen extends Component {
       selectedAllCate,
     } = this.state;
     
-
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -80,7 +77,6 @@ export default class Searchscreen extends Component {
             </Text>
           </TouchableOpacity>
             
-          
         </View>
 
         <ScrollView style={styles.scrollContainer}>
@@ -318,7 +314,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
   },
-
   tabButtonContainer: {
     width: width,
     height: 40,
@@ -327,7 +322,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
   },
-
   planContainer: {
     width: width,
     justifyContent: 'center',
@@ -336,7 +330,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 10,
   },
-
   categoryBtnStyle: {
     width: width * 0.17,
     height: 40,
@@ -345,7 +338,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 1,
   },
-
   selectedCategoryBtnStyle: {
     width: width * 0.17,
     height: 40,
