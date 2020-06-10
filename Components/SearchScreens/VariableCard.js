@@ -63,11 +63,9 @@ export default class VariableCard extends Component {
     } 
 
     return (
-
       <View>
         {testVari}
       </View>
-      
     );
   }
 }

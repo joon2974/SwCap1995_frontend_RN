@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
-/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,
@@ -11,21 +8,18 @@ import {
 } from 'react-native';
 import DayList from './TabList/DayList';
 
-// eslint-disable-next-line no-unused-vars
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class Calendar extends Component {
     state = {
-    
       // selectedAllCate: '',      
       data: [],
     }
 
-
     async componentDidMount() {
       this.setParams();
       this.getData();
-      //      this.getDataTest();
+      // this.getDataTest();
     }
 
     setParams = () => {
@@ -33,28 +27,26 @@ export default class Calendar extends Component {
     }
 
     async getData() {
+      const { data } = this.state;
       const url = 'http://49.50.172.58:3000/detailedCategories';
       await fetch(url)
         .then((r) => r.json())
-        .then((data) => {
+        .then((res) => {
           this.setState({ 
-            data: this.state.data.concat(data.data.detailedCategoryGet),
+            data: data.concat(res.data.detailedCategoryGet),
           });
         });
     }
-
 
     handleLoadMore = () => {
       this.getData();
     }
   
-       
     renderItem = ({ item }) => (
       <DayList 
         item={item}
         explore={() => this.props.navigation.navigate('일일 인증')} />    
     );
-
 
     render() {
       return (
@@ -66,7 +58,7 @@ export default class Calendar extends Component {
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item) => item.id}
 
               numColumns={2}
               contentContainerStyle={{

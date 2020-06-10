@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
-/* eslint-disable react/no-access-state-in-setstate */
-
 import React, { Component } from 'react';
 import {
   View,
@@ -13,36 +9,34 @@ import {
 } from 'react-native';
 import { CardFive } from './Cards';
 
-
-// eslint-disable-next-line no-unused-vars
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class PlanList extends Component {
     state = {
-     
       data: [],
       nowPage: 1,
-
       moreData: 0,
       // nowRecommended: this.props.route.params,  이거 마지막으로 api연동 해줘야함
     }
-
 
     componentDidMount() {
       this.getData();
     }
  
     getData = () => {
-      if (this.state.moreData === 0) {
-        const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+      const { data, nowPage, moreData } = this.state;
+      if (moreData === 0) {
+        const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + nowPage;
         fetch(url)
           .then((r) => r.json())
-          .then((data) => {
+          .then((res) => {
+            const newData = data.concat(res.plans);
+            const newNowPage = nowPage + 1;
             this.setState({ 
-              data: this.state.data.concat(data.plans),
-              nowPage: this.state.nowPage + 1,
+              data: newData,
+              nowPage: newNowPage,
             });
-            if (data.plans.length === 0) {
+            if (res.plans.length === 0) {
               this.setState({ moreData: 1 });
             }
           });      
@@ -53,7 +47,6 @@ export default class PlanList extends Component {
       this.getData();
     }
   
-       
     renderItem = ({ item }) => (
       <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('플랜 상세 정보', { item: item })}>
         <CardFive
@@ -66,18 +59,15 @@ export default class PlanList extends Component {
       </TouchableOpacity>
     );
 
-
     render() {
       return (
- 
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
-  
             <FlatList 
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item) => item.id}
               onEndReached={this.handleLoadMore}
               onEndReachedThreshold={1}
             />

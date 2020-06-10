@@ -61,12 +61,6 @@ export default class HomeMain extends Component {
     });
   };
 
-  // Async 확인용
-  checkAsync = async () => {
-    const ji = await AsyncStorage.getItem('UserID');
-    console.log('asdf', ji);
-  };
-
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.setState({ userId: id });
@@ -157,15 +151,17 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          const ji = AsyncStorage.getItem('UserID').then(() => {
-            console.log('userID', ji);
+          // eslint-disable-next-line no-unused-vars
+          const ji = AsyncStorage.getItem('UserID').then((res) => {
+            if (res) console.log('userID', res);
           });
        
           console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
 
-          const jj = AsyncStorage.getItem('UserID').then(() => {
-            console.log('userID', jj);
+          // eslint-disable-next-line no-unused-vars
+          const jj = AsyncStorage.getItem('UserID').then((res) => {
+            if (res) console.log('userID', res);
           });
           this.setState({ userId: res.data.id });
         } else {

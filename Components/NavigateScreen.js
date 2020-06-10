@@ -70,7 +70,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        
+        height: 60,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -96,7 +96,7 @@ function SearchStackScreen() {
     <SearchStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        
+        height: 60,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -125,7 +125,7 @@ function FriendStackScreen() {
     <FriendStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        
+        height: 60,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -144,7 +144,7 @@ function PlanStackScreen() {
     <PlanStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        
+        height: 60,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -171,7 +171,7 @@ function MyMenuStackScreen() {
     <MyMenuStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        
+        height: 60,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

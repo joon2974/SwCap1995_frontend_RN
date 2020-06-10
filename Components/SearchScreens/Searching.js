@@ -1,7 +1,4 @@
-/* eslint-disable global-require */
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   View,
@@ -125,7 +122,7 @@ export default class Searching extends Component {
           style={{ marginTop: 10, width: width }}
           data={this.state.data}
           renderItem={this.renderItem}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item) => item.id}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={1}
           ref={(ref) => { this.flatList = ref; }}

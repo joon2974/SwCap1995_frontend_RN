@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  Modal,
 } from 'react-native';
 import axios from 'axios';
 import ImageModal from 'react-native-image-modal';
@@ -32,6 +33,7 @@ export default class PlanMain extends Component {
     dateList: [],
     ruleListFromServer: [],
     authenticationWay: null,
+    modalVisible: false,
   };
 
   componentDidMount() {
@@ -142,11 +144,54 @@ export default class PlanMain extends Component {
       timeList,
       periodList,
       dateList,
+      modalVisible,
+      authenticationWay,
     } = this.state;
 
     return (
       <ScrollView style={styles.container}>
         <View style={styles.viewContainer}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              alert('Modal has been closed.');
+            }}
+            >
+            <View>
+              <View style={styles.modalHeaderStyle}>
+                <TouchableOpacity
+                  onPress={() => this.setState({ modalVisible: false })}
+                  style={{ marginRight: 20 }}
+                  >
+                  <Text>도움말 닫기</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.modalTopContainerStyle}>
+                <Text>a</Text>
+              </View>
+              <View style={styles.modalMiddleContainerStyle}>
+                <Text>b</Text>
+              </View>
+              <View style={styles.modalBottomContainerStyle}>
+                <Text>c</Text>
+              </View>
+            </View>
+          </Modal>
+          <View style={{
+            justifyContent: 'center', alignItems: 'flex-end', width: width, height: 20,
+          }}>
+            <TouchableOpacity
+              style={{ marginRight: 15, marginTop: 20 }}
+              onPress={() => this.setState({ modalVisible: true })}
+            >
+              <Image
+                source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png' }}
+                style={{ width: 25, height: 25 }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.selectedInformContainer}>
             <Image
               source={{ uri: this.props.route.params.uri }}
@@ -239,24 +284,24 @@ export default class PlanMain extends Component {
             onPress={() => this.props.navigation.navigate('플랜 만들기: 2단계', {
               category: this.props.route.params.category,
               planName: this.props.route.params.planName,
-              startDate: this.state.startDate,
-              endDate: this.state.endDate,
-              certifyTime: this.state.certifyTime,
-              picture_rule_1: this.state.selectedMainRule,
-              picture_rule_2: this.state.pictureRules[
-                this.state.selectedMainRule
+              startDate: startDate,
+              endDate: endDate,
+              certifyTime: certifyTime,
+              picture_rule_1: selectedMainRule,
+              picture_rule_2: pictureRules[
+                selectedMainRule
               ][0],
-              picture_rule_3: this.state.pictureRules[
-                this.state.selectedMainRule
+              picture_rule_3: pictureRules[
+                selectedMainRule
               ][1],
               custom_picture_rule_1: null,
               custom_picture_rule_2: null,
               custom_picture_rule_3: null,
-              certifyImgUri: this.state.certifyImageUri,
+              certifyImgUri: certifyImageUri,
               userID: this.props.route.params.userID,
               categoryUri: this.props.route.params.uri,
               is_custom: false,
-              authentication_way: this.state.authenticationWay,
+              authentication_way: authenticationWay,
             })
             }
           >
@@ -378,5 +423,37 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
+  },
+  modalHeaderStyle: {
+    backgroundColor: '#E6E6E6',
+    width: width,
+    height: 60,
+    opacity: 0.95,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  modalTopContainerStyle: {
+    width: width,
+    height: height * 0.17 + 40,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#F6CEEC',
+    opacity: 0.7,
+  },
+  modalMiddleContainerStyle: {
+    width: width,
+    height: height * 0.25 + 30,
+    backgroundColor: '#E6E6E6',
+    opacity: 0.7,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  modalBottomContainerStyle: {
+    width: width,
+    height: height * 0.4,
+    backgroundColor: '#F5ECCE',
+    opacity: 0.7,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });

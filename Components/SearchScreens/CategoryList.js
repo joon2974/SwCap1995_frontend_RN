@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
@@ -11,21 +9,18 @@ import {
 } from 'react-native';
 import SmallCate from './TabList/SmallCate';
 
-// eslint-disable-next-line no-unused-vars
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class CategoryList extends Component {
     state = {
-    
       // selectedAllCate: '',      
       data: [],
     }
 
-
     async componentDidMount() {
       this.setParams();
       this.getData();
-      //      this.getDataTest();
+      // this.getDataTest();
     }
 
     setParams = () => {
@@ -43,18 +38,15 @@ export default class CategoryList extends Component {
         });
     }
 
-
     handleLoadMore = () => {
       this.getData();
     }
   
-       
     renderItem = ({ item }) => (
       <SmallCate 
         item={item}
         explore={() => this.props.navigation.navigate('플랜 목록')} />    
     );
-
 
     render() {
       return (
@@ -66,8 +58,7 @@ export default class CategoryList extends Component {
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
-              keyExtractor={(item, index) => item.id}
-              
+              keyExtractor={(item) => item.id}
               numColumns={2}
               contentContainerStyle={{
                 alignItems: 'center',

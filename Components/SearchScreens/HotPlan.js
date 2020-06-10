@@ -19,15 +19,11 @@ const { width, height } = Dimensions.get('window');
 
 export default class HotPlan extends Component {
     state = {
-     
       data: [],
       nowPage: 1,
-
       moreData: 0,
-
       // nowRecommended: this.props.route.params,  이거 마지막으로 api연동 해줘야함
     }
-
 
     componentDidMount() {
       this.getData();
@@ -54,7 +50,6 @@ export default class HotPlan extends Component {
       this.getData();
     }
   
-       
     renderItem = ({ item }) => (
       <TouchableOpacity style={{}} onPress={() => this.props.navigation.navigate('플랜 상세 정보', { item: item })}>
         <CardFive
@@ -66,7 +61,6 @@ export default class HotPlan extends Component {
         />
       </TouchableOpacity>
     );
-
 
     render() {
       return (

@@ -5,12 +5,13 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  Image,
   TouchableOpacity,
   Platform,
   TextInput,
+  Image,
 } from 'react-native';
 import axios from 'axios';
+import ImageModal from 'react-native-image-modal';
 import SpectorIcon from './PlanComponents/SpectorIcon';
 
 const { width, height } = Dimensions.get('window');
@@ -70,7 +71,7 @@ export default class MakePlanStep3 extends Component {
         <View style={styles.container}>
           <View style={styles.categoryContainer}>
             <View style={styles.categoryImgContainer}>
-              <Image 
+              <Image
                 source={{ uri: this.props.route.params.categoryUri }} 
                 style={styles.imageStyle}
               />
@@ -121,15 +122,30 @@ export default class MakePlanStep3 extends Component {
             </View>
             <View style={styles.rulesContainerStyle}>
               <View style={styles.categoryImgContainer}>
-                <Image 
+                <ImageModal 
                   source={{ uri: this.props.route.params.certifyImgUri }} 
                   style={styles.imageStyle}
                 />
               </View>
               <View style={styles.categoryInfoContainer}>
-                <Text>{this.props.route.params.selectedMainRule}</Text>
-                <Text>{this.props.route.params.subRule1}</Text>
-                <Text>{this.props.route.params.subRule2}</Text>
+                <Text>
+                  {(this.props.route.params.picture_rule_1 === null) 
+                    ? this.props.route.params.custom_picture_rule_1
+                    : this.props.route.params.picture_rule_1
+                  }
+                </Text>
+                <Text>
+                  {(this.props.route.params.picture_rule_2 === null) 
+                    ? this.props.route.params.custom_picture_rule_2
+                    : this.props.route.params.picture_rule_2
+                  }
+                </Text>
+                <Text>
+                  {(this.props.route.params.picture_rule_3 === null) 
+                    ? this.props.route.params.custom_picture_rule_3
+                    : this.props.route.params.picture_rule_3
+                  }
+                </Text>
               </View>
             </View>
           </View>
