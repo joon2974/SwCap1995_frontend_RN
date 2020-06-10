@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
-  View, Text, Dimensions, Button, 
+  View, Text, Dimensions, Button, TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Input } from 'react-native-elements';
@@ -66,47 +66,53 @@ export default class VariableCard extends Component {
             }}
             checkBoxStatus={this.state.watchStatusResult}
       />
-
-          <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
-            <View style={{
-              height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
-            }}>
-              <Text style={{ 
-                color: 'white', 
-                fontSize: 20,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                backgroundColor: '#FD8A69',
-                height: height / 20,
-                width: width / 1.05,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10, 
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <View style={{
+                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
               }}>
-                당신의 느낌을 적어주세요
-              </Text>
-              <Input
-                placeholder="코멘트를 입력해 주세요"
-                onChangeText={(changedComment) => {
-                  this.updateComment(changedComment);
-                }}
-            />
-
-              <View style={{ marginBottom: 10 }}>
-                <Button
-                  title="코멘트 보내기"
-                  type="solid"
-                  color="#FD8A69"
-                  onPress={() => {
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 20,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  backgroundColor: '#FD8A69',
+                  height: height / 20,
+                  width: width / 1.05,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10, 
+                }}>
+                  당신의 느낌을 적어주세요
+                </Text>
+                <Input
+                  placeholder="코멘트를 입력해 주세요"
+                  onChangeText={(changedComment) => {
+                    this.updateComment(changedComment);
+                  }}
+                  onSubmitEditing={() => {
                     this.toggleModal2();
                     this.sendComment();
                   }}
             />
+             
+                <View style={{ marginBottom: 10 }}>
+                  <Button
+                    title="코멘트 보내기"
+                    type="solid"
+                    color="#FD8A69"
+                    onPress={() => {
+                      this.toggleModal2();
+                      this.sendComment();
+                    }}
+            />
+                </View>
               </View>
-            </View>
-          </Modal>
+            
+            </Modal>
+          </TouchableWithoutFeedback>
 
         </View>
-
       );
     } else {
       testVari = (
@@ -133,44 +139,50 @@ export default class VariableCard extends Component {
             }}
             checkBoxStatus={this.state.watchStatusResult}
           />
-
-          <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
-            <View style={{
-              height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
-            }}>
-              <Text style={{ 
-                color: 'white', 
-                fontSize: 20,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                backgroundColor: '#FD8A69',
-                height: height / 20,
-                width: width / 1.05,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10, 
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+         
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <View style={{
+                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
               }}>
-                당신의 느낌을 적어주세요
-              </Text>
-              <Input
-                placeholder="코멘트를 입력해 주세요"
-                onChangeText={(changedComment) => {
-                  this.updateComment(changedComment);
-                }}
-            />
-
-              <View style={{ marginBottom: 10 }}>
-                <Button
-                  title="코멘트 보내기"
-                  type="solid"
-                  color="#FD8A69"
-                  onPress={() => {
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 20,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  backgroundColor: '#FD8A69',
+                  height: height / 20,
+                  width: width / 1.05,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10, 
+                }}>
+                  당신의 느낌을 적어주세요
+                </Text>
+                <Input
+                  placeholder="코멘트를 입력해 주세요"
+                  onChangeText={(changedComment) => {
+                    this.updateComment(changedComment);
+                  }}  
+                  onSubmitEditing={() => {
                     this.toggleModal2();
                     this.sendComment();
                   }}
             />
+
+                <View style={{ marginBottom: 10 }}>
+                  <Button
+                    title="코멘트 보내기"
+                    type="solid"
+                    color="#FD8A69"
+                    onPress={() => {
+                      this.toggleModal2();
+                      this.sendComment();
+                    }}
+            />
+                </View>
               </View>
-            </View>
-          </Modal>
+            </Modal>
+          </TouchableWithoutFeedback>
         </View>
       );
     } 
