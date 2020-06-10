@@ -8,6 +8,8 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Modal,
+  Image,
 } from 'react-native';
 import axios from 'axios';
 import PointPicker from './PlanComponents/PointPicker';
@@ -27,6 +29,7 @@ export default class MakePlanStep2 extends Component {
     selectedDist: '공평하게 n분의 1',
     percentList: ['5', '10', '20'],
     distribList: ['공평하게 n분의 1', '선착순', '추첨'],
+    modalVisible: false,
   };
 
   componentDidMount() {
@@ -40,7 +43,7 @@ export default class MakePlanStep2 extends Component {
     friendList.splice(idx, 1);
     selectedFriendList.push(friend);
     this.setState({ friends: friendList, selectedFriends: selectedFriendList });
-  }
+  };
 
   restoreFriend = (friend, friendList, selectedFriendList) => {
     const idx = selectedFriendList.indexOf(friend);
@@ -48,7 +51,7 @@ export default class MakePlanStep2 extends Component {
     selectedFriendList.splice(idx, 1);
     friendList.push(friend);
     this.setState({ friends: friendList, selectedFriends: selectedFriendList });
-  }
+  };
 
   getFriends = async () => {
     const userID = this.props.route.params.userID;
@@ -70,7 +73,7 @@ export default class MakePlanStep2 extends Component {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   getUserPoint = async () => {
     const userID = this.props.route.params.userID;
@@ -89,32 +92,31 @@ export default class MakePlanStep2 extends Component {
     } else if (selectedFriends.length < 3) {
       alert('감시자는 3명 이상이어야 합니다!');
     } else {
-      this.props.navigation.navigate('플랜 만들기: 3단계',
-        {
-          category: this.props.route.params.category,
-          planName: this.props.route.params.planName,
-          startDate: this.props.route.params.startDate,
-          endDate: this.props.route.params.endDate,
-          certifyTime: this.props.route.params.certifyTime,
-          picture_rule_1: this.props.route.params.picture_rule_1,
-          picture_rule_2: this.props.route.params.picture_rule_2,
-          picture_rule_3: this.props.route.params.picture_rule_3,
-          custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
-          custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
-          custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
-          challPoint: this.state.userBetPoint,
-          minusPercent: this.state.selectedPercent,
-          distribMethod: this.state.selectedDist,
-          spectors: this.state.selectedFriends,
-          certifyImgUri: this.props.route.params.certifyImgUri,
-          categoryUri: this.props.route.params.categoryUri,
-          userID: this.props.route.params.userID,
-          percent: this.state.selectedPercent,
-          is_custom: this.props.route.params.is_custom,
-          authentication_way: this.props.route.params.authentication_way,
-        });
+      this.props.navigation.navigate('플랜 만들기: 3단계', {
+        category: this.props.route.params.category,
+        planName: this.props.route.params.planName,
+        startDate: this.props.route.params.startDate,
+        endDate: this.props.route.params.endDate,
+        certifyTime: this.props.route.params.certifyTime,
+        picture_rule_1: this.props.route.params.picture_rule_1,
+        picture_rule_2: this.props.route.params.picture_rule_2,
+        picture_rule_3: this.props.route.params.picture_rule_3,
+        custom_picture_rule_1: this.props.route.params.custom_picture_rule_1,
+        custom_picture_rule_2: this.props.route.params.custom_picture_rule_2,
+        custom_picture_rule_3: this.props.route.params.custom_picture_rule_3,
+        challPoint: this.state.userBetPoint,
+        minusPercent: this.state.selectedPercent,
+        distribMethod: this.state.selectedDist,
+        spectors: this.state.selectedFriends,
+        certifyImgUri: this.props.route.params.certifyImgUri,
+        categoryUri: this.props.route.params.categoryUri,
+        userID: this.props.route.params.userID,
+        percent: this.state.selectedPercent,
+        is_custom: this.props.route.params.is_custom,
+        authentication_way: this.props.route.params.authentication_way,
+      });
     }
-  }
+  };
 
   render() {
     const {
@@ -127,14 +129,65 @@ export default class MakePlanStep2 extends Component {
       percentList,
       distribList,
       selectedFriends,
+      modalVisible,
     } = this.state;
     return (
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              alert('Modal has been closed.');
+            }}
+          >
+            <View>
+              <View style={styles.modalHeaderStyle}>
+                <TouchableOpacity
+                  onPress={() => this.setState({ modalVisible: false })}
+                  style={{ marginRight: 20 }}
+                >
+                  <Text>도움말 닫기</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.modalTopContainerStyle}>
+                <Text>a</Text>
+              </View>
+              <View style={styles.modalMiddleContainerStyle}>
+                <Text>b</Text>
+              </View>
+              <View style={styles.modalBottomContainerStyle}>
+                <Text>c</Text>
+              </View>
+            </View>
+          </Modal>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              width: width,
+              height: 20,
+            }}
+          >
+            <TouchableOpacity
+              style={{ marginRight: 15, marginTop: 20 }}
+              onPress={() => this.setState({ modalVisible: true })}
+            >
+              <Image
+                source={{
+                  uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png',
+                }}
+                style={{ width: 25, height: 25 }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.pointContainer}>
             <View style={styles.currentPoint}>
               <View style={styles.componentTitleContainer}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>인증 조건 선택</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                  인증 조건 선택
+                </Text>
               </View>
               <View style={styles.pointsStyle}>
                 <View style={styles.currentPointEach}>
@@ -157,7 +210,9 @@ export default class MakePlanStep2 extends Component {
             <View style={styles.lineDivider} />
 
             <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>도전 포인트 선택</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                도전 포인트 선택
+              </Text>
             </View>
 
             <View style={styles.challengePoint}>
@@ -179,7 +234,8 @@ export default class MakePlanStep2 extends Component {
                 </View>
                 <PointPicker
                   point={selectedPercent}
-                  onValueChange={(itemValue) => this.setState({ selectedPercent: itemValue })}
+                  onValueChange={(itemValue) => this.setState({ selectedPercent: itemValue })
+                  }
                   points={percentList}
                   pickerWidth={width / 2}
                 />
@@ -190,7 +246,8 @@ export default class MakePlanStep2 extends Component {
                 </View>
                 <PointPicker
                   point={selectedDist}
-                  onValueChange={(itemValue) => this.setState({ selectedDist: itemValue })}
+                  onValueChange={(itemValue) => this.setState({ selectedDist: itemValue })
+                  }
                   points={distribList}
                   pickerWidth={width / 2}
                 />
@@ -202,7 +259,9 @@ export default class MakePlanStep2 extends Component {
 
           <View style={styles.friendContainer}>
             <View style={styles.componentTitleContainer}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>감시자 선택</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                감시자 선택
+              </Text>
             </View>
             <View style={styles.friendSelectConainerStyle}>
               <View style={styles.friendContainerEach}>
@@ -210,10 +269,11 @@ export default class MakePlanStep2 extends Component {
                 <ScrollView style={styles.friendScrollViewContainer}>
                   <View style={styles.friendSelectContainer}>
                     {friends.map((friend) => (
-                      <FriendListEach 
+                      <FriendListEach
                         key={friend}
                         name={friend}
-                        friendSelectFunc={() => this.addSpector(friend, friends, selectedFriends)}
+                        friendSelectFunc={() => this.addSpector(friend, friends, selectedFriends)
+                        }
                       />
                     ))}
                   </View>
@@ -224,11 +284,12 @@ export default class MakePlanStep2 extends Component {
                 <ScrollView style={styles.friendScrollViewContainer}>
                   <View style={styles.friendSelectContainer}>
                     {selectedFriends.map((friend) => (
-                      <SelectedFriendListEach 
+                      <SelectedFriendListEach
                         key={friend}
                         name={friend}
                         // eslint-disable-next-line max-len
-                        friendSelectFunc={() => this.restoreFriend(friend, friends, selectedFriends)}
+                        friendSelectFunc={() => this.restoreFriend(friend, friends, selectedFriends)
+                        }
                       />
                     ))}
                   </View>
@@ -239,8 +300,10 @@ export default class MakePlanStep2 extends Component {
           <TouchableOpacity
             style={styles.nextStepBtn}
             onPress={() => this.goToNextStep(selectedFriends, userBetPoint)}
-            >
-            <Text style={{ fontWeight: 'bold', color: 'white' }}>플랜 결과 확인</Text>
+          >
+            <Text style={{ fontWeight: 'bold', color: 'white' }}>
+              플랜 결과 확인
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -409,5 +472,37 @@ const styles = StyleSheet.create({
   infoTitlesStyles: {
     width: width / 3.5,
     marginLeft: 20,
+  },
+  modalHeaderStyle: {
+    backgroundColor: '#E6E6E6',
+    width: width,
+    height: 60,
+    opacity: 0.95,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  modalTopContainerStyle: {
+    width: width,
+    height: height * 0.08 + 60,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#F6CEEC',
+    opacity: 0.7,
+  },
+  modalMiddleContainerStyle: {
+    width: width,
+    height: height * 0.25 + 35,
+    backgroundColor: '#E6E6E6',
+    opacity: 0.7,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  modalBottomContainerStyle: {
+    width: width,
+    height: height * 0.45,
+    backgroundColor: '#F5ECCE',
+    opacity: 0.7,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
