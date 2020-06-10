@@ -184,7 +184,7 @@ export default class CustomMakePlanStep1 extends Component {
                 onChangeText={(title) => this.setState({ planTitle: title })}
                 style={styles.input}
                 placeholder="플랜 이름을 작성해주세요"
-                keyboardType="email-address"
+                keyboardType="default"
               />
             </View>
           </View>

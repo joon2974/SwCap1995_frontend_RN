@@ -96,6 +96,7 @@ export default class PlanMain extends Component {
         }
         // eslint-disable-next-line prefer-const
         defaultRule = Object.keys(ruleObject)[0];
+        console.log('디폴트 롤', defaultRule);
         this.setState({
           selectedMainRule: defaultRule,
           pictureRules: ruleObject,
@@ -145,6 +146,7 @@ export default class PlanMain extends Component {
       periodList,
       dateList,
       modalVisible,
+      authenticationWay,
     } = this.state;
 
     return (
@@ -283,24 +285,24 @@ export default class PlanMain extends Component {
             onPress={() => this.props.navigation.navigate('플랜 만들기: 2단계', {
               category: this.props.route.params.category,
               planName: this.props.route.params.planName,
-              startDate: this.state.startDate,
-              endDate: this.state.endDate,
-              certifyTime: this.state.certifyTime,
-              picture_rule_1: this.state.selectedMainRule,
-              picture_rule_2: this.state.pictureRules[
-                this.state.selectedMainRule
+              startDate: startDate,
+              endDate: endDate,
+              certifyTime: certifyTime,
+              picture_rule_1: selectedMainRule,
+              picture_rule_2: pictureRules[
+                selectedMainRule
               ][0],
-              picture_rule_3: this.state.pictureRules[
-                this.state.selectedMainRule
+              picture_rule_3: pictureRules[
+                selectedMainRule
               ][1],
               custom_picture_rule_1: null,
               custom_picture_rule_2: null,
               custom_picture_rule_3: null,
-              certifyImgUri: this.state.certifyImageUri,
+              certifyImgUri: certifyImageUri,
               userID: this.props.route.params.userID,
               categoryUri: this.props.route.params.uri,
               is_custom: false,
-              authentication_way: this.state.authenticationWay,
+              authentication_way: authenticationWay,
             })
             }
           >

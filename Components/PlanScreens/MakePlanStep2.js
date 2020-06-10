@@ -224,6 +224,7 @@ export default class MakePlanStep2 extends Component {
                 onChangeText={(Point) => this.setState({ userBetPoint: Point })}
                 style={styles.betInput}
                 placeholder="도전에 걸 금액"
+                keyboardType="numeric"
               />
               <Text style={{ fontSize: 10 }}>(5000 ~ 50,000)</Text>
             </View>
