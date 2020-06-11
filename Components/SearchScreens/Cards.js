@@ -620,7 +620,7 @@ export class CardSix extends Component {
       );
     } else if (this.props.checkBoxStatus === 1) { 
       checkBox = (
-        <View>
+        <View style={{ borderWidth: 2 }}>
           <Text>
             인증 동의
           </Text>
@@ -911,7 +911,11 @@ export class CardSeven extends Component {
             padding: scale(2),
           }}
         >
-          <View style={{ height: screenHeight / 6.7 }}>
+          <TouchableOpacity 
+            style={{ height: screenHeight / 6.7 }}
+            onPress={this.props.switchShowing}
+            >
+
             <Text
               style={{ color: '#000', margin: scale(3), fontSize: scale(17) }}
               >
@@ -927,7 +931,7 @@ export class CardSeven extends Component {
               >
               {this.props.subTitle}
             </Text>
-          </View>
+          </TouchableOpacity>
         
         
           {checkBox}
@@ -1250,7 +1254,9 @@ export class CardSeven2 extends Component {
             padding: scale(2),
           }}
         >
-          <View style={{ height: screenHeight / 6.9, width: screenWidth / 1.7 }}>
+          <TouchableOpacity
+            style={{ height: screenHeight / 6.9, width: screenWidth / 1.7 }}
+            onPress={this.props.switchShowing}>
             <Text
               style={{ color: '#000', margin: scale(3), fontSize: scale(17) }}
               >
@@ -1266,7 +1272,7 @@ export class CardSeven2 extends Component {
               >
               {this.props.subTitle}
             </Text>
-          </View>
+          </TouchableOpacity>
         
           <View style={{ alignItems: 'flex-end', justifyContent: 'center', marginRight: 10 }}>
 

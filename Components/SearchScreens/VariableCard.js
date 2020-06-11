@@ -60,7 +60,7 @@ export default class VariableCard extends Component {
             switchShowing={this.props.changeShowing}
             icon2="remove"
             iconColor2="#fff"
-            iconBackground2="purple"
+            iconBackground2="#FD8A69"
             onClicked2={() => {
               this.toggleModal(2);
             }}
@@ -133,7 +133,7 @@ export default class VariableCard extends Component {
             switchShowing={this.props.changeShowing}
             icon2="remove"
             iconColor2="#fff"
-            iconBackground2="purple"
+            iconBackground2="#FD8A69"
             onClicked2={() => {
               this.toggleModal(2);
             }}

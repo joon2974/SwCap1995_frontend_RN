@@ -57,7 +57,7 @@ export default class WatcherPage extends Component {
         }
             onPress={() => this.setState({ selectedTab: 0, tabState: 0 })}
       >
-            <Text style={this.state.selectedTab === 0 ? { color: 'white' } : { color: 'black' }}>감시</Text>
+            <Text style={this.state.selectedTab === 0 ? { color: 'white' } : { color: 'black' }}>인증</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -68,7 +68,7 @@ export default class WatcherPage extends Component {
         }
             onPress={() => this.setState({ selectedTab: 1, tabState: 1 })}
       >
-            <Text style={this.state.selectedTab === 1 ? { color: 'white' } : { color: 'black' }}>정보</Text>
+            <Text style={this.state.selectedTab === 1 ? { color: 'white' } : { color: 'black' }}>기타</Text>
           </TouchableOpacity>
         </View>
         
