@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unused-state */
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   View,
@@ -7,12 +8,15 @@ import {
   ScrollView,
   Dimensions,
   Text,
+  Platform,
+  TouchableOpacityBase,
 } from 'react-native';
+import axios from 'axios';
 import VariableCard from './VariableCard';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-export default class AuthenticationPage extends Component {
+export default class WatcherPage extends Component {
   state = {
     title: '',
     isPublic: false,
@@ -20,61 +24,64 @@ export default class AuthenticationPage extends Component {
     onOff: 0,
     selectedTab: 0,
     tabState: 0,
+
+    testArray: [],
   }
 
-  // sendPlanInfo = () => {
-  //   const today = new Date();
-  //   today.setDate(Number(this.props.route.params.startDate));
+  // componentDidMount() {
+  //   this.setTest();
+  // }
 
-  //   axios
-  //     .post('http://49.50.172.58:3000/plans', {
-  //       headers: {
-  //         'Content-type': 'application/x-www-form-urlencoded',
-  //       },
-  //       user_id: Number(this.props.route.params.userID),
-  //     })
-  //     .then((res) => {
-  //       console.log(res.status);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
+  setTest = () => {
+    axios.get('').then((res) => {
+      console.log('this is test111111111111111111111111111111111');
+      console.log(res);
+    }).catch((error) => {
+      console.log(error);
+      alert(error);
+    });
+  }
+  
 
   render() {
     return (
+
       <View>
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
             style={
-                this.state.selectedTab === 0
-                  ? styles.selectedCategoryBtnStyle
-                  : styles.categoryBtnStyle
-            }
+            this.state.selectedTab === 0
+              ? styles.selectedCategoryBtnStyle
+              : styles.categoryBtnStyle
+        }
             onPress={() => this.setState({ selectedTab: 0, tabState: 0 })}
-          >
-            <Text style={this.state.selectedTab === 0 ? { color: 'white' } : { color: 'black' }}>인증</Text>
+      >
+            <Text style={this.state.selectedTab === 0 ? { color: 'white' } : { color: 'black' }}>감시</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={
-              this.state.selectedTab === 1
-                ? styles.selectedCategoryBtnStyle
-                : styles.categoryBtnStyle
-            }
+          this.state.selectedTab === 1
+            ? styles.selectedCategoryBtnStyle
+            : styles.categoryBtnStyle
+        }
             onPress={() => this.setState({ selectedTab: 1, tabState: 1 })}
-          >
-            <Text style={this.state.selectedTab === 1 ? { color: 'white' } : { color: 'black' }}>??</Text>
+      >
+            <Text style={this.state.selectedTab === 1 ? { color: 'white' } : { color: 'black' }}>정보</Text>
           </TouchableOpacity>
         </View>
         
         {this.state.tabState === 0 ? (
+
           <ScrollView style={{ marginBottom: 40 }}>
+          
+
             <View style={styles.container}>
               {
                 this.state.data.map((data, index) => (
                   <VariableCard 
+                    key={data}
                     index={index} 
                     onOff={this.state.onOff}
                     changeShowing={() => {
@@ -84,9 +91,13 @@ export default class AuthenticationPage extends Component {
                 ))
               }
               <View style={styles.lineDivider} />
+
             </View>
+
           </ScrollView>
         ) : (<View />) }
+       
+    
       </View>
     );
   }
@@ -114,6 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 1,
   },
+
   selectedCategoryBtnStyle: {
     width: width * 0.495,
     height: 40,

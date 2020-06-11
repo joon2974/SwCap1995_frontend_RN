@@ -41,16 +41,9 @@ export default class VariableCard extends Component {
       testVari = (
         <View>
           <CardSix
-            title="Vinny’s Barber"
-            subTitle="852 N Virgil Ave, Beverly Hills"
-            profile={{
-              uri:
-            'https://lemag.nikonclub.fr/wp-content/uploads/2016/11/Photo-selection-pour-Nikon-France-Mattia-Bonavida-2016-6.jpg',
-            }}
-            image={{
-              uri:
-            'https://idinterdesign.ca/wp-content/uploads/2016/07/paysage-ID-02-750x468.jpg',
-            }}
+            title={this.props.data.comment}
+            subTitle={'작성일: ' + this.props.data.createdAt + '\n수정일: ' + this.props.data.updatedAt}
+            image={{ uri: this.props.data.image_url }}
             icon1="check"
             iconColor1="#fff"
             iconBackground1="green"
@@ -118,12 +111,9 @@ export default class VariableCard extends Component {
       testVari = (
         <View>
           <CardSeven
-            title="Vinny’s Barber"
-            subTitle="852 N Virgil Ave, Beverly Hills"
-            image={{
-              uri:
-                'https://idinterdesign.ca/wp-content/uploads/2016/07/paysage-ID-02-750x468.jpg',
-            }}
+            title={this.props.data.comment}
+            subTitle={'작성일: ' + this.props.data.createdAt + '\n수정일: ' + this.props.data.updatedAt}
+            image={{ uri: this.props.data.image_url }}
             icon1="check"
             iconColor1="#fff"
             iconBackground1="green" 

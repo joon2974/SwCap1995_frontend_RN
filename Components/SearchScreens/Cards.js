@@ -565,6 +565,7 @@ export class CardFive extends Component {
   }
 }
 
+
 export class CardSix extends Component {
   render() {
     let checkBox = null;
@@ -931,6 +932,347 @@ export class CardSeven extends Component {
         
           {checkBox}
          
+        </View>
+      </View>
+    );
+  }
+}
+
+
+export class CardSix2 extends Component {
+  render() {
+    let checkBox = null;
+    if (this.props.checkBoxStatus === 0) { 
+      checkBox = (
+        <View
+          style={[
+            {
+              justifyContent: 'center',
+              zIndex: 3,
+              alignItems: 'center',
+              width: scale(120),
+              height: scale(50),
+              margin: 10,
+              shadowRadius: 5,
+              borderRadius: scale(40),
+              backgroundColor: this.props.iconBackground1,
+            },
+          ]}
+           >
+          <Icon
+            name={this.props.icon1}
+            color={this.props.iconColor1}
+            size={scale(20)}
+             />
+        </View>
+      );
+    } else if (this.props.checkBoxStatus === 1) { 
+      checkBox = (
+        <View
+          style={[
+            {
+              justifyContent: 'center',
+              zIndex: 3,
+              alignItems: 'center',
+              width: scale(120),
+              height: scale(50),
+              margin: 10,
+              shadowRadius: 5,
+              borderRadius: scale(40),
+              backgroundColor: this.props.iconBackground2,
+            },
+          ]}
+       >
+          <Icon
+            name={this.props.icon2}
+            color={this.props.iconColor2}
+            size={scale(20)}
+         />
+        </View>
+    
+      );
+    } else { 
+      checkBox = (
+        <View>
+          <Text>
+            인증 비동의
+          </Text>
+        </View>
+      );
+    }
+
+
+    return (
+      <View>
+        <View
+          style={{
+            height: screenHeight / 1.6,
+            width: screenWidth / 1.05,
+            marginTop: scale(10),
+            marginHorizontal: scale(10),
+            flexDirection: 'column',
+            borderRadius: 12,
+            elevation: 2,
+            shadowColor: '#777',
+            shadowOpacity: 0.16,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 0,
+            },
+          }}
+      >
+
+          <TouchableOpacity
+            style={{
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              width: screenWidth / 1.05,
+              height: screenHeight / 2.1,
+            }}
+            onPress={this.props.switchShowing}>
+            <Image
+              borderRadius={12}
+              source={this.props.image}
+              style={{
+                width: screenWidth / 1.05,
+                height: screenHeight / 2.1,
+                resizeMode: 'cover',
+              }}
+          />
+          </TouchableOpacity>
+
+
+          <View
+            style={{
+              backgroundColor: '#fff',
+              height: screenHeight / 6.2,
+              width: screenWidth / 1.05,
+              padding: scale(5),
+              marginTop: scale(-10),
+              borderBottomLeftRadius: 12,
+              borderBottomRightRadius: 12,
+            }}
+        >
+            <View
+              style={{
+                flexDirection: 'row',
+                height: screenHeight / 13.5,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+          >
+              <Text
+                style={{ color: '#000', margin: scale(3), fontSize: scale(17) }}
+              >
+                {this.props.title}
+              </Text>
+              <View style={{ flexDirection: 'row' }}>
+                {checkBox}
+              </View>
+            </View>
+          
+            <View
+              style={{
+                backgroundColor: 'transparent',
+                height: screenHeight / 13,
+              }}
+            >
+             
+              <Text
+                style={{
+                  color: '#888',
+                  textAlign: 'justify',
+                  margin: scale(3),
+                  fontSize: scale(12),
+                }}
+              >
+                {this.props.subTitle}
+              </Text>
+            </View>
+     
+          </View>
+        </View>
+
+        <View
+          style={{
+            height: screenHeight / 5,
+            width: screenWidth / 1.05,
+            marginHorizontal: 10,
+            borderRadius: 12,
+            elevation: 2,
+            shadowColor: '#777',
+            shadowOpacity: 0.16,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 0,
+            },
+          }}>
+          <View
+            style={{
+              backgroundColor: '#fff',
+              height: screenHeight / 5,
+              width: screenWidth / 1.05,
+              borderRadius: 12,  
+              justifyContent: 'center',
+              paddingLeft: 20,
+            }}
+         >
+            <Text>
+              Rule 1: ~~~~~~~~~~
+              {'\n'} 
+            </Text>
+            <Text>
+              Rule 2: ~~~~~~~~~~
+              {'\n'}
+            </Text>
+            <Text>
+              Rule 3: ~~~~~~~~~~
+            </Text>
+          </View>
+              
+        </View>
+              
+
+      </View>
+    );
+  }
+}
+
+
+export class CardSeven2 extends Component {
+  render() {
+    let checkBox = null;
+    if (this.props.checkBoxStatus === 0) { 
+      checkBox = (
+        <View
+          style={[
+            {           
+              justifyContent: 'center',
+              zIndex: 3,
+              alignItems: 'center',
+              width: scale(70),
+              height: scale(30),
+              margin: 2,
+              shadowRadius: 5,
+              borderRadius: scale(15),
+              backgroundColor: this.props.iconBackground1,
+            },
+          ]}
+                >
+          <Icon
+            name={this.props.icon1}
+            color={this.props.iconColor1}
+            size={scale(15)}
+                  />
+        </View>
+          
+      );
+    } else if (this.props.checkBoxStatus === 1) { 
+      checkBox = (
+        <View
+          style={[
+            {
+              justifyContent: 'center',
+              zIndex: 3,
+              alignItems: 'center',
+              width: scale(70),
+              height: scale(30),
+              margin: 2,
+              shadowRadius: 5,
+              borderRadius: scale(15),
+              backgroundColor: this.props.iconBackground2,
+            },
+          ]}
+            >
+          <Icon
+            name={this.props.icon2}
+            color={this.props.iconColor2}
+            size={scale(15)}
+              />
+        </View>
+      );
+    } 
+
+    return (
+      <View
+        style={{
+          backgroundColor: '#fff',
+          margin: scale(10),
+          flexDirection: 'row',
+          width: screenWidth / 1.05,
+          height: screenHeight / 5,
+          shadowColor: '#777',
+          borderRadius: 12,
+          elevation: 2,
+          shadowOpacity: 0.16,
+          shadowRadius: 2,
+          shadowOffset: {
+            height: 1,
+            width: 0,
+          },
+          justifyContent: 'center',
+          alignItems: 'center',
+          
+        }}
+      >
+
+       
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'transparent',
+            borderTopLeftRadius: 12,
+            borderBottomLeftRadius: 12,
+            height: screenHeight / 5,
+            width: screenWidth / 2.6, 
+          }}
+          onPress={this.props.switchShowing}>
+          <Image
+            source={this.props.image}
+            style={{
+              borderTopLeftRadius: 12,
+              borderBottomLeftRadius: 12,
+              height: screenHeight / 5,
+              width: screenWidth / 2.6,
+              resizeMode: 'cover',
+            }}
+          />
+        </TouchableOpacity>
+      
+
+        <View
+          style={{
+            height: screenHeight / 5,
+            width: screenWidth / 1.7,
+            borderTopRightRadius: 12,
+            borderBottomRightRadius: 12,
+            padding: scale(2),
+          }}
+        >
+          <View style={{ height: screenHeight / 6.9, width: screenWidth / 1.7 }}>
+            <Text
+              style={{ color: '#000', margin: scale(3), fontSize: scale(17) }}
+              >
+              {this.props.title}
+            </Text>
+            <Text
+              style={{
+                color: '#888',
+                textAlign: 'justify',
+                margin: scale(3),
+                fontSize: scale(12),
+              }}
+              >
+              {this.props.subTitle}
+            </Text>
+          </View>
+        
+          <View style={{ alignItems: 'flex-end', justifyContent: 'center', marginRight: 10 }}>
+
+            {checkBox}
+          </View>
+
         </View>
       </View>
     );
