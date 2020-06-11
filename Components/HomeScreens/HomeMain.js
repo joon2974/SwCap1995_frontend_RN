@@ -16,6 +16,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Notifications } from 'expo';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 
@@ -43,6 +44,14 @@ export default class HomeMain extends Component {
         });
       });
     }
+    Notifications.addListener((notification) => {
+      console.log(notification);
+      var page = notification.data.screen;
+      console.log(page);
+      if (page === 'friend') {
+        this.props.navigation.dangerouslyGetParent().navigate('Friend');
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -151,17 +160,12 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          // eslint-disable-next-line no-unused-vars
-          const ji = AsyncStorage.getItem('UserID').then((res) => {
-            if (res) console.log('userID', res);
+          AsyncStorage.getItem('UserID').then(() => {
           });
        
-          console.log('데이터 이미 존재');
           AsyncStorage.setItem('UserID', res.data.id.toString());
 
-          // eslint-disable-next-line no-unused-vars
-          const jj = AsyncStorage.getItem('UserID').then((res) => {
-            if (res) console.log('userID', res);
+          AsyncStorage.getItem('UserID').then(() => {
           });
           this.setState({ userId: res.data.id });
         } else {
