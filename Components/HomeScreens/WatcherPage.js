@@ -25,7 +25,23 @@ export default class WatcherPage extends Component {
     onOff: 0,
     selectedTab: 0,
     tabState: 0,
+
+    testArray: [],
   }
+
+  componentDidMount() {
+    this.setTest();
+  }
+
+  setTest = () => {
+    axios.get('http://49.50.172.58:3000/daily_authentications/166').then((res) => {
+      this.setState({ testArray: res.data.rows });
+    }).catch((error) => {
+      console.log(error);
+      alert(error);
+    });
+  }  
+
 
   render() {
     return (
@@ -62,14 +78,15 @@ export default class WatcherPage extends Component {
 
             <View style={styles.container}>
               {
-                this.state.data.map((data, index) => (
+                this.state.testArray.map((data, index) => (
                   <VariableCard 
                     key={data}
+                    data={data}
                     index={index} 
                     onOff={this.state.onOff}
                     changeShowing={() => {
                       this.setState({ onOff: index });
-                    }} 
+                    }}
                 />
                 ))
               }
