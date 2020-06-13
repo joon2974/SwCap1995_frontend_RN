@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
         shadowOpacity: 0.1,
-        shadowRadius: 5,
+        shadowRadius: 30,
         shadowOffset: {
           height: -1,
           width: 0,
