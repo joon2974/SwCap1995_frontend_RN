@@ -14,8 +14,11 @@ import axios from 'axios';
 import ImageModal from 'react-native-image-modal';
 import TimePicker from './PlanComponents/TimePicker';
 import RulePicker from './PlanComponents/RulePicker';
+import customInfoPicture2 from '../InfoImages/customMakePlanInfo2.png';
+import MakePlan1Info1 from '../InfoImages/MakePlan1Info1.png';
 
 const { height, width } = Dimensions.get('window');
+const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
 
 export default class PlanMain extends Component {
   state = {
@@ -120,7 +123,6 @@ export default class PlanMain extends Component {
 
   updateCertifyPhoto = (selectedMainRule) => {
     const ruleListFromServer = this.state.ruleListFromServer;
-    console.log('룰 리스트 확인', ruleListFromServer);
 
     let certifyPhotoUri;
     let authentication;
@@ -165,17 +167,21 @@ export default class PlanMain extends Component {
                   onPress={() => this.setState({ modalVisible: false })}
                   style={{ marginRight: 20 }}
                   >
-                  <Text>도움말 닫기</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>도움말 닫기</Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.modalTopContainerStyle}>
-                <Text>a</Text>
-              </View>
+              <View style={styles.modalTopContainerStyle} />
               <View style={styles.modalMiddleContainerStyle}>
-                <Text>b</Text>
+                <Image 
+                  source={customInfoPicture2}
+                  style={{ width: width, height: height * 0.25 + 30, marginLeft: 5 }}
+                />
               </View>
               <View style={styles.modalBottomContainerStyle}>
-                <Text>c</Text>
+                <Image 
+                  source={MakePlan1Info1}
+                  style={{ width: width, height: height * 0.4, marginLeft: 5 }}
+                />
               </View>
             </View>
           </Modal>
@@ -183,12 +189,12 @@ export default class PlanMain extends Component {
             justifyContent: 'center', alignItems: 'flex-end', width: width, height: 20,
           }}>
             <TouchableOpacity
-              style={{ marginRight: 15, marginTop: 20 }}
+              style={{ marginRight: 15, marginTop: 30 }}
               onPress={() => this.setState({ modalVisible: true })}
             >
               <Image
                 source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png' }}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>
@@ -427,7 +433,7 @@ const styles = StyleSheet.create({
   modalHeaderStyle: {
     backgroundColor: '#E6E6E6',
     width: width,
-    height: 60,
+    height: 60 + statusbarHeight,
     opacity: 0.95,
     alignItems: 'flex-end',
     justifyContent: 'center',
@@ -436,15 +442,15 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.17 + 40,
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#F6CEEC',
-    opacity: 0.7,
+    alignItems: 'flex-start',
+    backgroundColor: 'white',
+    opacity: 0.1,
   },
   modalMiddleContainerStyle: {
     width: width,
     height: height * 0.25 + 30,
     backgroundColor: '#E6E6E6',
-    opacity: 0.7,
+    opacity: 0.9,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
@@ -452,7 +458,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.4,
     backgroundColor: '#F5ECCE',
-    opacity: 0.7,
+    opacity: 0.9,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

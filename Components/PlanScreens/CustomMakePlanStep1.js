@@ -147,7 +147,7 @@ export default class CustomMakePlanStep1 extends Component {
                   onPress={() => this.setState({ modalVisible: false })}
                   style={{ marginRight: 20 }}
                 >
-                  <Text>도움말 닫기</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>도움말 닫기</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.modalTopContainerStyle}>
@@ -174,12 +174,12 @@ export default class CustomMakePlanStep1 extends Component {
             justifyContent: 'center', alignItems: 'flex-end', width: width, height: 20,
           }}>
             <TouchableOpacity
-              style={{ marginRight: 15, marginTop: 20 }}
+              style={{ marginRight: 15, marginTop: 30 }}
               onPress={() => this.setState({ modalVisible: true })}
             >
               <Image
                 source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png' }}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>

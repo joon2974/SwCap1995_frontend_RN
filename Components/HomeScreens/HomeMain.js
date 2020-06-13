@@ -118,7 +118,6 @@ export default class HomeMain extends Component {
     const watchcount = await watchresponse.data.count;
     
     try {
-      // console.log(watchresponseJson);
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
@@ -149,8 +148,17 @@ export default class HomeMain extends Component {
   }
 
   moveToWatchPage = (data) => {
-    if (data.status === 'waiting') this.props.navigation.navigate('플랜평가하기', { id: data.id });
-    else this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
+    if (data.status === 'waiting') {
+      axios.post(
+        'http://49.50.172.58:3000/agreements/is_exist', {
+          user_id: this.state.userId,
+          plan_id: data.id,
+        },
+      ).then(() => { this.props.navigation.navigate('플랜평가하기', { id: data.id }); })
+        .catch(() => {
+          alert('이미 평가하셨습니다');
+        }); 
+    } else this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
   }
 
   setModalInvisible = () => {
@@ -192,15 +200,24 @@ export default class HomeMain extends Component {
     this.props.navigation.navigate('일일인증: 갤러리', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
   }
 
-  faceAuthentication = (planId, authMethod) => {
-    this.props.navigation.navigate('일일인증: 본인인증', 
-      {
-        cameraCertify: this.cameraCertify,
-        galaryCertify: this.galaryCertify,
-        userID: this.state.userId,
-        planID: planId,
-        certifyMethod: authMethod,
-      });
+  faceAuthentication = (planId, authMethod, pictureTime) => {
+    const currentDate = Date();
+    const currentTime = currentDate.split(' ')[4];
+    const currentHour = Number(currentTime.split(':')[0]);
+    const currentMinute = Number(currentTime.split(':')[1]);
+    if (((currentHour === pictureTime - 1) && currentMinute >= 30) 
+      || ((currentHour === pictureTime + 1) && currentMinute <= 30)) {
+      this.props.navigation.navigate('일일인증: 본인인증', 
+        {
+          cameraCertify: this.cameraCertify,
+          galaryCertify: this.galaryCertify,
+          userID: this.state.userId,
+          planID: planId,
+          certifyMethod: authMethod,
+        });
+    } else {
+      alert('인증 시간이 아닙니다!');
+    }
   }
 
   returnToTop = () => {
@@ -220,7 +237,7 @@ export default class HomeMain extends Component {
         key={data.id}
         planId={data.id}
         title={data.title}
-        btnFunc={() => { this.moveToAuthenticationList(data.id); }}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
