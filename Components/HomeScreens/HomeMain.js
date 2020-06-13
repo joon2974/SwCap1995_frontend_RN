@@ -199,8 +199,6 @@ export default class HomeMain extends Component {
     const currentTime = currentDate.split(' ')[4];
     const currentHour = Number(currentTime.split(':')[0]);
     const currentMinute = Number(currentTime.split(':')[1]);
-    console.log('현재 시간', currentHour);
-    console.log('현재 분', currentMinute);
     if (((currentHour === pictureTime - 1) && currentMinute >= 30) 
       || ((currentHour === pictureTime + 1) && currentMinute <= 30)) {
       this.props.navigation.navigate('일일인증: 본인인증', 
