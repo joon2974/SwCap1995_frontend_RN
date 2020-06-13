@@ -46,9 +46,9 @@ export default class HomeMain extends Component {
       });
     }
     Notifications.addListener((notification) => {
-      console.log(notification);
+      // console.log(notification);
       var page = notification.data.screen;
-      console.log(page);
+      // console.log(page);
       if (page === 'friend') {
         this.props.navigation.dangerouslyGetParent().navigate('Friend');
       }
@@ -118,7 +118,7 @@ export default class HomeMain extends Component {
     const watchcount = await watchresponse.data.count;
     
     try {
-      console.log(watchresponseJson);
+      // console.log(watchresponseJson);
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
@@ -150,7 +150,11 @@ export default class HomeMain extends Component {
 
   moveToWatchPage = (data) => {
     if (data.status === 'waiting') this.props.navigation.navigate('플랜평가하기', { id: data.id });
-    else this.props.navigation.navigate('감시 리스트', { planID: data.id });
+    else this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
+  }
+
+  moveToWatchPage2 = (data) => {
+    this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
   }
 
   setModalInvisible = () => {
@@ -235,6 +239,7 @@ export default class HomeMain extends Component {
         title={data.title}
         id={data.id}
         btnFunc={() => { this.moveToWatchPage(data); }}
+        btnFunc2={() => { this.moveToWatchPage2(data); }}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}

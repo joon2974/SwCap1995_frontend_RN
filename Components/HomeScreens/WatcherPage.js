@@ -96,6 +96,7 @@ export default class WatcherPage extends Component {
                       this.setState({ onOff: index });
                     }}
                     planData={this.state.testArray2}
+                    userID={this.props.route.params.userID}
                 />
                 ))
               }
