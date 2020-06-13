@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
@@ -16,22 +17,37 @@ import AllCateList from './TabList/AllCateList';
 const { height, width } = Dimensions.get('window');
 
 export default class Searchscreen extends Component {
-  state = {
-  
-    selectedRecommend: '',
-    selectedAllCate: '',
-
-    nowRecommend: [],
-    nowAllCate: [],
-    
-  };
+  constructor(props) {
+    super(props);
+    this.onRefresh = this.onRefresh.bind(this);
+    this.state = {
+      selectedRecommend: '',
+      selectedAllCate: '',
+      nowRecommend: [],
+      nowAllCate: [],
+      refreshing: false,
+    };
+  }
   
   componentDidMount() {
     this.setPlanList('10대');
     this.setPlanListAllCate('운동/건강');
   }
 
-  setPlanList = (categoryName) => {
+  onRefresh = () => {
+    this.setState({
+      selectedRecommend: '',
+      selectedAllCate: '',
+      nowRecommend: [],
+      nowAllCate: [],
+    });
+    this.setState({ refreshing: true });
+    this.setPlanList('10대')
+      .then(this.setPlanListAllCate('운동/건강'))
+      .then(() => this.setState({ refreshing: false }));
+  }
+
+  setPlanList = async (categoryName) => {
     this.setState({ selectedRecommend: categoryName });
 
     axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
@@ -64,7 +80,7 @@ export default class Searchscreen extends Component {
     } = this.state;
     
     return (
-      <View style={styles.container}>
+      <View>
         <View style={styles.searchContainer}>
           
           <TouchableOpacity
@@ -79,7 +95,19 @@ export default class Searchscreen extends Component {
             
         </View>
 
-        <ScrollView style={styles.scrollContainer}>
+        <ScrollView 
+          refreshControl={(
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+              tintColor="#ff0000"
+              title="Loading..."
+              titleColor="#00ff00"
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="white" />
+          )}
+          style={styles.scrollContainer}
+        >
           <View>
             <Text style={styles.recommendTitle}>주간 인기 플랜</Text>
             <Text style={styles.recommendSubTitle}>

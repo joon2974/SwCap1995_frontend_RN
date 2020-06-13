@@ -13,8 +13,12 @@ import {
 } from 'react-native';
 import ImageModal from 'react-native-image-modal';
 import TimePicker from './PlanComponents/TimePicker';
+import customInfoPicture1 from '../InfoImages/customMakePlanInfo1.png';
+import customInfoPicture2 from '../InfoImages/customMakePlanInfo2.png';
+import customInfoPicture3 from '../InfoImages/customMakePlanInfo3.png';
 
 const { height, width } = Dimensions.get('window');
+const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
 
 export default class CustomMakePlanStep1 extends Component {
   state = {
@@ -147,13 +151,22 @@ export default class CustomMakePlanStep1 extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.modalTopContainerStyle}>
-                <Text>a</Text>
+                <Image
+                  source={customInfoPicture1}
+                  style={{ width: width * 0.6, height: height * 0.17 + 40, marginLeft: 5 }}
+                />
               </View>
               <View style={styles.modalMiddleContainerStyle}>
-                <Text>b</Text>
+                <Image 
+                  source={customInfoPicture2}
+                  style={{ width: width, height: height * 0.25 + 30, marginLeft: 5 }}
+                />
               </View>
               <View style={styles.modalBottomContainerStyle}>
-                <Text>c</Text>
+                <Image 
+                  source={customInfoPicture3}
+                  style={{ width: width, height: height * 0.4, marginLeft: 5 }}
+                />
               </View>
             </View>
           </Modal>
@@ -506,7 +519,7 @@ const styles = StyleSheet.create({
   modalHeaderStyle: {
     backgroundColor: '#E6E6E6',
     width: width,
-    height: 60,
+    height: 60 + statusbarHeight,
     opacity: 0.95,
     alignItems: 'flex-end',
     justifyContent: 'center',
@@ -515,15 +528,15 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.17 + 40,
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#F6CEEC',
-    opacity: 0.7,
+    opacity: 0.9,
   },
   modalMiddleContainerStyle: {
     width: width,
     height: height * 0.25 + 30,
     backgroundColor: '#E6E6E6',
-    opacity: 0.7,
+    opacity: 0.9,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
@@ -531,7 +544,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.4,
     backgroundColor: '#F5ECCE',
-    opacity: 0.7,
+    opacity: 0.9,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
