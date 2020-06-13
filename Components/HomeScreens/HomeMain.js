@@ -237,7 +237,7 @@ export default class HomeMain extends Component {
         key={data.id}
         planId={data.id}
         title={data.title}
-        btnFunc={this.moveToEstimate}
+        btnFunc={() => { this.moveToAuthenticationList(data.id); }}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
