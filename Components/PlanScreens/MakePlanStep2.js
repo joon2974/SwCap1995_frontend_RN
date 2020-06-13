@@ -15,8 +15,12 @@ import axios from 'axios';
 import PointPicker from './PlanComponents/PointPicker';
 import FriendListEach from './PlanComponents/FriendListEach';
 import SelectedFriendListEach from './PlanComponents/SelectedFriendListEach';
+import makePlan2Info1 from '../InfoImages/makePlan2Info1.png';
+import makePlan2Info2 from '../InfoImages/makePlan2Info2.png';
+import makePlan2Info3 from '../InfoImages/makePlan2Info3.png';
 
 const { width, height } = Dimensions.get('window');
+const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
 
 export default class MakePlanStep2 extends Component {
   state = {
@@ -146,19 +150,28 @@ export default class MakePlanStep2 extends Component {
               <View style={styles.modalHeaderStyle}>
                 <TouchableOpacity
                   onPress={() => this.setState({ modalVisible: false })}
-                  style={{ marginRight: 20 }}
+                  style={{ marginRight: 20, justifyContent: 'flex-end', alignItems: 'flex-end' }}
                 >
-                  <Text>도움말 닫기</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>도움말 닫기</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.modalTopContainerStyle}>
-                <Text>a</Text>
+                <Image
+                  source={makePlan2Info1}
+                  style={{ width: width, height: height * 0.17, marginLeft: 5 }}
+                />
               </View>
               <View style={styles.modalMiddleContainerStyle}>
-                <Text>b</Text>
+                <Image 
+                  source={makePlan2Info2}
+                  style={{ width: width, height: height * 0.25 + 35, marginLeft: 5 }}
+                />
               </View>
               <View style={styles.modalBottomContainerStyle}>
-                <Text>c</Text>
+                <Image 
+                  source={makePlan2Info3}
+                  style={{ width: width, height: height * 0.5, marginLeft: 5 }}
+                />
               </View>
             </View>
           </Modal>
@@ -171,14 +184,14 @@ export default class MakePlanStep2 extends Component {
             }}
           >
             <TouchableOpacity
-              style={{ marginRight: 15, marginTop: 20 }}
+              style={{ marginRight: 15, marginTop: 30 }}
               onPress={() => this.setState({ modalVisible: true })}
             >
               <Image
                 source={{
                   uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png',
                 }}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>
@@ -477,32 +490,32 @@ const styles = StyleSheet.create({
   modalHeaderStyle: {
     backgroundColor: '#E6E6E6',
     width: width,
-    height: 60,
+    height: 60 + statusbarHeight,
     opacity: 0.95,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
   modalTopContainerStyle: {
     width: width,
-    height: height * 0.08 + 60,
+    height: height * 0.17,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F6CEEC',
-    opacity: 0.7,
+    opacity: 0.75,
   },
   modalMiddleContainerStyle: {
     width: width,
     height: height * 0.25 + 35,
     backgroundColor: '#E6E6E6',
-    opacity: 0.7,
+    opacity: 0.8,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   modalBottomContainerStyle: {
     width: width,
-    height: height * 0.45,
+    height: height * 0.5,
     backgroundColor: '#F5ECCE',
-    opacity: 0.7,
+    opacity: 0.8,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

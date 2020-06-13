@@ -148,8 +148,17 @@ export default class HomeMain extends Component {
   }
 
   moveToWatchPage = (data) => {
-    if (data.status === 'waiting') this.props.navigation.navigate('플랜평가하기', { id: data.id });
-    else this.props.navigation.navigate('감시 리스트', { planID: data.id });
+    if (data.status === 'waiting') {
+      axios.post(
+        'http://49.50.172.58:3000/agreements/is_exist', {
+          user_id: this.state.userId,
+          plan_id: data.id,
+        },
+      ).then(() => { this.props.navigation.navigate('플랜평가하기', { id: data.id }); })
+        .catch(() => {
+          alert('이미 평가하셨습니다');
+        }); 
+    } else this.props.navigation.navigate('감시 리스트', { planID: data.id });
   }
 
   setModalInvisible = () => {
