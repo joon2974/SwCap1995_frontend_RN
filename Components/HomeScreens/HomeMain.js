@@ -93,7 +93,7 @@ export default class HomeMain extends Component {
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
-          const planPercent = (responseJson[i].daily_authentications.length === 0 
+          const planPercent = (responseJson[i].daily_authentications.length !== 0 
             ? responseJson[i].daily_authentications.length 
             / (responseJson[i].plan_period * 7) : 0);
           const obj = {
@@ -124,7 +124,7 @@ export default class HomeMain extends Component {
     try {
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
-          const planPercent = (watchresponseJson[l].daily_authentications.length === 0 
+          const planPercent = (watchresponseJson[l].daily_authentications.length !== 0 
             ? watchresponseJson[l].daily_authentications.length 
             / (watchresponseJson[l].plan_period * 7) : 0);
           const obj = {

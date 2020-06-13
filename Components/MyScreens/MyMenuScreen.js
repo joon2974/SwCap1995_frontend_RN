@@ -80,7 +80,7 @@ export default class MyMenuScreen extends Component {
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
-          const planPercent = (responseJson[i].daily_authentications.length === 0 
+          const planPercent = (responseJson[i].daily_authentications.length !== 0 
             ? responseJson[i].daily_authentications.length 
             / (responseJson[i].plan_period * 7) : 0);
           const obj = {
