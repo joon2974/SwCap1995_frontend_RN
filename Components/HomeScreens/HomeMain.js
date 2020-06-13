@@ -153,10 +153,6 @@ export default class HomeMain extends Component {
     else this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
   }
 
-  moveToWatchPage2 = (data) => {
-    this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
-  }
-
   setModalInvisible = () => {
     this.setState({ modalVisible: false });
   };
@@ -239,7 +235,6 @@ export default class HomeMain extends Component {
         title={data.title}
         id={data.id}
         btnFunc={() => { this.moveToWatchPage(data); }}
-        btnFunc2={() => { this.moveToWatchPage2(data); }}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}

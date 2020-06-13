@@ -19,6 +19,32 @@ export default class VariableCard extends Component {
     watchStatusResult: -1,
   }
 
+
+  componentDidMount() {
+    this.setWatcherPage();
+  }
+
+  setWatcherPage=() => {
+    axios
+      .post('http://49.50.172.58:3000/daily_judges/is_exist', {
+        headers: {
+          'content-type': 'x-www-form-urlencoded',
+        },
+        user_id: this.props.userID,    
+        daily_auth_id: this.props.data.id,
+      })
+      .then((res) => {
+        if (res.data.count !== 0) {
+          if (res.data.rows[0].is_correct === true) this.setState({ watchStatusResult: 1 });
+          else this.setState({ watchStatusResult: 0 });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
   toggleModal = (select) => {
     this.setState({ isModalVisible: !this.state.isModalVisible, currentWatchStatus: select });
   };

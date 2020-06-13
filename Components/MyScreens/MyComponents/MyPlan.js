@@ -30,12 +30,7 @@ export default class MyPlan extends Component {
       <View style={styles.container}>
         <View style={this.props.status === 'waiting' ? styles.watingtopContainer : styles.completetopContainer}>
           <Text style={{ fontWeight: 'bold' }}>{this.props.title}</Text>
-          <TouchableOpacity
-            onPress={() => this.props.btnFunc2(this.props.id)}
-            style={styles.btnContainer}>
-           
-            <Feather name="more-horizontal" size={24} color="black" />
-          </TouchableOpacity>
+        
           <TouchableOpacity
             onPress={() => this.props.btnFunc(this.props.id)}
             style={styles.btnContainer}>

@@ -620,16 +620,16 @@ export class CardSix extends Component {
       );
     } else if (this.props.checkBoxStatus === 1) { 
       checkBox = (
-        <View style={{ borderWidth: 2 }}>
-          <Text>
+        <View style={{ borderRadius: 10, backgroundColor: 'green', marginRight: 5 }}>
+          <Text style={{ margin: 10, color: 'white' }}>
             인증 동의
           </Text>
         </View>
       );
     } else { 
       checkBox = (
-        <View>
-          <Text>
+        <View style={{ borderRadius: 10, backgroundColor: '#FD8A69', marginRight: 5 }}>
+          <Text style={{ margin: 10, color: 'white' }}>
             인증 비동의
           </Text>
         </View>
@@ -842,18 +842,26 @@ export class CardSeven extends Component {
       );
     } else if (this.props.checkBoxStatus === 1) { 
       checkBox = (
-        <View>
-          <Text>
-            인증 동의
-          </Text>
+        <View style={{ alignItems: 'flex-end', marginRight: 10 }}>
+          <View style={{
+            borderRadius: 10, backgroundColor: 'green', height: screenHeight / 24, width: screenWidth / 5, justifyContent: 'center', alignItems: 'center', 
+          }}>
+            <Text style={{ color: 'white' }}>
+              인증 동의
+            </Text>
+          </View>
         </View>
       );
     } else { 
       checkBox = (
-        <View>
-          <Text>
-            인증 비동의
-          </Text>
+        <View style={{ alignItems: 'flex-end', marginRight: 10 }}>
+          <View style={{
+            borderRadius: 10, backgroundColor: '#FD8A69', height: screenHeight / 24, width: screenWidth / 4, justifyContent: 'center', alignItems: 'center', 
+          }}>
+            <Text style={{ color: 'white' }}>
+              인증 비동의
+            </Text>
+          </View>
         </View>
       );
     }
@@ -948,8 +956,10 @@ export class CardSeven extends Component {
 
 export class CardSix2 extends Component {
   render() {
+    console.log(this.props.authData.status);
+
     let checkBox = null;
-    if (this.props.checkBoxStatus === 1) { 
+    if (this.props.authData.status === 'done') { 
       checkBox = (
         <View
           style={[
@@ -973,7 +983,7 @@ export class CardSix2 extends Component {
              />
         </View>
       );
-    } else if (this.props.checkBoxStatus === 0) { 
+    } else if (this.props.authData.status === 'undone') { 
       checkBox = (
         <View
           style={[
@@ -998,16 +1008,32 @@ export class CardSix2 extends Component {
         </View>
     
       );
-    } else { 
+    } else if (this.props.authData.status === 'invalid') { 
       checkBox = (
-        <View>
-          <Text>
-            인증 비동의
-          </Text>
+        <View
+          style={[
+            {
+              justifyContent: 'center',
+              zIndex: 3,
+              alignItems: 'center',
+              width: scale(120),
+              height: scale(50),
+              margin: 10,
+              shadowRadius: 5,
+              borderRadius: scale(40),
+              backgroundColor: this.props.iconBackground3,
+            },
+          ]}
+       >
+          <Icon
+            name={this.props.icon3}
+            color={this.props.iconColor3}
+            size={scale(20)}
+         />
         </View>
+    
       );
     }
-
 
     return (
       <View>
@@ -1154,7 +1180,7 @@ export class CardSix2 extends Component {
 export class CardSeven2 extends Component {
   render() {
     let checkBox = null;
-    if (this.props.checkBoxStatus === 1) { 
+    if (this.props.authData.status === 'done') { 
       checkBox = (
         <View
           style={[
@@ -1179,7 +1205,7 @@ export class CardSeven2 extends Component {
         </View>
           
       );
-    } else if (this.props.checkBoxStatus === 0) { 
+    } else if (this.props.authData.status === 'undone') { 
       checkBox = (
         <View
           style={[
@@ -1199,6 +1225,30 @@ export class CardSeven2 extends Component {
           <Icon
             name={this.props.icon2}
             color={this.props.iconColor2}
+            size={scale(15)}
+              />
+        </View>
+      );
+    } else if (this.props.authData.status === 'invalid') { 
+      checkBox = (
+        <View
+          style={[
+            {
+              justifyContent: 'center',
+              zIndex: 3,
+              alignItems: 'center',
+              width: scale(70),
+              height: scale(30),
+              margin: 2,
+              shadowRadius: 5,
+              borderRadius: scale(15),
+              backgroundColor: this.props.iconBackground3,
+            },
+          ]}
+            >
+          <Icon
+            name={this.props.icon3}
+            color={this.props.iconColor3}
             size={scale(15)}
               />
         </View>
