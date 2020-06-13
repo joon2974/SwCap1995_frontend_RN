@@ -70,14 +70,6 @@ export default class HomeMain extends Component {
     });
   };
 
-<<<<<<< HEAD
-=======
-  // Async 확인용
-  checkAsync = async () => {
-    await AsyncStorage.getItem('UserID');
-  };
-
->>>>>>> 15e810e76bfb9afe9dc614a884679acc3521f904
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.setState({ userId: id });
@@ -125,7 +117,6 @@ export default class HomeMain extends Component {
     const watchcount = await watchresponse.data.count;
     
     try {
-      console.log(watchresponseJson);
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
@@ -154,14 +145,6 @@ export default class HomeMain extends Component {
   moveToEstimate = (id) => {
     this.props.navigation.navigate('플랜평가하기', { id: id });
   };
-
-  moveToAuthenticationList = (planID) => {
-    this.props.navigation.navigate('인증 리스트', { planID: planID });
-  }
-
-  moveToWatchPage = (planID) => {
-    this.props.navigation.navigate('감시 리스트', { planID: planID });
-  }
 
   setModalInvisible = () => {
     this.setState({ modalVisible: false });
@@ -230,7 +213,7 @@ export default class HomeMain extends Component {
         key={data.id}
         planId={data.id}
         title={data.title}
-        btnFunc={() => { this.moveToAuthenticationList(data.id); }}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
@@ -244,7 +227,7 @@ export default class HomeMain extends Component {
         key={data.id}
         title={data.title}
         id={data.id}
-        btnFunc={() => { this.moveToWatchPage(data.id); }}
+        btnFunc={this.moveToEstimate}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
