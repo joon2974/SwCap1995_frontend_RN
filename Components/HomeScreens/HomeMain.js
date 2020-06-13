@@ -124,9 +124,9 @@ export default class HomeMain extends Component {
     try {
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
-          const planPercent = (responseJson[l].daily_authentications.length === 0 
-            ? responseJson[l].daily_authentications.length 
-            / (responseJson[l].plan_period * 7) : 0);
+          const planPercent = (watchresponseJson[l].daily_authentications.length === 0 
+            ? watchresponseJson[l].daily_authentications.length 
+            / (watchresponseJson[l].plan_period * 7) : 0);
           const obj = {
             title: watchresponseJson[l].title,
             url: watchresponseJson[l].image_url,
