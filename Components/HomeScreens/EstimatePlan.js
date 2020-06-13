@@ -62,10 +62,14 @@ export default class EstimatePlan extends Component {
           user_id: this.state.userId,
           plan_id: this.props.route.params.id,
         },
-      ).then((res) => { console.log('성공', res); this.estimateSubmit(); })
+      ).then((res) => { 
+        console.log('성공', res); 
+        this.estimateSubmit(); 
+      })
         .catch((res) => {
           console.log('실패', res);
           alert('이미 평가하셨습니다');
+          this.props.route.params.refreshFunc();
           this.props.navigation.popToTop();
         }); 
     } else {
@@ -81,7 +85,10 @@ export default class EstimatePlan extends Component {
         rule_1_point: this.state.imgPoint,
         rule_2_point: this.state.rulePoint,
       },
-    ).then(() => this.props.navigation.popToTop());
+    ).then(() => {
+      this.props.route.params.refreshFunc();
+      this.props.navigation.popToTop();
+    });
   }
 
   render() {

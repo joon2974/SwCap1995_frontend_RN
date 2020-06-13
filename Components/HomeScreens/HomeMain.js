@@ -154,7 +154,7 @@ export default class HomeMain extends Component {
           user_id: this.state.userId,
           plan_id: data.id,
         },
-      ).then(() => { this.props.navigation.navigate('플랜평가하기', { id: data.id }); })
+      ).then(() => { this.props.navigation.navigate('플랜평가하기', { id: data.id, refreshFunc: this.onRefresh }); })
         .catch(() => {
           alert('이미 평가하셨습니다');
         }); 
