@@ -93,6 +93,9 @@ export default class HomeMain extends Component {
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
+          const planPercent = (responseJson[i].daily_authentications.length === 0 
+            ? responseJson[i].daily_authentications.length 
+            / (responseJson[i].plan_period * 7) : 0);
           const obj = {
             title: responseJson[i].title,
             url: responseJson[i].image_url,
@@ -101,8 +104,7 @@ export default class HomeMain extends Component {
             status: responseJson[i].status,
             authentication_way: responseJson[i].authentication_way,
             today_auth: responseJson[i].today_auth,
-            percent: responseJson[i].daily_authentications.length 
-              / (responseJson[i].plan_period * 7),
+            percent: planPercent,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -122,6 +124,9 @@ export default class HomeMain extends Component {
     try {
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
+          const planPercent = (responseJson[l].daily_authentications.length === 0 
+            ? responseJson[l].daily_authentications.length 
+            / (responseJson[l].plan_period * 7) : 0);
           const obj = {
             title: watchresponseJson[l].title,
             url: watchresponseJson[l].image_url,
@@ -129,8 +134,7 @@ export default class HomeMain extends Component {
             id: watchresponseJson[l].id,
             nickname: watchresponseJson[l].user.nickname,
             status: watchresponseJson[l].status,
-            percent: responseJson[l].daily_authentications.length 
-              / (responseJson[l].plan_period * 7),
+            percent: planPercent,
           };
           watcharray = this.state.watchData.concat(obj);
           this.setState({
