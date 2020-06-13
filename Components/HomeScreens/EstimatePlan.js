@@ -65,6 +65,7 @@ export default class EstimatePlan extends Component {
         .catch((res) => {
           console.log('실패', res);
           alert('이미 평가하셨습니다');
+          this.props.navigation.popToTop();
         }); 
     } else {
       alert('체크하지 않은 항목이 있습니다');
@@ -78,9 +79,8 @@ export default class EstimatePlan extends Component {
         plan_id: this.props.route.params.id,
         rule_1_point: this.state.imgPoint,
         rule_2_point: this.state.rulePoint,
-        
       },
-    );
+    ).then(() => this.props.navigation.popToTop());
   }
 
   render() {
