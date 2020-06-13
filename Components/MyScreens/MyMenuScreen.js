@@ -32,6 +32,7 @@ export default class MyMenuScreen extends Component {
       email: '',
       planData: [],
       refreshing: false,
+      notice: '',
     };
   }
 
@@ -53,10 +54,19 @@ export default class MyMenuScreen extends Component {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.state.userId = id;
       this.getUserPoint(id);
-      
+      this.loadNotice();
       this.loadAllPlan(id);
     });
   };
+  
+  loadNotice = async () => {
+    const response = await axios.get(
+      'http://49.50.172.58:3000/notices/recent',
+    );
+    console.log(response.data);
+    this.setState({ notice: response.data.title });
+  };
+
 
   loadAllPlan = async (userId) => {
     console.log('유저아이디1', userId);
@@ -127,6 +137,20 @@ export default class MyMenuScreen extends Component {
   )}
       >
         <View style={styles.container}>
+          <View style={styles.noticeContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>공지사항</Text>
+            
+            <View style={styles.lineDivider} />
+            <Text style={{ fontSize: 20 }}>{this.state.notice}</Text>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.button}
+              onPress={() => this.props.navigation.navigate('공지사항')}
+                  >
+              <Text>더보기</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.lineDivider} />
           <View style={styles.myInfoContainer}>
             <View style={styles.userInfoContainer}>
               <View style={styles.profilecontainer}>
@@ -331,10 +355,33 @@ const styles = StyleSheet.create({
   },
   lineDivider: {
     backgroundColor: '#F2F2F2',
-    width: width - 30,
+    width: width - 65,
     height: 1.5,
     marginLeft: 15,
     marginBottom: 15,
     marginTop: 15,
+  },
+  noticeContainer: {
+    marginTop: 10,
+    width: width * 0.9,
+    height: height / 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: 'white',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
 });
