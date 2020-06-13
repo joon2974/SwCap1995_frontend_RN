@@ -756,17 +756,17 @@ export class CardSix extends Component {
          >
             <Text>
               {'Rule 1: '}
-              {this.props.ruleData.picture_rule_1}
+              {this.props.planData.picture_rule_1}
               {'\n'} 
             </Text>
             <Text>
               {'Rule 2: '}
-              {this.props.ruleData.picture_rule_2}
+              {this.props.planData.picture_rule_2}
               {'\n'}
             </Text>
             <Text>
               {'Rule 3: '}
-              {this.props.ruleData.picture_rule_3}
+              {this.props.planData.picture_rule_3}
             </Text>
           </View>
               
@@ -1128,17 +1128,17 @@ export class CardSix2 extends Component {
          >
             <Text>
               {'Rule 1: '}
-              {this.props.ruleData.picture_rule_1}
+              {this.props.planData.picture_rule_1}
               {'\n'} 
             </Text>
             <Text>
               {'Rule 2: '}
-              {this.props.ruleData.picture_rule_2}
+              {this.props.planData.picture_rule_2}
               {'\n'}
             </Text>
             <Text>
               {'Rule 3: '}
-              {this.props.ruleData.picture_rule_3}
+              {this.props.planData.picture_rule_3}
             </Text>
           </View>
               

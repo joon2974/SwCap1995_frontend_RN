@@ -95,7 +95,7 @@ export default class WatcherPage extends Component {
                     changeShowing={() => {
                       this.setState({ onOff: index });
                     }}
-                    ruleData={this.state.testArray2}
+                    planData={this.state.testArray2}
                 />
                 ))
               }
@@ -104,7 +104,7 @@ export default class WatcherPage extends Component {
             </View>
 
           </ScrollView>
-        ) : (<WatcherInfo />) }
+        ) : (<WatcherInfo planData={this.state.testArray2} />) }
        
     
       </View>
