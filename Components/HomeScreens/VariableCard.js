@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Input } from 'react-native-elements';
+import axios from 'axios';
 import { CardSix, CardSeven } from '../SearchScreens/Cards';
 
 const { width, height } = Dimensions.get('window');
@@ -31,9 +32,31 @@ export default class VariableCard extends Component {
   };
 
   sendComment = () => {
-    alert('구현해이새기야\n\ncomment: ' + this.state.currentComment);
+    const formData = new FormData();
+    formData.append('user_id', 1);
+    formData.append('daily_auth_id', 1);
+    formData.append('is_correct', 1);
+    formData.append('emoticon', 1);
+    formData.append('comment', 'aaaa');
+    
+    axios
+      .post('http://49.50.172.58:3000/daily_judges', formData, {
+        headers: {
+          'Content-Type': 'x-www-form-urlencoded',
+        },
+      })
+      .then((res) => {
+        console.log(res.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+    console.log(formData);
     this.setState({ watchStatusResult: this.state.currentWatchStatus });
   }
+
 
   render() {
     let testVari = null;
@@ -58,7 +81,7 @@ export default class VariableCard extends Component {
               this.toggleModal(2);
             }}
             checkBoxStatus={this.state.watchStatusResult}
-            ruleData={this.props.ruleData}
+            planData={this.props.planData}
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               

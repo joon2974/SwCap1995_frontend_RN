@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   titleInfoContainer: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'white',
     width: width * 0.9,
     marginTop: 15,
     borderRadius: 10,

@@ -31,6 +31,7 @@ export default class HomeMain extends Component {
     watchData: [],
     refreshing: false,
     modalVisible: false,
+
   };
 
   componentDidMount() {
@@ -141,17 +142,14 @@ export default class HomeMain extends Component {
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
-
-  moveToEstimate = (id) => {
-    this.props.navigation.navigate('플랜평가하기', { id: id });
-  };
-
+  
   moveToAuthenticationList = (planID) => {
     this.props.navigation.navigate('인증 리스트', { planID: planID });
   }
 
-  moveToWatchPage = (planID) => {
-    this.props.navigation.navigate('감시 리스트', { planID: planID });
+  moveToWatchPage = (data) => {
+    if (data.status === 'waiting') this.props.navigation.navigate('플랜평가하기', { id: data.id });
+    else this.props.navigation.navigate('감시 리스트', { planID: data.id });
   }
 
   setModalInvisible = () => {
@@ -235,7 +233,7 @@ export default class HomeMain extends Component {
         key={data.id}
         title={data.title}
         id={data.id}
-        btnFunc={() => { this.moveToWatchPage(data.id); }}
+        btnFunc={() => { this.moveToWatchPage(data); }}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}

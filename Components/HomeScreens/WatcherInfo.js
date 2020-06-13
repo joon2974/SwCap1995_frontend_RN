@@ -41,7 +41,7 @@ export default class WatcherInfo extends Component {
   }
 
   setTest = () => {
-    axios.get('http://49.50.172.58:3000/plans/168').then((res) => {
+    axios.get('http://49.50.172.58:3000/plans/' + this.props.planData.id).then((res) => {
       this.setState({ testArray: res.data });
       this.setTitle();
     }).catch((error) => {
