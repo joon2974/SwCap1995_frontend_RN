@@ -27,6 +27,7 @@ export default class WatcherPage extends Component {
     tabState: 0,
 
     testArray: [],
+    testArray2: [],
   }
 
   componentDidMount() {
@@ -34,8 +35,14 @@ export default class WatcherPage extends Component {
   }
 
   setTest = () => {
-    axios.get('http://49.50.172.58:3000/daily_authentications/166').then((res) => {
+    axios.get('http://49.50.172.58:3000/daily_authentications/' + this.props.route.params.planID).then((res) => {
       this.setState({ testArray: res.data.rows });
+    }).catch((error) => {
+      console.log(error);
+      alert(error);
+    });
+    axios.get('http://49.50.172.58:3000/plans/' + this.props.route.params.planID).then((res) => {
+      this.setState({ testArray2: res.data });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -82,11 +89,13 @@ export default class WatcherPage extends Component {
                   <VariableCard 
                     key={data}
                     data={data}
+                    data2={this.state.testArray2}
                     index={index} 
                     onOff={this.state.onOff}
                     changeShowing={() => {
                       this.setState({ onOff: index });
                     }}
+                    ruleData={this.state.testArray2}
                 />
                 ))
               }

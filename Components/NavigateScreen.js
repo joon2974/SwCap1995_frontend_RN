@@ -24,6 +24,7 @@ import NotiTestScreen from './HomeScreens/NotiTestScreen';
 import FaceAuthenticationScreen from './HomeScreens/FaceAuthenticationScreen';
 import CameraTestScreen from './MyScreens/CameraTestScreen';
 import Estimate from './HomeScreens/EstimatePlan';
+import AuthenticationPage from './SearchScreens/AuthenticationPage';
 
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
@@ -46,7 +47,6 @@ import HotPlan from './SearchScreens/HotPlan';
 import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
 import Joom from './SearchScreens/TabList/Joom';
-import AuthenticationPage from './SearchScreens/AuthenticationPage';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 if (!firebase.apps.length) {
@@ -86,6 +86,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="일일인증: 갤러리" component={DailyCertifyGalary} />
       <HomeStack.Screen name="일일인증: 본인인증" component={FaceAuthenticationScreen} />
       <HomeStack.Screen name="플랜평가하기" component={Estimate} />
+      <HomeStack.Screen name="인증 리스트" component={AuthenticationPage} />
+      <HomeStack.Screen name="감시 리스트" component={WatcherPage} />
     </HomeStack.Navigator>
   );
 }

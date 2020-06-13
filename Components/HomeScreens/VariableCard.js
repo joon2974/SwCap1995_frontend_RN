@@ -58,6 +58,7 @@ export default class VariableCard extends Component {
               this.toggleModal(2);
             }}
             checkBoxStatus={this.state.watchStatusResult}
+            ruleData={this.props.ruleData}
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               

@@ -6,25 +6,59 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  TouchableHighlightBase,
 } from 'react-native';
 import axios from 'axios';
 import { CardNine } from '../SearchScreens/Cards';
 
 const { width, height } = Dimensions.get('window');
 
+const categoryURI = [
+  'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%A9%E1%86%BC.jpg',
+  'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%89%E1%85%A2%E1%86%BC%E1%84%92%E1%85%AA%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8%E1%84%80%E1%85%AA%E1%86%AB.jpg',
+  'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%8C%E1%85%A1%E1%84%80%E1%85%B5%E1%84%80%E1%85%A8%E1%84%87%E1%85%A1%E1%86%AF.jpeg',
+  'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%80%E1%85%A1%E1%86%B7%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5.jpeg',
+  'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%80%E1%85%B5%E1%84%90%E1%85%A1.jpeg',
+];
+
+
 export default class WatcherInfo extends Component {
   state = {
+    testArray: [],
+    titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%89%E1%85%A2%E1%86%BC%E1%84%92%E1%85%AA%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8%E1%84%80%E1%85%AA%E1%86%AB.jpg',
   }
+
+  componentDidMount() {
+    this.setTest();
+  }
+
+  setTitle = () => {
+    if (this.state.testArray.category === '운동/건강') this.setState({ titleURI: categoryURI[0] });
+    else if (this.state.testArray.category === '생활습관') this.setState({ titleURI: categoryURI[1] });
+    else if (this.state.testArray.category === '자기계발') this.setState({ titleURI: categoryURI[2] });
+    else if (this.state.testArray.category === '감정관리') this.setState({ titleURI: categoryURI[3] });
+    else if (this.state.testArray.category === '기타') this.setState({ titleURI: categoryURI[4] });
+  }
+
+  setTest = () => {
+    axios.get('http://49.50.172.58:3000/plans/168').then((res) => {
+      this.setState({ testArray: res.data });
+      this.setTitle();
+    }).catch((error) => {
+      console.log(error);
+      alert(error);
+    });
+  }  
 
   render() {
     return (
       <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
        
         <CardNine
-          title="카테고리 이름"
-          subTitle="서브 타이틀"
-          description="설명"
-          image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
+          title={this.state.testArray.title}
+          subTitle={this.state.testArray.category} 
+          description={this.state.testArray.custom_picture_rule_3} // description => subtitle 
+          image={{ uri: this.state.titleURI }}
         />
 
         <View style={styles.lineDivider} />
@@ -36,7 +70,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
             <Text>
-              ffffffffffffffffff
+              {this.state.testArray.plan_start_day}
               {' '}
               일
             </Text>
@@ -44,7 +78,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>플랜 기간:  </Text>
             <Text>
-              aaaaaaaaaaaaa
+              {this.state.testArray.plan_period}
               {' '}
               주
             </Text>
@@ -52,9 +86,9 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>인증 시간:  </Text>
             <Text>
-              ssssssssssssssssssssss
+              {this.state.testArray.picture_time}
               {' '}
-              시(앞 뒤로 30분의 여유시간이 주어집니다)
+              시(앞 뒤로 30분의 여유시 간이 주어집니다)
             </Text>
           </View>
         </View>
@@ -64,10 +98,8 @@ export default class WatcherInfo extends Component {
 
         <CardNine
           title="인증 룰"
-          subTitle="룰 서브"
-          description="설명"
-          image={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }}
-             />
+          subTitle={this.state.testArray.picture_rule_1 + '\n' + this.state.testArray.picture_rule_2 + '\n' + this.state.testArray.picture_rule_3}
+          image={{ uri: this.state.testArray.image_url }} />
 
 
         <View style={styles.lineDivider} />
@@ -78,15 +110,15 @@ export default class WatcherInfo extends Component {
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17 }}>도전 포인트:  </Text>
-            <Text>fffffffffffff</Text>
+            <Text>{this.state.testArray.bet_money}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17 }}>차감 %:  </Text>
-            <Text>wwwwwwwwwwww</Text>
+            <Text>{this.state.testArray.percent}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17 }}>분배 방식:  </Text>
-            <Text>eeeeeeeeeeeeeeeee</Text>
+            <Text>{this.state.testArray.distrib_method}</Text>
           </View>
         </View>
 

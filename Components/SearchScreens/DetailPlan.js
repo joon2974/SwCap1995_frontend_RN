@@ -61,6 +61,7 @@ export default class DetailPlan extends Component {
      
       ];
       
+      
       return (
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
@@ -107,7 +108,7 @@ export default class DetailPlan extends Component {
                 
                 <TouchableOpacity 
                   style={styles.moreExploreBar}
-                  onPress={() => { this.props.navigation.navigate('인증'); }}
+                  onPress={() => { this.props.navigation.navigate('인증', { planID: this.state.item.id }); }}
                 >
                   <Text>인증 더 보기</Text>
                 </TouchableOpacity>
