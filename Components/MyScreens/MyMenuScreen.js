@@ -191,11 +191,11 @@ export default class MyMenuScreen extends Component {
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"
-              btnFunc={() => alert('고객센터')}
+              btnFunc={() => this.props.navigation.navigate('문의하기', { userId: this.userId })}
           />
             <MyPageBtn 
               btnName="비밀번호 변경"
-              btnFunc={() => this.props.navigation.navigate('비밀번호 변경')}
+              btnFunc={() => this.props.navigation.navigate('비밀번호 변경', { userId: this.userId })}
           />
 
             <MyPageBtn 
