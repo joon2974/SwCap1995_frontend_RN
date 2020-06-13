@@ -2,14 +2,11 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
-  View, Text, Dimensions, Button, TouchableWithoutFeedback, Keyboard,
+  View,
 } from 'react-native';
-import Modal from 'react-native-modal';
-import { Input } from 'react-native-elements';
 import axios from 'axios';
 import { CardSix2, CardSeven2 } from './Cards';
 
-const { width, height } = Dimensions.get('window');
 
 export default class VariableCard extends Component {
   state={
@@ -63,67 +60,25 @@ export default class VariableCard extends Component {
             title={this.props.data.id}
             subTitle={this.props.data.comment}
             image={{ uri: this.props.data.image_url }}
+            
             icon1="check"
             iconColor1="#fff"
             iconBackground1="green"
-            onClicked1={() => {
-              this.toggleModal(1);
-            }}
-            switchShowing={this.props.changeShowing}
+            
             icon2="remove"
             iconColor2="#fff"
             iconBackground2="#FD8A69"
-            onClicked2={() => {
-              this.toggleModal(2);
-            }}
+            
+
+            icon3="exclamation"
+            iconColor3="#fff"
+            iconBackground3="#D1CC32"
+            
+
+            authData={this.props.data}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
       />
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              
-            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
-              <View style={{
-                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
-              }}>
-                <Text style={{ 
-                  color: 'white', 
-                  fontSize: 20,
-                  textAlign: 'center',
-                  textAlignVertical: 'center',
-                  backgroundColor: '#FD8A69',
-                  height: height / 20,
-                  width: width / 1.05,
-                  borderTopLeftRadius: 10,
-                  borderTopRightRadius: 10, 
-                }}>
-                  당신의 느낌을 적어주세요
-                </Text>
-                <Input
-                  placeholder="코멘트를 입력해 주세요"
-                  onChangeText={(changedComment) => {
-                    this.updateComment(changedComment);
-                  }}
-                  onSubmitEditing={() => {
-                    this.toggleModal2();
-                    this.sendComment();
-                  }}
-            />
-             
-                <View style={{ marginBottom: 10 }}>
-                  <Button
-                    title="코멘트 보내기"
-                    type="solid"
-                    color="#FD8A69"
-                    onPress={() => {
-                      this.toggleModal2();
-                      this.sendComment();
-                    }}
-            />
-                </View>
-              </View>
-            
-            </Modal>
-          </TouchableWithoutFeedback>
 
         </View>
       );
@@ -137,63 +92,22 @@ export default class VariableCard extends Component {
             icon1="check"
             iconColor1="#fff"
             iconBackground1="green" 
-            onClicked1={() => {
-              this.toggleModal(1);
-            }}
+          
             switchShowing={this.props.changeShowing}
             icon2="remove"
             iconColor2="#fff"
             iconBackground2="#FD8A69"
-            onClicked2={() => {
-              this.toggleModal(2);
-            }}
+           
+            
+            icon3="exclamation"
+            iconColor3="#fff"
+            iconBackground3="#D1CC32"
+
+            authData={this.props.data}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
             />
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
          
-            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
-              <View style={{
-                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
-              }}>
-                <Text style={{ 
-                  color: 'white', 
-                  fontSize: 20,
-                  textAlign: 'center',
-                  textAlignVertical: 'center',
-                  backgroundColor: '#FD8A69',
-                  height: height / 20,
-                  width: width / 1.05,
-                  borderTopLeftRadius: 10,
-                  borderTopRightRadius: 10, 
-                }}>
-                  당신의 느낌을 적어주세요
-                </Text>
-                <Input
-                  placeholder="코멘트를 입력해 주세요"
-                  onChangeText={(changedComment) => {
-                    this.updateComment(changedComment);
-                  }}  
-                  onSubmitEditing={() => {
-                    this.toggleModal2();
-                    this.sendComment();
-                  }}
-            />
-
-                <View style={{ marginBottom: 10 }}>
-                  <Button
-                    title="코멘트 보내기"
-                    type="solid"
-                    color="#FD8A69"
-                    onPress={() => {
-                      this.toggleModal2();
-                      this.sendComment();
-                    }}
-            />
-                </View>
-              </View>
-            </Modal>
-          </TouchableWithoutFeedback>
         </View>
       );
     } 

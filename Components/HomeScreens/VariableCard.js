@@ -15,9 +15,35 @@ export default class VariableCard extends Component {
   state={
     isModalVisible: false,
     currentComment: '',
-    currentWatchStatus: 0,
-    watchStatusResult: 0,
+    currentWatchStatus: -1,
+    watchStatusResult: -1,
   }
+
+
+  componentDidMount() {
+    this.setWatcherPage();
+  }
+
+  setWatcherPage=() => {
+    axios
+      .post('http://49.50.172.58:3000/daily_judges/is_exist', {
+        headers: {
+          'content-type': 'x-www-form-urlencoded',
+        },
+        user_id: this.props.userID,    
+        daily_auth_id: this.props.data.id,
+      })
+      .then((res) => {
+        if (res.data.count !== 0) {
+          if (res.data.rows[0].is_correct === true) this.setState({ watchStatusResult: 1 });
+          else this.setState({ watchStatusResult: 0 });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
 
   toggleModal = (select) => {
     this.setState({ isModalVisible: !this.state.isModalVisible, currentWatchStatus: select });
@@ -32,18 +58,17 @@ export default class VariableCard extends Component {
   };
 
   sendComment = () => {
-    const formData = new FormData();
-    formData.append('user_id', 1);
-    formData.append('daily_auth_id', 1);
-    formData.append('is_correct', 1);
-    formData.append('emoticon', 1);
-    formData.append('comment', 'aaaa');
-    
     axios
-      .post('http://49.50.172.58:3000/daily_judges', formData, {
+      .post('http://49.50.172.58:3000/daily_judges', {
         headers: {
-          'Content-Type': 'x-www-form-urlencoded',
+          'content-type': 'x-www-form-urlencoded',
         },
+        user_id: this.props.userID,    
+        daily_auth_id: this.props.data.id,
+        is_correct: this.state.currentWatchStatus,
+        emoticon: 0,
+        comment: this.state.currentComment,
+        
       })
       .then((res) => {
         console.log(res.status);
@@ -51,9 +76,8 @@ export default class VariableCard extends Component {
       .catch((error) => {
         console.log(error);
       });
+      
 
-
-    console.log(formData);
     this.setState({ watchStatusResult: this.state.currentWatchStatus });
   }
 
@@ -78,7 +102,7 @@ export default class VariableCard extends Component {
             iconColor2="#fff"
             iconBackground2="#FD8A69"
             onClicked2={() => {
-              this.toggleModal(2);
+              this.toggleModal(0);
             }}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.props.planData}
@@ -149,7 +173,7 @@ export default class VariableCard extends Component {
             iconColor2="#fff"
             iconBackground2="#FD8A69"
             onClicked2={() => {
-              this.toggleModal(2);
+              this.toggleModal(0);
             }}
             checkBoxStatus={this.state.watchStatusResult}
           />

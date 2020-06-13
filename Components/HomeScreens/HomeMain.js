@@ -158,7 +158,7 @@ export default class HomeMain extends Component {
         .catch(() => {
           alert('이미 평가하셨습니다');
         }); 
-    } else this.props.navigation.navigate('감시 리스트', { planID: data.id });
+    } else this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
   }
 
   setModalInvisible = () => {
