@@ -16,6 +16,7 @@ import MyMenuScreen from './MyScreens/MyMenuScreen';
 import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import ServiceScreen from './MyScreens/ServiceScreen';
+import NoticeScreen from './MyScreens/noticeScreen';
 import HomeMain from './HomeScreens/HomeMain';
 import WatcherPage from './HomeScreens/WatcherPage';
 import DailyCertifyCamera from './HomeScreens/DailyCertifyCamera';
@@ -186,6 +187,7 @@ function MyMenuStackScreen() {
       <MyMenuStack.Screen name="비밀번호 변경" component={ChangePassword} />
       <MyMenuStack.Screen name="카메라 테스트" component={CameraTestScreen} />
       <MyMenuStack.Screen name="문의하기" component={ServiceScreen} />
+      <MyMenuStack.Screen name="공지사항" component={NoticeScreen} />
     </MyMenuStack.Navigator>
   );
 }

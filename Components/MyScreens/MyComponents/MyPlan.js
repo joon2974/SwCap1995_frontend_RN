@@ -16,6 +16,8 @@ const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
   goToCertifyPage = () => {
+    console.log('ㄴㄴ', this.props.picturetime);
+    console.log('ㄴㄴ', typeof this.props.picturetime);
     if (this.props.today_auth === false) {
       this.props.faceAuthentication(this.props.planId, this.props.certifyMethod);
     } else {

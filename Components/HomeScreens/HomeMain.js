@@ -71,6 +71,14 @@ export default class HomeMain extends Component {
     });
   };
 
+<<<<<<< HEAD
+=======
+  // Async 확인용
+  checkAsync = async () => {
+    await AsyncStorage.getItem('UserID');
+  };
+
+>>>>>>> 15e810e76bfb9afe9dc614a884679acc3521f904
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.setState({ userId: id });
@@ -118,7 +126,8 @@ export default class HomeMain extends Component {
     const watchcount = await watchresponse.data.count;
     
     try {
-      if (count !== 0) {
+      console.log(watchresponseJson);
+      if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
             title: watchresponseJson[l].title,
