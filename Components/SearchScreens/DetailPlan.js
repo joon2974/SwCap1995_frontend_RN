@@ -13,6 +13,14 @@ import {
   ScrollView,
 } from 'react-native';
 import PureChart from 'react-native-pure-chart';
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart,
+} from 'react-native-chart-kit';
 import Watcher from './TabList/Watcher';
 import { CardNine } from './Cards';
 
@@ -61,7 +69,24 @@ export default class DetailPlan extends Component {
      
       ];
       
+
+      const data = {
+        labels: ['Swim', 'Bike', 'Run'], // optional
+        data: [0.4, 0.6, 0.8],
+      };
       
+      const chartConfig = {
+        backgroundGradientFrom: '#1E2923',
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: '#08130D',
+        backgroundGradientToOpacity: 0.5,
+        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        strokeWidth: 2, // optional, default 3
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false, // optional
+      };
+
+
       return (
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
@@ -104,8 +129,55 @@ export default class DetailPlan extends Component {
               <View style={{ alignItems: 'center', marginVertical: 30 }}>
                 <View style={styles.lineDivider} />
                
-                <PureChart data={sampleData} type="line" />
-                
+               
+                <View>
+                  <Text>Bezier Line Chart</Text>
+                  <LineChart
+                    data={{
+                      labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                      datasets: [
+                        {
+                          data: [
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100,
+                          ],
+                        },
+                      ],
+                    }}
+                    width={Dimensions.get('window').width} // from react-native
+                    height={220}
+                    yAxisLabel="$"
+                    yAxisSuffix="k"
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                      backgroundColor: '#e26a00',
+                      backgroundGradientFrom: '#fb8c00',
+                      backgroundGradientTo: '#ffa726',
+                      decimalPlaces: 2, // optional, defaults to 2dp
+                      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                      style: {
+                        borderRadius: 16,
+                      },
+                      propsForDots: {
+                        r: '6',
+                        strokeWidth: '2',
+                        stroke: '#ffa726',
+                      },
+                    }}
+                    bezier
+                    style={{
+                      marginVertical: 8,
+                      borderRadius: 16,
+                    }}
+  />
+                </View>
+
+
                 <TouchableOpacity 
                   style={styles.moreExploreBar}
                   onPress={() => { this.props.navigation.navigate('인증', { planID: this.state.item.id }); }}
@@ -113,9 +185,21 @@ export default class DetailPlan extends Component {
                   <Text>인증 더 보기</Text>
                 </TouchableOpacity>
 
+
                 <View style={styles.lineDivider} />
 
-                <PureChart data={sampleData2} type="pie" />
+
+                <ProgressChart
+                  data={data}
+                  width={width}
+                  height={220}
+                  strokeWidth={16}
+                  radius={32}
+                  chartConfig={chartConfig}
+                  hideLegend={false}
+              />
+
+
               </View>
 
               <View style={styles.titleInfoContainer}>
@@ -173,7 +257,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width * 1,
     backgroundColor: 'white',
-    justifyContent: 'center',
+    justifyContent: 'center', 
     alignItems: 'center',
   },
   titleImageContainer: {
@@ -236,7 +320,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   titleInfoContainer: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'white',
     width: width * 0.9,
     marginTop: 15,
     borderRadius: 10,

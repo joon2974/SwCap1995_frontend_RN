@@ -77,7 +77,7 @@ export default class VariableCard extends Component {
               this.toggleModal(2);
             }}
             checkBoxStatus={this.state.watchStatusResult}
-            ruleData={this.state.planData}
+            planData={this.state.planData}
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
@@ -148,7 +148,7 @@ export default class VariableCard extends Component {
               this.toggleModal(2);
             }}
             checkBoxStatus={this.state.watchStatusResult}
-            ruleData={this.state.planData}
+            planData={this.state.planData}
             />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
          
