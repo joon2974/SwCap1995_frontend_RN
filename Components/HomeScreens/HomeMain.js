@@ -70,14 +70,6 @@ export default class HomeMain extends Component {
     });
   };
 
-<<<<<<< HEAD
-=======
-  // Async 확인용
-  checkAsync = async () => {
-    await AsyncStorage.getItem('UserID');
-  };
-
->>>>>>> 15e810e76bfb9afe9dc614a884679acc3521f904
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.setState({ userId: id });
@@ -202,15 +194,26 @@ export default class HomeMain extends Component {
     this.props.navigation.navigate('일일인증: 갤러리', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
   }
 
-  faceAuthentication = (planId, authMethod) => {
-    this.props.navigation.navigate('일일인증: 본인인증', 
-      {
-        cameraCertify: this.cameraCertify,
-        galaryCertify: this.galaryCertify,
-        userID: this.state.userId,
-        planID: planId,
-        certifyMethod: authMethod,
-      });
+  faceAuthentication = (planId, authMethod, pictureTime) => {
+    const currentDate = Date();
+    const currentTime = currentDate.split(' ')[4];
+    const currentHour = Number(currentTime.split(':')[0]);
+    const currentMinute = Number(currentTime.split(':')[1]);
+    console.log('현재 시간', currentHour);
+    console.log('현재 분', currentMinute);
+    if (((currentHour === pictureTime - 1) && currentMinute >= 30) 
+      || ((currentHour === pictureTime + 1) && currentMinute <= 30)) {
+      this.props.navigation.navigate('일일인증: 본인인증', 
+        {
+          cameraCertify: this.cameraCertify,
+          galaryCertify: this.galaryCertify,
+          userID: this.state.userId,
+          planID: planId,
+          certifyMethod: authMethod,
+        });
+    } else {
+      alert('인증 시간이 아닙니다!');
+    }
   }
 
   returnToTop = () => {
