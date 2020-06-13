@@ -70,14 +70,11 @@ export default class HomeMain extends Component {
     });
   };
 
-<<<<<<< HEAD
-=======
   // Async 확인용
   checkAsync = async () => {
     await AsyncStorage.getItem('UserID');
   };
 
->>>>>>> serviceScreen
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.setState({ userId: id });
@@ -176,24 +173,12 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-<<<<<<< HEAD
-          // eslint-disable-next-line no-unused-vars
-          const ji = AsyncStorage.getItem('UserID').then((res) => {
-            if (res) console.log('userID', res);
-=======
           AsyncStorage.getItem('UserID').then(() => {
->>>>>>> serviceScreen
           });
        
           AsyncStorage.setItem('UserID', res.data.id.toString());
 
-<<<<<<< HEAD
-          // eslint-disable-next-line no-unused-vars
-          const jj = AsyncStorage.getItem('UserID').then((res) => {
-            if (res) console.log('userID', res);
-=======
           AsyncStorage.getItem('UserID').then(() => {
->>>>>>> serviceScreen
           });
           this.setState({ userId: res.data.id });
         } else {
