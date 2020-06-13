@@ -11,6 +11,7 @@ import {
   Platform,
   RefreshControl,
   Modal,
+  Vibration,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -46,9 +47,8 @@ export default class HomeMain extends Component {
       });
     }
     Notifications.addListener((notification) => {
-      console.log(notification);
+      Vibration.vibrate();
       var page = notification.data.screen;
-      console.log(page);
       if (page === 'friend') {
         this.props.navigation.dangerouslyGetParent().navigate('Friend');
       }
