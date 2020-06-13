@@ -71,14 +71,6 @@ export default class HomeMain extends Component {
     });
   };
 
-<<<<<<< HEAD
-=======
-  // Async 확인용
-  checkAsync = async () => {
-    await AsyncStorage.getItem('UserID');
-  };
-
->>>>>>> 15e810e76bfb9afe9dc614a884679acc3521f904
   loadUserID = async () => {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.setState({ userId: id });
@@ -151,7 +143,7 @@ export default class HomeMain extends Component {
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
-  
+
   moveToAuthenticationList = (planID) => {
     this.props.navigation.navigate('인증 리스트', { planID: planID });
   }
