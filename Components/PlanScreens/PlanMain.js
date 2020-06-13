@@ -175,7 +175,7 @@ export default class PlanMain extends Component {
 
     if (isFaceRegisterd) {
       return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: 'white' }}>
           <View style={styles.container}>
             <View style={styles.selectionContainer}>
               <View style={styles.categoryBtnContainer}>
@@ -302,8 +302,7 @@ const styles = StyleSheet.create({
   },
   selectionContainer: {
     width: width,
-    height: height,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   InfoContainer: {
@@ -317,6 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    marginTop: 5,
   },
   categoryBtnStyle: {
     width: width * 0.17,
@@ -351,7 +351,6 @@ const styles = StyleSheet.create({
   },
   plansContainer: {
     width: width,
-    height: height - 60,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
