@@ -18,6 +18,7 @@ export default class ServiceScreen extends Component {
       title: '',
       category: '템플릿제의',
       contents: '',
+      email: '',
     }
 
 
@@ -32,13 +33,14 @@ export default class ServiceScreen extends Component {
           title: this.state.title,
           message: this.state.contents,
           message_type: this.state.category,
+          email: this.state.email,
         },
-      ).then((response) => { alert('문의를 보냈습니다.'); console.log(response); }).catch((error) => (console.log(error)));
+      ).then((response) => { alert('문의를 보냈습니다.'); this.props.navigation.popToTop(); console.log(response); }).catch((error) => (console.log(error)));
     }
 
     render() {
       const {
-        title, category, contents, 
+        title, category, contents, email,
       } = this.state;
       return (
         <View style={styles.container}>
@@ -57,6 +59,13 @@ export default class ServiceScreen extends Component {
                 <Picker.Item label="감시" value="감시" />
                 <Picker.Item label="포인트" value="포인트" />
               </Picker> 
+              <TextInput
+                value={email}
+                onChangeText={(email) => this.setState({ email })}
+                style={styles.titleInputStyle}
+                placeholder="답변을 받을 이메일을 써주세요"
+                keyboardType="email-address"
+            />
             </View>
             <TextInput
               value={title}
@@ -68,10 +77,12 @@ export default class ServiceScreen extends Component {
           </View>
           <View style={{ margintop: 10 }}>
             <TextInput
+              multiline={true}
               value={contents}
               onChangeText={(contents) => this.setState({ contents })}
               style={styles.contentsInputStyle}
               placeholder="문의 내용을 써주세요"
+              textAlignVertical="top"
             />
           </View>
           <View style={{ marginTop: 10 }} />
@@ -104,7 +115,6 @@ const styles = StyleSheet.create({
     width: width - 100,
     borderRadius: 5,
     backgroundColor: '#F2F2F2',
-    height: 30,
   },
   pickerContainer: {
     marginBottom: 20,
@@ -114,6 +124,7 @@ const styles = StyleSheet.create({
     height: height / 2,
     borderRadius: 5,
     backgroundColor: '#F2F2F2',
+    flexShrink: 1,
   },    
   
   button: {

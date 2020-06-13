@@ -33,7 +33,13 @@
       "translucent": false
     },
     "android": {
-      "package": "com.plana.plana"
+      "package": "com.plana.plana",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyCPHHTbWOKEu60ilch4R2WSogNMgs_bvcw",
+          "certificateHash": "4B5A325F55602DB35C40C4980B38EFB99DF12EC7"
+        }
+      }
     },
     "description": ""
   }
