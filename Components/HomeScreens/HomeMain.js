@@ -101,6 +101,8 @@ export default class HomeMain extends Component {
             status: responseJson[i].status,
             authentication_way: responseJson[i].authentication_way,
             today_auth: responseJson[i].today_auth,
+            percent: responseJson[i].daily_authentications.length 
+              / (responseJson[i].plan_period * 7),
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -127,6 +129,8 @@ export default class HomeMain extends Component {
             id: watchresponseJson[l].id,
             nickname: watchresponseJson[l].user.nickname,
             status: watchresponseJson[l].status,
+            percent: responseJson[l].daily_authentications.length 
+              / (responseJson[l].plan_period * 7),
           };
           watcharray = this.state.watchData.concat(obj);
           this.setState({
@@ -244,6 +248,7 @@ export default class HomeMain extends Component {
         certifyMethod={data.authentication_way}
         faceAuthentication={this.faceAuthentication}
         today_auth={data.today_auth}
+        percent={data.percent}
       />
     ));
     const watchplans = watchData.map((data) => (
@@ -256,6 +261,7 @@ export default class HomeMain extends Component {
         picturetime={data.picturetime}
         nickname={data.nickname}
         status={data.status}
+        percent={data.percent}
       />
     ));
     return (
