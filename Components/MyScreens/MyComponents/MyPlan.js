@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   btnContainer: {
-    backgroundColor:'red',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
