@@ -755,15 +755,18 @@ export class CardSix extends Component {
             }}
          >
             <Text>
-              Rule 1: ~~~~~~~~~~
+              {'Rule 1: '}
+              {this.props.ruleData.picture_rule_1}
               {'\n'} 
             </Text>
             <Text>
-              Rule 2: ~~~~~~~~~~
+              {'Rule 2: '}
+              {this.props.ruleData.picture_rule_2}
               {'\n'}
             </Text>
             <Text>
-              Rule 3: ~~~~~~~~~~
+              {'Rule 3: '}
+              {this.props.ruleData.picture_rule_3}
             </Text>
           </View>
               
@@ -946,7 +949,7 @@ export class CardSeven extends Component {
 export class CardSix2 extends Component {
   render() {
     let checkBox = null;
-    if (this.props.checkBoxStatus === 0) { 
+    if (this.props.checkBoxStatus === 1) { 
       checkBox = (
         <View
           style={[
@@ -970,7 +973,7 @@ export class CardSix2 extends Component {
              />
         </View>
       );
-    } else if (this.props.checkBoxStatus === 1) { 
+    } else if (this.props.checkBoxStatus === 0) { 
       checkBox = (
         <View
           style={[
@@ -1124,15 +1127,18 @@ export class CardSix2 extends Component {
             }}
          >
             <Text>
-              Rule 1: ~~~~~~~~~~
+              {'Rule 1: '}
+              {this.props.ruleData.picture_rule_1}
               {'\n'} 
             </Text>
             <Text>
-              Rule 2: ~~~~~~~~~~
+              {'Rule 2: '}
+              {this.props.ruleData.picture_rule_2}
               {'\n'}
             </Text>
             <Text>
-              Rule 3: ~~~~~~~~~~
+              {'Rule 3: '}
+              {this.props.ruleData.picture_rule_3}
             </Text>
           </View>
               
@@ -1148,7 +1154,7 @@ export class CardSix2 extends Component {
 export class CardSeven2 extends Component {
   render() {
     let checkBox = null;
-    if (this.props.checkBoxStatus === 0) { 
+    if (this.props.checkBoxStatus === 1) { 
       checkBox = (
         <View
           style={[
@@ -1173,7 +1179,7 @@ export class CardSeven2 extends Component {
         </View>
           
       );
-    } else if (this.props.checkBoxStatus === 1) { 
+    } else if (this.props.checkBoxStatus === 0) { 
       checkBox = (
         <View
           style={[

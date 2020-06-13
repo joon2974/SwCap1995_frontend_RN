@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   AsyncStorage,
+  ScrollView,
 
 } from 'react-native';
 
@@ -86,7 +87,7 @@ export default class EstimatePlan extends Component {
   render() {
     const { planData, imgPoint, rulePoint } = this.state;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.estimateContainer}>
           <View style={styles.InfoContainer}>
             <Text style={styles.titlestyle}>
@@ -186,7 +187,7 @@ export default class EstimatePlan extends Component {
             <Text style={styles.text}>제출</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

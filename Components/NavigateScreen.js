@@ -16,6 +16,7 @@ import MyMenuScreen from './MyScreens/MyMenuScreen';
 import AddPoint from './MyScreens/AddPointScreen';
 import ChangePassword from './MyScreens/ChangePassword';
 import ServiceScreen from './MyScreens/ServiceScreen';
+import NoticeScreen from './MyScreens/noticeScreen';
 import HomeMain from './HomeScreens/HomeMain';
 import WatcherPage from './HomeScreens/WatcherPage';
 import DailyCertifyCamera from './HomeScreens/DailyCertifyCamera';
@@ -24,6 +25,7 @@ import NotiTestScreen from './HomeScreens/NotiTestScreen';
 import FaceAuthenticationScreen from './HomeScreens/FaceAuthenticationScreen';
 import CameraTestScreen from './MyScreens/CameraTestScreen';
 import Estimate from './HomeScreens/EstimatePlan';
+import AuthenticationPage from './SearchScreens/AuthenticationPage';
 
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
@@ -46,7 +48,6 @@ import HotPlan from './SearchScreens/HotPlan';
 import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
 import Joom from './SearchScreens/TabList/Joom';
-import AuthenticationPage from './SearchScreens/AuthenticationPage';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 if (!firebase.apps.length) {
@@ -86,6 +87,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="일일인증: 갤러리" component={DailyCertifyGalary} />
       <HomeStack.Screen name="일일인증: 본인인증" component={FaceAuthenticationScreen} />
       <HomeStack.Screen name="플랜평가하기" component={Estimate} />
+      <HomeStack.Screen name="인증 리스트" component={AuthenticationPage} />
+      <HomeStack.Screen name="감시 리스트" component={WatcherPage} />
     </HomeStack.Navigator>
   );
 }
@@ -184,6 +187,7 @@ function MyMenuStackScreen() {
       <MyMenuStack.Screen name="비밀번호 변경" component={ChangePassword} />
       <MyMenuStack.Screen name="카메라 테스트" component={CameraTestScreen} />
       <MyMenuStack.Screen name="문의하기" component={ServiceScreen} />
+      <MyMenuStack.Screen name="공지사항" component={NoticeScreen} />
     </MyMenuStack.Navigator>
   );
 }

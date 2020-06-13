@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Input } from 'react-native-elements';
+import axios from 'axios';
 import { CardSix2, CardSeven2 } from './Cards';
 
 const { width, height } = Dimensions.get('window');
@@ -15,8 +16,26 @@ export default class VariableCard extends Component {
     isModalVisible: false,
     currentComment: '',
     currentWatchStatus: 0,
-    watchStatusResult: 1,
+    watchStatusResult: 0,
+    planData: [],
   }
+
+  componentDidMount() {
+    if (this.props.data.status === 'done') {
+      this.setState({ watchStatusResult: 1 });
+    }
+    this.setTable();
+  }
+  
+  setTable = () => {
+    axios.get('http://49.50.172.58:3000/plans/' + this.props.data.plan_id).then((res) => {
+      this.setState({ planData: res.data });
+    }).catch((error) => {
+      console.log(error);
+      alert(error);
+    });
+  }
+
 
   toggleModal = (select) => {
     this.setState({ isModalVisible: !this.state.isModalVisible, currentWatchStatus: select });
@@ -41,16 +60,9 @@ export default class VariableCard extends Component {
       testVari = (
         <View>
           <CardSix2
-            title="Vinny’s Barber"
-            subTitle="852 N Virgil Ave, Beverly Hills"
-            profile={{
-              uri:
-            'https://lemag.nikonclub.fr/wp-content/uploads/2016/11/Photo-selection-pour-Nikon-France-Mattia-Bonavida-2016-6.jpg',
-            }}
-            image={{
-              uri:
-            'https://idinterdesign.ca/wp-content/uploads/2016/07/paysage-ID-02-750x468.jpg',
-            }}
+            title={this.props.data.id}
+            subTitle={this.props.data.comment}
+            image={{ uri: this.props.data.image_url }}
             icon1="check"
             iconColor1="#fff"
             iconBackground1="green"
@@ -65,6 +77,7 @@ export default class VariableCard extends Component {
               this.toggleModal(2);
             }}
             checkBoxStatus={this.state.watchStatusResult}
+            ruleData={this.state.planData}
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
@@ -118,12 +131,9 @@ export default class VariableCard extends Component {
       testVari = (
         <View>
           <CardSeven2
-            title="Vinny’s Barber"
-            subTitle="852 N Virgil Ave, Beverly Hills"
-            image={{
-              uri:
-                'https://idinterdesign.ca/wp-content/uploads/2016/07/paysage-ID-02-750x468.jpg',
-            }}
+            title={this.props.data.id}
+            subTitle={this.props.data.comment}
+            image={{ uri: this.props.data.image_url }}
             icon1="check"
             iconColor1="#fff"
             iconBackground1="green" 
@@ -138,7 +148,8 @@ export default class VariableCard extends Component {
               this.toggleModal(2);
             }}
             checkBoxStatus={this.state.watchStatusResult}
-          />
+            ruleData={this.state.planData}
+            />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
          
             <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
