@@ -122,7 +122,8 @@ export default class HomeMain extends Component {
     const watchcount = await watchresponse.data.count;
     
     try {
-      if (count !== 0) {
+      console.log(watchresponseJson);
+      if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
           const obj = {
             title: watchresponseJson[l].title,
