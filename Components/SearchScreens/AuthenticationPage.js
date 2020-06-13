@@ -79,7 +79,7 @@ export default class WatcherPage extends Component {
               {
                 this.state.testArray.map((data, index) => (
                   <VariableCard 
-                    key={data}
+                    key={data.id}
                     data={data}
                     index={index} 
                     onOff={this.state.onOff}

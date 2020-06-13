@@ -85,6 +85,8 @@ export default class MyMenuScreen extends Component {
             url: responseJson[i].image_url, 
             picturetime: responseJson[i].picture_time, 
             id: responseJson[i].id,
+            percent: responseJson[i].daily_authentications.length 
+              / (responseJson[i].plan_period * 7),
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -120,6 +122,7 @@ export default class MyMenuScreen extends Component {
         btnFunc={() => alert('더보기')}
         url={data.url}
         picturetime={data.picturetime}
+        percent={data.percent}
       />
     ));
     return (

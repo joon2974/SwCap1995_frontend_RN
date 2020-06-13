@@ -25,7 +25,6 @@ export default class WatcherPage extends Component {
     onOff: 0,
     selectedTab: 0,
     tabState: 0,
-
     testArray: [],
     testArray2: [],
   }
@@ -87,7 +86,7 @@ export default class WatcherPage extends Component {
               {
                 this.state.testArray.map((data, index) => (
                   <VariableCard 
-                    key={data}
+                    key={data.id}
                     data={data}
                     data2={this.state.testArray2}
                     index={index} 
