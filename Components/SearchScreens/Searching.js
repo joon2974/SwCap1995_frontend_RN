@@ -122,7 +122,7 @@ export default class Searching extends Component {
           style={{ marginTop: 10, width: width }}
           data={this.state.data}
           renderItem={this.renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={1}
           ref={(ref) => { this.flatList = ref; }}

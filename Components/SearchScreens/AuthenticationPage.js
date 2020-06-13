@@ -52,9 +52,9 @@ export default class WatcherPage extends Component {
             this.state.selectedTab === 0
               ? styles.selectedCategoryBtnStyle
               : styles.categoryBtnStyle
-        }
+            }
             onPress={() => this.setState({ selectedTab: 0, tabState: 0 })}
-      >
+          >
             <Text style={this.state.selectedTab === 0 ? { color: 'white' } : { color: 'black' }}>인증</Text>
           </TouchableOpacity>
 
@@ -63,9 +63,9 @@ export default class WatcherPage extends Component {
           this.state.selectedTab === 1
             ? styles.selectedCategoryBtnStyle
             : styles.categoryBtnStyle
-        }
+            }
             onPress={() => this.setState({ selectedTab: 1, tabState: 1 })}
-      >
+          >
             <Text style={this.state.selectedTab === 1 ? { color: 'white' } : { color: 'black' }}>기타</Text>
           </TouchableOpacity>
         </View>
@@ -74,7 +74,6 @@ export default class WatcherPage extends Component {
 
           <ScrollView style={{ marginBottom: 40 }}>
           
-
             <View style={styles.container}>
               {
                 this.state.testArray.map((data, index) => (
@@ -86,7 +85,7 @@ export default class WatcherPage extends Component {
                     changeShowing={() => {
                       this.setState({ onOff: index });
                     }} 
-                />
+                  />
                 ))
               }
               <View style={styles.lineDivider} />
@@ -95,8 +94,6 @@ export default class WatcherPage extends Component {
 
           </ScrollView>
         ) : (<View />) }
-       
-    
       </View>
     );
   }

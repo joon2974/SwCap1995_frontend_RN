@@ -39,6 +39,7 @@ export default class HotPlan extends Component {
               data: this.state.data.concat(data.plans),
               nowPage: this.state.nowPage + 1,
             });
+            console.log('데이터', this.state.data);
             if (data.plans.length === 0) {
               this.setState({ moreData: 1 });
             }
@@ -72,7 +73,7 @@ export default class HotPlan extends Component {
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               onEndReached={this.handleLoadMore}
               onEndReachedThreshold={1}
             />

@@ -67,7 +67,7 @@ export default class PlanList extends Component {
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
               onEndReached={this.handleLoadMore}
               onEndReachedThreshold={1}
             />

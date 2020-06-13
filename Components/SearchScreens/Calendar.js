@@ -58,7 +58,7 @@ export default class Calendar extends Component {
               style={{ marginTop: 30, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
 
               numColumns={2}
               contentContainerStyle={{

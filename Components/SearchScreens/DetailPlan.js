@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
-/* eslint-disable no-undef */
-/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import {
   View,
@@ -11,15 +7,11 @@ import {
   ImageBackground,
   Dimensions,
   ScrollView,
+  Platform,
 } from 'react-native';
-import PureChart from 'react-native-pure-chart';
 import {
   LineChart,
-  BarChart,
-  PieChart,
   ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
 } from 'react-native-chart-kit';
 import Watcher from './TabList/Watcher';
 import { CardNine } from './Cards';
@@ -43,32 +35,6 @@ export default class DetailPlan extends Component {
 
     render() {
       const { item } = this.state;
-     
-      const sampleData = [
-        { x: '2018-01-01', y: 30 },
-        { x: '2018-01-02', y: 200 },
-        { x: '2018-01-03', y: 170 },
-        { x: '2018-01-04', y: 250 },
-        { x: '2018-01-05', y: 10 },
-      ];
-
-      const sampleData2 = [
-        {
-          value: 50,
-          label: 'Marketing',
-          color: 'red',
-        }, {
-          value: 40,
-          label: 'Sales',
-          color: 'blue',
-        }, {
-          value: 25,
-          label: 'Support',
-          color: 'green',
-        },
-     
-      ];
-      
 
       const data = {
         labels: ['Swim', 'Bike', 'Run'], // optional
@@ -122,14 +88,11 @@ export default class DetailPlan extends Component {
                   {'작성일 : ' + item.createdAt + '\n'}
                   {'수정일 : ' + item.updatedAt}
                 </Text>
-
                 <View style={{ marginBottom: 10 }} />
               </View>
           
               <View style={{ alignItems: 'center', marginVertical: 30 }}>
-                <View style={styles.lineDivider} />
-               
-               
+                <View style={styles.lineDivider} />    
                 <View>
                   <Text>Bezier Line Chart</Text>
                   <LineChart
@@ -174,9 +137,8 @@ export default class DetailPlan extends Component {
                       marginVertical: 8,
                       borderRadius: 16,
                     }}
-  />
+                  />
                 </View>
-
 
                 <TouchableOpacity 
                   style={styles.moreExploreBar}
@@ -185,9 +147,7 @@ export default class DetailPlan extends Component {
                   <Text>인증 더 보기</Text>
                 </TouchableOpacity>
 
-
                 <View style={styles.lineDivider} />
-
 
                 <ProgressChart
                   data={data}
@@ -197,8 +157,7 @@ export default class DetailPlan extends Component {
                   radius={32}
                   chartConfig={chartConfig}
                   hideLegend={false}
-              />
-
+                />
 
               </View>
 
