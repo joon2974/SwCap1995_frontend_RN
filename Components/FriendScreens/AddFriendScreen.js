@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     marginBottom: 5,
-    padding: 100,
+    paddingLeft: 10,
   },
 });

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Platform, 
+} from 'react-native';
+import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -50,6 +56,8 @@ import DetailPlan from './SearchScreens/DetailPlan';
 import Joom from './SearchScreens/TabList/Joom';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
+const statusbarHeight = Platform.OS === 'ios' ? Constants.statusBarHeight : 0;
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
@@ -71,7 +79,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        height: 60,
+        height: 60 + statusbarHeight,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -99,7 +107,7 @@ function SearchStackScreen() {
     <SearchStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        height: 60,
+        height: 60 + statusbarHeight,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -128,7 +136,7 @@ function FriendStackScreen() {
     <FriendStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        height: 60,
+        height: 60 + statusbarHeight,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -147,7 +155,7 @@ function PlanStackScreen() {
     <PlanStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        height: 60,
+        height: 60 + statusbarHeight,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -174,7 +182,7 @@ function MyMenuStackScreen() {
     <MyMenuStack.Navigator screenOptions={{
       headerStyle: {
         backgroundColor: '#FD8A69', 
-        height: 60,
+        height: 60 + statusbarHeight,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
