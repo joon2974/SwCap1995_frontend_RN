@@ -4,7 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
-  Platform,
+  Button,
 } from 'react-native';
 import axios from 'axios';
 import ServiceCard from './MyComponents/ServiceCard';
@@ -65,14 +65,22 @@ export default class AllServiceScreen extends Component {
     ));
     return (
       <ScrollView
-        style={styles.Container}
-      
+        style={styles.Container}     
 >
         <View style={{
-          alignItems: 'center', backgroundColor: 'white', height: height, 
+          alignItems: 'center', backgroundColor: 'white', height: height, paddingTop: 10,
         }}>
+          
+          <Button
+            title="문의하기"
+            onPress={() => {
+              this.props.navigation.navigate('문의하기', { userId: this.state.userid });
+            }
+        }
+         />
           {service}
         </View>
+        
       </ScrollView>
     );
   }
@@ -80,28 +88,8 @@ export default class AllServiceScreen extends Component {
 
 const styles = StyleSheet.create({
     
-  noticeContainer: {
-    marginTop: 30,
-    width: width * 0.9,
-    height: height / 8,
-    alignItems: 'center',
-    borderRadius: 15,
-    backgroundColor: 'white',
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgb(50, 50, 50)',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: {
-          height: -1,
-          width: 0,
-        },
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
   Container: {
+    height: height,
+    width: width,
   },
 });

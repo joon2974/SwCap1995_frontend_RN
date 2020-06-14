@@ -128,17 +128,17 @@ export default class MyMenuScreen extends Component {
         percent={data.percent}
       />
     )); const commitsData = [
-      { date: '2017-01-02', count: 1 },
-      { date: '2017-01-03', count: 2 },
-      { date: '2017-01-04', count: 3 },
-      { date: '2017-01-05', count: 4 },
-      { date: '2017-01-06', count: 5 },
-      { date: '2017-01-30', count: 2 },
-      { date: '2017-01-31', count: 3 },
-      { date: '2017-03-01', count: 2 },
-      { date: '2017-04-02', count: 4 },
-      { date: '2017-03-05', count: 2 },
-      { date: '2017-02-30', count: 4 },
+      { date: '2020-05-30', count: 1 },
+      { date: '2020-05-31', count: 2 },
+      { date: '2020-06-01', count: 3 },
+      { date: '2020-06-02', count: 4 },
+      { date: '2020-06-03', count: 5 },
+      { date: '2020-06-04', count: 2 },
+      { date: '2020-06-05', count: 3 },
+      { date: '2020-06-06', count: 2 },
+      { date: '2020-06-07', count: 4 },
+      { date: '2020-06-08', count: 2 },
+      { date: '2020-06-09', count: 4 },
     ];
     return (
       
@@ -224,13 +224,31 @@ export default class MyMenuScreen extends Component {
               paddingEnd: 5,
             }}
                             >
+                              
+            <View style={{ marginRight: 30, marginLeft: 10 }}>
+              
+              <Text>내 플랜</Text>
+              
+              <Text>보기</Text>
+              <Image
+                source={{
+                  uri:
+                      'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
+                }}
+                style={{ width: 50, height: 50, marginTop: 20 }}
+                />
+            </View>
+             
             {plans}
           </ScrollView>
           
           <View style={styles.lineDivider} />
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>목표달성 색칠하기</Text>
+          </View>
           <ContributionGraph
             values={commitsData}
-            endDate={new Date('2017-04-01')}
+            endDate={new Date('2020-08-10')}
             numDays={105}
             width={width - 50}
             height={220}

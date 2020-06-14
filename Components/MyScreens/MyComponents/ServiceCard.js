@@ -34,9 +34,8 @@ export default class ServiceCard extends Component {
         <View style={styles.lineDivider} />
         <View style={styles.contentStyle}>
           
-          <Text>답변내용:</Text>
           <Text>
-            {this.props.answer}
+            {this.props.answer !== null ? `답변내용:${this.props.answer}` : '아직 답변이 달리지 않았습니다'}
           </Text>
         </View>
       </View>
