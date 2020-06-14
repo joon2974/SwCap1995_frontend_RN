@@ -8,13 +8,8 @@ import {
   ScrollView,
   Dimensions,
   Text,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from 'react-native';
-import { Input } from 'react-native-elements';
 import axios from 'axios';
-import Modal from 'react-native-modal';
 import VariableCard from './VariableCard';
 
 const { width, height } = Dimensions.get('window');
@@ -45,7 +40,7 @@ export default class WatcherPage extends Component {
   }
   
 
-  render() {
+  render() { 
     return (
 
       <View>

@@ -1109,6 +1109,9 @@ export class CardSix2 extends Component {
               style={{
                 backgroundColor: 'transparent',
                 height: screenHeight / 13,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}
             >
              
@@ -1122,6 +1125,22 @@ export class CardSix2 extends Component {
               >
                 {this.props.subTitle}
               </Text>
+
+              <TouchableOpacity
+                style={{
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  height: screenHeight / 22,
+                  width: screenWidth / 4,
+                  backgroundColor: '#FD8A69',
+                  borderRadius: 10,
+                  marginRight: 15, 
+                }}
+                onPress={this.props.exploreComment}>
+                <Text style={{ color: 'white' }}>
+                  코멘트 보기
+                </Text>
+              </TouchableOpacity>
             </View>
      
           </View>
@@ -1330,7 +1349,26 @@ export class CardSeven2 extends Component {
             </Text>
           </TouchableOpacity>
         
-          <View style={{ alignItems: 'flex-end', justifyContent: 'center', marginRight: 10 }}>
+          <View style={{
+            flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginRight: 10, 
+          }}>
+
+            <TouchableOpacity
+              style={{
+                alignItems: 'center', 
+                justifyContent: 'center',
+                height: screenHeight / 24,
+                width: screenWidth / 4.5,
+                backgroundColor: '#FD8A69',
+                borderRadius: 10,
+                marginRight: 15, 
+              }}
+              onPress={this.props.exploreComment}>
+              <Text style={{ color: 'white' }}>
+                코멘트 보기
+              </Text>
+            </TouchableOpacity>
+
 
             {checkBox}
           </View>
