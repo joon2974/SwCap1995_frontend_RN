@@ -15,7 +15,6 @@ import AuthWatcher from './TabList/AuthWatcher';
 
 const { width } = Dimensions.get('window');
 
-
 export default class VariableCard extends Component {
   state={
     isModalVisible: false,
@@ -34,16 +33,17 @@ export default class VariableCard extends Component {
     }
     this.setTable();
     this.setState({ watchers: this.props.data.daily_judges });
+
+
+    const test = this.props.data.createdAt.split('-');
+    let test2 = '';
+    test2 = test2.concat(test[1], '월 ', test[2][0], test[2][1], '일 인증');
+    this.setState({ authTitle: test2 });
   }
   
   setTable = () => {
     axios.get('http://49.50.172.58:3000/plans/' + this.props.data.plan_id).then((res) => {
       this.setState({ planData: res.data });
-
-      const test = res.data.createdAt.split('-');
-      let test2 = '';
-      test2 = test2.concat(test[1], '월 ', test[2][0], test[2][1], '일 인증');
-      this.setState({ authTitle: test2 });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -52,10 +52,11 @@ export default class VariableCard extends Component {
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
-    console.log('togle');
   };
 
   render() {
+    console.log(this.props.data.daily_judges);
+
     let testVari = null;
 
     let comment = null;

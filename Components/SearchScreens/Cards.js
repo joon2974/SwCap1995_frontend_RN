@@ -956,8 +956,7 @@ export class CardSeven extends Component {
 
 export class CardSix2 extends Component {
   render() {
-    console.log(this.props.authData.status);
-
+    
     let checkBox = null;
     if (this.props.authData.status === 'done') { 
       checkBox = (
