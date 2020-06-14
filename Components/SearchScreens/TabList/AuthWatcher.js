@@ -24,9 +24,6 @@ export default class AuthWatcher extends Component {
           style={styles.imageStyle}
             />
         <Text style={styles.watcherInfo}>
-          {this.props.userID}
-        </Text>
-        <Text style={styles.watcherInfo}>
           {this.props.comment}
         </Text>
 
