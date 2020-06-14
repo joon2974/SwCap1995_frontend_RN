@@ -3,9 +3,20 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
+  Button,  
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
 } from 'react-native';
 import axios from 'axios';
+import { Input } from 'react-native-elements';
+import Modal from 'react-native-modal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CardSix2, CardSeven2 } from './Cards';
+import Watcher from './TabList/Watcher';
+
+const { width, height } = Dimensions.get('window');
 
 
 export default class VariableCard extends Component {
@@ -15,6 +26,8 @@ export default class VariableCard extends Component {
     currentWatchStatus: 0,
     watchStatusResult: 0,
     planData: [],
+    watchers: [1, 2, 3],
+    watchersComment: [1, 2, 3],
   }
 
   componentDidMount() {
@@ -33,9 +46,8 @@ export default class VariableCard extends Component {
     });
   }
 
-
-  toggleModal = (select) => {
-    this.setState({ isModalVisible: !this.state.isModalVisible, currentWatchStatus: select });
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
   toggleModal2 = () => {
@@ -79,6 +91,47 @@ export default class VariableCard extends Component {
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
       />
+          <TouchableOpacity style={{ height: 50, width: 50, backgroundColor: 'red' }} onPress={this.toggleModal} />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <View style={{
+                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+              }}>
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 20,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  backgroundColor: '#FD8A69',
+                  height: height / 20,
+                  width: width / 1.05,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10, 
+                }}>
+                  감시자들의 코멘트
+                </Text>
+                
+                <View>
+                  {
+                  this.state.watchers.map((data, index) => (
+                    <View key={data}>
+                      <Watcher 
+                        key={data}
+                        index={index}
+                        comment={this.state.watchersComment}
+                      />
+                    </View>
+                  ))                                
+                }
+                </View>
+               
+                
+              </View>
+              
+            </Modal>
+          </TouchableWithoutFeedback>
+
 
         </View>
       );
@@ -107,6 +160,32 @@ export default class VariableCard extends Component {
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
             />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <View style={{
+                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+              }}>
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 20,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  backgroundColor: '#FD8A69',
+                  height: height / 20,
+                  width: width / 1.05,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10, 
+                }}>
+                  당신의 느낌을 적어주세요
+                </Text>
+               
+                
+              </View>
+              
+            </Modal>
+          </TouchableWithoutFeedback>
+
          
         </View>
       );

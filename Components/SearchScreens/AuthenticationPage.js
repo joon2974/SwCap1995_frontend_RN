@@ -9,9 +9,12 @@ import {
   Dimensions,
   Text,
   Platform,
-  TouchableOpacityBase,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
+import { Input } from 'react-native-elements';
 import axios from 'axios';
+import Modal from 'react-native-modal';
 import VariableCard from './VariableCard';
 
 const { width, height } = Dimensions.get('window');
