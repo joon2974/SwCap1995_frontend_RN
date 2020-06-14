@@ -10,13 +10,14 @@ import {
   AsyncStorage,
   Platform,
   RefreshControl,
-  Button,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import {
+  ContributionGraph,
+} from 'react-native-chart-kit';
 import MyPageBtn from './MyComponents/MyPageBtn';
 import MyPlan from './MyComponents/MyPlan';
-import PlanCalendar from './MyComponents/PlanCalendar';
 
 const { height, width } = Dimensions.get('window');
 
@@ -121,8 +122,21 @@ export default class MyMenuScreen extends Component {
         url={data.url}
         picturetime={data.picturetime}
       />
-    ));
+    )); const commitsData = [
+      { date: '2017-01-02', count: 1 },
+      { date: '2017-01-03', count: 2 },
+      { date: '2017-01-04', count: 3 },
+      { date: '2017-01-05', count: 4 },
+      { date: '2017-01-06', count: 5 },
+      { date: '2017-01-30', count: 2 },
+      { date: '2017-01-31', count: 3 },
+      { date: '2017-03-01', count: 2 },
+      { date: '2017-04-02', count: 4 },
+      { date: '2017-03-05', count: 2 },
+      { date: '2017-02-30', count: 4 },
+    ];
     return (
+      
       <ScrollView
         refreshControl={(
           <RefreshControl
@@ -187,18 +201,13 @@ export default class MyMenuScreen extends Component {
                 </View>
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
-                  <Text>12</Text>
-                  <Button title="테스트" onPress={() => this.props.navigation.navigate('카메라 테스트')} />
+                  <Text>1000</Text>
                   <View style={{ height: 35 }} />
                 </View>
               </View>
             </View>
           </View>
 
-          <View style={styles.lineDivider} />
-          <View style={styles.calendarContainer}>
-            <PlanCalendar />
-          </View>
 
           <View style={styles.lineDivider} />
           <ScrollView 
@@ -212,10 +221,29 @@ export default class MyMenuScreen extends Component {
                             >
             {plans}
           </ScrollView>
+          
+          <View style={styles.lineDivider} />
+          <ContributionGraph
+            values={commitsData}
+            endDate={new Date('2017-04-01')}
+            numDays={105}
+            width={width - 50}
+            height={220}
+            chartConfig={{
+              
+              backgroundColor: '#000000',
+              backgroundGradientFrom: '#FD8A69',
+              backgroundGradientTo: '#FD8A69',
+              color: (opacity = 0.8) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+/>
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"
-              btnFunc={() => this.props.navigation.navigate('문의하기', { userId: this.state.userId })}
+              btnFunc={() => this.props.navigation.navigate('고객센터', { userId: this.state.userId })}
           />
             <MyPageBtn 
               btnName="비밀번호 변경"
