@@ -116,7 +116,7 @@ export default class MyMenuScreen extends Component {
   };
 
   render() {
-    const { planData } = this.state;
+    const { planData, userId } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
         key={data.id}
@@ -193,7 +193,7 @@ export default class MyMenuScreen extends Component {
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
                   <Text>12</Text>
-                  <Button title="테스트" onPress={() => this.props.navigation.navigate('카메라 테스트')} />
+                  <Button title="테스트" onPress={() => this.props.navigation.navigate('카메라 테스트', { userID: userId })} />
                   <View style={{ height: 35 }} />
                 </View>
               </View>
