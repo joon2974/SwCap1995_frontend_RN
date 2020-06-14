@@ -44,8 +44,12 @@ export default class AddFriendScreen extends Component {
         <Button
           title="친구 요청 보내기"
           onPress={() => {
-            this.sendFriendRequest(userId, targetNickname);
-            this.props.navigation.popToTop();
+            if (targetNickname !== '') {
+              this.sendFriendRequest(userId, targetNickname);
+              this.props.navigation.popToTop();
+            } else {
+              alert('닉네임이 입력되지 않았습니다');
+            }
           }}
          />
          
@@ -68,5 +72,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     marginBottom: 5,
+    padding: 100,
   },
 });
