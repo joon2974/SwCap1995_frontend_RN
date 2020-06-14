@@ -26,7 +26,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "plana"
     },
     "androidStatusBar": {
       "backgroundColor": "#FD8A69",
@@ -41,6 +42,7 @@
         }
       }
     },
-    "description": ""
+    "description": "",
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
