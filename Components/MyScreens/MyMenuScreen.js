@@ -90,6 +90,10 @@ export default class MyMenuScreen extends Component {
             picturetime: responseJson[i].picture_time, 
             id: responseJson[i].id,
             percent: planPercent,
+            status: responseJson[i].status,
+            authentication_way: responseJson[i].authentication_way,
+            today_auth: responseJson[i].today_auth,
+            
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -120,13 +124,19 @@ export default class MyMenuScreen extends Component {
     const { planData } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
+      
         key={data.id}
+        planId={data.id}
         title={data.title}
-        btnFunc={() => alert('더보기')}
+        btnFunc={() => { this.moveToAuthenticationList(data.id); }}
         url={data.url}
         picturetime={data.picturetime}
+        status={data.status}
+        certifyMethod={data.authentication_way}
+        faceAuthentication={this.faceAuthentication}
+        today_auth={data.today_auth}
         percent={data.percent}
-      />
+          />
     )); const commitsData = [
       { date: '2020-05-30', count: 1 },
       { date: '2020-05-31', count: 2 },
