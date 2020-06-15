@@ -2,7 +2,15 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
-  View, Text, Dimensions, Button, TouchableWithoutFeedback, Keyboard,
+  View,
+  Text, 
+  Dimensions, 
+  Button, 
+  TouchableWithoutFeedback, 
+  Keyboard, 
+  Image, 
+  TouchableOpacity, 
+  StyleSheet,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Input } from 'react-native-elements';
@@ -17,13 +25,24 @@ export default class VariableCard extends Component {
     currentComment: '',
     currentWatchStatus: -1,
     watchStatusResult: -1,
+    authTitle: '',
+    emoticon: [1, 2, 3, 4, 5],
+    test4: './emoticons/emoticon1.png',
+    currentEmoticon: 0,
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setWatcherPage();
+   
+    const test = this.props.data.createdAt.split('-');
+    const test3 = this.props.data.updatedAt.split('-');
+    let test2 = '';
+    test2 = test2.concat('작성일: ', test[1], '월 ', test[2][0], test[2][1], '일\n수정일: ', test3[1], '월 ', test3[2][0], test3[2][1], '일');
+    this.setState({ authTitle: test2 });
   }
 
+  
   setWatcherPage=() => {
     axios
       .post('http://49.50.172.58:3000/daily_judges/is_exist', {
@@ -46,12 +65,17 @@ export default class VariableCard extends Component {
 
 
   toggleModal = (select) => {
-    this.setState({ isModalVisible: !this.state.isModalVisible, currentWatchStatus: select });
+    this.setState({
+      isModalVisible: !this.state.isModalVisible,
+      currentWatchStatus: select,
+      currentEmoticon: 0, 
+    });
   };
 
   toggleModal2 = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
+  
 
   updateComment = (changedComment) => {
     this.setState({ currentComment: changedComment });
@@ -66,7 +90,7 @@ export default class VariableCard extends Component {
         user_id: this.props.userID,    
         daily_auth_id: this.props.data.id,
         is_correct: this.state.currentWatchStatus,
-        emoticon: 0,
+        emoticon: this.state.currentEmoticon,
         comment: this.state.currentComment,
         
       })
@@ -89,7 +113,7 @@ export default class VariableCard extends Component {
         <View>
           <CardSix
             title={this.props.data.comment}
-            subTitle={'작성일: ' + this.props.data.createdAt + '\n수정일: ' + this.props.data.updatedAt}
+            subTitle={this.state.authTitle}
             image={{ uri: this.props.data.image_url }}
             icon1="check"
             iconColor1="#fff"
@@ -109,9 +133,9 @@ export default class VariableCard extends Component {
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
-            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal2}>
               <View style={{
-                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+                height: height / 3.8, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
               }}>
                 <Text style={{ 
                   color: 'white', 
@@ -136,7 +160,43 @@ export default class VariableCard extends Component {
                     this.sendComment();
                   }}
             />
-             
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 1 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 1 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon1.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 2 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 2 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon2.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 3 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 3 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon3.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 4 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 4 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon4.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 5 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 5 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon5.png')} />
+                  </TouchableOpacity>
+                </View>
                 <View style={{ marginBottom: 10 }}>
                   <Button
                     title="코멘트 보내기"
@@ -160,7 +220,7 @@ export default class VariableCard extends Component {
         <View>
           <CardSeven
             title={this.props.data.comment}
-            subTitle={'작성일: ' + this.props.data.createdAt + '\n수정일: ' + this.props.data.updatedAt}
+            subTitle={this.state.authTitle}
             image={{ uri: this.props.data.image_url }}
             icon1="check"
             iconColor1="#fff"
@@ -234,3 +294,24 @@ export default class VariableCard extends Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  clickedEmoticon: { 
+    height: height / 14, 
+    width: width / 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 8,
+    backgroundColor: '#FD8A69',
+    borderRadius: 5, 
+  },
+  unclickedEmoticon: {
+    height: height / 14, 
+    width: width / 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 8,
+    backgroundColor: 'white',   
+  },
+}); 
