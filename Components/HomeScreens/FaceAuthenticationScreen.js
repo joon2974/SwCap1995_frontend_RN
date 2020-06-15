@@ -12,15 +12,15 @@ import {
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-import axios from 'axios';
+import { kairosConfig } from '../../kairosConfig';
 
 const { height, width } = Dimensions.get('window');
 const BASE_URL = 'https://api.kairos.com/';
 const HEADERS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
-  app_id: '79e9aa10',
-  app_key: '2bcefdffa750bc7defa2b7278e776de2',
+  app_id: kairosConfig.app_id,
+  app_key: kairosConfig.app_key,
 };
 
 export default class FaceAuthenticationScreen extends Component {
@@ -79,41 +79,6 @@ export default class FaceAuthenticationScreen extends Component {
     }
   }
 
-  sendImage = (uri) => {
-    const uriParts = uri.split('.');
-    const fileType = uriParts[uriParts.length - 1];
-
-    const formData = new FormData();
-    formData.append('photo', {
-      uri: uri,
-      name: `photo.${fileType}`,
-      type: 'image/jpeg',
-    });
-    formData.append('user_id', this.props.route.params.userID);
-
-    axios
-      .post('http://49.50.172.58:3000/daily_authentications/face_detection', formData, {
-        header: {
-          'content-type': 'multipart/form-data',
-        },
-      })
-      .then((res) => {
-        console.log(res.status);
-        if (res.status === 200) {
-          if (this.props.route.params.certifyMethod === 0) {
-            this.props.route.params.galaryCertify(this.props.route.params.planID);
-          } else {
-            this.props.route.params.cameraCertify(this.props.route.params.planID);
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  // sendImage를 대체하고 modal indicator띄우기
-  // await로 체크하고 certify로 넘기기
   recognize = async (base64) => {
     this.setState({ modalVisible: true });
     const rawResponse = await fetch(`${BASE_URL}recognize`, {
@@ -129,8 +94,10 @@ export default class FaceAuthenticationScreen extends Component {
     if (this.props.route.params.userFaceId === highestPercentId) {
       this.setState({ modalVisible: false });
       if (this.props.route.params.certifyMethod === 0) {
+        alert('본인 인증이 완료되었습니다!');
         this.props.route.params.galaryCertify(this.props.route.params.planID);
       } else {
+        alert('본인 인증이 완료되었습니다!');
         this.props.route.params.cameraCertify(this.props.route.params.planID);
       }
     } else {

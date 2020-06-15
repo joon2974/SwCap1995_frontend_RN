@@ -11,5 +11,6 @@ web-build/
 web-report/
 
 firebaseConfig.js
+kairosConfig.js
 # macOS
 .DS_Store
