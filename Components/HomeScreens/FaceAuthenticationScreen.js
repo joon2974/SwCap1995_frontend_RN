@@ -167,8 +167,8 @@ export default class FaceAuthenticationScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.sendImage(imageUri)}
-              // onPress={() => this.recognize(imageBase64)}  
+              // onPress={() => this.sendImage(imageUri)}
+              onPress={() => this.recognize(imageBase64)}  
             >
               <Text>이 사진으로 본인 인증하기</Text>
             </TouchableOpacity>

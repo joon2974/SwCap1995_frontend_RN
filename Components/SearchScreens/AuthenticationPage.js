@@ -8,8 +8,6 @@ import {
   ScrollView,
   Dimensions,
   Text,
-  Platform,
-  TouchableOpacityBase,
 } from 'react-native';
 import axios from 'axios';
 import VariableCard from './VariableCard';
@@ -42,7 +40,7 @@ export default class WatcherPage extends Component {
   }
   
 
-  render() {
+  render() { 
     return (
 
       <View>

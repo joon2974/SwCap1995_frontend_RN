@@ -14,9 +14,11 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import {
+  ContributionGraph,
+} from 'react-native-chart-kit';
 import MyPageBtn from './MyComponents/MyPageBtn';
 import MyPlan from './MyComponents/MyPlan';
-import PlanCalendar from './MyComponents/PlanCalendar';
 
 const { height, width } = Dimensions.get('window');
 
@@ -89,6 +91,10 @@ export default class MyMenuScreen extends Component {
             picturetime: responseJson[i].picture_time, 
             id: responseJson[i].id,
             percent: planPercent,
+            status: responseJson[i].status,
+            authentication_way: responseJson[i].authentication_way,
+            today_auth: responseJson[i].today_auth,
+            
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -119,15 +125,34 @@ export default class MyMenuScreen extends Component {
     const { planData, userId } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
+      
         key={data.id}
+        planId={data.id}
         title={data.title}
-        btnFunc={() => alert('더보기')}
+        btnFunc={() => { this.moveToAuthenticationList(data.id); }}
         url={data.url}
         picturetime={data.picturetime}
+        status={data.status}
+        certifyMethod={data.authentication_way}
+        faceAuthentication={this.faceAuthentication}
+        today_auth={data.today_auth}
         percent={data.percent}
-      />
-    ));
+          />
+    )); const commitsData = [
+      { date: '2020-05-30', count: 1 },
+      { date: '2020-05-31', count: 2 },
+      { date: '2020-06-01', count: 3 },
+      { date: '2020-06-02', count: 4 },
+      { date: '2020-06-03', count: 5 },
+      { date: '2020-06-04', count: 2 },
+      { date: '2020-06-05', count: 3 },
+      { date: '2020-06-06', count: 2 },
+      { date: '2020-06-07', count: 4 },
+      { date: '2020-06-08', count: 2 },
+      { date: '2020-06-09', count: 4 },
+    ];
     return (
+      
       <ScrollView
         refreshControl={(
           <RefreshControl
@@ -200,10 +225,6 @@ export default class MyMenuScreen extends Component {
             </View>
           </View>
 
-          <View style={styles.lineDivider} />
-          <View style={styles.calendarContainer}>
-            <PlanCalendar />
-          </View>
 
           <View style={styles.lineDivider} />
           <ScrollView 
@@ -215,12 +236,49 @@ export default class MyMenuScreen extends Component {
               paddingEnd: 5,
             }}
                             >
+                              
+            <View style={{ marginRight: 30, marginLeft: 10 }}>
+              
+              <Text>내 플랜</Text>
+              
+              <Text>보기</Text>
+              <Image
+                source={{
+                  uri:
+                      'https://kr.object.ncloudstorage.com/swcap1995/001-right-arrow-1.png',
+                }}
+                style={{ width: 50, height: 50, marginTop: 20 }}
+                />
+            </View>
+             
             {plans}
           </ScrollView>
+          
+          <View style={styles.lineDivider} />
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>목표달성 색칠하기</Text>
+          </View>
+          <ContributionGraph
+            values={commitsData}
+            endDate={new Date('2020-08-10')}
+            numDays={105}
+            width={width - 50}
+            height={220}
+            chartConfig={{
+              
+              backgroundColor: '#000000',
+              backgroundGradientFrom: '#FD8A69',
+              backgroundGradientTo: '#FD8A69',
+              color: (opacity = 0.8) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+/>
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"
-              btnFunc={() => this.props.navigation.navigate('문의하기', { userId: this.state.userId })}
+              btnFunc={() => this.props.navigation.navigate('고객센터', { userId: this.state.userId })}
           />
             <MyPageBtn 
               btnName="비밀번호 변경"
