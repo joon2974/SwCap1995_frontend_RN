@@ -60,13 +60,11 @@ export default class ImagePickScreen extends Component {
       },
     }).then((res) => {
       console.log(res.status);
-      if (res.status === 200) {
-        this.props.route.params.completeFunc();
-        this.props.navigation.popToTop();
-      }
     }).catch((error) => {
       console.log(error);
     });
+    this.props.route.params.completeFunc();
+    this.props.navigation.popToTop();
   }
 
   render() {

@@ -11,12 +11,17 @@ import {
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
 import * as FaceDetector from 'expo-face-detector';
 import axios from 'axios';
 
 const { height, width } = Dimensions.get('window');
-const ALBUM_NAME = 'PLAN A';
+const BASE_URL = 'https://api.kairos.com/';
+const HEADERS = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+  app_id: '79e9aa10',
+  app_key: '2bcefdffa750bc7defa2b7278e776de2',
+};
 
 export default class CameraTestScreen extends Component {
   constructor(props) {
@@ -27,6 +32,7 @@ export default class CameraTestScreen extends Component {
       cameraType: Camera.Constants.Type.front,
       isPhotoTaken: false,
       imageUri: null,
+      imageBase64: null,
     };
 
     this.cameraRef = React.createRef();
@@ -42,6 +48,34 @@ export default class CameraTestScreen extends Component {
     }
   };
 
+  enroll = async (userId, base64) => {
+    console.log('유저 아이디', userId);
+    const rawResponse = await fetch(`${BASE_URL}enroll`, {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify({
+        image: base64,
+        subject_id: `MySocial_${userId}`,
+        gallery_name: 'MyGallery',
+      }),
+    });
+    const content = await rawResponse.json();
+    console.log('인롤 결과', content);
+  };
+
+  recognize = async (base64) => {
+    const rawResponse = await fetch(`${BASE_URL}recognize`, {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify({
+        image: base64,
+        gallery_name: 'MyGallery',
+      }),
+    });
+    const content = await rawResponse.json();
+    console.log('레코그 나이즈', content);
+  };
+
   switchCameraType = () => {
     const { cameraType } = this.state;
 
@@ -50,80 +84,64 @@ export default class CameraTestScreen extends Component {
     } else {
       this.setState({ cameraType: Camera.Constants.Type.front });
     }
-  }
+  };
 
   takePhoto = async () => {
     try {
       if (this.cameraRef.current) {
-        const { uri } = await this.cameraRef.current.takePictureAsync({
+        const image = await this.cameraRef.current.takePictureAsync({
           quality: 1,
+          base64: true,
         });
 
-        if (uri) {
-          this.setState({ imageUri: uri });
+        if (image) {
+          this.setState({ imageUri: image.uri });
+          this.setState({ imageBase64: image.base64 });
           alert('사진을 찍었습니다!');
-          this.savePhoto(uri);
           this.setState({ isPhotoTaken: true });
         }
       }
     } catch (error) {
       alert(error);
     }
-  }
-
-  savePhoto = async (uri) => {
-    try {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-      if (status === 'granted') {
-        const asset = await MediaLibrary.createAssetAsync(uri);
-        let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
-
-        if (album === null) {
-          album = await MediaLibrary.createAlbumAsync(ALBUM_NAME, asset);
-        } else {
-          await MediaLibrary.addAssetsToAlbumAsync([asset], album.id);
-        }
-      } else {
-        this.setState({ hasPermission: false });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  };
 
   sendImage = (uri) => {
     const uriParts = uri.split('.');
     const fileType = uriParts[uriParts.length - 1];
 
     const formData = new FormData();
-    formData.append('photo', { uri: uri, name: `photo.${fileType}`, type: 'image/jpeg' });
-    formData.append('user_id', this.props.route.params.userID);
-    axios.post('http://49.50.172.58:3000/users/face_detection', formData, {
-      header: { 
-        'content-type': 'multipart/form-data',
-      },
-    }).then((res) => {
-      console.log(res.status);
-      if (res.status === 200) {
-        this.props.route.params.completeFunc();
-        this.props.navigation.popToTop();
-      }
-    }).catch((error) => {
-      console.log(error);
+    formData.append('photo', {
+      uri: uri,
+      name: `photo.${fileType}`,
+      type: 'image/jpeg',
     });
-  }
+    formData.append('user_id', this.props.route.params.userID);
+    axios
+      .post('http://49.50.172.58:3000/users/face_detection', formData, {
+        header: {
+          'content-type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          this.props.route.params.completeFunc();
+          this.props.navigation.popToTop();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   onFacesDetected = (faces) => {
-    console.log(faces);
-  }
+    console.log(faces[0]);
+  };
 
   render() {
     const {
-      hasPermission,
-      cameraType,
-      isPhotoTaken,
-      imageUri,
+      hasPermission, cameraType, isPhotoTaken, imageUri, imageBase64,
     } = this.state;
 
     if (hasPermission === true) {
@@ -131,15 +149,21 @@ export default class CameraTestScreen extends Component {
         return (
           <View style={styles.container}>
             <Text>찍은 사진</Text>
-            <Image 
-              source={{ uri: imageUri }} 
-              style={{ width: width - 40, height: (width - 40) * 1.3 }} 
+            <Image
+              source={{ uri: imageUri }}
+              style={{ width: width - 40, height: (width - 40) * 1.3 }}
             />
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.uploadBtn}
-              onPress={() => this.sendImage(imageUri)}  
+              onPress={() => this.enroll(this.props.route.params.userID, imageBase64)}
             >
-              <Text>이 사진으로 얼굴 등록하기</Text>
+              <Text>얼굴 등록</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.uploadBtn}
+              onPress={() => this.recognize(imageBase64)}
+            >
+              <Text>유사도 확인</Text>
             </TouchableOpacity>
           </View>
         );
@@ -155,22 +179,27 @@ export default class CameraTestScreen extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.cameraContainer}>
-              <Camera 
+              <Camera
                 style={styles.cameraStyle}
                 type={cameraType}
                 ref={this.cameraRef}
                 onFacesDetected={this.onFacesDetected}
-                faceDetectionClassifications="all"
-                faceDetectorSettings={{ detectLandmarks: FaceDetector.Constants.Landmarks.all }}
+                // faceDetectionClassifications="all"
+                faceDetectorSettings={{
+                  detectLandmarks: FaceDetector.Constants.Landmarks.none,
+                  mode: FaceDetector.Constants.Mode.fast,
+                  runClassifications: FaceDetector.Constants.Mode.none,
+                }}
               />
             </View>
             <View style={styles.shutterBtnContainer}>
-              <TouchableOpacity
-                onPress={this.takePhoto}
-              >
-                <Image 
-                  source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png' }} 
-                  style={{ width: 40, height: 40 }} 
+              <TouchableOpacity onPress={this.takePhoto}>
+                <Image
+                  source={{
+                    uri:
+                      'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png',
+                  }}
+                  style={{ width: 40, height: 40 }}
                 />
               </TouchableOpacity>
             </View>
@@ -218,7 +247,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   uploadBtn: {
-    width: width * 0.6,
+    width: width * 0.3,
     height: 40,
     backgroundColor: '#40FF00',
     alignItems: 'center',

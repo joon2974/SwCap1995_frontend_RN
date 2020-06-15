@@ -221,6 +221,7 @@ export default class MakePlanStep3 extends Component {
           </View>
 
           <TouchableOpacity
+            disabled={title.length === 0 ? true : false}
             style={styles.nextStepBtn}
             onPress={() => {
               this.sendPlanInfo();

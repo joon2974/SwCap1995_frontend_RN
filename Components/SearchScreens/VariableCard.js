@@ -3,10 +3,17 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
 } from 'react-native';
 import axios from 'axios';
+import Modal from 'react-native-modal';
 import { CardSix2, CardSeven2 } from './Cards';
+import AuthWatcher from './TabList/AuthWatcher';
 
+const { width } = Dimensions.get('window');
 
 export default class VariableCard extends Component {
   state={
@@ -15,6 +22,9 @@ export default class VariableCard extends Component {
     currentWatchStatus: 0,
     watchStatusResult: 0,
     planData: [],
+    watchers: [],
+    testComment: '',
+    authTitle: '',
   }
 
   componentDidMount() {
@@ -22,6 +32,13 @@ export default class VariableCard extends Component {
       this.setState({ watchStatusResult: 1 });
     }
     this.setTable();
+    this.setState({ watchers: this.props.data.daily_judges });
+
+
+    const test = this.props.data.createdAt.split('-');
+    let test2 = '';
+    test2 = test2.concat(test[1], '월 ', test[2][0], test[2][1], '일 인증');
+    this.setState({ authTitle: test2 });
   }
   
   setTable = () => {
@@ -33,31 +50,37 @@ export default class VariableCard extends Component {
     });
   }
 
-
-  toggleModal = (select) => {
-    this.setState({ isModalVisible: !this.state.isModalVisible, currentWatchStatus: select });
-  };
-
-  toggleModal2 = () => {
+  toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
-  }
-
-  updateComment = (changedComment) => {
-    this.setState({ currentComment: changedComment });
   };
-
-  sendComment = () => {
-    alert('구현해이새기야\n\ncomment: ' + this.state.currentComment);
-    this.setState({ watchStatusResult: this.state.currentWatchStatus });
-  }
 
   render() {
     let testVari = null;
+
+    let comment = null;
+    if (this.state.watchers.length === 0) {
+      comment = (<View style={{ margin: 10 }}><Text>코멘트 없음</Text></View>);
+    } else {
+      comment = (
+        <View style={{ marginVertical: 20 }}>
+          {this.state.watchers.map((data) => (
+            <View key={data}>
+              <AuthWatcher 
+                key={data}
+                userID={data.user_id}
+                comment={data.comment}
+              />
+            </View>
+          ))}
+        </View>
+      ); 
+    }
+
     if (this.props.onOff === this.props.index) {
       testVari = (
         <View>
           <CardSix2
-            title={this.props.data.id}
+            title={this.state.authTitle}
             subTitle={this.props.data.comment}
             image={{ uri: this.props.data.image_url }}
             
@@ -78,7 +101,34 @@ export default class VariableCard extends Component {
             authData={this.props.data}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
+            exploreComment={this.toggleModal}
       />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <View style={{
+                width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+              }}>
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 20,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  backgroundColor: '#FD8A69',
+                  width: width / 1.05,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10, 
+                }}>
+                  감시자들의 코멘트
+                </Text>
+                
+                {comment}
+               
+              </View>
+              
+            </Modal>
+          </TouchableWithoutFeedback>
+
 
         </View>
       );
@@ -86,7 +136,7 @@ export default class VariableCard extends Component {
       testVari = (
         <View>
           <CardSeven2
-            title={this.props.data.id}
+            title={this.state.authTitle}
             subTitle={this.props.data.comment}
             image={{ uri: this.props.data.image_url }}
             icon1="check"
@@ -106,7 +156,34 @@ export default class VariableCard extends Component {
             authData={this.props.data}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
+            exploreComment={this.toggleModal}
             />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <View style={{
+                width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+              }}>
+                <Text style={{ 
+                  color: 'white', 
+                  fontSize: 20,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  backgroundColor: '#FD8A69',
+                  width: width / 1.05,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10, 
+                }}>
+                  감시자들의 코멘트
+                </Text>
+                  
+                {comment}
+                 
+              </View>
+                
+            </Modal>
+          </TouchableWithoutFeedback>
+
          
         </View>
       );

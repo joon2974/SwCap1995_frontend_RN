@@ -98,7 +98,7 @@ export default class AddPointScreen extends React.Component {
       pay_method: 'card',
       name: '아임포트 결제데이터 분석',
       merchant_uid: `mid_${new Date().getTime()}`,
-      amount: '39000',
+      amount: '100',
       buyer_name: '홍길동',
       buyer_tel: '01012345678',
       buyer_email: 'example@naver.com',
@@ -116,7 +116,7 @@ export default class AddPointScreen extends React.Component {
   render() {
     return (
       <IMP.Payment
-        userCode={'iamport'} // 가맹점 식별코드
+        userCode={'imp13539284'} // 가맹점 식별코드
         loading={<Loading />} // 웹뷰 로딩 컴포넌트
         data={this.getPaymentData()} // 결제 데이터
         callback={this.callback} // 결제 종료 후 콜백

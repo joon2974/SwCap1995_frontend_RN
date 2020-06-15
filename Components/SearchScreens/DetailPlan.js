@@ -13,6 +13,7 @@ import {
   LineChart,
   ProgressChart,
 } from 'react-native-chart-kit';
+import axios from 'axios';
 import Watcher from './TabList/Watcher';
 import { CardNine } from './Cards';
 
@@ -23,10 +24,40 @@ export default class DetailPlan extends Component {
       item: [],
       watchers: ['1', '2', '3', '4', '5'],
       watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
+      authCreatedAt: [],
+      authStatus: [1],
     }
 
-    componentDidMount() {
-      this.setPlan();
+    async componentDidMount() {
+      await this.setPlan();
+      await this.setGraph();
+    }
+
+    setGraph=() => {
+      axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: 168}) {createdAt}}').then((res) => {
+        this.setState({
+          authCreatedAt: res.data.data.dailyAuthenticationGet.map((data) => (data.createdAt)), 
+        });  
+      }).catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+
+      axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: 168}) {status}}').then((res) => {
+        this.setState({
+          authStatus: res.data.data.dailyAuthenticationGet.map((data) => {
+            if (data.status === 'done') return 1;
+            else if (data.status === 'invalid') return 0.5;
+            else return 0;
+          }), 
+        });
+        
+        
+        //console.log('this is authstatus', this.state.authStatus);
+      }).catch((error) => {
+        console.log(error);
+        alert(error);
+      });
     }
 
     setPlan = () => {
@@ -34,8 +65,10 @@ export default class DetailPlan extends Component {
     }
 
     render() {
+  
       const { item } = this.state;
-
+      
+    
       const data = {
         labels: ['Swim', 'Bike', 'Run'], // optional
         data: [0.4, 0.6, 0.8],
@@ -93,21 +126,14 @@ export default class DetailPlan extends Component {
           
               <View style={{ alignItems: 'center', marginVertical: 30 }}>
                 <View style={styles.lineDivider} />    
+                
                 <View>
-                  <Text>Bezier Line Chart</Text>
                   <LineChart
                     data={{
-                      labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                      labels: this.state.authCreatedAt,
                       datasets: [
                         {
-                          data: [
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                          ],
+                          data: this.state.authStatus,
                         },
                       ],
                     }}
@@ -149,16 +175,7 @@ export default class DetailPlan extends Component {
 
                 <View style={styles.lineDivider} />
 
-                <ProgressChart
-                  data={data}
-                  width={width}
-                  height={220}
-                  strokeWidth={16}
-                  radius={32}
-                  chartConfig={chartConfig}
-                  hideLegend={false}
-                />
-
+      
               </View>
 
               <View style={styles.titleInfoContainer}>
@@ -174,6 +191,17 @@ export default class DetailPlan extends Component {
               </View>
 
               <View style={styles.lineDivider} />
+
+              <ProgressChart
+                data={data}
+                width={width}
+                height={220}
+                strokeWidth={16}
+                radius={32}
+                chartConfig={chartConfig}
+                hideLegend={false}
+                />
+
 
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>

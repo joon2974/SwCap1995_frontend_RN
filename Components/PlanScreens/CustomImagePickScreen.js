@@ -36,7 +36,7 @@ export default class CustomImagePickScreen extends Component {
       if (!result.cancelled) {
         this.setState({ image: result.uri });
       } else {
-        this.props.navigation.popToTop();
+        this.props.navigation.goBack();
       }
 
       console.log('image pick result', result);

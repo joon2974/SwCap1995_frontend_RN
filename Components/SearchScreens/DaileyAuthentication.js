@@ -28,7 +28,6 @@ export default class DaileyAuthentication extends Component {
   }
 
   setPlan = () => {
-    //       console.log(this.state.para);  파라미터 넘기는거 확인
     axios
       .get(
         'http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}',

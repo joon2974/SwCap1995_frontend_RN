@@ -20,7 +20,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Notifications } from 'expo';
 import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
+import HomeInfo from '../InfoImages/HomeInfo.png';
 
+const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
 let currentUser;
 let isInformCheck;
 const { width, height } = Dimensions.get('window');
@@ -32,7 +34,7 @@ export default class HomeMain extends Component {
     watchData: [],
     refreshing: false,
     modalVisible: false,
-
+    infoVisible: false,
   };
 
   componentDidMount() {
@@ -80,7 +82,6 @@ export default class HomeMain extends Component {
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
-  
 
   loadAllPlan = async (userId) => {
     const response = await axios.get(
@@ -93,9 +94,14 @@ export default class HomeMain extends Component {
     try {
       if (count !== 0) {
         for (var i = 0; i < count; i++) {
-          const planPercent = (responseJson[i].daily_authentications.length === 0 
-            ? responseJson[i].daily_authentications.length 
-            / (responseJson[i].plan_period * 7) : 0);
+          const planPercent = responseJson[i].daily_authentications.length !== 0
+            ? responseJson[i].daily_authentications.length
+                / (responseJson[i].plan_period * 7)
+            : 0;
+          let faceID;
+          if (responseJson[i].user.user_image.face_id) {
+            faceID = responseJson[i].user.user_image.face_id;
+          } else faceID = null;
           const obj = {
             title: responseJson[i].title,
             url: responseJson[i].image_url,
@@ -105,6 +111,7 @@ export default class HomeMain extends Component {
             authentication_way: responseJson[i].authentication_way,
             today_auth: responseJson[i].today_auth,
             percent: planPercent,
+            userFaceId: faceID,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -120,13 +127,14 @@ export default class HomeMain extends Component {
     );
     const watchresponseJson = await watchresponse.data.rows;
     const watchcount = await watchresponse.data.count;
-    
+
     try {
       if (watchcount !== 0) {
         for (var l = 0; l < watchcount; l++) {
-          const planPercent = (watchresponseJson[l].daily_authentications.length === 0 
-            ? watchresponseJson[l].daily_authentications.length 
-            / (watchresponseJson[l].plan_period * 7) : 0);
+          const planPercent = watchresponseJson[l].daily_authentications.length !== 0
+            ? watchresponseJson[l].daily_authentications.length
+                / (watchresponseJson[l].plan_period * 7)
+            : 0;
           const obj = {
             title: watchresponseJson[l].title,
             url: watchresponseJson[l].image_url,
@@ -145,6 +153,7 @@ export default class HomeMain extends Component {
     } catch (error) {
       console.error(error);
     }
+    if (count === 0 && watchcount === 0) this.setState({ infoVisible: true });
   };
 
   moveToPlan = () => {
@@ -153,21 +162,31 @@ export default class HomeMain extends Component {
 
   moveToAuthenticationList = (planID) => {
     this.props.navigation.navigate('인증 리스트', { planID: planID });
-  }
+  };
 
   moveToWatchPage = (data) => {
     if (data.status === 'waiting') {
-      axios.post(
-        'http://49.50.172.58:3000/agreements/is_exist', {
+      axios
+        .post('http://49.50.172.58:3000/agreements/is_exist', {
           user_id: this.state.userId,
           plan_id: data.id,
-        },
-      ).then(() => { this.props.navigation.navigate('플랜평가하기', { id: data.id, refreshFunc: this.onRefresh }); })
+        })
+        .then(() => {
+          this.props.navigation.navigate('플랜평가하기', {
+            id: data.id,
+            refreshFunc: this.onRefresh,
+          });
+        })
         .catch(() => {
           alert('이미 평가하셨습니다');
-        }); 
-    } else this.props.navigation.navigate('감시 리스트', { planID: data.id, userID: this.state.userId });
-  }
+        });
+    } else {
+      this.props.navigation.navigate('감시 리스트', {
+        planID: data.id,
+        userID: this.state.userId,
+      });
+    }
+  };
 
   setModalInvisible = () => {
     this.setState({ modalVisible: false });
@@ -183,13 +202,11 @@ export default class HomeMain extends Component {
       })
       .then((res) => {
         if (res.data.id) {
-          AsyncStorage.getItem('UserID').then(() => {
-          });
-       
+          AsyncStorage.getItem('UserID').then(() => {});
+
           AsyncStorage.setItem('UserID', res.data.id.toString());
 
-          AsyncStorage.getItem('UserID').then(() => {
-          });
+          AsyncStorage.getItem('UserID').then(() => {});
           this.setState({ userId: res.data.id });
         } else {
           this.setState({ modalVisible: true });
@@ -201,37 +218,47 @@ export default class HomeMain extends Component {
   };
 
   cameraCertify = (planId) => {
-    this.props.navigation.navigate('일일인증: 카메라', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
-  }
+    this.props.navigation.navigate('일일인증: 카메라', {
+      userID: this.state.userId,
+      planID: planId,
+      returnFunc: this.returnToTop,
+    });
+  };
 
   galaryCertify = (planId) => {
-    this.props.navigation.navigate('일일인증: 갤러리', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
-  }
+    this.props.navigation.navigate('일일인증: 갤러리', {
+      userID: this.state.userId,
+      planID: planId,
+      returnFunc: this.returnToTop,
+    });
+  };
 
-  faceAuthentication = (planId, authMethod, pictureTime) => {
+  faceAuthentication = (planId, authMethod, pictureTime, userFaceId) => {
     const currentDate = Date();
     const currentTime = currentDate.split(' ')[4];
     const currentHour = Number(currentTime.split(':')[0]);
     const currentMinute = Number(currentTime.split(':')[1]);
-    if (((currentHour === pictureTime - 1) && currentMinute >= 30) 
-      || ((currentHour === pictureTime + 1) && currentMinute <= 30)) {
-      this.props.navigation.navigate('일일인증: 본인인증', 
-        {
-          cameraCertify: this.cameraCertify,
-          galaryCertify: this.galaryCertify,
-          userID: this.state.userId,
-          planID: planId,
-          certifyMethod: authMethod,
-        });
+    if (
+      (currentHour === pictureTime - 1 && currentMinute >= 30) 
+      || (currentHour === pictureTime && currentMinute <= 30)
+    ) {
+      this.props.navigation.navigate('일일인증: 본인인증', {
+        cameraCertify: this.cameraCertify,
+        galaryCertify: this.galaryCertify,
+        userID: this.state.userId,
+        planID: planId,
+        certifyMethod: authMethod,
+        userFaceId: userFaceId,
+      });
     } else {
       alert('인증 시간이 아닙니다!');
     }
-  }
+  };
 
   returnToTop = () => {
     this.props.navigation.popToTop();
     this.onRefresh();
-  }
+  };
 
   render() {
     const {
@@ -239,13 +266,16 @@ export default class HomeMain extends Component {
       planData,
       watchData,
       modalVisible,
+      infoVisible,
     } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
         key={data.id}
         planId={data.id}
         title={data.title}
-        btnFunc={() => { this.moveToAuthenticationList(data.id); }}
+        btnFunc={() => {
+          this.moveToAuthenticationList(data.id);
+        }}
         url={data.url}
         picturetime={data.picturetime}
         status={data.status}
@@ -253,6 +283,7 @@ export default class HomeMain extends Component {
         faceAuthentication={this.faceAuthentication}
         today_auth={data.today_auth}
         percent={data.percent}
+        userFaceId={data.userFaceId}
       />
     ));
     const watchplans = watchData.map((data) => (
@@ -260,7 +291,9 @@ export default class HomeMain extends Component {
         key={data.id}
         title={data.title}
         id={data.id}
-        btnFunc={() => { this.moveToWatchPage(data); }}
+        btnFunc={() => {
+          this.moveToWatchPage(data);
+        }}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
@@ -295,6 +328,45 @@ export default class HomeMain extends Component {
             userEmail={userEmail}
           />
         </Modal>
+        <Modal animationType="slide" transparent={true} visible={modalVisible === false && infoVisible ? true : false}>
+          <View style={styles.modalHeaderStyle}>
+            <TouchableOpacity
+              onPress={() => this.setState({ infoVisible: false })}
+              style={{ marginRight: 20 }}
+            >
+              <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
+                도움말 닫기
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ opacity: 0.9, backgroundColor: 'white' }}>
+            <Image
+              source={HomeInfo}
+              style={{ height: height - 133 - statusbarHeight, width: width }}
+            />
+          </View>
+        </Modal>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            width: width,
+            height: 40,
+            backgroundColor: 'white',
+          }}
+        >
+          <TouchableOpacity
+            style={{ marginLeft: 5, marginTop: 10 }}
+            onPress={() => this.setState({ infoVisible: true })}
+          >
+            <Image
+              source={{
+                uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png',
+              }}
+              style={{ width: 30, height: 30 }}
+            />
+          </TouchableOpacity>
+        </View>
         <LinearGradient colors={['white', '#FBEFEF']} style={styles.container}>
           <View style={styles.planContainer}>
             <ScrollView
@@ -353,10 +425,6 @@ export default class HomeMain extends Component {
               {!watchplans.length && (
                 <View style={styles.addContainer}>
                   <Text>감시중인 플랜이 없습니다</Text>
-                  <TouchableOpacity
-                    style={{ height: 50, width: 50, backgroundColor: 'red' }}
-                    onPress={() => this.props.navigation.navigate('WatcherPage')}
-                  />
                 </View>
               )}
             </ScrollView>
@@ -412,6 +480,14 @@ const styles = StyleSheet.create({
   },
   addBtnContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalHeaderStyle: {
+    backgroundColor: '#E6E6E6',
+    width: width,
+    height: 60 + statusbarHeight,
+    opacity: 0.95,
+    alignItems: 'flex-end',
     justifyContent: 'center',
   },
 });

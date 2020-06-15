@@ -312,6 +312,10 @@ export default class MakePlanStep2 extends Component {
             </View>
           </View>
           <TouchableOpacity
+            disabled={(Number(userBetPoint) < 5000 || Number(userBetPoint) > 50000)
+              || selectedFriends.length < 3 
+              ? true : false
+            }
             style={styles.nextStepBtn}
             onPress={() => this.goToNextStep(selectedFriends, userBetPoint)}
           >
