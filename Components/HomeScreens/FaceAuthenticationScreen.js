@@ -71,7 +71,7 @@ export default class FaceAuthenticationScreen extends Component {
           this.setState({ imageUri: image.uri });
           this.setState({ imageBase64: image.base64 });
           alert('사진을 찍었습니다!');
-          this.setState({ isPhotoTaken: true, modalVisible: true });
+          this.setState({ isPhotoTaken: true });
         }
       }
     } catch (error) {
@@ -115,6 +115,7 @@ export default class FaceAuthenticationScreen extends Component {
   // sendImage를 대체하고 modal indicator띄우기
   // await로 체크하고 certify로 넘기기
   recognize = async (base64) => {
+    this.setState({ modalVisible: true });
     const rawResponse = await fetch(`${BASE_URL}recognize`, {
       method: 'POST',
       headers: HEADERS,
@@ -158,7 +159,10 @@ export default class FaceAuthenticationScreen extends Component {
               transparent={false}
               visible={modalVisible}
             >
-              <ActivityIndicator />
+              <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                <ActivityIndicator size="large" />
+                <Text>본인 확인 중입니다...</Text>
+              </View>
             </Modal>
             <Text>찍은 사진</Text>
             <Image 
@@ -167,7 +171,6 @@ export default class FaceAuthenticationScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              // onPress={() => this.sendImage(imageUri)}
               onPress={() => this.recognize(imageBase64)}  
             >
               <Text>이 사진으로 본인 인증하기</Text>
