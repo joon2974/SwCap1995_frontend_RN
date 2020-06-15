@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
+import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -50,6 +51,8 @@ import DetailPlan from './SearchScreens/DetailPlan';
 import Joom from './SearchScreens/TabList/Joom';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
+const statusbarHeight = Platform.OS === 'ios' ? Constants.statusBarHeight : 0;
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
@@ -68,24 +71,35 @@ function LoginStackScreen() {
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: '#FD8A69', 
-        height: 60,
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerTitleAlign: 'center', 
-    }}>
+    <HomeStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#FD8A69',
+          height: 60 + statusbarHeight,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}
+    >
       <HomeStack.Screen name="Plan A" component={HomeMain} />
       <HomeStack.Screen name="MyMenuScreen" component={MyMenuScreen} />
       <HomeStack.Screen name="WatcherPage" component={WatcherPage} />
       <HomeStack.Screen name="NotiTestScreen" component={NotiTestScreen} />
-      <HomeStack.Screen name="일일인증: 카메라" component={DailyCertifyCamera} />
-      <HomeStack.Screen name="일일인증: 갤러리" component={DailyCertifyGalary} />
-      <HomeStack.Screen name="일일인증: 본인인증" component={FaceAuthenticationScreen} />
+      <HomeStack.Screen
+        name="일일인증: 카메라"
+        component={DailyCertifyCamera}
+      />
+      <HomeStack.Screen
+        name="일일인증: 갤러리"
+        component={DailyCertifyGalary}
+      />
+      <HomeStack.Screen
+        name="일일인증: 본인인증"
+        component={FaceAuthenticationScreen}
+      />
       <HomeStack.Screen name="플랜평가하기" component={Estimate} />
       <HomeStack.Screen name="인증 리스트" component={AuthenticationPage} />
       <HomeStack.Screen name="감시 리스트" component={WatcherPage} />
@@ -96,17 +110,19 @@ function HomeStackScreen() {
 const SearchStack = createStackNavigator();
 function SearchStackScreen() {
   return (
-    <SearchStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: '#FD8A69', 
-        height: 60,
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerTitleAlign: 'center', 
-    }}>
+    <SearchStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#FD8A69',
+          height: 60 + statusbarHeight,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}
+    >
       <SearchStack.Screen name="검색" component={SearchScreen} />
       <SearchStack.Screen name="검색하기" component={Searching} />
       <SearchStack.Screen name="카테고리" component={CategoryList} />
@@ -115,27 +131,26 @@ function SearchStackScreen() {
       <SearchStack.Screen name="줌" component={Joom} />
       <SearchStack.Screen name="플랜 상세 정보" component={DetailPlan} />
       <SearchStack.Screen name="인증" component={AuthenticationPage} />
-      <SearchStack.Screen
-        name="일일 인증"
-        component={DaileyAuthentication}
-      />
+      <SearchStack.Screen name="일일 인증" component={DaileyAuthentication} />
     </SearchStack.Navigator>
   );
 }
 const FriendStack = createStackNavigator();
 function FriendStackScreen() {
   return (
-    <FriendStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: '#FD8A69', 
-        height: 60,
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerTitleAlign: 'center', 
-    }}>
+    <FriendStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#FD8A69',
+          height: 60 + statusbarHeight,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}
+    >
       <FriendStack.Screen name="친구 목록" component={FriendScreen} />
       <FriendStack.Screen name="친구 추가" component={AddFriendScreen} />
     </FriendStack.Navigator>
@@ -144,26 +159,37 @@ function FriendStackScreen() {
 const PlanStack = createStackNavigator();
 function PlanStackScreen() {
   return (
-    <PlanStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: '#FD8A69', 
-        height: 60,
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerTitleAlign: 'center', 
-    }}>
+    <PlanStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#FD8A69',
+          height: 60 + statusbarHeight,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}
+    >
       <PlanStack.Screen name="플랜" component={PlanMain} />
       <PlanStack.Screen name="플랜 만들기: 1단계" component={MakePlanStep1} />
       <PlanStack.Screen name="플랜 만들기: 2단계" component={MakePlanStep2} />
       <PlanStack.Screen name="플랜 만들기: 3단계" component={MakePlanStep3} />
-      <PlanStack.Screen name="플랜 만들기: 1단계(커스텀)" component={CustomMakePlanStep1} />
+      <PlanStack.Screen
+        name="플랜 만들기: 1단계(커스텀)"
+        component={CustomMakePlanStep1}
+      />
       <PlanStack.Screen name="카메라" component={CameraScreen} />
       <PlanStack.Screen name="갤러리 선택" component={ImagePickScreen} />
-      <PlanStack.Screen name="카메라(인증사진 등록)" component={CustomCameraScreen} />
-      <PlanStack.Screen name="갤러리 선택(인증사진 등록)" component={CustomImagePickScreen} />
+      <PlanStack.Screen
+        name="카메라(인증사진 등록)"
+        component={CustomCameraScreen}
+      />
+      <PlanStack.Screen
+        name="갤러리 선택(인증사진 등록)"
+        component={CustomImagePickScreen}
+      />
     </PlanStack.Navigator>
   );
 }
@@ -171,17 +197,19 @@ function PlanStackScreen() {
 const MyMenuStack = createStackNavigator();
 function MyMenuStackScreen() {
   return (
-    <MyMenuStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: '#FD8A69', 
-        height: 60,
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerTitleAlign: 'center', 
-    }}>
+    <MyMenuStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#FD8A69',
+          height: 60 + statusbarHeight,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}
+    >
       <MyMenuStack.Screen name="마이 메뉴" component={MyMenuScreen} />
       <MyMenuStack.Screen name="포인트 충전" component={AddPoint} />
       <MyMenuStack.Screen name="비밀번호 변경" component={ChangePassword} />

@@ -184,6 +184,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation project(':iamport-react-native')
+    implementation project(':react-native-webview')
     addUnimodulesDependencies()
 
     if (enableHermes) {
