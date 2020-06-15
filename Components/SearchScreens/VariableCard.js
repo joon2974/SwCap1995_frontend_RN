@@ -55,8 +55,6 @@ export default class VariableCard extends Component {
   };
 
   render() {
-    console.log(this.props.data.daily_judges);
-
     let testVari = null;
 
     let comment = null;
