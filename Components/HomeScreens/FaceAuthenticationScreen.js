@@ -68,8 +68,7 @@ export default class FaceAuthenticationScreen extends Component {
         });
 
         if (image) {
-          this.setState({ imageUri: image.uri });
-          this.setState({ imageBase64: image.base64 });
+          this.setState({ imageUri: image.uri, imageBase64: image.base64 });
           alert('사진을 찍었습니다!');
           this.setState({ isPhotoTaken: true });
         }

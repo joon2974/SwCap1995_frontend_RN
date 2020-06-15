@@ -59,6 +59,7 @@ $ npm install
 You will need:
 
 - firebaseConfig.js
+- kairosConfig.js
 
 These files are a security risk, so contact the administrator directly.
 
