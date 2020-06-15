@@ -19,7 +19,8 @@ export default class MyPlan extends Component {
     if (this.props.today_auth === false) {
       this.props.faceAuthentication(this.props.planId, 
         this.props.certifyMethod,
-        this.props.picturetime);
+        this.props.picturetime,
+        this.props.userFaceId);
     } else {
       alert('이미 일일 인증을 했습니다!');
     }

@@ -105,6 +105,7 @@ export default class HomeMain extends Component {
             authentication_way: responseJson[i].authentication_way,
             today_auth: responseJson[i].today_auth,
             percent: planPercent,
+            userFaceId: responseJson[i].user.user_image.face_id,
           };
           planarray = this.state.planData.concat(obj);
           this.setState({
@@ -208,13 +209,13 @@ export default class HomeMain extends Component {
     this.props.navigation.navigate('일일인증: 갤러리', { userID: this.state.userId, planID: planId, returnFunc: this.returnToTop });
   }
 
-  faceAuthentication = (planId, authMethod, pictureTime) => {
+  faceAuthentication = (planId, authMethod, pictureTime, userFaceId) => {
     const currentDate = Date();
     const currentTime = currentDate.split(' ')[4];
     const currentHour = Number(currentTime.split(':')[0]);
     const currentMinute = Number(currentTime.split(':')[1]);
     if (((currentHour === pictureTime - 1) && currentMinute >= 30) 
-      || ((currentHour === pictureTime + 1) && currentMinute <= 30)) {
+      || ((currentHour === pictureTime) && currentMinute <= 30)) {
       this.props.navigation.navigate('일일인증: 본인인증', 
         {
           cameraCertify: this.cameraCertify,
@@ -222,6 +223,7 @@ export default class HomeMain extends Component {
           userID: this.state.userId,
           planID: planId,
           certifyMethod: authMethod,
+          userFaceId: userFaceId,
         });
     } else {
       alert('인증 시간이 아닙니다!');
@@ -253,6 +255,7 @@ export default class HomeMain extends Component {
         faceAuthentication={this.faceAuthentication}
         today_auth={data.today_auth}
         percent={data.percent}
+        userFaceId={data.userFaceId}
       />
     ));
     const watchplans = watchData.map((data) => (

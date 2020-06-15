@@ -8,12 +8,20 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  Modal,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import axios from 'axios';
 
 const { height, width } = Dimensions.get('window');
+const BASE_URL = 'https://api.kairos.com/';
+const HEADERS = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+  app_id: '79e9aa10',
+  app_key: '2bcefdffa750bc7defa2b7278e776de2',
+};
 
 export default class FaceAuthenticationScreen extends Component {
   constructor(props) {
@@ -24,6 +32,8 @@ export default class FaceAuthenticationScreen extends Component {
       cameraType: Camera.Constants.Type.front,
       isPhotoTaken: false,
       imageUri: null,
+      imageBase64: null,
+      modalVisible: false,
     };
 
     this.cameraRef = React.createRef();
@@ -52,14 +62,16 @@ export default class FaceAuthenticationScreen extends Component {
   takePhoto = async () => {
     try {
       if (this.cameraRef.current) {
-        const { uri } = await this.cameraRef.current.takePictureAsync({
+        const image = await this.cameraRef.current.takePictureAsync({
           quality: 1,
+          base64: true,
         });
 
-        if (uri) {
-          this.setState({ imageUri: uri });
+        if (image) {
+          this.setState({ imageUri: image.uri });
+          this.setState({ imageBase64: image.base64 });
           alert('사진을 찍었습니다!');
-          this.setState({ isPhotoTaken: true });
+          this.setState({ isPhotoTaken: true, modalVisible: true });
         }
       }
     } catch (error) {
@@ -100,18 +112,54 @@ export default class FaceAuthenticationScreen extends Component {
       });
   }
 
+  // sendImage를 대체하고 modal indicator띄우기
+  // await로 체크하고 certify로 넘기기
+  recognize = async (base64) => {
+    const rawResponse = await fetch(`${BASE_URL}recognize`, {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify({
+        image: base64,
+        gallery_name: 'MyGallery',
+      }),
+    });
+    const content = await rawResponse.json();
+    const highestPercentId = content.images[0].transaction.face_id;
+    if (this.props.route.params.userFaceId === highestPercentId) {
+      this.setState({ modalVisible: false });
+      if (this.props.route.params.certifyMethod === 0) {
+        this.props.route.params.galaryCertify(this.props.route.params.planID);
+      } else {
+        this.props.route.params.cameraCertify(this.props.route.params.planID);
+      }
+    } else {
+      this.setState({ modalVisible: false });
+      alert('얼굴이 일치하지 않습니다!');
+      this.props.navigation.goBack();
+    }
+  };
+
   render() {
     const {
       hasPermission,
       cameraType,
       isPhotoTaken,
       imageUri,
+      imageBase64,
+      modalVisible,
     } = this.state;
 
     if (hasPermission === true) {
       if (isPhotoTaken) {
         return (
           <View style={styles.container}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={modalVisible}
+            >
+              <ActivityIndicator />
+            </Modal>
             <Text>찍은 사진</Text>
             <Image 
               source={{ uri: imageUri }} 
@@ -119,7 +167,8 @@ export default class FaceAuthenticationScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.sendImage(imageUri)}  
+              onPress={() => this.sendImage(imageUri)}
+              // onPress={() => this.recognize(imageBase64)}  
             >
               <Text>이 사진으로 본인 인증하기</Text>
             </TouchableOpacity>

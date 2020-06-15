@@ -64,7 +64,6 @@ export default class CameraTestScreen extends Component {
   };
 
   recognize = async (base64) => {
-    console.log('레코그나이즈 시작');
     const rawResponse = await fetch(`${BASE_URL}recognize`, {
       method: 'POST',
       headers: HEADERS,
