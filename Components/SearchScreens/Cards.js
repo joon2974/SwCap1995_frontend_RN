@@ -570,6 +570,7 @@ export class CardSix extends Component {
   render() {
     let checkBox = null;
     if (this.props.checkBoxStatus === -1) { 
+      // 여기서 인증의 going 상태 체크후 가능하다면 밑에 선택지, 불가능하다면 인증참여실패로 표기
       checkBox = (
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
@@ -579,9 +580,9 @@ export class CardSix extends Component {
                 justifyContent: 'center',
                 zIndex: 3,
                 alignItems: 'center',
-                width: scale(50),
-                height: scale(50),
-                margin: 10,
+                width: screenWidth / 7,
+                height: screenHeight / 14,
+                marginRight: 10,
                 shadowRadius: 5,
                 borderRadius: scale(40),
                 backgroundColor: this.props.iconBackground1,
@@ -601,10 +602,10 @@ export class CardSix extends Component {
                 justifyContent: 'center',
                 zIndex: 3,
                 alignItems: 'center',
-                width: scale(50),
-                height: scale(50),
-                margin: 10,
+                width: screenWidth / 7,
+                height: screenHeight / 14,
                 shadowRadius: 5,
+                marginRight: 10,
                 borderRadius: scale(40),
                 backgroundColor: this.props.iconBackground2,
               },
@@ -620,22 +621,54 @@ export class CardSix extends Component {
       );
     } else if (this.props.checkBoxStatus === 1) { 
       checkBox = (
-        <View style={{ borderRadius: 10, backgroundColor: 'green', marginRight: 5 }}>
+        <View style={{
+          borderRadius: 10, height: screenHeight / 20, width: screenWidth / 4, backgroundColor: 'green', marginRight: 20, justifyContent: 'center', alignItems: 'center', 
+        }}>
           <Text style={{ margin: 10, color: 'white' }}>
-            인증 동의
+            감시 동의
           </Text>
         </View>
       );
-    } else { 
+    } else if (this.props.checkBoxStatus === 0) { 
       checkBox = (
-        <View style={{ borderRadius: 10, backgroundColor: '#FD8A69', marginRight: 5 }}>
+        <View style={{
+          borderRadius: 10, height: screenHeight / 20, width: screenWidth / 4, backgroundColor: '#FD8A69', marginRight: 20, justifyContent: 'center', alignItems: 'center', 
+        }}>
           <Text style={{ margin: 10, color: 'white' }}>
-            인증 비동의
+            감시 비동의
           </Text>
         </View>
       );
     }
 
+
+    let authStatus = null;
+    if (this.props.authStatus === 'done') {
+      authStatus = (
+        <View style={{
+          borderRadius: 10, height: screenHeight / 20, width: screenWidth / 4, backgroundColor: 'green', marginRight: 20, justifyContent: 'center', alignItems: 'center', 
+        }}>
+          <Text style={{ color: 'white' }}>인증 성공</Text>
+        </View>
+      );
+    } else if (this.props.authStatus === 'undone') {
+      authStatus = (
+        <View style={{
+          borderRadius: 10, height: screenHeight / 20, width: screenWidth / 4, backgroundColor: '#FD8A69', marginRight: 20, justifyContent: 'center', alignItems: 'center', 
+        }}>
+          <Text style={{ color: 'white' }}>인증 실패</Text>
+        </View>
+      );
+    } else if (this.props.authStatus === 'invalid') {
+      authStatus = (
+        <View style={{
+          borderRadius: 10, height: screenHeight / 20, width: screenWidth / 4, backgroundColor: '#D1CC32', marginRight: 20, justifyContent: 'center', alignItems: 'center', 
+        }}>
+          <Text style={{ color: 'white' }}>인증 보류</Text>
+        </View>
+      );
+    }
+      
 
     return (
       <View>
@@ -703,14 +736,17 @@ export class CardSix extends Component {
                 {this.props.title}
               </Text>
               <View style={{ flexDirection: 'row' }}>
-                {checkBox}
+                {authStatus}
               </View>
+              
             </View>
           
             <View
               style={{
                 backgroundColor: 'transparent',
                 height: screenHeight / 13,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}
             >
              
@@ -724,6 +760,7 @@ export class CardSix extends Component {
               >
                 {this.props.subTitle}
               </Text>
+              {checkBox}
             </View>
      
           </View>
@@ -788,7 +825,6 @@ export class CardSeven extends Component {
           style={{
             flexDirection: 'row',
             height: screenHeight / 22,
-            zIndex: scale(4),
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}
@@ -796,16 +832,15 @@ export class CardSeven extends Component {
           <TouchableOpacity
             onPress={() => this.props.onClicked1()}
             style={[
-              {
-                    
+              {    
                 justifyContent: 'center',
-                zIndex: 3,
                 alignItems: 'center',
-                width: scale(30),
-                height: scale(30),
-                margin: 10,
+                width: screenWidth / 9,
+                height: screenHeight / 18,
+                marginHorizontal: 5,
+                marginBottom: 5,
                 shadowRadius: 5,
-                borderRadius: scale(15),
+                borderRadius: 30,
                 backgroundColor: this.props.iconBackground1,
               },
             ]}
@@ -813,7 +848,7 @@ export class CardSeven extends Component {
             <Icon
               name={this.props.icon1}
               color={this.props.iconColor1}
-              size={scale(15)}
+              size={scale(20)}
                   />
           </TouchableOpacity>
           <TouchableOpacity
@@ -821,13 +856,13 @@ export class CardSeven extends Component {
             style={[
               {
                 justifyContent: 'center',
-                zIndex: 3,
                 alignItems: 'center',
-                width: scale(30),
-                height: scale(30),
-                margin: 10,
+                width: screenWidth / 9,
+                height: screenHeight / 18,
+                marginHorizontal: 5,
+                marginBottom: 5,
                 shadowRadius: 5,
-                borderRadius: scale(15),
+                borderRadius: 30,
                 backgroundColor: this.props.iconBackground2,
               },
             ]}
@@ -835,7 +870,7 @@ export class CardSeven extends Component {
             <Icon
               name={this.props.icon2}
               color={this.props.iconColor2}
-              size={scale(15)}
+              size={scale(20)}
                   />
           </TouchableOpacity>
         </View>
@@ -844,10 +879,10 @@ export class CardSeven extends Component {
       checkBox = (
         <View style={{ alignItems: 'flex-end', marginRight: 10 }}>
           <View style={{
-            borderRadius: 10, backgroundColor: 'green', height: screenHeight / 24, width: screenWidth / 5, justifyContent: 'center', alignItems: 'center', 
+            borderRadius: 10, backgroundColor: 'green', height: screenHeight / 24, width: screenWidth / 4, justifyContent: 'center', alignItems: 'center', 
           }}>
             <Text style={{ color: 'white' }}>
-              인증 동의
+              감시 동의
             </Text>
           </View>
         </View>
@@ -859,7 +894,7 @@ export class CardSeven extends Component {
             borderRadius: 10, backgroundColor: '#FD8A69', height: screenHeight / 24, width: screenWidth / 4, justifyContent: 'center', alignItems: 'center', 
           }}>
             <Text style={{ color: 'white' }}>
-              인증 비동의
+              감시 비동의
             </Text>
           </View>
         </View>
@@ -867,6 +902,33 @@ export class CardSeven extends Component {
     }
 
 
+    let authStatus = null;
+    if (this.props.authStatus === 'done') {
+      authStatus = (
+        <View style={{
+          marginHorizontal: 8, borderRadius: 10, height: screenHeight / 24, width: screenWidth / 4, backgroundColor: 'green', justifyContent: 'center', alignItems: 'center', 
+        }}>
+          <Text style={{ color: 'white' }}>인증 성공</Text>
+        </View>
+      );
+    } else if (this.props.authStatus === 'undone') {
+      authStatus = (
+        <View style={{
+          marginHorizontal: 8, borderRadius: 10, height: screenHeight / 24, width: screenWidth / 4, backgroundColor: '#FD8A69', justifyContent: 'center', alignItems: 'center', 
+        }}>
+          <Text style={{ color: 'white' }}>인증 실패</Text>
+        </View>
+      );
+    } else if (this.props.authStatus === 'invalid') {
+      authStatus = (
+        <View style={{
+          marginHorizontal: 8, borderRadius: 10, height: screenHeight / 24, width: screenWidth / 4, backgroundColor: '#D1CC32', justifyContent: 'center', alignItems: 'center', 
+        }}>
+          <Text style={{ color: 'white' }}>인증 보류</Text>
+        </View>
+      );
+    }
+      
     return (
       <View
         style={{
@@ -923,7 +985,7 @@ export class CardSeven extends Component {
           }}
         >
           <TouchableOpacity 
-            style={{ height: screenHeight / 6.7 }}
+            style={{ height: screenHeight / 7.5 }}
             onPress={this.props.switchShowing}
             >
 
@@ -944,8 +1006,10 @@ export class CardSeven extends Component {
             </Text>
           </TouchableOpacity>
         
-        
-          {checkBox}
+          <View style={{ flexDirection: 'row' }}>
+            {authStatus}
+            {checkBox}
+          </View>
          
         </View>
       </View>
@@ -956,7 +1020,6 @@ export class CardSeven extends Component {
 
 export class CardSix2 extends Component {
   render() {
-    
     let checkBox = null;
     if (this.props.authData.status === 'done') { 
       checkBox = (
