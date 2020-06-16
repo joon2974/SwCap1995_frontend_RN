@@ -69,6 +69,7 @@ export default class VariableCard extends Component {
                 key={data}
                 userID={data.user_id}
                 comment={data.comment}
+                emoticon={data.emoticon}
               />
             </View>
           ))}

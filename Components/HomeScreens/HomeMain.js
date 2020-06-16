@@ -396,6 +396,7 @@ export default class HomeMain extends Component {
                   <AntDesign name="pluscircleo" size={70} color="black" />
                   <Text>플랜 만들러 가기</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={{ height: 50, width: 50, backgroundColor: 'red' }} onPress={() => this.moveToAuthenticationList(168)} />
               </View>
             </ScrollView>
           </View>
