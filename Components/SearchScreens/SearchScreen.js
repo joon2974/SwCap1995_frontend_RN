@@ -80,7 +80,7 @@ export default class Searchscreen extends Component {
     } = this.state;
     
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.searchContainer}>
           
           <TouchableOpacity

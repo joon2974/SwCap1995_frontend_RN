@@ -1609,30 +1609,25 @@ export class CardNine extends Component {
   render() {
     return (
       <View style={{
-        width: screenWidth, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', 
+        width: screenWidth, 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: screenHeight / 3.5,
       }}>
 
-        {/* <ImageModal
-              source={this.props.image}
-              style={{
-                height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, 
-              }}
-           /> */}
-        <TouchableOpacity
+        <ImageModal
+          source={this.props.image}
           style={{
-            height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, 
+            height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, backgroundColor: 'blue', marginVertical: 30, 
           }}
-          onPress={this.props.explore}
-        />
-
+           />
+      
         <View
           style={{
-            marginVertical: 10,
-            alignSelf: 'flex-end',
             width: screenWidth / 1.4,
             height: screenHeight / 4,
             borderRadius: 12,
-            elevation: 3,
             flexDirection: 'row',
             
             shadowColor: '#000',
@@ -1642,7 +1637,8 @@ export class CardNine extends Component {
               height: 1,
               width: 0,
             },
-            borderRadius: 6,
+            borderColor: '#FD8A69', 
+            borderWidth: 4,
             backgroundColor: '#ffffff',
             justifyContent: 'center',
             alignItems: 'center',
