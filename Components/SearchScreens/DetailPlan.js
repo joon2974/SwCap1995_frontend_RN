@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet,
   ImageBackground,
   Dimensions,
   ScrollView,
@@ -11,6 +13,7 @@ import {
 } from 'react-native';
 import {
   LineChart,
+  ContributionGraph,
   ProgressChart,
 } from 'react-native-chart-kit';
 import axios from 'axios';
@@ -26,34 +29,57 @@ export default class DetailPlan extends Component {
       watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
       authCreatedAt: [],
       authStatus: [1],
+      date: '',
+      contriGraphDate: '',
+      currentAuthComment: '',
     }
 
     async componentDidMount() {
       await this.setPlan();
-      await this.setGraph();
+      this.setGraph();
+      this.setDate();
+    }
+
+    setDate = () => {
+      const date1 = this.state.item.createdAt.split('-');
+      const date2 = this.state.item.updatedAt.split('-');
+      let date3 = '';
+      date3 = date3.concat('작성일: ' + date1[0] + '년 ' + date1[1] + '월 ' + date1[2][0] + date1[2][1] + '일\n수정일: ' + date2[0] + '년 ' + date2[1] + '월 ' + date2[2][0] + date2[2][1] + '일');
+      let date4 = '';
+      date4 = date4.concat(date1[0] + '-' + date1[1] + '-' + date1[2][0] + date1[2][1]);
+      this.setState({ date: date3, contriGraphDate: date4 });
     }
 
     setGraph=() => {
-      axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: 168}) {createdAt}}').then((res) => {
+      axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: ' + this.state.item.id + '}) {createdAt}}').then((res) => {
         this.setState({
-          authCreatedAt: res.data.data.dailyAuthenticationGet.map((data) => (data.createdAt)), 
+          authCreatedAt: res.data.data.dailyAuthenticationGet.map((data) => {
+            const date1 = data.createdAt.split('-');
+            let date2 = '';
+            date2 = date2.concat(date1[2][0] + date1[2][1]);
+            return date2;
+          }),
         });  
       }).catch((error) => {
         console.log(error);
         alert(error);
       });
 
-      axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: 168}) {status}}').then((res) => {
+      axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: ' + this.state.item.id + '}) {status}}').then((res) => {
         this.setState({
           authStatus: res.data.data.dailyAuthenticationGet.map((data) => {
             if (data.status === 'done') return 1;
-            else if (data.status === 'invalid') return 0.5;
-            else return 0;
+            else if (data.status === 'reject') return 0;
+            else return 0.5;
           }), 
         });
-        
-        
-        //console.log('this is authstatus', this.state.authStatus);
+      }).catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+
+      axios.get('http://49.50.172.58:3000/daily_authentications/' + this.state.item.id).then((res) => {        
+        this.setState({ currentAuthComment: res.data.rows[0].comment });
       }).catch((error) => {
         console.log(error);
         alert(error);
@@ -65,69 +91,82 @@ export default class DetailPlan extends Component {
     }
 
     render() {
-  
       const { item } = this.state;
       
     
-      const data = {
+      const watcherData = {
         labels: ['Swim', 'Bike', 'Run'], // optional
         data: [0.4, 0.6, 0.8],
       };
-      
+
+      // const commitsData = [
+      //   { date: '2017-01-02', count: 0 },
+      //   { date: '2017-01-03', count: 30 },
+      //   { date: '2017-01-04', count: 30 },
+      //   { date: '2017-01-05', count: 100 },
+      //   { date: '2017-01-06', count: 100 },
+      //   { date: '2017-01-30', count: 0 },
+      //   { date: '2017-01-31', count: 0 },
+      //   { date: '2017-03-01', count: 30 },
+      //   { date: '2017-04-02', count: 100 },
+      //   { date: '2017-03-05', count: 0 },
+      //   { date: '2017-02-30', count: 0 },
+      // ];
+
+
       const chartConfig = {
-        backgroundGradientFrom: '#1E2923',
+        backgroundGradientFrom: 'black',
+        backgroundGradientTo: 'white',
         backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: '#08130D',
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false, // optional
       };
-
+    
 
       return (
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
             <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop: 10 }}>
               <CardNine
-                title={item.category}
-                subTitle={item.detailedCategory}
-                description={item.custom_picture_rule_3}
+                title={item.detailedCategory}
+                subTitle={item.custom_picture_rule_3}
+                description={this.state.date}
                 image={{ uri: item.image_url }}
                 explore={() => this.props.navigation.navigate('줌', { item: item.image_url })}
             />
-              {/* <TouchableOpacity 
-                style={styles.titleImageContainer}
-                onPress={() => this.props.navigation.navigate('줌', { image_url: item.image_url })}
-                
-                    >
-                <Image 
-                  style={styles.imageStyle}
-                  source={{ uri: item.image_url }} 
-                        />
-              </TouchableOpacity> */} 
-
+               
+ 
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
-                  {'제목 : ' + item.title}
+                  최근 인증에서 남긴말...
                 </Text>
                         
                 <Text style={styles.subTitleStyle}>
-                  {'부제 : ' + item.custom_picture_rule_3}
+                  {this.state.currentAuthComment}
                 </Text>
                         
-                <Text style={styles.dateInfo}>
-                  {'작성일 : ' + item.createdAt + '\n'}
-                  {'수정일 : ' + item.updatedAt}
-                </Text>
                 <View style={{ marginBottom: 10 }} />
               </View>
-          
-              <View style={{ alignItems: 'center', marginVertical: 30 }}>
-                <View style={styles.lineDivider} />    
+
+              <View style={styles.lineDivider} />    
+                        
+              <View style={{ alignItems: 'center', marginVertical: 10 }}>
+ 
                 
-                <View>
+                <View style={{ alignItems: 'center' }}>
+
+                  {/* <ContributionGraph
+                    values={commitsData}
+                    endDate={new Date('2017-04-09')}
+                    numDays={105}
+                    width={width}
+                    height={220}
+                    chartConfig={chartConfig}
+                /> */}
+
                   <LineChart
                     data={{
                       labels: this.state.authCreatedAt,
@@ -137,25 +176,24 @@ export default class DetailPlan extends Component {
                         },
                       ],
                     }}
-                    width={Dimensions.get('window').width} // from react-native
-                    height={220}
-                    yAxisLabel="$"
-                    yAxisSuffix="k"
-                    yAxisInterval={1} // optional, defaults to 1
+                    width={width * 0.9} // from react-native
+                    height={height / 4}
+                    yAxisLabel=""
+                    yAxisSuffix=""
+                    segments={2}
+                    fromZero={true}
                     chartConfig={{
-                      backgroundColor: '#e26a00',
-                      backgroundGradientFrom: '#fb8c00',
-                      backgroundGradientTo: '#ffa726',
+                      backgroundGradientFrom: '#139C73',
+                      backgroundGradientTo: 'black',
                       decimalPlaces: 2, // optional, defaults to 2dp
                       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                       labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                      style: {
-                        borderRadius: 16,
+                      style: {                        
                       },
                       propsForDots: {
                         r: '6',
                         strokeWidth: '2',
-                        stroke: '#ffa726',
+                        stroke: '#fd8a69',
                       },
                     }}
                     bezier
@@ -177,25 +215,31 @@ export default class DetailPlan extends Component {
 
       
               </View>
-
+              
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
                   인증 방법에 대해...
                 </Text>
                 <Text style={styles.subTitleStyle}>
-                  {'Rule1: ' + item.picture_rule_1 + '\n'}
-                  {'Rule2: ' + item.picture_rule_2 + '\n'}
+                  {'Rule1: ' + item.picture_rule_1}
+                </Text>
+                <Text style={styles.subTitleStyle}>
+                
+                  {'Rule2: ' + item.picture_rule_2}
+                </Text>
+                <Text style={styles.subTitleStyle}>
                   {'Rule3: ' + item.picture_rule_3}
                 </Text>
+                
                 <View style={{ marginBottom: 10 }} />
               </View>
 
               <View style={styles.lineDivider} />
 
               <ProgressChart
-                data={data}
-                width={width}
-                height={220}
+                data={watcherData}
+                width={width * 0.9}
+                height={height / 4}
                 strokeWidth={16}
                 radius={32}
                 chartConfig={chartConfig}
@@ -221,7 +265,7 @@ export default class DetailPlan extends Component {
                   ))                                
                 }
                   <TouchableOpacity
-                    style={styles.moreExplore}
+                    style={styles.moreExploreBar2}
                             >
                     <Text>감시자들 더보기</Text>
                   </TouchableOpacity>
@@ -241,7 +285,6 @@ export default class DetailPlan extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: width * 1,
     backgroundColor: 'white',
     justifyContent: 'center', 
@@ -277,6 +320,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F2F2F2',
+    borderWidth: 2,
+    borderColor: '#139C73',
+    borderRadius: 10,
+    margin: 6,
+    marginTop: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  moreExploreBar2: {
+    width: width * 0.8,
+    height: height / 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F2F2F2',
     borderRadius: 10,
     margin: 6,
     marginTop: 20,
@@ -307,11 +376,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   titleInfoContainer: {
+    borderWidth: 4,
+    borderColor: '#FD8A69',
     backgroundColor: 'white',
     width: width * 0.9,
     marginTop: 15,
     borderRadius: 10,
-    margin: 6,
+    marginBottom: 20,
     padding: 10,
     // eslint-disable-next-line no-undef
     ...Platform.select({
@@ -336,19 +407,11 @@ const styles = StyleSheet.create({
   },
   subTitleStyle: {
     fontSize: 14,
-    marginTop: 5,
-  },
-  moreExplore: {
-    marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width * 0.75,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    height: height * 0.04,
-    marginLeft: 24,
+    marginLeft: 14,
+    marginVertical: 3,
   },
   dateInfo: {
+    color: '#adb3bf',
     fontSize: 12,
     marginTop: 15,
     marginLeft: 10,
