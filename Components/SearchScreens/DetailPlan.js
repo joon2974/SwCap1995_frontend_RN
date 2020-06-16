@@ -53,7 +53,7 @@ export default class DetailPlan extends Component {
         });
         
         
-        //console.log('this is authstatus', this.state.authStatus);
+        // console.log('this is authstatus', this.state.authStatus);
       }).catch((error) => {
         console.log(error);
         alert(error);
@@ -65,7 +65,6 @@ export default class DetailPlan extends Component {
     }
 
     render() {
-  
       const { item } = this.state;
       
     
