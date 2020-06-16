@@ -98,6 +98,9 @@ export default class VariableCard extends Component {
             iconColor3="#fff"
             iconBackground3="#D1CC32"
             
+            icon4="play"
+            iconColor4="#fff"
+            iconBackground4="blue"
 
             authData={this.props.data}
             checkBoxStatus={this.state.watchStatusResult}
@@ -154,6 +157,10 @@ export default class VariableCard extends Component {
             iconColor3="#fff"
             iconBackground3="#D1CC32"
 
+            icon4="play"
+            iconColor4="#fff"
+            iconBackground4="blue"
+            
             authData={this.props.data}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
