@@ -9,6 +9,7 @@ import {
   Image,
   Platform,
   Modal,
+  Alert,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
@@ -72,7 +73,7 @@ export default class FaceAuthenticationScreen extends Component {
   
           if (image) {
             this.setState({ imageUri: image.uri, imageBase64: image.base64 });
-            alert('사진을 찍었습니다!');
+            Alert.alert('', '사진을 찍었습니다!');
             this.setState({ isPhotoTaken: true });
           }
         }
@@ -80,7 +81,7 @@ export default class FaceAuthenticationScreen extends Component {
         alert(error);
       }
     } else {
-      alert('얼굴이 잘 나오게 찍어주세요!');
+      Alert.alert('', '얼굴이 잘 나오게 찍어주세요!');
     }
   }
 
@@ -100,15 +101,15 @@ export default class FaceAuthenticationScreen extends Component {
     if (this.props.route.params.userFaceId === highestPercentId) {
       this.setState({ modalVisible: false });
       if (this.props.route.params.certifyMethod === 0) {
-        alert('본인 인증이 완료되었습니다!');
+        Alert.alert('', '본인 인증이 완료되었습니다!');
         this.props.route.params.galaryCertify(this.props.route.params.planID);
       } else {
-        alert('본인 인증이 완료되었습니다!');
+        Alert.alert('', '본인 인증이 완료되었습니다!');
         this.props.route.params.cameraCertify(this.props.route.params.planID);
       }
     } else {
       this.setState({ modalVisible: false });
-      alert('얼굴이 일치하지 않습니다!');
+      Alert.alert('', '얼굴이 일치하지 않습니다!');
       this.props.navigation.goBack();
     }
   };

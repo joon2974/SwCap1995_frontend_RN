@@ -9,7 +9,7 @@ import {
   Platform,
   AsyncStorage,
   ScrollView,
-
+  Alert,
 } from 'react-native';
 
 import { RadioButton } from 'react-native-paper';
@@ -68,12 +68,12 @@ export default class EstimatePlan extends Component {
       })
         .catch((res) => {
           console.log('실패', res);
-          alert('이미 평가하셨습니다');
+          Alert.alert('', '이미 평가하셨습니다');
           this.props.route.params.refreshFunc();
           this.props.navigation.popToTop();
         }); 
     } else {
-      alert('체크하지 않은 항목이 있습니다');
+      Alert.alert('', '체크하지 않은 항목이 있습니다');
     } 
   }
   

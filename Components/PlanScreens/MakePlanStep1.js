@@ -159,9 +159,6 @@ export default class PlanMain extends Component {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => {
-              alert('Modal has been closed.');
-            }}
             >
             <View>
               <View style={styles.modalHeaderStyle}>

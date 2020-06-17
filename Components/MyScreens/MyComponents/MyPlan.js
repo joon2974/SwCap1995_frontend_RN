@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   Platform,
+  Alert,
 } from 'react-native'; 
 import {
   Feather,
@@ -22,7 +23,7 @@ export default class MyPlan extends Component {
         this.props.picturetime,
         this.props.userFaceId);
     } else {
-      alert('이미 일일 인증을 했습니다!');
+      Alert.alert('', '이미 일일 인증을 했습니다!');
     }
   }
 

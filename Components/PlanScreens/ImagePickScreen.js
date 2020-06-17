@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -21,7 +22,7 @@ export default class ImagePickScreen extends Component {
   componentDidMount = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
-      alert('권한이 없으면 사진 선택을 할 수 없어요ㅠ');
+      Alert.alert('', '권한이 없으면 사진 선택을 할 수 없어요ㅠ');
     }
     this.pickImage();
   }
