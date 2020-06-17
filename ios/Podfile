@@ -45,4 +45,6 @@ target 'PlanA' do
   use_native_modules!
 
 
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
 end
