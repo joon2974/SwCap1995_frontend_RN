@@ -30,7 +30,7 @@ export default class WatcherInfo extends Component {
     testArray: [],
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     watchers: [1, 2, 3, 4, 5],
-    watchersComment: ['1222,', '3231,', '441,', '1,', '1,'],
+    watchersComment: ['생각보다 열심히 하네', '웬일이지ㅋㅋㅋ', '500원 꺼억', '몸짱 되겠다!', '지석이 맞아?'],
   }
 
   componentDidMount() {
@@ -57,8 +57,8 @@ export default class WatcherInfo extends Component {
 
   render() {
     const watcherData = {
-      labels: ['Swim', 'Bike', 'Run'], // optional
-      data: [0.4, 0.6, 0.8],
+      labels: ['빵준이', '한수찬', '김첨지'], // optional
+      data: [0.95, 0.8, 0.65],
     };
 
     const chartConfig = {
@@ -92,9 +92,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
             <Text>
-              {this.props.planData.plan_start_day}
-              {' '}
-              일
+              {`${this.props.planData.plan_start_day.split('-')[1]}월 ${this.props.planData.plan_start_day.split('-')[2].slice(0, 2)}일`}
             </Text>
           </View>
           <View style={styles.lineContainer}>
@@ -110,7 +108,7 @@ export default class WatcherInfo extends Component {
             <Text>
               {this.props.planData.picture_time}
               {' '}
-              시(앞 뒤로 30분의 여유시 간이 주어집니다)
+              시(앞 뒤로 30분의 여유 시간이 주어집니다)
             </Text>
           </View>
         </View>
@@ -148,6 +146,26 @@ export default class WatcherInfo extends Component {
 
         <View style={styles.lineDivider} />
 
+        <View style={styles.getPointContainer}>
+          <View style={styles.componentTitleContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17 }}>실패 횟수:  </Text>
+            <Text>1</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17 }}>차감될 포인트:  </Text>
+            <Text>250</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17 }}>내가 획득한 포인트:  </Text>
+            <Text>80 💸</Text>
+          </View>
+        </View>
+
+        <View style={styles.lineDivider} />
+
         <ProgressChart
           data={watcherData}
           width={width * 0.9}
@@ -156,8 +174,7 @@ export default class WatcherInfo extends Component {
           radius={32}
           chartConfig={chartConfig}
           hideLegend={false}
-                />
-
+        />
 
         <View style={styles.titleInfoContainer}>
           <Text style={styles.titleStyle}>
@@ -186,9 +203,7 @@ export default class WatcherInfo extends Component {
           <View style={{ marginBottom: 10 }} />
         </View>
 
-
         <View style={styles.lineDivider} />
-
 
       </ScrollView>
     );
@@ -238,6 +253,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   pointContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width,
+    height: height * 0.2,
+  },
+  getPointContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
