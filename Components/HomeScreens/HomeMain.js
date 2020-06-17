@@ -102,7 +102,11 @@ export default class HomeMain extends Component {
                 / (responseJson[i].plan_period * 7)
             : 0;
           let faceID;
+<<<<<<< HEAD
           if (responseJson[i].user.user_image !== null) {
+=======
+          if (responseJson[i].user.user_image) {
+>>>>>>> detailPlanRenewal
             faceID = responseJson[i].user.user_image.face_id;
           } else faceID = null;
           const obj = {
@@ -288,6 +292,7 @@ export default class HomeMain extends Component {
         today_auth={data.today_auth}
         percent={data.percent}
         userFaceId={data.userFaceId}
+        moveToWatching={() => { this.moveToAuthenticationList(data.id); }}
       />
     ));
     const watchplans = watchData.map((data) => (
@@ -401,7 +406,6 @@ export default class HomeMain extends Component {
                   <AntDesign name="pluscircleo" size={70} color="black" />
                   <Text>플랜 만들러 가기</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ height: 50, width: 50, backgroundColor: 'red' }} onPress={() => this.moveToAuthenticationList(168)} />
               </View>
             </ScrollView>
           </View>

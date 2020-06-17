@@ -22,11 +22,12 @@ export default class PlanList extends Component {
     componentDidMount() {
       this.getData();
     }
- 
+
     getData = () => {
       const { data, nowPage, moreData } = this.state;
       if (moreData === 0) {
-        const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + nowPage;
+        const url = 'http://49.50.172.58:3000/plans/filter_detailedCategory?detailedCategory=' 
+        + this.props.route.params.selectedDetailedCategory + '&limit=10&page=' + nowPage;
         fetch(url)
           .then((r) => r.json())
           .then((res) => {

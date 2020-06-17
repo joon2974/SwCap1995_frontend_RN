@@ -10,7 +10,8 @@ import {
   TouchableHighlightBase,
 } from 'react-native';
 import axios from 'axios';
-import { CardNine } from '../SearchScreens/Cards';
+import { ProgressChart } from 'react-native-chart-kit';
+import { CardNine, CardNine2 } from '../SearchScreens/Cards';
 import Watcher from '../SearchScreens/TabList/Watcher';
 
 const { width, height } = Dimensions.get('window');
@@ -27,7 +28,7 @@ const categoryURI = [
 export default class WatcherInfo extends Component {
   state = {
     testArray: [],
-    titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%89%E1%85%A2%E1%86%BC%E1%84%92%E1%85%AA%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8%E1%84%80%E1%85%AA%E1%86%AB.jpg',
+    titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     watchers: [1, 2, 3, 4, 5],
     watchersComment: ['1222,', '3231,', '441,', '1,', '1,'],
   }
@@ -55,7 +56,23 @@ export default class WatcherInfo extends Component {
   }  
 
   render() {
-    console.log(this.props.planData.id);
+    const watcherData = {
+      labels: ['Swim', 'Bike', 'Run'], // optional
+      data: [0.4, 0.6, 0.8],
+    };
+
+    const chartConfig = {
+      backgroundGradientFrom: 'black',
+      backgroundGradientTo: 'white',
+      backgroundGradientFromOpacity: 0,
+      backgroundGradientToOpacity: 0.5,
+      color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+      strokeWidth: 2, // optional, default 3
+      barPercentage: 0.5,
+      useShadowColorFromDataset: false, // optional
+    };
+
+
     return (
       <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
        
@@ -101,7 +118,7 @@ export default class WatcherInfo extends Component {
         <View style={styles.lineDivider} />
 
 
-        <CardNine
+        <CardNine2
           title="인증 룰"
           subTitle={'\n' + this.props.planData.picture_rule_1 
             + '\n' + this.props.planData.picture_rule_2 
@@ -130,6 +147,16 @@ export default class WatcherInfo extends Component {
         </View>
 
         <View style={styles.lineDivider} />
+
+        <ProgressChart
+          data={watcherData}
+          width={width * 0.9}
+          height={height / 4}
+          strokeWidth={16}
+          radius={32}
+          chartConfig={chartConfig}
+          hideLegend={false}
+                />
 
 
         <View style={styles.titleInfoContainer}>
@@ -180,8 +207,7 @@ const styles = StyleSheet.create({
     width: width - 30,
     height: 1.5,
     marginLeft: 15,
-    marginBottom: 10,
-    marginTop: 15,
+    marginVertical: 15,
   },
   componentTitleContainer: {
     width: width - 20,
