@@ -568,9 +568,10 @@ export class CardFive extends Component {
 
 export class CardSix extends Component {
   render() {
+
     let checkBox = null;
     if (this.props.checkBoxStatus === -1) {
-      if (this.props.authData === 'undone') {
+      if (this.props.authStatus === 'undone') {
         checkBox = (
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
@@ -837,7 +838,7 @@ export class CardSeven extends Component {
   render() {
     let checkBox = null;
     if (this.props.checkBoxStatus === -1) { 
-      if (this.props.authData === 'undone') {
+      if (this.props.authStatus === 'undone') {
         checkBox = (
           <View
             style={{
