@@ -568,7 +568,6 @@ export class CardFive extends Component {
 
 export class CardSix extends Component {
   render() {
-
     let checkBox = null;
     if (this.props.checkBoxStatus === -1) {
       if (this.props.authStatus === 'undone') {

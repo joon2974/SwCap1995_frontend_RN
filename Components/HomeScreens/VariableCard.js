@@ -242,10 +242,10 @@ export default class VariableCard extends Component {
             authStatus={this.props.data.status}
           />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-         
-            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              
+            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal2}>
               <View style={{
-                height: height / 5, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+                height: height / 3.8, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
               }}>
                 <Text style={{ 
                   color: 'white', 
@@ -264,13 +264,49 @@ export default class VariableCard extends Component {
                   placeholder="코멘트를 입력해 주세요"
                   onChangeText={(changedComment) => {
                     this.updateComment(changedComment);
-                  }}  
+                  }}
                   onSubmitEditing={() => {
                     this.toggleModal2();
                     this.sendComment();
                   }}
-            />
-
+              />
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 1 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 1 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon1.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 2 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 2 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon2.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 3 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 3 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon3.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 4 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 4 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon4.png')} />
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={this.state.currentEmoticon === 5 
+                      ? styles.clickedEmoticon 
+                      : styles.unclickedEmoticon} 
+                    onPress={() => this.setState({ currentEmoticon: 5 })}>
+                    <Image style={{ height: height / 15, width: width / 8 }} source={require('./emoticons/emoticon5.png')} />
+                  </TouchableOpacity>
+                </View>
                 <View style={{ marginBottom: 10 }}>
                   <Button
                     title="코멘트 보내기"
@@ -280,9 +316,10 @@ export default class VariableCard extends Component {
                       this.toggleModal2();
                       this.sendComment();
                     }}
-            />
+              />
                 </View>
               </View>
+              
             </Modal>
           </TouchableWithoutFeedback>
         </View>
