@@ -126,7 +126,6 @@ export default class DetailPlan extends Component {
         barPercentage: 0.5,
         useShadowColorFromDataset: false, // optional
       };
-    
 
       return (
         <View style={styles.container}>
@@ -184,7 +183,11 @@ export default class DetailPlan extends Component {
                     yAxisSuffix=""
                     segments={2}
                     fromZero={true}
-                    // formatYLabel={(1) => {return 'abc'}}
+                    formatYLabel={(data) => {
+                      if (data === '0.00') return '성공';
+                      else if (data === '0.50') return '보류';
+                      else return '실패';
+                    }}
                     chartConfig={{
                       backgroundGradientFrom: '#139C73',
                       backgroundGradientTo: 'black',
