@@ -18,7 +18,6 @@
     "expo-constants": "~9.0.0",
     "expo-face-detector": "~8.1.0",
     "expo-facebook": "~8.1.0",
-    "expo-font": "^8.1.1",
     "expo-google-app-auth": "8.1.0",
     "expo-image-picker": "~8.1.0",
     "expo-linear-gradient": "~8.1.0",

@@ -53,8 +53,6 @@ export default class HomeMain extends Component {
       var page = notification.data.screen;
       if (page === 'friend') {
         this.props.navigation.dangerouslyGetParent().navigate('Friend');
-      } else if (page === 'myPage') {
-        this.props.navigation.dangerouslyGetParent().navigate('My');
       }
     });
   }
