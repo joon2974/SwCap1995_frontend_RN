@@ -12,6 +12,7 @@ import {
   RefreshControl,
   Modal,
   Vibration,
+  Alert,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -181,7 +182,7 @@ export default class HomeMain extends Component {
           });
         })
         .catch(() => {
-          alert('이미 평가하셨습니다');
+          Alert.alert('', '이미 평가하셨습니다');
         });
     } else {
       this.props.navigation.navigate('감시 리스트', {
@@ -255,7 +256,7 @@ export default class HomeMain extends Component {
         userFaceId: userFaceId,
       });
     } else {
-      alert('인증 시간이 아닙니다!');
+      Alert.alert('','인증 시간이 아닙니다!');
     }
   };
 

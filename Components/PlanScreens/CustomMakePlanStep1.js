@@ -10,6 +10,7 @@ import {
   Platform,
   TextInput,
   Modal,
+  Alert,
 } from 'react-native';
 import ImageModal from 'react-native-image-modal';
 import TimePicker from './PlanComponents/TimePicker';
@@ -80,17 +81,17 @@ export default class CustomMakePlanStep1 extends Component {
 
   goToNextStep = (planTitle, customImgUri, mainRule, subRule1, subRule2, authenticationWay) => {
     if (planTitle.length === 0) {
-      alert('플랜 카테고리 이름을 입력해 주세요!');
+      Alert.alert('', '플랜 카테고리 이름을 입력해 주세요!');
     } else if (customImgUri.length === 0) {
-      alert('인증 사진을 등록해 주세요!');
+      Alert.alert('', '인증 사진을 등록해 주세요!');
     } else if (authenticationWay === null) {
-      alert('일일 인증 수단을 선택해 주세요!');
+      Alert.alert('', '일일 인증 수단을 선택해 주세요!');
     } else if (mainRule.length === 0) {
-      alert('메인 룰을 입력해 주세요!');
+      Alert.alert('', '메인 룰을 입력해 주세요!');
     } else if (subRule1.length === 0) {
-      alert('서브룰1을 입력해 주세요!');
+      Alert.alert('', '서브룰1을 입력해 주세요!');
     } else if (subRule2.length === 0) {
-      alert('서브룰2를 입력해 주세요!');
+      Alert.alert('', '서브룰2를 입력해 주세요!');
     } else {
       this.props.navigation.navigate('플랜 만들기: 2단계', {
         category: this.props.route.params.category,
@@ -137,9 +138,6 @@ export default class CustomMakePlanStep1 extends Component {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => {
-              alert('Modal has been closed.');
-            }}
           >
             <View>
               <View style={styles.modalHeaderStyle}>

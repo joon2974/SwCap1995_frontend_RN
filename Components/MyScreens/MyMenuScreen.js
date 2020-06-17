@@ -10,7 +10,6 @@ import {
   AsyncStorage,
   Platform,
   RefreshControl,
-  Button,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -122,7 +121,7 @@ export default class MyMenuScreen extends Component {
   };
 
   render() {
-    const { planData, userId } = this.state;
+    const { planData } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
       
@@ -218,7 +217,6 @@ export default class MyMenuScreen extends Component {
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
                   <Text>12</Text>
-                  <Button title="테스트" onPress={() => this.props.navigation.navigate('카메라 테스트', { userID: userId })} />
                   <View style={{ height: 35 }} />
                 </View>
               </View>
@@ -235,12 +233,10 @@ export default class MyMenuScreen extends Component {
               paddingStart: 5,
               paddingEnd: 5,
             }}
-                            >
+          >
                               
             <View style={{ marginRight: 30, marginLeft: 10 }}>
-              
               <Text>내 플랜</Text>
-              
               <Text>보기</Text>
               <Image
                 source={{
@@ -261,9 +257,10 @@ export default class MyMenuScreen extends Component {
           <ContributionGraph
             values={commitsData}
             endDate={new Date('2020-08-10')}
-            numDays={105}
+            numDays={85}
             width={width - 50}
             height={220}
+            gutterSize={0.7}
             chartConfig={{
               backgroundColor: '#000000',
               backgroundGradientFrom: '#FD8A69',

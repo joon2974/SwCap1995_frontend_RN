@@ -49,5 +49,6 @@ module.exports = {
     'no-unescaped-entities': 0,
     'global-require': 0,
     'jsx-a11y/accessible-emoji': 0,
+    'react/jsx-no-duplicate-props': 0,
   },
 };

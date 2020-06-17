@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import { Notifications } from 'expo';
@@ -104,11 +105,11 @@ export default class InputInfo extends Component {
   ) => {
     try {
       if (!ableNickname) {
-        alert('닉네임을 확인해 주세요!!');
+        Alert.alert('', '닉네임을 확인해 주세요!!');
       } else if (!(male || female)) {
-        alert('성별을 선택해 주세요!');
+        Alert.alert('', '성별을 선택해 주세요!');
       } else if (!age) {
-        alert('나이를 선택해 주세요!');
+        Alert.alert('', '나이를 선택해 주세요!');
       } else {
         const categories = this.catList(cat1, cat2, cat3, cat4, cat5);
         const sex = male ? 'male' : 'female';

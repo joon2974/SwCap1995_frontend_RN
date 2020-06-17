@@ -7,6 +7,7 @@ import {
   TextInput,
   Button,
   Image,
+  Alert,
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -58,7 +59,7 @@ export default class FindPassword extends Component {
             onPress={() => auth
               .sendPasswordResetEmail(ID)
               .then(function () {
-                alert('이메일을 확인해주세요');
+                Alert.alert('', '이메일을 확인해주세요');
               })
               .catch(function (error) {
                 // An error happened.

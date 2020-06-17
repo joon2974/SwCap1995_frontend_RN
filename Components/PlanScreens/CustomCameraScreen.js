@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  Alert,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
@@ -60,7 +61,7 @@ export default class CustomCameraScreen extends Component {
 
         if (uri) {
           this.setState({ imageUri: uri });
-          alert('사진을 찍었습니다!');
+          Alert.alert('', '사진을 찍었습니다!');
           this.savePhoto(uri);
           this.setState({ isPhotoTaken: true });
         }

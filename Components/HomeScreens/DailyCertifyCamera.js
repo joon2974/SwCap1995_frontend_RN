@@ -10,6 +10,7 @@ import {
   Platform,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import ImageModal from 'react-native-image-modal';
@@ -64,7 +65,7 @@ export default class DayCertifyCamera extends Component {
 
         if (uri) {
           this.setState({ imageUri: uri });
-          alert('사진을 찍었습니다!');
+          Alert.alert('', '사진을 찍었습니다!');
           this.savePhoto(uri);
           this.setState({ isPhotoTaken: true });
         }
