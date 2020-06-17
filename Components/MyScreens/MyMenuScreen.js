@@ -265,7 +265,6 @@ export default class MyMenuScreen extends Component {
             width={width - 50}
             height={220}
             chartConfig={{
-              
               backgroundColor: '#000000',
               backgroundGradientFrom: '#FD8A69',
               backgroundGradientTo: '#FD8A69',
@@ -274,7 +273,7 @@ export default class MyMenuScreen extends Component {
                 borderRadius: 16,
               },
             }}
-/>
+          />
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"

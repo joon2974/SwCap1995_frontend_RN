@@ -48,5 +48,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     'no-unescaped-entities': 0,
     'global-require': 0,
+    'jsx-a11y/accessible-emoji': 0,
   },
 };

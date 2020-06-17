@@ -9,6 +9,7 @@ import {
   Platform,
   TextInput,
   Image,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import ImageModal from 'react-native-image-modal';
@@ -221,11 +222,14 @@ export default class MakePlanStep3 extends Component {
           </View>
 
           <TouchableOpacity
-            disabled={title.length === 0 ? true : false}
             style={styles.nextStepBtn}
             onPress={() => {
-              this.sendPlanInfo();
-              this.props.navigation.popToTop();
+              if (title.length === 0) {
+                Alert.alert('경고', '플랜 이름을 입력해 주세요!');
+              } else {
+                this.sendPlanInfo();
+                this.props.navigation.popToTop();
+              }
             }}
           >
             <Text style={{ color: 'white' }}>플랜 생성하기</Text>

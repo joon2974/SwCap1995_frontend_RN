@@ -22,10 +22,13 @@ import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 import HomeInfo from '../InfoImages/HomeInfo.png';
 
-const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
+console.disableYellowBox = true;
+const minusHeight = (Platform.OS === 'ios') ? 123 : 133;
+const statusbarHeight = (Platform.OS === 'ios') ? 20 : 0;
 let currentUser;
 let isInformCheck;
 const { width, height } = Dimensions.get('window');
+
 export default class HomeMain extends Component {
   state = {
     userEmail: '',
@@ -99,7 +102,7 @@ export default class HomeMain extends Component {
                 / (responseJson[i].plan_period * 7)
             : 0;
           let faceID;
-          if (responseJson[i].user.user_image.face_id) {
+          if (responseJson[i].user.user_image !== null) {
             faceID = responseJson[i].user.user_image.face_id;
           } else faceID = null;
           const obj = {
@@ -164,7 +167,7 @@ export default class HomeMain extends Component {
     this.props.navigation.navigate('인증 리스트', { planID: planID });
   };
 
-  moveToWatchPage = (data) => {
+  moveToWatchPage = (data, selectedTab) => {
     if (data.status === 'waiting') {
       axios
         .post('http://49.50.172.58:3000/agreements/is_exist', {
@@ -184,6 +187,7 @@ export default class HomeMain extends Component {
       this.props.navigation.navigate('감시 리스트', {
         planID: data.id,
         userID: this.state.userId,
+        selectedTab: selectedTab,
       });
     }
   };
@@ -292,13 +296,14 @@ export default class HomeMain extends Component {
         title={data.title}
         id={data.id}
         btnFunc={() => {
-          this.moveToWatchPage(data);
+          this.moveToWatchPage(data, 1);
         }}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
         status={data.status}
         percent={data.percent}
+        moveToWatching={() => { this.moveToWatchPage(data, 0); }}
       />
     ));
     return (
@@ -342,7 +347,7 @@ export default class HomeMain extends Component {
           <View style={{ opacity: 0.9, backgroundColor: 'white' }}>
             <Image
               source={HomeInfo}
-              style={{ height: height - 133 - statusbarHeight, width: width }}
+              style={{ height: height - minusHeight, width: width }}
             />
           </View>
         </Modal>
@@ -396,6 +401,7 @@ export default class HomeMain extends Component {
                   <AntDesign name="pluscircleo" size={70} color="black" />
                   <Text>플랜 만들러 가기</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={{ height: 50, width: 50, backgroundColor: 'red' }} onPress={() => this.moveToAuthenticationList(168)} />
               </View>
             </ScrollView>
           </View>
@@ -485,9 +491,10 @@ const styles = StyleSheet.create({
   modalHeaderStyle: {
     backgroundColor: '#E6E6E6',
     width: width,
-    height: 60 + statusbarHeight,
+    height: 60,
     opacity: 0.95,
     alignItems: 'flex-end',
     justifyContent: 'center',
+    marginTop: statusbarHeight,
   },
 });

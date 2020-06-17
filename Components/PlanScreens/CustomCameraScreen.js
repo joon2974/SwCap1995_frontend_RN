@@ -12,6 +12,7 @@ import {
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
+import ImageModal from 'react-native-image-modal';
 
 const { height, width } = Dimensions.get('window');
 const ALBUM_NAME = 'PLAN A';
@@ -108,9 +109,9 @@ export default class CustomCameraScreen extends Component {
         return (
           <View style={styles.container}>
             <Text>찍은 사진</Text>
-            <Image 
+            <ImageModal
               source={{ uri: imageUri }} 
-              style={{ width: width - 40, height: (width - 40) * 1.3 }} 
+              style={{ width: width - 40, height: (width - 40) * 1.3, marginLeft: 20 }} 
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
@@ -168,7 +169,14 @@ const styles = StyleSheet.create({
   },
   cameraStyle: {
     width: width - 40,
-    height: (width - 40) * 1.3,
+    ...Platform.select({
+      ios: {
+        height: (width - 40) * 1.25,
+      },
+      android: {
+        height: (width - 40) * 1.3,
+      },
+    }),
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -216,6 +224,7 @@ const styles = StyleSheet.create({
           height: -1,
           width: 0,
         },
+        marginBottom: 10,
       },
       android: {
         elevation: 4,

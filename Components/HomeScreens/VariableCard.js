@@ -34,7 +34,11 @@ export default class VariableCard extends Component {
 
   async componentDidMount() {
     this.setWatcherPage();
-   
+    this.setDate();
+  }
+
+
+  setDate = () => {
     const test = this.props.data.createdAt.split('-');
     const test3 = this.props.data.updatedAt.split('-');
     let test2 = '';
@@ -42,7 +46,6 @@ export default class VariableCard extends Component {
     this.setState({ authTitle: test2 });
   }
 
-  
   setWatcherPage=() => {
     axios
       .post('http://49.50.172.58:3000/daily_judges/is_exist', {
@@ -105,7 +108,6 @@ export default class VariableCard extends Component {
     this.setState({ watchStatusResult: this.state.currentWatchStatus });
   }
 
-
   render() {
     let testVari = null;
     if (this.props.onOff === this.props.index) {
@@ -130,6 +132,7 @@ export default class VariableCard extends Component {
             }}
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.props.planData}
+            authStatus={this.props.data.status}
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
@@ -236,6 +239,7 @@ export default class VariableCard extends Component {
               this.toggleModal(0);
             }}
             checkBoxStatus={this.state.watchStatusResult}
+            authStatus={this.props.data.status}
           />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
          
