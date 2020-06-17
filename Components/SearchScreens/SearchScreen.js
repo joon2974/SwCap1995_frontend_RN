@@ -76,8 +76,7 @@ export default class Searchscreen extends Component {
     axios.get('http://49.50.172.58:3000/plans/filter_category?category=' + this.state.cate + '&limit=4&page=1').then((res) => {
       this.setState({ nowAllCate: res.data.plans });
     
-      console.log(res.data.plans);
-    //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
+    // this.setState({ nowRecommendUri: res.data.data.categorcyGet });
     }).catch((error) => {
       console.log(error);
       alert(error);

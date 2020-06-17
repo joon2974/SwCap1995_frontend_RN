@@ -102,11 +102,7 @@ export default class HomeMain extends Component {
                 / (responseJson[i].plan_period * 7)
             : 0;
           let faceID;
-<<<<<<< HEAD
           if (responseJson[i].user.user_image !== null) {
-=======
-          if (responseJson[i].user.user_image) {
->>>>>>> detailPlanRenewal
             faceID = responseJson[i].user.user_image.face_id;
           } else faceID = null;
           const obj = {
