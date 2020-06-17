@@ -93,12 +93,12 @@ export default class DetailPlan extends Component {
     }
 
     handlerYAxis = (value) => {
-      if (value === 1) {
-        return 'done';
-      } else if (value === 0.5) {
-        return 'invalid';
+      if (value === '1.00') {
+        return '성공';
+      } else if (value === '0.50') {
+        return '보류';
       } else {
-        return 'undone';
+        return '실패';
       }
     }
 
@@ -194,11 +194,7 @@ export default class DetailPlan extends Component {
                     formatYLabel={(value) => this.handlerYAxis(value)}
                     segments={2}
                     fromZero={true}
-                    formatYLabel={(data) => {
-                      if (data === '1.00') return '성공';
-                      else if (data === '0.50') return '보류';
-                      else return '실패';
-                    }}
+                    formatYLabel={(data) => this.handlerYAxis(data)}
                     chartConfig={{
                       backgroundGradientFrom: '#139C73',
                       backgroundGradientTo: 'black',

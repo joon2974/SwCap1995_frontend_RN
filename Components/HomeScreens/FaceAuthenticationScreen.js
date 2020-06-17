@@ -34,6 +34,7 @@ export default class FaceAuthenticationScreen extends Component {
       imageUri: null,
       imageBase64: null,
       modalVisible: false,
+      isFaceDetected: false,
     };
 
     this.cameraRef = React.createRef();
@@ -60,21 +61,26 @@ export default class FaceAuthenticationScreen extends Component {
   }
 
   takePhoto = async () => {
-    try {
-      if (this.cameraRef.current) {
-        const image = await this.cameraRef.current.takePictureAsync({
-          quality: 1,
-          base64: true,
-        });
-
-        if (image) {
-          this.setState({ imageUri: image.uri, imageBase64: image.base64 });
-          alert('사진을 찍었습니다!');
-          this.setState({ isPhotoTaken: true });
+    const { isFaceDetected } = this.state;
+    if (isFaceDetected) {
+      try {
+        if (this.cameraRef.current) {
+          const image = await this.cameraRef.current.takePictureAsync({
+            quality: 1,
+            base64: true,
+          });
+  
+          if (image) {
+            this.setState({ imageUri: image.uri, imageBase64: image.base64 });
+            alert('사진을 찍었습니다!');
+            this.setState({ isPhotoTaken: true });
+          }
         }
+      } catch (error) {
+        alert(error);
       }
-    } catch (error) {
-      alert(error);
+    } else {
+      alert('얼굴이 잘 나오게 찍어주세요!');
     }
   }
 
@@ -90,7 +96,6 @@ export default class FaceAuthenticationScreen extends Component {
     });
     const content = await rawResponse.json();
     console.log('결과', content);
-    console.log('아이디', this.props.route.params.userFaceId);
     const highestPercentId = content.images[0].transaction.face_id;
     if (this.props.route.params.userFaceId === highestPercentId) {
       this.setState({ modalVisible: false });
@@ -107,6 +112,12 @@ export default class FaceAuthenticationScreen extends Component {
       this.props.navigation.goBack();
     }
   };
+
+  faceDetected = (faces) => {
+    if (faces.faces.length !== 0) {
+      this.setState({ isFaceDetected: true });
+    }
+  }
 
   render() {
     const {
@@ -161,6 +172,7 @@ export default class FaceAuthenticationScreen extends Component {
                 style={styles.cameraStyle}
                 type={cameraType}
                 ref={this.cameraRef}
+                onFacesDetected={this.faceDetected}
               />
             </View>
             <View style={styles.shutterBtnContainer}>

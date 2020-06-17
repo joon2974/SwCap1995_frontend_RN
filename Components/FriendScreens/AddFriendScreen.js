@@ -13,26 +13,49 @@ export default class AddFriendScreen extends Component {
   state = {
     targetNickname: '',
     userId: this.props.route.params.userId,
+    myNickName: '',
   };
+
+  componentDidMount() {
+    this.getMyInfo();
+  }
 
   onChangeText(targetNickname) {
     this.setState({ targetNickname });
   }
 
-  sendFriendRequest=(userId, targetNickname) => {
-    console.log(targetNickname);
-    console.log(this.props.route.params.userId);
-    
-    axios.put('http://49.50.172.58:3000/friends/add', {
-      user_id: userId,
-      nickname: targetNickname,
-    }).then(function () {
-      alert(targetNickname + '님께 친구요청을 보냈습니다');
-    });
+  getMyInfo = async () => {
+    const response = await axios.get(
+      'http://49.50.172.58:3000/users/me/' + this.props.route.params.userId,
+    );
+    this.setState({ myNickName: response.data.nickname });
+  }
+
+  sendFriendRequest=(userId, targetNickname, myNickName) => {
+    if (myNickName === targetNickname) {
+      alert('본인은 친구추가를 할 수 없습니다!');
+      this.setState({ targetNickname: '' });
+    } else {
+      axios.put('http://49.50.172.58:3000/friends/add', {
+        user_id: userId,
+        nickname: targetNickname,
+      }).then(function () {
+        alert(targetNickname + '님께 친구요청을 보냈습니다');
+        this.props.navigation.popToTop();
+      }).catch((err) => {
+        if (err.response.status === 501) {
+          alert('이미 친구로 등록된 사용자 입니다.');
+          this.setState({ targetNickname: '' });
+        } else {
+          alert('없는 아이디 입니다.');
+          this.setState({ targetNickname: '' });
+        }
+      });
+    }
   }
 
   render() {
-    const { targetNickname, userId } = this.state;
+    const { targetNickname, userId, myNickName } = this.state;
     return (
       <View style={styles.container}>
         <TextInput
@@ -47,8 +70,7 @@ export default class AddFriendScreen extends Component {
 
           onPress={() => {
             if (targetNickname !== '') {
-              this.sendFriendRequest(userId, targetNickname);
-              this.props.navigation.popToTop();
+              this.sendFriendRequest(userId, targetNickname, myNickName);
             } else {
               alert('닉네임이 입력되지 않았습니다');
             }

@@ -10,6 +10,7 @@ import {
   AsyncStorage,
   Platform,
   RefreshControl,
+  Button,
 } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -34,7 +35,6 @@ export default class MyMenuScreen extends Component {
       planData: [],
       refreshing: false,
       notice: '',
-      challPoint: '',
     };
   }
 
@@ -114,16 +114,15 @@ export default class MyMenuScreen extends Component {
     );
     console.log(response.data);
     this.setState({
-      myPoint: response.data.point.general_total,
+      myPoint: response.data.point.challenge_total,
       nickname: response.data.nickname,
       friend_count: response.data.friend_count, 
       email: response.data.email,
-      challPoint: response.data.point.challenge_total,
     });
   };
 
   render() {
-    const { planData, challPoint } = this.state;
+    const { planData, userId } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
       
@@ -218,7 +217,8 @@ export default class MyMenuScreen extends Component {
                 </View>
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
-                  <Text>{challPoint}</Text>
+                  <Text>12</Text>
+                  <Button title="테스트" onPress={() => this.props.navigation.navigate('카메라 테스트', { userID: userId })} />
                   <View style={{ height: 35 }} />
                 </View>
               </View>
@@ -265,7 +265,6 @@ export default class MyMenuScreen extends Component {
             width={width - 50}
             height={220}
             chartConfig={{
-              
               backgroundColor: '#000000',
               backgroundGradientFrom: '#FD8A69',
               backgroundGradientTo: '#FD8A69',
@@ -274,7 +273,7 @@ export default class MyMenuScreen extends Component {
                 borderRadius: 16,
               },
             }}
-/>
+          />
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"

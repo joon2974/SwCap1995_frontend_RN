@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native'; 
 import {
-  Feather, MaterialIcons, AntDesign, FontAwesome5, FontAwesome,
+  Feather,
 } from '@expo/vector-icons'; 
 
 const { width } = Dimensions.get('window');
@@ -40,7 +40,11 @@ export default class MyPlan extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.planInfoContainer}>
-          <TouchableOpacity style={styles.photoContainer} onPress={this.props.moveToWatching}>
+          <TouchableOpacity 
+            style={styles.photoContainer} 
+            onPress={this.props.faceAuthentication 
+              ? this.goToCertifyPage : this.props.moveToWatching}
+          >
             <Image
               source={{
                 uri: this.props.url,
@@ -52,41 +56,35 @@ export default class MyPlan extends Component {
             justifyContent: 'space-evenly', height: 200,
           }}> 
             <View style={{ flexDirection: 'row' }}>
-              <MaterialIcons name="access-time" size={24} color="black" />
               <Text style={styles.textstyle}>
+                ⏰
+                {' '} 
                 {this.props.picturetime}
                 :00   
               </Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
-              <AntDesign name="piechart" size={20} color="black" />
               <Text style={styles.textstyle}>
+                📊
+                {' '}
                 {(this.props.percent * 100).toFixed(2)}
                 %
               </Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
-              {this.props.nickname && <FontAwesome5 name="user-friends" size={18} color="black" />}
-              <Text style={{ marginLeft: 5, fontSize: 14 }}>{this.props.nickname}</Text>
-            </View>
+            {this.props.nickname 
+              && (
+              <View style={{ flexDirection: 'row' }}>
+                <Text>
+                  🙍 
+                  {' '}
+                </Text>
+                <Text style={{ marginLeft: 5, fontSize: 16 }}>{this.props.nickname}</Text>
+              </View>
+              )
+            }
             <View style={{ flexDirection: 'row' }}>
               {(this.props.status === 'waiting') && (
-              <>
-                <FontAwesome name="pause-circle" size={20} color="black" /> 
-               
-                <Text style={{ marginLeft: 5, fontSize: 18 }}>대기 중</Text>
-              </>
-              )}
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              {(this.props.certifyMethod === 0 || this.props.certifyMethod === 1) && (
-              <TouchableOpacity 
-                style={{ flexDirection: 'row' }}
-                onPress={() => this.goToCertifyPage()}
-              >
-                <FontAwesome name="camera" size={18} color="black" /> 
-                <Text style={{ marginLeft: 5, fontSize: 14 }}>인증하기</Text>
-              </TouchableOpacity>
+                <Text style={{ fontSize: 16 }}>⌛ 대기 중</Text>
               )}
             </View>
           </View>
@@ -154,7 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textstyle: {
-    fontSize: 18, paddingLeft: 10, paddingRight: 10,
+    fontSize: 16, paddingRight: 10,
   },
   planInfoContainer: {
     flexDirection: 'row',
