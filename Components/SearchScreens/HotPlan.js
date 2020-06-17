@@ -31,7 +31,7 @@ export default class HotPlan extends Component {
  
     getData = () => {
       if (this.state.moreData === 0) {
-        const url = 'http://49.50.172.58:3000/plans?limit=10&page=' + this.state.nowPage;
+        const url = 'http://49.50.172.58:3000/plans/filter_age?age=' + this.props.route.params.selectedRecommend + '&limit=10&page=' + this.state.nowPage;
         fetch(url)
           .then((r) => r.json())
           .then((data) => {

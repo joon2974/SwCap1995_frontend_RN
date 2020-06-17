@@ -32,6 +32,7 @@ export default class DetailPlan extends Component {
       date: '',
       contriGraphDate: '',
       currentAuthComment: '',
+      test: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     }
 
     async componentDidMount() {
@@ -92,15 +93,7 @@ export default class DetailPlan extends Component {
       this.setState({ item: this.props.route.params.item });
     }
 
-    handlerYAxis = (value) => {
-      if (value === '1.00') {
-        return '성공';
-      } else if (value === '0.50') {
-        return '보류';
-      } else {
-        return '실패';
-      }
-    }
+    setTitleImage = () => ({ uri: this.state.test })
 
     render() {
       const { item } = this.state;
@@ -146,7 +139,7 @@ export default class DetailPlan extends Component {
                 subTitle={item.custom_picture_rule_3}
                 description={this.state.date}
                 image={{ uri: item.image_url }}
-                explore={() => this.props.navigation.navigate('줌', { item: item.image_url })}
+               // image={this.setTitleImage()}
             />
                
  
@@ -191,10 +184,13 @@ export default class DetailPlan extends Component {
                     height={height / 4}
                     yAxisLabel=""
                     yAxisSuffix=""
-                    formatYLabel={(value) => this.handlerYAxis(value)}
+                    formatYLabel={(data) => {
+                      if (data === '1.00') return '성공';
+                      else if (data === '0.50') return '보류';
+                      else return '실패';
+                    }}
                     segments={2}
                     fromZero={true}
-                    formatYLabel={(data) => this.handlerYAxis(data)}
                     chartConfig={{
                       backgroundGradientFrom: '#139C73',
                       backgroundGradientTo: 'black',
@@ -203,7 +199,7 @@ export default class DetailPlan extends Component {
                       labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                       style: {                        
                       },
-                      propsForDots: {
+                      propsForDots: { 
                         r: '6',
                         strokeWidth: '2',
                         stroke: '#fd8a69',
