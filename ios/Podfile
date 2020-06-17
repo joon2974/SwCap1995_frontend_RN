@@ -45,4 +45,8 @@ target 'PlanA' do
   use_native_modules!
 
 
+  pod 'IamportReactNative', :path => '../node_modules/iamport-react-native'
+
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
 end

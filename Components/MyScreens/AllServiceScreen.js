@@ -21,7 +21,6 @@ export default class AllServiceScreen extends Component {
     console.log(this.state.userid);
     this.loadAllService();
   }
- 
 
   loadAllService = async () => {
     const response = await axios.get(

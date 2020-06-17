@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
+import {
+  View, StyleSheet, ActivityIndicator, Platform, 
+} from 'react-native';
 import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -31,7 +33,7 @@ import AuthenticationPage from './SearchScreens/AuthenticationPage';
 
 import FriendScreen from './FriendScreens/FriendScreen';
 import AddFriendScreen from './FriendScreens/AddFriendScreen';
-
+import PaymentScreen from './MyScreens/PaymentScreen';
 import PlanMain from './PlanScreens/PlanMain';
 import MakePlanStep1 from './PlanScreens/MakePlanStep1';
 import MakePlanStep2 from './PlanScreens/MakePlanStep2';
@@ -218,6 +220,8 @@ function MyMenuStackScreen() {
       <MyMenuStack.Screen name="고객센터" component={AllServiceScreen} />
       <MyMenuStack.Screen name="공지사항" component={NoticeScreen} />
       <MyMenuStack.Screen name="문의하기" component={ServiceScreen} />
+      
+      <MyMenuStack.Screen name="충전하기" component={PaymentScreen} />
     </MyMenuStack.Navigator>
   );
 }
