@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { CardNine } from '../SearchScreens/Cards';
+import Watcher from '../SearchScreens/TabList/Watcher';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,6 +28,8 @@ export default class WatcherInfo extends Component {
   state = {
     testArray: [],
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/category_images/%E1%84%89%E1%85%A2%E1%86%BC%E1%84%92%E1%85%AA%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8%E1%84%80%E1%85%AA%E1%86%AB.jpg',
+    watchers: [1, 2, 3, 4, 5],
+    watchersComment: ['1222,', '3231,', '441,', '1,', '1,'],
   }
 
   componentDidMount() {
@@ -33,11 +37,11 @@ export default class WatcherInfo extends Component {
   }
 
   setTitle = () => {
-    if (this.state.testArray.category === '운동/건강') this.setState({ titleURI: categoryURI[0] });
-    else if (this.state.testArray.category === '생활습관') this.setState({ titleURI: categoryURI[1] });
-    else if (this.state.testArray.category === '자기계발') this.setState({ titleURI: categoryURI[2] });
-    else if (this.state.testArray.category === '감정관리') this.setState({ titleURI: categoryURI[3] });
-    else if (this.state.testArray.category === '기타') this.setState({ titleURI: categoryURI[4] });
+    if (this.props.planData.category === '운동/건강') this.setState({ titleURI: categoryURI[0] });
+    else if (this.props.planData.category === '생활습관') this.setState({ titleURI: categoryURI[1] });
+    else if (this.props.planData.category === '자기계발') this.setState({ titleURI: categoryURI[2] });
+    else if (this.props.planData.category === '감정관리') this.setState({ titleURI: categoryURI[3] });
+    else if (this.props.planData.category === '기타') this.setState({ titleURI: categoryURI[4] });
   }
 
   setTest = () => {
@@ -51,13 +55,14 @@ export default class WatcherInfo extends Component {
   }  
 
   render() {
+    console.log(this.props.planData.id);
     return (
       <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
        
         <CardNine
-          title={this.state.testArray.title}
-          subTitle={this.state.testArray.category} 
-          description={this.state.testArray.custom_picture_rule_3} // description => subtitle 
+          title={this.props.planData.title}
+          subTitle={this.props.planData.category} 
+          description={this.props.planData.custom_picture_rule_3} // description => subtitle 
           image={{ uri: this.state.titleURI }}
         />
 
@@ -70,7 +75,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
             <Text>
-              {this.state.testArray.plan_start_day}
+              {this.props.planData.plan_start_day}
               {' '}
               일
             </Text>
@@ -78,7 +83,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>플랜 기간:  </Text>
             <Text>
-              {this.state.testArray.plan_period}
+              {this.props.planData.plan_period}
               {' '}
               주
             </Text>
@@ -86,7 +91,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>인증 시간:  </Text>
             <Text>
-              {this.state.testArray.picture_time}
+              {this.props.planData.picture_time}
               {' '}
               시(앞 뒤로 30분의 여유시 간이 주어집니다)
             </Text>
@@ -98,8 +103,10 @@ export default class WatcherInfo extends Component {
 
         <CardNine
           title="인증 룰"
-          subTitle={this.state.testArray.picture_rule_1 + '\n' + this.state.testArray.picture_rule_2 + '\n' + this.state.testArray.picture_rule_3}
-          image={{ uri: this.state.testArray.image_url }} />
+          subTitle={'\n' + this.props.planData.picture_rule_1 
+            + '\n' + this.props.planData.picture_rule_2 
+            + '\n' + this.props.planData.picture_rule_3}
+          image={{ uri: this.props.planData.image_url }} />
 
 
         <View style={styles.lineDivider} />
@@ -110,31 +117,48 @@ export default class WatcherInfo extends Component {
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17 }}>도전 포인트:  </Text>
-            <Text>{this.state.testArray.bet_money}</Text>
+            <Text>{this.props.planData.bet_money}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17 }}>차감 %:  </Text>
-            <Text>{this.state.testArray.percent}</Text>
+            <Text>{this.props.planData.percent}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17 }}>분배 방식:  </Text>
-            <Text>{this.state.testArray.distrib_method}</Text>
+            <Text>{this.props.planData.distrib_method}</Text>
           </View>
         </View>
 
         <View style={styles.lineDivider} />
 
-        <View style={styles.friendsContainer}>
-          <View style={styles.friendtitle}>
-            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>감시자  </Text>
-          </View>
+
+        <View style={styles.titleInfoContainer}>
+          <Text style={styles.titleStyle}>
+            감시자들
+          </Text>
+                        
           <View>
-            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-              {'\n내용내용내용내용\n내용내용내용내용'}
-            </Text>
+            {
+                  this.state.watchers.map((data, index) => (
+                    <View key={data}>
+                      <Watcher 
+                        key={data}
+                        index={index}
+                        comment={this.state.watchersComment}
+                      />
+                    </View>
+                  ))                                
+                }
+            {/* <TouchableOpacity
+                    style={styles.moreExploreBar2}
+                            >
+                    <Text>감시자들 더보기</Text>
+                  </TouchableOpacity> */}
           </View>
-          
+
+          <View style={{ marginBottom: 10 }} />
         </View>
+
 
         <View style={styles.lineDivider} />
 
@@ -203,5 +227,35 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     flexDirection: 'row',
+  },
+  titleInfoContainer: {
+    borderWidth: 4,
+    borderColor: '#FD8A69',
+    backgroundColor: 'white',
+    width: width * 0.9,
+    marginTop: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 10,
+    // eslint-disable-next-line no-undef
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  titleStyle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginVertical: 10,
   },
 });

@@ -164,7 +164,7 @@ export default class HomeMain extends Component {
     this.props.navigation.navigate('인증 리스트', { planID: planID });
   };
 
-  moveToWatchPage = (data) => {
+  moveToWatchPage = (data, selectedTab) => {
     if (data.status === 'waiting') {
       axios
         .post('http://49.50.172.58:3000/agreements/is_exist', {
@@ -184,6 +184,7 @@ export default class HomeMain extends Component {
       this.props.navigation.navigate('감시 리스트', {
         planID: data.id,
         userID: this.state.userId,
+        selectedTab: selectedTab,
       });
     }
   };
@@ -292,13 +293,14 @@ export default class HomeMain extends Component {
         title={data.title}
         id={data.id}
         btnFunc={() => {
-          this.moveToWatchPage(data);
+          this.moveToWatchPage(data, 1);
         }}
         url={data.url}
         picturetime={data.picturetime}
         nickname={data.nickname}
         status={data.status}
         percent={data.percent}
+        moveToWatching={() => { this.moveToWatchPage(data, 0); }}
       />
     ));
     return (
