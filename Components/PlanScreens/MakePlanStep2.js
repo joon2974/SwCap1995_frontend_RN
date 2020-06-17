@@ -91,7 +91,10 @@ export default class MakePlanStep2 extends Component {
   };
 
   goToNextStep = (selectedFriends, userBetPoint) => {
-    if (Number(userBetPoint) < 5000 || Number(userBetPoint) > 50000) {
+    const { point, challPoint } = this.state;
+    if ((Number(point) + Number(challPoint)) < Number(userBetPoint)) {
+      alert('보유한 포인트보다 같거나 적은 포인트를 설정해 주세요!');
+    } else if (Number(userBetPoint) < 5000 || Number(userBetPoint) > 50000) {
       alert('포인트는 5000 ~ 50000 사이로 설정해 주세요!');
     } else if (selectedFriends.length < 3) {
       alert('감시자는 3명 이상이어야 합니다!');
@@ -312,10 +315,6 @@ export default class MakePlanStep2 extends Component {
             </View>
           </View>
           <TouchableOpacity
-            disabled={(Number(userBetPoint) < 5000 || Number(userBetPoint) > 50000)
-              || selectedFriends.length < 3 
-              ? true : false
-            }
             style={styles.nextStepBtn}
             onPress={() => this.goToNextStep(selectedFriends, userBetPoint)}
           >

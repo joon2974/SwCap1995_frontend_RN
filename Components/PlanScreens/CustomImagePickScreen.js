@@ -3,12 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import ImageModal from 'react-native-image-modal';
 
 const { width } = Dimensions.get('window');
 
@@ -57,9 +57,9 @@ export default class CustomImagePickScreen extends Component {
       <View style={styles.container}>
         <Text>선택된 이미지</Text>
         { image && (
-        <Image 
+        <ImageModal
           source={{ uri: image }} 
-          style={{ width: width - 40, height: (width - 40) * 1.3 }} />
+          style={{ width: width - 40, height: (width - 40) * 1.3, marginLeft: 20 }} />
         )}
         <TouchableOpacity 
           style={styles.uploadBtn}

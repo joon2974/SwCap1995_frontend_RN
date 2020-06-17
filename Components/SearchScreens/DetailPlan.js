@@ -90,6 +90,16 @@ export default class DetailPlan extends Component {
       this.setState({ item: this.props.route.params.item });
     }
 
+    handlerYAxis = (value) => {
+      if (value === 1) {
+        return 'done';
+      } else if (value === 0.5) {
+        return 'invalid';
+      } else {
+        return 'undone';
+      }
+    }
+
     render() {
       const { item } = this.state;
       
@@ -180,6 +190,7 @@ export default class DetailPlan extends Component {
                     height={height / 4}
                     yAxisLabel=""
                     yAxisSuffix=""
+                    formatYLabel={(value) => this.handlerYAxis(value)}
                     segments={2}
                     fromZero={true}
                     chartConfig={{

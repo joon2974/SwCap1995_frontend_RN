@@ -19,12 +19,14 @@ import MakePlan1Info1 from '../InfoImages/MakePlan1Info1.png';
 
 const { height, width } = Dimensions.get('window');
 const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
+const currentDate = Date();
+const currentDay = currentDate.split(' ')[2];
 
 export default class PlanMain extends Component {
   state = {
-    startDate: '05-23',
-    endDate: '1주',
-    certifyTime: '09시 ~ 11시',
+    startDate: currentDay.toString(),
+    endDate: '1',
+    certifyTime: '0',
     certifyImageUri: 'https://ifh.cc/g/BHltgC.jpg',
     pictureRules: {
       '찬물에 손 씻기': ['자신의 손이 보일 것', '차가울 물임을 증명할 것'],

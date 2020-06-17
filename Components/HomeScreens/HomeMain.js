@@ -22,10 +22,13 @@ import InputInfo from '../LogInScreens/InputInfo';
 import MyPlan from '../MyScreens/MyComponents/MyPlan';
 import HomeInfo from '../InfoImages/HomeInfo.png';
 
-const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
+console.disableYellowBox = true;
+const minusHeight = (Platform.OS === 'ios') ? 123 : 133;
+const statusbarHeight = (Platform.OS === 'ios') ? 20 : 0;
 let currentUser;
 let isInformCheck;
 const { width, height } = Dimensions.get('window');
+
 export default class HomeMain extends Component {
   state = {
     userEmail: '',
@@ -99,7 +102,7 @@ export default class HomeMain extends Component {
                 / (responseJson[i].plan_period * 7)
             : 0;
           let faceID;
-          if (responseJson[i].user.user_image.face_id) {
+          if (responseJson[i].user.user_image.length !== 0) {
             faceID = responseJson[i].user.user_image.face_id;
           } else faceID = null;
           const obj = {
@@ -342,7 +345,7 @@ export default class HomeMain extends Component {
           <View style={{ opacity: 0.9, backgroundColor: 'white' }}>
             <Image
               source={HomeInfo}
-              style={{ height: height - 133 - statusbarHeight, width: width }}
+              style={{ height: height - minusHeight, width: width }}
             />
           </View>
         </Modal>
@@ -486,9 +489,10 @@ const styles = StyleSheet.create({
   modalHeaderStyle: {
     backgroundColor: '#E6E6E6',
     width: width,
-    height: 60 + statusbarHeight,
+    height: 60,
     opacity: 0.95,
     alignItems: 'flex-end',
     justifyContent: 'center',
+    marginTop: statusbarHeight,
   },
 });

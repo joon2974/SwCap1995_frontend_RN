@@ -89,6 +89,8 @@ export default class FaceAuthenticationScreen extends Component {
       }),
     });
     const content = await rawResponse.json();
+    console.log('결과', content);
+    console.log('아이디', this.props.route.params.userFaceId);
     const highestPercentId = content.images[0].transaction.face_id;
     if (this.props.route.params.userFaceId === highestPercentId) {
       this.setState({ modalVisible: false });
@@ -191,7 +193,14 @@ const styles = StyleSheet.create({
   },
   cameraStyle: {
     width: width - 40,
-    height: (width - 40) * 1.3,
+    ...Platform.select({
+      ios: {
+        height: (width - 40) * 1.25,
+      },
+      android: {
+        height: (width - 40) * 1.3,
+      },
+    }),
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -239,6 +248,7 @@ const styles = StyleSheet.create({
           height: -1,
           width: 0,
         },
+        marginBottom: 10,
       },
       android: {
         elevation: 4,
