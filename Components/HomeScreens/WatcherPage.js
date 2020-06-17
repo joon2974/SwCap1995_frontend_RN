@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
@@ -29,8 +30,9 @@ export default class WatcherPage extends Component {
     testArray2: [],
   }
 
-  componentDidMount() {
-    this.setTest();
+  async componentDidMount() {
+    await this.setTest();
+    this.setState({ tabState: this.props.route.params.selectedTab, selectedTab: this.props.route.params.selectedTab });
   }
 
   setTest = () => {

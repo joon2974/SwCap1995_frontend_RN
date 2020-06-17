@@ -184,7 +184,7 @@ export default class DetailPlan extends Component {
                     segments={2}
                     fromZero={true}
                     formatYLabel={(data) => {
-                      if (data === '0.00') return '성공';
+                      if (data === '1.00') return '성공';
                       else if (data === '0.50') return '보류';
                       else return '실패';
                     }}
@@ -270,11 +270,11 @@ export default class DetailPlan extends Component {
                     </View>
                   ))                                
                 }
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.moreExploreBar2}
                             >
                     <Text>감시자들 더보기</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
 
                 <View style={{ marginBottom: 10 }} />
