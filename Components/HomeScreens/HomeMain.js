@@ -288,7 +288,6 @@ export default class HomeMain extends Component {
         today_auth={data.today_auth}
         percent={data.percent}
         userFaceId={data.userFaceId}
-        moveToWatching={() => { this.moveToAuthenticationList(data.id); }}
       />
     ));
     const watchplans = watchData.map((data) => (
