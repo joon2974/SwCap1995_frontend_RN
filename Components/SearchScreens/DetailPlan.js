@@ -184,7 +184,11 @@ export default class DetailPlan extends Component {
                     height={height / 4}
                     yAxisLabel=""
                     yAxisSuffix=""
-                    // formatYLabel={(data) => this.handlerYAxis(value)}
+                    formatYLabel={(data) => {
+                      if (data === '1.00') return '성공';
+                      else if (data === '0.50') return '보류';
+                      else return '실패';
+                    }}
                     segments={2}
                     fromZero={true}
                     chartConfig={{
