@@ -256,7 +256,7 @@ export default class HomeMain extends Component {
         userFaceId: userFaceId,
       });
     } else {
-      Alert.alert('','인증 시간이 아닙니다!');
+      Alert.alert('', '인증 시간이 아닙니다!');
     }
   };
 
