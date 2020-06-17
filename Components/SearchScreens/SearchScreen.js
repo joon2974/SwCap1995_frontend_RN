@@ -26,11 +26,13 @@ export default class Searchscreen extends Component {
       nowRecommend: [],
       nowAllCate: [],
       refreshing: false,
+      age: '10',
+      cate: '운동/건강',
     };
   }
   
   componentDidMount() {
-    this.setPlanList('10대');
+    this.setPlanList('10');
     this.setPlanListAllCate('운동/건강');
   }
 
@@ -42,30 +44,39 @@ export default class Searchscreen extends Component {
       nowAllCate: [],
     });
     this.setState({ refreshing: true });
-    this.setPlanList('10대')
+    this.setPlanList('10')
       .then(this.setPlanListAllCate('운동/건강'))
       .then(() => this.setState({ refreshing: false }));
   }
 
-  setPlanList = async (categoryName) => {
-    this.setState({ selectedRecommend: categoryName });
-
-    axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
-      this.setState({ nowRecommend: res.data.plans });
+  async setPlanList(categoryName) {
+    await this.setState({ selectedRecommend: categoryName, age: categoryName });
+    // axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
+    //   this.setState({ nowRecommend: res.data.plans });
     
-    //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
+    // //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
+    // }).catch((error) => {
+    //   console.log(error);
+    //   alert(error);
+    // });
+      
+
+    axios.get('http://49.50.172.58:3000/plans/filter_age?age=' + this.state.age + '&limit=4&page=1').then((res) => {
+      console.log(res);
+      this.setState({ nowRecommend: res.data.plans });
     }).catch((error) => {
       console.log(error);
       alert(error);
     });
   }
 
-  setPlanListAllCate = (categoryName) => {
-    this.setState({ selectedAllCate: categoryName });
+  async setPlanListAllCate(categoryName) {
+    await this.setState({ selectedAllCate: categoryName, cate: categoryName });
 
-    axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
+    axios.get('http://49.50.172.58:3000/plans/filter_category?category=' + this.state.cate + '&limit=4&page=1').then((res) => {
       this.setState({ nowAllCate: res.data.plans });
     
+      console.log(res.data.plans);
     //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
     }).catch((error) => {
       console.log(error);
@@ -118,57 +129,57 @@ export default class Searchscreen extends Component {
           <View style={styles.tabButtonContainer}>
             <TouchableOpacity
               style={
-                selectedRecommend === '10대'
+                selectedRecommend === '10'
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanList('10대')}
+              onPress={() => this.setPlanList('10')}
             >
-              <Text style={selectedRecommend === '10대' ? { color: 'white' } : { color: 'black' }}>10대</Text>
+              <Text style={selectedRecommend === '10' ? { color: 'white' } : { color: 'black' }}>10대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedRecommend === '20대'
+                selectedRecommend === '20'
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanList('20대')}
+              onPress={() => this.setPlanList('20')}
             >
-              <Text style={selectedRecommend === '20대' ? { color: 'white' } : { color: 'black' }}>20대</Text>
+              <Text style={selectedRecommend === '20' ? { color: 'white' } : { color: 'black' }}>20대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedRecommend === '30대'
+                selectedRecommend === '30'
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanList('30대')}
+              onPress={() => this.setPlanList('30')}
             >
-              <Text style={selectedRecommend === '30대' ? { color: 'white' } : { color: 'black' }}>30대</Text>
+              <Text style={selectedRecommend === '30' ? { color: 'white' } : { color: 'black' }}>30대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedRecommend === '40~50대'
+                selectedRecommend === '40'
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanList('40~50대')}
+              onPress={() => this.setPlanList('40')}
             >
-              <Text style={selectedRecommend === '40~50대' ? { color: 'white' } : { color: 'black' }}>40~50대</Text>
+              <Text style={selectedRecommend === '40' ? { color: 'white' } : { color: 'black' }}>40~50대</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedRecommend === '60대 이상'
+                selectedRecommend === '60'
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanList('60대 이상')}
+              onPress={() => this.setPlanList('60')}
             >
-              <Text style={selectedRecommend === '60대 이상' ? { color: 'white' } : { color: 'black' }}>60대 이상</Text>
+              <Text style={selectedRecommend === '60' ? { color: 'white' } : { color: 'black' }}>60대 이상</Text>
             </TouchableOpacity>
           </View>
 

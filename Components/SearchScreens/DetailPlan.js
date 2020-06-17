@@ -32,6 +32,7 @@ export default class DetailPlan extends Component {
       date: '',
       contriGraphDate: '',
       currentAuthComment: '',
+      test:'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     }
 
     async componentDidMount() {
@@ -92,6 +93,10 @@ export default class DetailPlan extends Component {
       this.setState({ item: this.props.route.params.item });
     }
 
+    setTitleImage = () => {
+        return {uri: this.state.test }
+    }
+
     render() {
       const { item } = this.state;
       
@@ -136,7 +141,7 @@ export default class DetailPlan extends Component {
                 subTitle={item.custom_picture_rule_3}
                 description={this.state.date}
                 image={{ uri: item.image_url }}
-                explore={() => this.props.navigation.navigate('줌', { item: item.image_url })}
+               // image={this.setTitleImage()}
             />
                
  
