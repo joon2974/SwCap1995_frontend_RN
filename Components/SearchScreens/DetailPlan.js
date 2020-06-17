@@ -195,7 +195,7 @@ export default class DetailPlan extends Component {
                       labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                       style: {                        
                       },
-                      propsForDots: {
+                      propsForDots: { 
                         r: '6',
                         strokeWidth: '2',
                         stroke: '#fd8a69',
