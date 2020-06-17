@@ -39,7 +39,6 @@ export default class HotPlan extends Component {
               data: this.state.data.concat(data.plans),
               nowPage: this.state.nowPage + 1,
             });
-            console.log('데이터', this.state.data);
             if (data.plans.length === 0) {
               this.setState({ moreData: 1 });
             }

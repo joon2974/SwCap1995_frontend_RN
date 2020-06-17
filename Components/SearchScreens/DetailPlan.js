@@ -78,8 +78,10 @@ export default class DetailPlan extends Component {
         alert(error);
       });
 
-      axios.get('http://49.50.172.58:3000/daily_authentications/' + this.state.item.id).then((res) => {        
-        this.setState({ currentAuthComment: res.data.rows[0].comment });
+      axios.get('http://49.50.172.58:3000/daily_authentications/' + this.state.item.id).then((res) => {
+        if (res.data.rows.length !== 0) {        
+          this.setState({ currentAuthComment: res.data.rows[0].comment });
+        }
       }).catch((error) => {
         console.log(error);
         alert(error);
@@ -134,7 +136,6 @@ export default class DetailPlan extends Component {
         barPercentage: 0.5,
         useShadowColorFromDataset: false, // optional
       };
-    
 
       return (
         <View style={styles.container}>
@@ -193,6 +194,11 @@ export default class DetailPlan extends Component {
                     formatYLabel={(value) => this.handlerYAxis(value)}
                     segments={2}
                     fromZero={true}
+                    formatYLabel={(data) => {
+                      if (data === '1.00') return '성공';
+                      else if (data === '0.50') return '보류';
+                      else return '실패';
+                    }}
                     chartConfig={{
                       backgroundGradientFrom: '#139C73',
                       backgroundGradientTo: 'black',
@@ -275,11 +281,11 @@ export default class DetailPlan extends Component {
                     </View>
                   ))                                
                 }
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.moreExploreBar2}
                             >
                     <Text>감시자들 더보기</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
 
                 <View style={{ marginBottom: 10 }} />

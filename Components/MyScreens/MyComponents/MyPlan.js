@@ -40,14 +40,14 @@ export default class MyPlan extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.planInfoContainer}>
-          <View style={styles.photoContainer}>
+          <TouchableOpacity style={styles.photoContainer} onPress={this.props.moveToWatching}>
             <Image
               source={{
                 uri: this.props.url,
               }}
               style={styles.photoStyle}
                 />
-          </View>
+          </TouchableOpacity>
           <View style={{
             justifyContent: 'space-evenly', height: 200,
           }}> 
