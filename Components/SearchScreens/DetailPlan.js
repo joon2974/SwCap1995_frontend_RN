@@ -32,7 +32,7 @@ export default class DetailPlan extends Component {
       date: '',
       contriGraphDate: '',
       currentAuthComment: '',
-      test:'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
+      test: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     }
 
     async componentDidMount() {
@@ -93,9 +93,7 @@ export default class DetailPlan extends Component {
       this.setState({ item: this.props.route.params.item });
     }
 
-    setTitleImage = () => {
-        return {uri: this.state.test }
-    }
+    setTitleImage = () => ({ uri: this.state.test })
 
     render() {
       const { item } = this.state;
