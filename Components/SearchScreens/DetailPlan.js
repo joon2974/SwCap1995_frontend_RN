@@ -133,14 +133,10 @@ export default class DetailPlan extends Component {
       return (
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
-<<<<<<< HEAD
-            <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop: 10, backgroundColor: '#d6a192' }}>
-=======
             <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: '#d6a192' }}>
               
               <View style={{ marginVertical: 10 }} />
 
->>>>>>> detailPlanRenewal
               <CardNine
                 title={item.detailedCategory}
                 subTitle={item.custom_picture_rule_3}
