@@ -252,6 +252,13 @@ export default class WatcherInfo extends Component {
                   </TouchableOpacity> */}
               </View>
 
+              <TouchableOpacity
+                style={{
+                  width: width * 0.77,
+                  height: height / 12,
+                }}
+                onPress={this.toggleModal} />
+
               <View style={{ marginBottom: 10 }} />
               
             </ScrollView>
