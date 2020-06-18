@@ -39,8 +39,8 @@ export default class WatcherInfo extends Component {
     watchersComment: ['빵준이', '한수찬', '김첨지'],
     // watchersComment: ['생각보다 열심히 하네', '웬일이지ㅋㅋㅋ', '500원 꺼억', '몸짱 되겠다!', '지석이 맞아?'],
     isModalVisible: 0,
-    pointHistory: [500, 500, 500, 500],
-    pointDate: ['6월 1일', '6월 2일', '6월 5일', '6월 6일'],
+    pointHistory: [500],
+    pointDate: ['6월 1일'],
     dateConveted: '',
   }
 
@@ -192,7 +192,7 @@ export default class WatcherInfo extends Component {
               획득 포인트
             </Text>
             <Text style={{ fontSize: 15 }}>
-              2000 p
+              500 p
             </Text>
           </View>
         </TouchableOpacity>
@@ -217,15 +217,15 @@ export default class WatcherInfo extends Component {
                 </View>
                 <View style={styles.lineContainer}>
                   <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
-                  <Text>8</Text>
+                  <Text>1</Text>
                 </View>
                 <View style={styles.lineContainer}>
                   <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
-                  <Text>4000</Text>
+                  <Text>500</Text>
                 </View>
                 <View style={styles.lineContainer}>
                   <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
-                  <Text>2000 💸</Text>
+                  <Text>500 💸</Text>
                 </View>
                 <View style={styles.lineContainer}>
                   <Text style={{ fontWeight: 'bold', fontSize: 20 }}>포인트 내역</Text>
