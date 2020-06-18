@@ -1,3 +1,4 @@
+/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
@@ -6,12 +7,17 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
   Dimensions,
-  TouchableHighlightBase,
 } from 'react-native';
 import axios from 'axios';
 import { ProgressChart } from 'react-native-chart-kit';
+import Modal from 'react-native-modal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CardNine, CardNine2 } from '../SearchScreens/Cards';
+import PointHistory from '../SearchScreens/TabList/PointHistory';
 import Watcher from '../SearchScreens/TabList/Watcher';
 
 const { width, height } = Dimensions.get('window');
@@ -29,12 +35,20 @@ export default class WatcherInfo extends Component {
   state = {
     testArray: [],
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
-    watchers: [1, 2, 3, 4, 5],
-    watchersComment: ['생각보다 열심히 하네', '웬일이지ㅋㅋㅋ', '500원 꺼억', '몸짱 되겠다!', '지석이 맞아?'],
+    watchers: [1, 2, 3],
+    watchersComment: ['빵준이', '한수찬', '김첨지'],
+    // watchersComment: ['생각보다 열심히 하네', '웬일이지ㅋㅋㅋ', '500원 꺼억', '몸짱 되겠다!', '지석이 맞아?'],
+    isModalVisible: 0,
+    pointHistory: [500, 500, 500, 500],
+    pointDate: ['6월 1일', '6월 2일', '6월 5일', '6월 6일'],
   }
 
   componentDidMount() {
     this.setTest();
+  }
+
+  toggleModal=() => {
+    this.setState({ isModalVisible: !this.state.isModalVisible }); 
   }
 
   setTitle = () => {
@@ -58,15 +72,15 @@ export default class WatcherInfo extends Component {
   render() {
     const watcherData = {
       labels: ['빵준이', '한수찬', '김첨지'], // optional
-      data: [0.95, 0.8, 0.65],
+      data: [0.95, 0.30, 0.66],
     };
 
     const chartConfig = {
-      backgroundGradientFrom: 'black',
+      backgroundGradientFrom: '139C73',
       backgroundGradientTo: 'white',
       backgroundGradientFromOpacity: 0,
       backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+      color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
       strokeWidth: 2, // optional, default 3
       barPercentage: 0.5,
       useShadowColorFromDataset: false, // optional
@@ -115,7 +129,6 @@ export default class WatcherInfo extends Component {
 
         <View style={styles.lineDivider} />
 
-
         <CardNine2
           title="인증 룰"
           subTitle={'\n' + this.props.planData.picture_rule_1 
@@ -144,25 +157,106 @@ export default class WatcherInfo extends Component {
           </View>
         </View>
 
+        <TouchableOpacity
+          style={{ 
+            height: height / 4, 
+            width: width / 1.2,
+            marginTop: 30, 
+            borderColor: 'black',
+            borderRadius: 20,
+            borderWidth: 4,
+            alignItems: 'center',
+            flexDirection: 'row',  
+          }}
+          onPress={() => this.toggleModal()}
+        >
+          <Image
+            style={{
+              height: height / 6,
+              width: height / 6,
+              marginLeft: 10,
+              resizeMode: 'stretch',
+            }}
+            source={require('./money.png')}
+          />
+
+          <View style={{
+            height: height / 6,
+            width: height / 6,
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}>
+            <Text style={{ fontSize: 25 }}>
+              획득 포인트
+            </Text>
+            <Text style={{ fontSize: 15 }}>
+              2000 p
+            </Text>
+          </View>
+        </TouchableOpacity>
+
         <View style={styles.lineDivider} />
 
-        <View style={styles.getPointContainer}>
-          <View style={styles.componentTitleContainer}>
-            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
-          </View>
-          <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17 }}>실패 횟수:  </Text>
-            <Text>1</Text>
-          </View>
-          <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17 }}>차감될 포인트:  </Text>
-            <Text>250</Text>
-          </View>
-          <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17 }}>내가 획득한 포인트:  </Text>
-            <Text>80 💸</Text>
-          </View>
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              
+          <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+
+            <ScrollView style={{
+              backgroundColor: 'white',
+              borderRadius: 20,
+              borderWidth: 5,
+              borderColor: '#fd8a69',
+            }}>
+
+            
+              <View style={styles.getPointContainer}>
+                <View style={styles.componentTitleContainer}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
+                </View>
+                <View style={styles.lineContainer}>
+                  <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
+                  <Text>8</Text>
+                </View>
+                <View style={styles.lineContainer}>
+                  <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
+                  <Text>4000</Text>
+                </View>
+                <View style={styles.lineContainer}>
+                  <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
+                  <Text>2000 💸</Text>
+                </View>
+                <View style={styles.lineContainer}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>포인트 내역</Text>
+                </View>
+              </View>                        
+
+              <View>
+                {
+                  this.state.pointHistory.map((data, index) => (
+                    <View key={data}>
+                      <PointHistory
+                        key={data}
+                        index={index}
+                        point={data}
+                        date={this.state.pointDate}
+                      />
+                    </View>
+                  ))                                
+                }
+                {/* <TouchableOpacity
+                    style={styles.moreExploreBar2}
+                            >
+                    <Text>감시자들 더보기</Text>
+                  </TouchableOpacity> */}
+              </View>
+
+              <View style={{ marginBottom: 10 }} />
+              
+            </ScrollView>
+
+          </Modal>
+        </TouchableWithoutFeedback>
+
 
         <View style={styles.lineDivider} />
 
@@ -262,7 +356,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
-    height: height * 0.2,
+    marginVertical: 20,
   },
   friendsContainer: {
     justifyContent: 'center',
@@ -277,7 +371,7 @@ const styles = StyleSheet.create({
   },
   titleInfoContainer: {
     borderWidth: 4,
-    borderColor: '#FD8A69',
+    borderColor: '#139C73',
     backgroundColor: 'white',
     width: width * 0.9,
     marginTop: 15,

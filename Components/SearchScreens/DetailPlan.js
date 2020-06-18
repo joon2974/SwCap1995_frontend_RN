@@ -25,8 +25,8 @@ const { width, height } = Dimensions.get('window');
 export default class DetailPlan extends Component {
     state = {
       item: [],
-      watchers: ['1', '2', '3', '4', '5'],
-      watchersComment: ['hello', 'bye', 'thank', 'u', '...'],
+      watchers: [1, 2, 3],
+      watchersComment: ['빵준이', '한수찬', '김첨지'],
       authCreatedAt: [],
       authStatus: [1],
       date: '',
@@ -100,8 +100,8 @@ export default class DetailPlan extends Component {
       
     
       const watcherData = {
-        labels: ['Swim', 'Bike', 'Run'], // optional
-        data: [0.4, 0.6, 0.8],
+        labels: ['빵준이', '한수찬', '김첨지'], // optional
+        data: [0.95, 0.30, 0.66],
       };
 
       // const commitsData = [
@@ -120,11 +120,11 @@ export default class DetailPlan extends Component {
 
 
       const chartConfig = {
-        backgroundGradientFrom: 'black',
+        backgroundGradientFrom: '#139c73',
         backgroundGradientTo: 'white',
         backgroundGradientFromOpacity: 0,
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false, // optional
@@ -133,7 +133,14 @@ export default class DetailPlan extends Component {
       return (
         <View style={styles.container}>
           <ImageBackground source={require('./back8.png')} style={{ width: width }}>
+<<<<<<< HEAD
             <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop: 10, backgroundColor: '#d6a192' }}>
+=======
+            <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: '#d6a192' }}>
+              
+              <View style={{ marginVertical: 10 }} />
+
+>>>>>>> detailPlanRenewal
               <CardNine
                 title={item.detailedCategory}
                 subTitle={item.custom_picture_rule_3}
@@ -219,11 +226,9 @@ export default class DetailPlan extends Component {
                 >
                   <Text>인증 더 보기</Text>
                 </TouchableOpacity>
-
-                <View style={styles.lineDivider} />
-
-      
               </View>
+              
+              <View style={{ marginVertical: 10 }} />
               
               <View style={styles.titleInfoContainer}>
                 <Text style={styles.titleStyle}>
@@ -245,6 +250,7 @@ export default class DetailPlan extends Component {
 
               <View style={styles.lineDivider} />
 
+              
               <ProgressChart
                 data={watcherData}
                 width={width * 0.9}
@@ -253,10 +259,9 @@ export default class DetailPlan extends Component {
                 radius={32}
                 chartConfig={chartConfig}
                 hideLegend={false}
-                />
+        />
 
-
-              <View style={styles.titleInfoContainer}>
+              <View style={styles.titleInfoContainer2}>
                 <Text style={styles.titleStyle}>
                   감시자들
                 </Text>
@@ -282,6 +287,7 @@ export default class DetailPlan extends Component {
 
                 <View style={{ marginBottom: 10 }} />
               </View>
+
 
               <View style={{ marginVertical: 20 }} />
             </ScrollView>
@@ -330,7 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F2F2F2',
     borderWidth: 2,
-    borderColor: '#139C73',
+    borderColor: '#fd8a69',
     borderRadius: 10,
     margin: 6,
     marginTop: 20,
@@ -387,6 +393,31 @@ const styles = StyleSheet.create({
   titleInfoContainer: {
     borderWidth: 4,
     borderColor: '#FD8A69',
+    backgroundColor: 'white',
+    width: width * 0.9,
+    marginTop: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 10,
+    // eslint-disable-next-line no-undef
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  titleInfoContainer2: {
+    borderWidth: 4,
+    borderColor: '#139c73',
     backgroundColor: 'white',
     width: width * 0.9,
     marginTop: 15,
