@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   TouchableOpacity,
@@ -10,7 +11,7 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-export default class Watcher extends Component {
+export default class PointHistory extends Component {
   render() {
     const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU';
 
@@ -19,16 +20,22 @@ export default class Watcher extends Component {
         style={styles.container}
         onPress={this.props.explore}
         >
-        <Image 
+        {/* <Image 
           source={{ uri: uri }} 
           style={styles.imageStyle}
-            />
-        {/* <Text style={styles.watcherInfo}>
-          {this.props.index}
-        </Text> */}
+            /> */}
         <Text style={styles.watcherInfo}>
-          {this.props.comment[this.props.index]}
+          {this.props.date[this.props.index]}
+          {': '}
         </Text>
+        <Text style={styles.watcherInfo}>
+          {this.props.point}
+          {' p'}
+        </Text>
+        
+        <Image
+          style={{ height: height / 24, width: height / 24, marginLeft: 15 }}
+          source={require('../../HomeScreens/money.png')} />
 
       </TouchableOpacity>
 
@@ -38,11 +45,12 @@ export default class Watcher extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.82,
+    width: width * 0.77,
     height: height / 12,
     alignItems: 'center',
     backgroundColor: 'white',
     margin: 4,
+    marginLeft: 20,
     borderRadius: 10,
     flexDirection: 'row',
 
@@ -70,7 +78,7 @@ const styles = StyleSheet.create({
   },
 
   watcherInfo: {
-    marginLeft: 20,
+    marginLeft: 60,
     fontSize: 14,
   },
 });
