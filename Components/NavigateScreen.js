@@ -100,6 +100,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="감시 리스트" component={WatcherPage} />
       <HomeStack.Screen name="플랜 상세 정보" component={DetailPlan} />
       <HomeStack.Screen name="줌" component={Joom} />
+      <HomeStack.Screen name="인증" component={AuthenticationPage} />
     </HomeStack.Navigator>
   );
 }

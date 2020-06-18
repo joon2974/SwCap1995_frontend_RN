@@ -17,6 +17,7 @@ import {
   ProgressChart,
 } from 'react-native-chart-kit';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Watcher from './TabList/Watcher';
 import { CardNine } from './Cards';
 
@@ -173,6 +174,26 @@ export default class DetailPlan extends Component {
                     height={220}
                     chartConfig={chartConfig}
                 /> */}
+
+                  <TouchableOpacity style={{
+                    flexDirection: 'row', 
+                    height: height / 13,
+                    width: width / 1.1,
+                    alignItems: 'center',
+                    backgroundColor: '#EAD0BE',
+                    justifyContent: 'space-between',
+                    borderRadius: 10,
+                    borderWidth: 2,
+                    borderColor: 'yellow',
+                    marginBottom: 10,
+                  }}>
+                    <Icon size={30} color="yellow" name="star" style={{ marginHorizontal: 10 }} />
+                    <Text style={{ fontSize: 16 }}>
+                      플랜이 완료되었습니다! 축하합니다!!!
+                    </Text>
+                    <Icon size={30} color="yellow" name="star" style={{ marginHorizontal: 10 }} />
+                  </TouchableOpacity>
+
 
                   <LineChart
                     data={{
