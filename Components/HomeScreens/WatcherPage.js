@@ -114,6 +114,7 @@ export default class WatcherPage extends Component {
           <WatcherInfo 
             planData={this.state.testArray2} 
             date={this.state.dateConverted}
+            exploreMoreInfo={() => this.props.navigation.navigate('플랜 상세 정보', { item: this.state.testArray2 })}
         />
         ) }
        

@@ -16,7 +16,7 @@ import axios from 'axios';
 import { ProgressChart } from 'react-native-chart-kit';
 import Modal from 'react-native-modal';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { CardNine, CardNine2 } from '../SearchScreens/Cards';
+import { CardNine3, CardNine2 } from '../SearchScreens/Cards';
 import PointHistory from '../SearchScreens/TabList/PointHistory';
 import Watcher from '../SearchScreens/TabList/Watcher';
 
@@ -91,11 +91,12 @@ export default class WatcherInfo extends Component {
     return (
       <ScrollView contentContainerStyle={styles.scrollViewStyle} style={{ marginBottom: 40 }}>
        
-        <CardNine
+        <CardNine3
           title={this.props.planData.title}
           subTitle={this.props.planData.category} 
           description={this.props.planData.custom_picture_rule_3} // description => subtitle 
           image={{ uri: this.state.titleURI }}
+          exploreMoreInfo={this.props.exploreMoreInfo}
         />
 
         <View style={styles.lineDivider} />

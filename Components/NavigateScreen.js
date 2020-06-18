@@ -98,6 +98,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="플랜평가하기" component={Estimate} />
       <HomeStack.Screen name="인증 리스트" component={AuthenticationPage} />
       <HomeStack.Screen name="감시 리스트" component={WatcherPage} />
+      <HomeStack.Screen name="플랜 상세 정보" component={DetailPlan} />
+      <HomeStack.Screen name="줌" component={Joom} />
     </HomeStack.Navigator>
   );
 }
@@ -121,7 +123,6 @@ function SearchStackScreen() {
       <SearchStack.Screen name="카테고리" component={CategoryList} />
       <SearchStack.Screen name="인기 플랜" component={HotPlan} />
       <SearchStack.Screen name="플랜 목록" component={PlanList} />
-      <SearchStack.Screen name="줌" component={Joom} />
       <SearchStack.Screen name="플랜 상세 정보" component={DetailPlan} />
       <SearchStack.Screen name="인증" component={AuthenticationPage} />
       <SearchStack.Screen

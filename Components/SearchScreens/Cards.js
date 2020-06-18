@@ -1764,6 +1764,191 @@ export class CardNine extends Component {
   }
 }
 
+export class CardNine3 extends Component {
+  render() {
+    return (
+      <View style={{
+        width: screenWidth, 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: screenHeight / 3.5,
+      }}>
+
+        <ImageModal
+          source={this.props.image}
+          style={{
+            height: screenHeight / 5, width: screenWidth / 5, borderRadius: 10, marginVertical: 30, 
+          }}
+           />
+      
+        <View
+          style={{
+            width: screenWidth / 1.4,
+            height: screenHeight / 4,
+            borderRadius: 12,
+            flexDirection: 'row',
+            
+            shadowColor: '#000',
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            shadowOffset: {
+              height: 1,
+              width: 0,
+            },
+            borderColor: '#FD8A69', 
+            borderWidth: 4,
+            backgroundColor: '#ffffff',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+      >
+      
+          <View  
+            borderRadius={10}
+            style={{
+              width: screenWidth / 2.8,
+              height: screenHeight / 5,
+              marginLeft: -(screenWidth / 4.5),
+            }}
+          >
+            <ImageModal
+              source={this.props.image}
+              borderRadius={10}
+              style={{
+                width: screenWidth / 2.8,
+                height: screenHeight / 5,
+              }}
+           />
+          </View>
+          <View>
+            <Text
+              style={{
+                width: screenWidth / 2.5,
+                color: '#404852',
+                marginTop: scale(20),
+                marginLeft: scale(20),
+                fontSize: scale(20),
+                fontWeight: '700',
+                letterSpacing: -0.36,
+                lineHeight: scale(20),
+              }}
+            >
+              {this.props.title}
+            </Text>
+
+            <Text
+              style={{
+                width: screenWidth / 2.5,
+                color: '#5A6464',
+                marginTop: scale(6),
+                marginLeft: scale(30),
+                fontSize: scale(12),
+                fontWeight: '200',
+                letterSpacing: -0.36,
+                lineHeight: 18,
+              }}
+            >
+              {this.props.subTitle}
+            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text
+                style={{
+                  width: screenWidth / 2.8,
+                  color: '#adb3bf',
+                  fontSize: 12,
+                  fontWeight: '400',
+                  letterSpacing: -0.29,
+                  marginTop: scale(20),
+                  marginLeft: scale(20),
+                  marginBottom: scale(10),
+                }}
+            >
+                {this.props.description}
+              </Text>
+
+            
+              <TouchableOpacity
+                style={{
+                  height: 45, 
+                  width: 45,
+                  backgroundColor: '#139c73',
+                  borderRadius: 15,
+                  marginRight: 10, 
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }} 
+                onPress={this.props.exploreMoreInfo}
+              >
+                
+                <Icon
+                  name="search-plus"
+                  color="white"
+                  size={scale(30)}
+             />
+              </TouchableOpacity>
+
+            </View>
+            {/* <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: scale(10),
+              }}
+            >
+              <Text
+                style={{
+                  height: scale(22),
+                  color: '#535bfe',
+                  fontSize: 12,
+                  fontWeight: '900',
+                  letterSpacing: -0.29,
+                  lineHeight: scale(22),
+                }}
+              >
+                $
+                {this.props.price}
+              </Text>
+              <TouchableOpacity
+                onPress={() => this.props.onClicked()}
+                style={[
+                  {
+                    justifyContent: 'center',
+                    zIndex: 3,
+                    borderWidth: 1,
+                    borderColor: '#eee',
+                    alignItems: 'center',
+                    alignSelf: 'flex-end',
+                    width: scale(80),
+                    height: scale(30),
+                    margin: 30,
+                    shadowRadius: 5,
+                    borderRadius: scale(40),
+                    backgroundColor: this.props.iconBackground2,
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    color: '#535bfe',
+                    fontSize: 12,
+                    fontWeight: '900',
+                  }}
+                >
+                  Buy now
+                </Text>
+              </TouchableOpacity>
+            </View>  */}
+
+          </View>
+      
+        </View>
+      </View>
+    );
+  }
+}
+
 
 export class CardNine2 extends Component {
   render() {
