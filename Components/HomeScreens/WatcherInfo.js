@@ -41,10 +41,15 @@ export default class WatcherInfo extends Component {
     isModalVisible: 0,
     pointHistory: [500, 500, 500, 500],
     pointDate: ['6월 1일', '6월 2일', '6월 5일', '6월 6일'],
+    dateConveted: '',
   }
 
   componentDidMount() {
     this.setTest();
+  }
+
+  setDate=()=>{      
+    //{`${this.props.planData.plan_start_day.split('-')[1]}월 ${this.props.planData.plan_start_day.split('-')[2].slice(0, 2)}일`}
   }
 
   toggleModal=() => {
@@ -106,7 +111,7 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 15 }}>시작 날짜:  </Text>
             <Text>
-              {`${this.props.planData.plan_start_day.split('-')[1]}월 ${this.props.planData.plan_start_day.split('-')[2].slice(0, 2)}일`}
+              6월 6일
             </Text>
           </View>
           <View style={styles.lineContainer}>
