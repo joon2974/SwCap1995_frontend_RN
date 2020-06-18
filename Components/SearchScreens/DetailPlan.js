@@ -99,6 +99,33 @@ export default class DetailPlan extends Component {
     render() {
       const { item } = this.state;
       
+      let congratulation = null;
+      if (item.status === 'end') {
+        congratulation = (
+          <TouchableOpacity style={{
+            flexDirection: 'row', 
+            height: height / 13,
+            width: width / 1.1,
+            alignItems: 'center',
+            backgroundColor: '#EAD0BE',
+            justifyContent: 'space-between',
+            borderRadius: 10,
+            borderWidth: 2,
+            borderColor: 'yellow',
+            marginBottom: 10,
+          }}>
+            <Icon size={30} color="yellow" name="star" style={{ marginHorizontal: 10 }} />
+            <Text style={{ fontSize: 16 }}>
+              플랜이 완료되었습니다! 축하합니다!!!
+            </Text>
+            <Icon size={30} color="yellow" name="star" style={{ marginHorizontal: 10 }} />
+          </TouchableOpacity>
+        );
+      } else {
+        congratulation = (
+          <View />
+        );
+      }
     
       const watcherData = {
         labels: ['빵준이', '한수찬', '김첨지'], // optional
@@ -175,24 +202,7 @@ export default class DetailPlan extends Component {
                     chartConfig={chartConfig}
                 /> */}
 
-                  <TouchableOpacity style={{
-                    flexDirection: 'row', 
-                    height: height / 13,
-                    width: width / 1.1,
-                    alignItems: 'center',
-                    backgroundColor: '#EAD0BE',
-                    justifyContent: 'space-between',
-                    borderRadius: 10,
-                    borderWidth: 2,
-                    borderColor: 'yellow',
-                    marginBottom: 10,
-                  }}>
-                    <Icon size={30} color="yellow" name="star" style={{ marginHorizontal: 10 }} />
-                    <Text style={{ fontSize: 16 }}>
-                      플랜이 완료되었습니다! 축하합니다!!!
-                    </Text>
-                    <Icon size={30} color="yellow" name="star" style={{ marginHorizontal: 10 }} />
-                  </TouchableOpacity>
+                  {congratulation}
 
 
                   <LineChart
