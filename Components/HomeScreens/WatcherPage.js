@@ -9,8 +9,6 @@ import {
   ScrollView,
   Dimensions,
   Text,
-  Platform,
-  TouchableOpacityBase,
 } from 'react-native';
 import axios from 'axios';
 import VariableCard from './VariableCard';
@@ -28,6 +26,7 @@ export default class WatcherPage extends Component {
     tabState: 0,
     testArray: [],
     testArray2: [],
+    dateConverted: '',
   }
 
   async componentDidMount() {
@@ -44,6 +43,11 @@ export default class WatcherPage extends Component {
     });
     axios.get('http://49.50.172.58:3000/plans/' + this.props.route.params.planID).then((res) => {
       this.setState({ testArray2: res.data });
+
+      const dateParsing1 = res.data.plan_start_day.split('-');
+      let dateParsing2 = '';
+      dateParsing2 = dateParsing2.concat(dateParsing1[0] + '년 ' + dateParsing1[1] + '월 ' + dateParsing1[2][0] + dateParsing1[2][1] + '일');
+      this.setState({ dateConverted: dateParsing2 });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -106,7 +110,12 @@ export default class WatcherPage extends Component {
             </View>
 
           </ScrollView>
-        ) : (<WatcherInfo planData={this.state.testArray2} />) }
+        ) : (
+          <WatcherInfo 
+            planData={this.state.testArray2} 
+            date={this.state.dateConverted}
+        />
+        ) }
        
     
       </View>
