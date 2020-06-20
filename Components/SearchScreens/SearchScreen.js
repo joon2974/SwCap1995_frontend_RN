@@ -22,30 +22,29 @@ export default class Searchscreen extends Component {
     this.onRefresh = this.onRefresh.bind(this);
     this.state = {
       selectedRecommend: '',
-      selectedAllCate: '',
+      selectedAllCate: 1,
       nowRecommend: [],
       nowAllCate: [],
       refreshing: false,
       age: '10',
-      cate: '운동/건강',
     };
   }
   
   componentDidMount() {
     this.setPlanList('10');
-    this.setPlanListAllCate('운동/건강');
+    this.setPlanListAllCate(1);
   }
 
   onRefresh = () => {
     this.setState({
       selectedRecommend: '',
-      selectedAllCate: '',
+      selectedAllCate: 1,
       nowRecommend: [],
       nowAllCate: [],
     });
     this.setState({ refreshing: true });
     this.setPlanList('10')
-      .then(this.setPlanListAllCate('운동/건강'))
+      .then(this.setPlanListAllCate(1))
       .then(() => this.setState({ refreshing: false }));
   }
 
@@ -62,7 +61,6 @@ export default class Searchscreen extends Component {
       
 
     axios.get('http://49.50.172.58:3000/plans/filter_age?age=' + this.state.age + '&limit=4&page=1').then((res) => {
-      console.log(res);
       this.setState({ nowRecommend: res.data.plans });
     }).catch((error) => {
       console.log(error);
@@ -70,13 +68,12 @@ export default class Searchscreen extends Component {
     });
   }
 
-  async setPlanListAllCate(categoryName) {
-    await this.setState({ selectedAllCate: categoryName, cate: categoryName });
+  
+  setPlanListAllCate(categoryID) {
+    this.setState({ selectedAllCate: categoryID });
 
-    axios.get('http://49.50.172.58:3000/plans/filter_category?category=' + this.state.cate + '&limit=4&page=1').then((res) => {
-      this.setState({ nowAllCate: res.data.plans });
-    
-    // this.setState({ nowRecommendUri: res.data.data.categorcyGet });
+    axios.get('http://49.50.172.58:3000/detailedCategories/' + categoryID + '?limit=4&page=1').then((res) => {  
+      this.setState({ nowAllCate: res.data.rows });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -212,66 +209,66 @@ export default class Searchscreen extends Component {
           <View style={styles.tabButtonContainer}>
             <TouchableOpacity
               style={
-                selectedAllCate === '운동/건강'
+                selectedAllCate === 1
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanListAllCate('운동/건강')}
+              onPress={() => this.setPlanListAllCate(1)}
             >
-              <Text style={selectedAllCate === '운동/건강' ? { color: 'white' } : { color: 'black' }}>운동/건강</Text>
+              <Text style={selectedAllCate === 1 ? { color: 'white' } : { color: 'black' }}>운동/건강</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedAllCate === '생활습관'
+                selectedAllCate === 2
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanListAllCate('생활습관')}
+              onPress={() => this.setPlanListAllCate(2)}
             >
-              <Text style={selectedAllCate === '생활습관' ? { color: 'white' } : { color: 'black' }}>생활습관</Text>
+              <Text style={selectedAllCate === 2 ? { color: 'white' } : { color: 'black' }}>생활습관</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedAllCate === '자기계발'
+                selectedAllCate === 3
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanListAllCate('자기계발')}
+              onPress={() => this.setPlanListAllCate(3)}
             >
-              <Text style={selectedAllCate === '자기계발' ? { color: 'white' } : { color: 'black' }}>자기계발</Text>
+              <Text style={selectedAllCate === 3 ? { color: 'white' } : { color: 'black' }}>자기계발</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedAllCate === '감정관리'
+                selectedAllCate === 4
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanListAllCate('감정관리')}
+              onPress={() => this.setPlanListAllCate(4)}
             >
-              <Text style={selectedAllCate === '감정관리' ? { color: 'white' } : { color: 'black' }}>감정관리</Text>
+              <Text style={selectedAllCate === 4 ? { color: 'white' } : { color: 'black' }}>감정관리</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                selectedAllCate === '기타'
+                selectedAllCate === 5
                   ? styles.selectedCategoryBtnStyle
                   : styles.categoryBtnStyle
               }
-              onPress={() => this.setPlanListAllCate('기타')}
+              onPress={() => this.setPlanListAllCate(5)}
             >
-              <Text style={selectedAllCate === '기타' ? { color: 'white' } : { color: 'black' }}>기타</Text>
+              <Text style={selectedAllCate === 5 ? { color: 'white' } : { color: 'black' }}>기타</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.planContainer}>
-            {this.state.nowAllCate.map((item, index) => (
+            {this.state.nowAllCate.map((data, index) => (
               <AllCateList
                 key={index}
                 index={index}
-                item={item}
+                data={data}
                 explore={() => this.props.navigation.navigate('플랜 목록', { selectedAllCate: selectedAllCate })}
               />
             ))}

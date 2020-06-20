@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   TouchableOpacity,
@@ -17,11 +18,11 @@ export default class AllCateList extends Component {
         style={styles.container}
         onPress={this.props.explore}
       >
-        <Image 
+        {/* <Image 
           source={{ uri: this.props.item.image_url }} 
           style={styles.imageStyle}
-        />
-        <Text>{this.props.item.title}</Text>
+        /> */}
+        <Text>{this.props.data.detailedCategory}</Text>
       </TouchableOpacity>
     );
   }
