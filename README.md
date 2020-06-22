@@ -60,6 +60,7 @@ You will need:
 
 - firebaseConfig.js
 - kairosConfig.js
+- google-services.json
 
 These files are a security risk, so contact the administrator directly.
 
