@@ -49,18 +49,16 @@ export default class WatcherPage extends Component {
   
 
   render() {
-    const chartConfig = {
-      backgroundGradientFrom: '#1E2923',
-      backgroundGradientFromOpacity: 0,
-      backgroundGradientTo: '#08130D',
-      backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-      strokeWidth: 2, // optional, default 3
-      barPercentage: 0.5,
-      useShadowColorFromDataset: false, // optional
+    const barData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+      datasets: [
+        {
+          data: [20, 45, 28, 80, 99, 43],
+        },
+      ],
     };
 
-    const data = [
+    const pieData = [
       {
         name: 'Seoul',
         population: 21500000,
@@ -97,6 +95,18 @@ export default class WatcherPage extends Component {
         legendFontSize: 15,
       },
     ];
+
+
+    const chartConfig = {
+      backgroundGradientFrom: '#1E2923',
+      backgroundGradientFromOpacity: 0,
+      backgroundGradientTo: '#08130D',
+      backgroundGradientToOpacity: 0.5,
+      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+      strokeWidth: 2, // optional, default 3
+      barPercentage: 0.5,
+      useShadowColorFromDataset: false, // optional
+    };
 
 
     let auth = null;
@@ -148,7 +158,7 @@ export default class WatcherPage extends Component {
       
           {this.state.tabState === 0 ? (
 
-            <ScrollView style={{ marginBottom: 40 }}>
+            <ScrollView style={{ marginBottom: 80 }}>
         
               <View style={styles.container}>
                 {
@@ -170,11 +180,10 @@ export default class WatcherPage extends Component {
 
             </ScrollView>
           ) : (
-            <View>
-            
-
-              <View>
-                <Text>Bezier Line Chart</Text>
+            <ScrollView style={{ marginBottom: 80 }}>
+        
+              <View style={styles.container}>
+                
                 <LineChart
                   data={{
                     labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -191,8 +200,8 @@ export default class WatcherPage extends Component {
                       },
                     ],
                   }}
-                  width={Dimensions.get('window').width} // from react-native
-                  height={220}
+                  width={width} // from react-native
+                  height={height / 3.5}
                   yAxisLabel="$"
                   yAxisSuffix="k"
                   yAxisInterval={1} // optional, defaults to 1
@@ -217,27 +226,39 @@ export default class WatcherPage extends Component {
                     marginVertical: 8,
                     borderRadius: 16,
                   }}
-            />
+  />
+                <PieChart
+                  data={pieData}
+                  width={width}
+                  height={height / 3.5}
+                  chartConfig={chartConfig}
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                  absolute
+  />
+
+                <BarChart
+                  style={{ height: height / 3.5, width: width }}
+                  data={barData}
+                  width={width}
+                  height={height / 3.5}
+                  yAxisLabel="$"
+                  chartConfig={chartConfig}
+                  verticalLabelRotation={30}
+                />
+
+  
+                <View style={styles.lineDivider} />
+
               </View>
 
-
-              <PieChart
-                data={data}
-                width={width}
-                height={220}
-                chartConfig={chartConfig}
-                accessor="population"
-                backgroundColor="transparent"
-                paddingLeft="15"
-                absolute
-            />
-
-            </View>
-          ) }
+            </ScrollView>
+          )
+          }
         </View>
       );
     }
-
 
     return (
       <View>
