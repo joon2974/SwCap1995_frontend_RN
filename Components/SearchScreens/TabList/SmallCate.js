@@ -22,8 +22,6 @@ export default class SmallCate extends Component {
           subTitle="John Bob"
           viewProgress={true}
           progress={2}
-
-          
           />
       </TouchableOpacity>
 

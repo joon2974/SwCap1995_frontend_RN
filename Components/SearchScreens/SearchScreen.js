@@ -74,6 +74,7 @@ export default class Searchscreen extends Component {
 
     axios.get('http://49.50.172.58:3000/detailedCategories/' + categoryID).then((res) => {  
       this.setState({ nowAllCate: res.data.rows });
+      console.log(this.state.nowAllCate);
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -269,7 +270,7 @@ export default class Searchscreen extends Component {
                 key={index}
                 index={index}
                 data={data}
-                explore={() => this.props.navigation.navigate('플랜 목록', { selectedAllCate: selectedAllCate })}
+                explore={() => this.props.navigation.navigate('플랜 목록', { detailedCategory: data.detailedCategory })}
               />
             ))}
           </View>
@@ -279,7 +280,7 @@ export default class Searchscreen extends Component {
               style={styles.moreExplore}
               onPress={() => this.props.navigation.navigate('카테고리', { selectedAllCate: selectedAllCate })}
             >
-              <Text>카테고리 더보기</Text>
+              <Text>카테고리 전체 보기</Text>
             </TouchableOpacity>
           </View>
 

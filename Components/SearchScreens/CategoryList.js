@@ -45,7 +45,7 @@ export default class CategoryList extends Component {
     renderItem = ({ item }) => (
       <SmallCate 
         item={item}
-        explore={() => this.props.navigation.navigate('플랜 목록', { selectedDetailedCategory: item.detailedCategory })} />    
+        explore={() => this.props.navigation.navigate('플랜 목록', { detailedCategory: item.detailedCategory })} />    
     );
 
     render() {

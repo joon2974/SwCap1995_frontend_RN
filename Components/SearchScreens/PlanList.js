@@ -1,3 +1,4 @@
+/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,
@@ -16,33 +17,34 @@ export default class PlanList extends Component {
       data: [],
       nowPage: 1,
       moreData: 0,
+      detailedCategory: null,
       // nowRecommended: this.props.route.params,  이거 마지막으로 api연동 해줘야함
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+      // this.getData();
+      await this.setState({ detailedCategory: this.props.route.params.detailedCategory });
       this.getData();
     }
 
-    getData = () => {
-      const { data, nowPage, moreData } = this.state;
-      if (moreData === 0) {
-        const url = 'http://49.50.172.58:3000/plans/filter_detailedCategory?detailedCategory=' 
-        + this.props.route.params.selectedDetailedCategory + '&limit=10&page=' + nowPage;
-        fetch(url)
-          .then((r) => r.json())
-          .then((res) => {
-            const newData = data.concat(res.plans);
-            const newNowPage = nowPage + 1;
-            this.setState({ 
-              data: newData,
-              nowPage: newNowPage,
-            });
-            if (res.plans.length === 0) {
-              this.setState({ moreData: 1 });
-            }
-          });      
-      }
+    
+  getData = () => {
+    if (this.state.moreData === 0) {
+      const url = 'http://49.50.172.58:3000/plans/search?query=' + this.state.detailedCategory + '&limit=10&page=' + this.state.nowPage;
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => {
+          this.setState({ 
+            data: this.state.data.concat(data.plans),
+            nowPage: this.state.nowPage + 1,
+          });
+          if (data.plans.length === 0) {
+            this.setState({ moreData: 1 });
+          }
+        });
     }
+  }
+
   
     handleLoadMore = () => {
       this.getData();
@@ -59,19 +61,23 @@ export default class PlanList extends Component {
         />
       </TouchableOpacity>
     );
+    
 
     render() {
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./back8.png')} style={{ width: width }}>
+          <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
+
             <FlatList 
-              style={{ marginTop: 30, width: width }}
+              style={{ marginTop: 10, width: width }}
               data={this.state.data}
               renderItem={this.renderItem}
               keyExtractor={(item) => item.id.toString()}
               onEndReached={this.handleLoadMore}
               onEndReachedThreshold={1}
-            />
+              ref={(ref) => { this.flatList = ref; }}
+          />
+
           </ImageBackground>
         </View>
       );

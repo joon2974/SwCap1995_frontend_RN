@@ -18,10 +18,10 @@ export default class AllCateList extends Component {
         style={styles.container}
         onPress={this.props.explore}
       >
-        {/* <Image 
-          source={{ uri: this.props.item.image_url }} 
+        <Image 
+          source={{ uri: this.props.data.image_url }} 
           style={styles.imageStyle}
-        /> */}
+        />
         <Text>{this.props.data.detailedCategory}</Text>
       </TouchableOpacity>
     );
