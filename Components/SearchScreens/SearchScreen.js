@@ -72,7 +72,7 @@ export default class Searchscreen extends Component {
   setPlanListAllCate(categoryID) {
     this.setState({ selectedAllCate: categoryID });
 
-    axios.get('http://49.50.172.58:3000/detailedCategories/' + categoryID + '?limit=4&page=1').then((res) => {  
+    axios.get('http://49.50.172.58:3000/detailedCategories/' + categoryID).then((res) => {  
       this.setState({ nowAllCate: res.data.rows });
     }).catch((error) => {
       console.log(error);

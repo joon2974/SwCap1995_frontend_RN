@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
@@ -42,10 +44,13 @@ export default class WatcherInfo extends Component {
     pointHistory: [500],
     pointDate: ['6월 1일'],
     dateConveted: '',
+    keysPointAndCount: [],
+    pointAndCount: [],
+    flag: 0,
   }
 
-  componentDidMount() {
-    this.setTest();
+  async componentDidMount() {
+    await this.setTest();
   }
 
   toggleModal=() => {
@@ -68,6 +73,19 @@ export default class WatcherInfo extends Component {
       console.log(error);
       alert(error);
     });
+  
+    axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + this.props.planData.id).then((res) => {
+      this.setState({ pointAndCount: res.data });  
+      for (const key in this.state.pointAndCount) {
+        this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
+      }
+      
+      this.setState({ flag: 1 });
+      // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
+    }).catch((error) => {
+      console.log(error);
+      alert(error);
+    });
   }  
 
   render() {
@@ -77,7 +95,7 @@ export default class WatcherInfo extends Component {
     };
 
     const chartConfig = {
-      backgroundGradientFrom: '139C73',
+      backgroundGradientFrom: '#139C73',
       backgroundGradientTo: 'white',
       backgroundGradientFromOpacity: 0,
       backgroundGradientToOpacity: 0.5,
@@ -86,6 +104,85 @@ export default class WatcherInfo extends Component {
       barPercentage: 0.5,
       useShadowColorFromDataset: false, // optional
     };
+   
+
+    let coinInfo = null;
+    if (this.state.flag === 1) {
+      coinInfo = (
+
+        <View style={styles.getPointContainer}>
+          <View style={styles.componentTitleContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
+            <Text>1</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
+            <Text>500</Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
+            <Text>
+              {this.state.pointAndCount[this.props.userID].point}
+              {' '}
+              💸
+            </Text>
+          </View>
+          <View style={styles.lineContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>포인트 내역</Text>
+          </View>
+        </View>                        
+      );      
+    }
+
+    let coinThumbnail = null;
+    if (this.state.flag === 1) {
+      coinThumbnail = (
+        
+        <TouchableOpacity
+          style={{ 
+            height: height / 4, 
+            width: width / 1.2,
+            marginTop: 30, 
+            borderColor: 'black',
+            borderRadius: 20,
+            borderWidth: 4,
+            alignItems: 'center',
+            flexDirection: 'row',  
+          }}
+          onPress={() => this.toggleModal()}
+        >
+          <Image
+            style={{
+              height: height / 6,
+              width: height / 6,
+              marginLeft: 10,
+              resizeMode: 'stretch',
+            }}
+            source={require('./money.png')}
+          />
+
+          <View style={{
+            height: height / 6,
+            width: height / 6,
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}>
+            <Text style={{ fontSize: 25 }}>
+              획득 포인트
+            </Text>
+            <Text style={{ fontSize: 15 }}>
+              {this.state.pointAndCount[this.props.userID].point}
+              {' '}
+              p
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+      );
+    }
 
 
     return (
@@ -159,43 +256,9 @@ export default class WatcherInfo extends Component {
           </View>
         </View>
 
-        <TouchableOpacity
-          style={{ 
-            height: height / 4, 
-            width: width / 1.2,
-            marginTop: 30, 
-            borderColor: 'black',
-            borderRadius: 20,
-            borderWidth: 4,
-            alignItems: 'center',
-            flexDirection: 'row',  
-          }}
-          onPress={() => this.toggleModal()}
-        >
-          <Image
-            style={{
-              height: height / 6,
-              width: height / 6,
-              marginLeft: 10,
-              resizeMode: 'stretch',
-            }}
-            source={require('./money.png')}
-          />
-
-          <View style={{
-            height: height / 6,
-            width: height / 6,
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-          }}>
-            <Text style={{ fontSize: 25 }}>
-              획득 포인트
-            </Text>
-            <Text style={{ fontSize: 15 }}>
-              500 p
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <View>
+          {coinThumbnail}
+        </View>
 
         <View style={styles.lineDivider} />
 
@@ -210,27 +273,9 @@ export default class WatcherInfo extends Component {
               borderColor: '#fd8a69',
             }}>
 
-            
-              <View style={styles.getPointContainer}>
-                <View style={styles.componentTitleContainer}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
-                </View>
-                <View style={styles.lineContainer}>
-                  <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
-                  <Text>1</Text>
-                </View>
-                <View style={styles.lineContainer}>
-                  <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
-                  <Text>500</Text>
-                </View>
-                <View style={styles.lineContainer}>
-                  <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
-                  <Text>500 💸</Text>
-                </View>
-                <View style={styles.lineContainer}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>포인트 내역</Text>
-                </View>
-              </View>                        
+              <View>
+                {coinInfo}  
+              </View>            
 
               <View>
                 {

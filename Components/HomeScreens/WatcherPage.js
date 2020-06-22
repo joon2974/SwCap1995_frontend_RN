@@ -1,3 +1,6 @@
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 /* eslint-disable max-len */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
@@ -27,6 +30,8 @@ export default class WatcherPage extends Component {
     testArray: [],
     testArray2: [],
     dateConverted: '',
+    pointAndCount: null,
+    keysPointAndCount: [],
   }
 
   async componentDidMount() {
@@ -112,6 +117,7 @@ export default class WatcherPage extends Component {
           </ScrollView>
         ) : (
           <WatcherInfo 
+            userID={this.props.route.params.userID}
             planData={this.state.testArray2} 
             date={this.state.dateConverted}
             exploreMoreInfo={() => this.props.navigation.navigate('플랜 상세 정보', { item: this.state.testArray2 })}
