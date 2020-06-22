@@ -80,7 +80,7 @@ export default class PlanMain extends Component {
   loadRulesFromServer = async () => {
     await axios
       .get('http://49.50.172.58:3000/plan_templates')
-      .then((data) => {
+      .then(data => {
         const rulesFromServer = data.data.rows;
         this.setState({ ruleListFromServer: rulesFromServer });
         const ruleObject = {};
@@ -88,9 +88,9 @@ export default class PlanMain extends Component {
 
         for (let i = 0; i < rulesFromServer.length; i++) {
           if (
-            rulesFromServer[i].detailedCategory
+            rulesFromServer[i].detailedCategory ==
             // eslint-disable-next-line eqeqeq
-            == this.props.route.params.planName
+            this.props.route.params.planName
           ) {
             const tempList = [];
 
@@ -114,16 +114,19 @@ export default class PlanMain extends Component {
             authentication = rulesFromServer[i].authentication_way;
           }
         }
-        this.setState({ certifyImageUri: certifyPhotoUri, authenticationWay: authentication });
+        this.setState({
+          certifyImageUri: certifyPhotoUri,
+          authenticationWay: authentication,
+        });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('서버로부터 template 가져오기 에러: ', error);
       });
   };
 
-  mainRuleFilter = (pictureRules) => Object.keys(pictureRules);
+  mainRuleFilter = pictureRules => Object.keys(pictureRules);
 
-  updateCertifyPhoto = (selectedMainRule) => {
+  updateCertifyPhoto = selectedMainRule => {
     const ruleListFromServer = this.state.ruleListFromServer;
 
     let certifyPhotoUri;
@@ -134,7 +137,10 @@ export default class PlanMain extends Component {
         authentication = ruleListFromServer[i].authentication_way;
       }
     }
-    this.setState({ certifyImageUri: certifyPhotoUri, authenticationWay: authentication });
+    this.setState({
+      certifyImageUri: certifyPhotoUri,
+      authenticationWay: authentication,
+    });
   };
 
   render() {
@@ -159,40 +165,53 @@ export default class PlanMain extends Component {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            >
+          >
             <View>
               <View style={styles.modalHeaderStyle}>
                 <TouchableOpacity
                   onPress={() => this.setState({ modalVisible: false })}
                   style={{ marginRight: 20 }}
-                  >
-                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>도움말 닫기</Text>
+                >
+                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
+                    도움말 닫기
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.modalTopContainerStyle} />
               <View style={styles.modalMiddleContainerStyle}>
-                <Image 
+                <Image
                   source={customInfoPicture2}
-                  style={{ width: width, height: height * 0.25 + 30, marginLeft: 5 }}
+                  style={{
+                    width: width,
+                    height: height * 0.25 + 30,
+                    marginLeft: 5,
+                  }}
                 />
               </View>
               <View style={styles.modalBottomContainerStyle}>
-                <Image 
+                <Image
                   source={MakePlan1Info1}
                   style={{ width: width, height: height * 0.4, marginLeft: 5 }}
                 />
               </View>
             </View>
           </Modal>
-          <View style={{
-            justifyContent: 'center', alignItems: 'flex-end', width: width, height: 20,
-          }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              width: width,
+              height: 20,
+            }}
+          >
             <TouchableOpacity
               style={{ marginRight: 15, marginTop: 30 }}
               onPress={() => this.setState({ modalVisible: true })}
             >
               <Image
-                source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png' }}
+                source={{
+                  uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png',
+                }}
                 style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
@@ -223,7 +242,8 @@ export default class PlanMain extends Component {
                 <Text>시작일</Text>
                 <TimePicker
                   time={startDate}
-                  onValueChange={(itemValue) => this.setState({ startDate: itemValue })
+                  onValueChange={itemValue =>
+                    this.setState({ startDate: itemValue })
                   }
                   times={dateList}
                 />
@@ -232,7 +252,8 @@ export default class PlanMain extends Component {
                 <Text>도전 기간(주)</Text>
                 <TimePicker
                   time={endDate}
-                  onValueChange={(itemValue) => this.setState({ endDate: itemValue })
+                  onValueChange={itemValue =>
+                    this.setState({ endDate: itemValue })
                   }
                   times={periodList}
                 />
@@ -241,7 +262,8 @@ export default class PlanMain extends Component {
                 <Text>인증 시간(시)</Text>
                 <TimePicker
                   time={certifyTime}
-                  onValueChange={(itemValue) => this.setState({ certifyTime: itemValue })
+                  onValueChange={itemValue =>
+                    this.setState({ certifyTime: itemValue })
                   }
                   times={timeList}
                 />
@@ -268,7 +290,7 @@ export default class PlanMain extends Component {
             <View style={styles.rulePickContainer}>
               <RulePicker
                 rule={selectedMainRule}
-                onValueChange={(itemValue) => {
+                onValueChange={itemValue => {
                   this.setState({ selectedMainRule: itemValue });
                   this.updateCertifyPhoto(itemValue);
                 }}
@@ -286,31 +308,30 @@ export default class PlanMain extends Component {
 
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() => this.props.navigation.navigate('플랜 만들기: 2단계', {
-              category: this.props.route.params.category,
-              planName: this.props.route.params.planName,
-              startDate: startDate,
-              endDate: endDate,
-              certifyTime: certifyTime,
-              picture_rule_1: selectedMainRule,
-              picture_rule_2: pictureRules[
-                selectedMainRule
-              ][0],
-              picture_rule_3: pictureRules[
-                selectedMainRule
-              ][1],
-              custom_picture_rule_1: null,
-              custom_picture_rule_2: null,
-              custom_picture_rule_3: null,
-              certifyImgUri: certifyImageUri,
-              userID: this.props.route.params.userID,
-              categoryUri: this.props.route.params.uri,
-              is_custom: false,
-              authentication_way: authenticationWay,
-            })
+            onPress={() =>
+              this.props.navigation.navigate('플랜 만들기: 2단계', {
+                category: this.props.route.params.category,
+                planName: this.props.route.params.planName,
+                startDate: startDate,
+                endDate: endDate,
+                certifyTime: certifyTime,
+                picture_rule_1: selectedMainRule,
+                picture_rule_2: pictureRules[selectedMainRule][0],
+                picture_rule_3: pictureRules[selectedMainRule][1],
+                custom_picture_rule_1: null,
+                custom_picture_rule_2: null,
+                custom_picture_rule_3: null,
+                certifyImgUri: certifyImageUri,
+                userID: this.props.route.params.userID,
+                categoryUri: this.props.route.params.uri,
+                is_custom: false,
+                authentication_way: authenticationWay,
+              })
             }
           >
-            <Text style={{ fontWeight: 'bold', color: 'white' }}>다음 단계로</Text>
+            <Text style={{ fontWeight: 'bold', color: 'white' }}>
+              다음 단계로
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
