@@ -133,7 +133,7 @@ export default class LoginScreen extends Component {
   signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync({
-        // behavior: 'web',
+        behavior: 'web',
         androidClientId:
           '842449399588-59u70328kdbu3vkq9i9u9g7ice7up4d9.apps.googleusercontent.com',
         iosClientId:
