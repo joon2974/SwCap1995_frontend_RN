@@ -1,8 +1,6 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   Text,
@@ -35,15 +33,12 @@ const categoryURI = [
 
 export default class WatcherInfo extends Component {
   state = {
-    testArray: [],
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     watchers: [1, 2, 3],
     watchersComment: ['빵준이', '한수찬', '김첨지'],
-    // watchersComment: ['생각보다 열심히 하네', '웬일이지ㅋㅋㅋ', '500원 꺼억', '몸짱 되겠다!', '지석이 맞아?'],
     isModalVisible: 0,
     pointHistory: [500],
     pointDate: ['6월 1일'],
-    dateConveted: '',
     keysPointAndCount: [],
     pointAndCount: [],
     flag: 0,
@@ -66,14 +61,6 @@ export default class WatcherInfo extends Component {
   }
 
   setTest = () => {
-    axios.get('http://49.50.172.58:3000/plans/' + this.props.planData.id).then((res) => {
-      this.setState({ testArray: res.data });
-      this.setTitle();
-    }).catch((error) => {
-      console.log(error);
-      alert(error);
-    });
-  
     axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + this.props.planData.id).then((res) => {
       this.setState({ pointAndCount: res.data });  
       for (const key in this.state.pointAndCount) {

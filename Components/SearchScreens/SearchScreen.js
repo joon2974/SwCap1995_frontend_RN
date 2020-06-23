@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import {
   View,
@@ -183,7 +182,7 @@ export default class Searchscreen extends Component {
           <View style={styles.planContainer}>
             {this.state.nowRecommend.map((item, index) => (
               <RecommendList
-                key={index}
+                key={item}
                 index={index}
                 item={item}
                 explore={() => this.props.navigation.navigate('플랜 상세 정보', { item: item })}
@@ -267,7 +266,7 @@ export default class Searchscreen extends Component {
           <View style={styles.planContainer}>
             {this.state.nowAllCate.map((data, index) => (
               <AllCateList
-                key={index}
+                key={data}
                 index={index}
                 data={data}
                 explore={() => this.props.navigation.navigate('플랜 목록', { detailedCategory: data.detailedCategory })}

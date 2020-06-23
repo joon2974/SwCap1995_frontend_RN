@@ -1,9 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
-/* eslint-disable max-len */
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   View,
@@ -17,26 +11,24 @@ import axios from 'axios';
 import VariableCard from './VariableCard';
 import WatcherInfo from './WatcherInfo';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class WatcherPage extends Component {
   state = {
-    title: '',
-    isPublic: false,
-    data: [1, 2, 3, 4, 5, 6],
     onOff: 0,
     selectedTab: 0,
     tabState: 0,
     testArray: [],
     testArray2: [],
     dateConverted: '',
-    pointAndCount: null,
-    keysPointAndCount: [],
   }
 
   async componentDidMount() {
     await this.setTest();
-    this.setState({ tabState: this.props.route.params.selectedTab, selectedTab: this.props.route.params.selectedTab });
+    this.setState({
+      tabState: this.props.route.params.selectedTab, 
+      selectedTab: this.props.route.params.selectedTab, 
+    });
   }
 
   setTest = () => {

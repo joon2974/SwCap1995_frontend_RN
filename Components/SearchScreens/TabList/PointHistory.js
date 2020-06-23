@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   TouchableOpacity,
@@ -13,9 +11,7 @@ import {
 const { width, height } = Dimensions.get('window');
 
 export default class PointHistory extends Component {
-  render() {
-    const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU';
-
+  render() {    
     return (
       <TouchableOpacity 
         style={styles.container}

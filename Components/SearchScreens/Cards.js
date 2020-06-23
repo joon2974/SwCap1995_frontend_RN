@@ -1,10 +1,5 @@
-/* eslint-disable global-require */
-/* eslint-disable max-classes-per-file */
 /* eslint-disable consistent-return */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-dupe-keys */
-/* eslint-disable max-len */
-
+/* eslint-disable max-classes-per-file */
 import React, { Component } from 'react';
 import {
   Text,
@@ -2135,7 +2130,6 @@ export class CardTen extends Component {
               width: 0,
             },
 
-            borderRadius: 6,
             backgroundColor: '#ffffff',
             justifyContent: 'center',
             alignItems: 'center',
@@ -2206,7 +2200,7 @@ export class CardTen extends Component {
               <View style={{ flexDirection: 'row', marginBottom: 40 }}>
                 {[1, 2, 3, 4, 5].map((item, index) => (
                   <Icon
-                    key={index}
+                    key={item}
                     name="star"
                     style={{ margin: 2 }}
                     color={this.props.star >= index + 1 ? '#ffd553' : '#bbb'}
@@ -2295,7 +2289,7 @@ export class CardEleven extends Component {
           >
             {[1, 2, 3, 4, 5].map((item, index) => (
               <Icon
-                key={index}
+                key={item}
                 name="star"
                 style={{ margin: 2 }}
                 color={this.props.stars >= index + 1 ? '#ffd553' : '#bbb'}
@@ -2363,9 +2357,9 @@ export class CardEleven extends Component {
               marginLeft: 0,
             }}
           >
-            {this.props.tags.map((item, index) => (
+            {this.props.tags.map((item) => (
               <View
-                key={index}
+                key={item}
                 style={{
                   width: scale(50),
                   height: verticalScale(15),

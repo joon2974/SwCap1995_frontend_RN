@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
   View,
@@ -13,7 +11,6 @@ import {
 } from 'react-native';
 import {
   LineChart,
-  ContributionGraph,
   ProgressChart,
 } from 'react-native-chart-kit';
 import axios from 'axios';
@@ -31,7 +28,6 @@ export default class DetailPlan extends Component {
       authCreatedAt: [],
       authStatus: [1],
       date: '',
-      contriGraphDate: '',
       currentAuthComment: '',
       test: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     }
@@ -47,9 +43,7 @@ export default class DetailPlan extends Component {
       const date2 = this.state.item.updatedAt.split('-');
       let date3 = '';
       date3 = date3.concat('작성일: ' + date1[0] + '년 ' + date1[1] + '월 ' + date1[2][0] + date1[2][1] + '일\n수정일: ' + date2[0] + '년 ' + date2[1] + '월 ' + date2[2][0] + date2[2][1] + '일');
-      let date4 = '';
-      date4 = date4.concat(date1[0] + '-' + date1[1] + '-' + date1[2][0] + date1[2][1]);
-      this.setState({ date: date3, contriGraphDate: date4 });
+      this.setState({ date: date3 });
     }
 
     setGraph=() => {
