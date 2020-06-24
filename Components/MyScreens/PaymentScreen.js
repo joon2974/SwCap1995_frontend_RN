@@ -29,7 +29,6 @@ export default class PaymentScreen extends Component {
   })
 
   callback = () => {
-    console.log("결제는성공");
     axios.post(
       'http://49.50.172.58:3000/points/add', {
         user_id: this.state.userId,
@@ -39,11 +38,8 @@ export default class PaymentScreen extends Component {
     ).then(() => {
       console.log(this.props);
       this.props.route.params.onRefresh();
-      console.log("온프레시는성공")
       this.props.navigation.popToTop();
-      console.log("팝투탑성공");
     });
-    
   }
 
   render() {
