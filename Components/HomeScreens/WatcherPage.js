@@ -14,7 +14,7 @@ import {
   Text,
 } from 'react-native';
 import axios from 'axios';
-import { ProgressChart } from 'react-native-chart-kit';
+import { BarChart } from 'react-native-chart-kit';
 import Modal from 'react-native-modal';
 import VariableCard from './VariableCard';
 import { CardNine2, CardNine3 } from '../SearchScreens/Cards';
@@ -49,6 +49,7 @@ export default class WatcherPage extends Component {
     rejectCount: 0,
     pointHistory2: [],
     authCount: 0,
+    joinStatus: [],
   }
 
   async componentDidMount() {
@@ -70,10 +71,7 @@ export default class WatcherPage extends Component {
     });
   }
 
-  toggleModal=() => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  }
-
+ 
   setTitle = () => {
     if (this.state.testArray2.category === '운동/건강') this.setState({ titleURI: categoryURI[0] });
     else if (this.state.testArray2.category === '생활습관') this.setState({ titleURI: categoryURI[1] });
@@ -83,8 +81,8 @@ export default class WatcherPage extends Component {
   }
 
 
-  setTest = () => {
-    axios.get('http://49.50.172.58:3000/daily_authentications/' + this.props.route.params.planID).then((res) => {
+  async setTest() {
+    await axios.get('http://49.50.172.58:3000/daily_authentications/' + this.props.route.params.planID).then((res) => {
       this.setState({
         testArray: res.data.rows,
         rejectCount: res.data.reject_count, 
@@ -113,14 +111,28 @@ export default class WatcherPage extends Component {
     });
   }  
 
+  toggleModal=() => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  }
+
+
   setTest2 = (id) => {
     axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + id).then((res) => {
       this.setState({
         pointAndCount: res.data, 
-        pointHistory2: res.data[this.props.route.params.userID].point, 
+        pointHistory2: res.data[this.props.route.params.userID].point,
       }); 
       for (const key in this.state.pointAndCount) {
-        this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
+        this.setState({ 
+          keysPointAndCount: 
+          this.state.keysPointAndCount.concat(key),
+        });
+        if (this.state.authCount !== 0) {
+          this.setState({
+            joinStatus: 
+            this.state.joinStatus.concat((res.data[key].count / this.state.authCount) * 100),  
+          });
+        }  
       }
       // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
     }).catch((error) => {
@@ -131,14 +143,18 @@ export default class WatcherPage extends Component {
 
   render() {
     const watcherData = {
-      labels: ['빵준이', '한수찬', '김첨지'], // optional
-      data: [0.95, 0.30, 0.66],
+      labels: this.state.keysPointAndCount,
+      datasets: [
+        {
+          data: this.state.joinStatus,
+        },
+      ],
     };
-
     // if(Object.keys(this.state.pointAndCount).length !== 0){
     //   console.log(this.state.pointAndCount[77].count);
     // }
 
+    console.log(this.state.joinStatus);
     
     const chartConfig = {
       backgroundGradientFrom: '#139C73',
@@ -147,7 +163,7 @@ export default class WatcherPage extends Component {
       backgroundGradientToOpacity: 0.5,
       color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
       strokeWidth: 2, // optional, default 3
-      barPercentage: 0.5,
+      barPercentage: 1,
       useShadowColorFromDataset: false, // optional
     };
    
@@ -443,16 +459,16 @@ export default class WatcherPage extends Component {
   
   
             <View style={styles.lineDivider} />
-  
-            <ProgressChart
+        
+
+            <BarChart
               data={watcherData}
-              width={width * 0.9}
-              height={height / 4}
-              strokeWidth={16}
-              radius={32}
+              width={width}
+              height={height / 3.5}
+              yAxisSuffix="%"
               chartConfig={chartConfig}
-              hideLegend={false}
-          />
+              verticalLabelRotation={30}
+           />
   
             <View style={styles.titleInfoContainer}>
               <Text style={styles.titleStyle}>

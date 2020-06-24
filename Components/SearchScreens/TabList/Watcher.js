@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  View,
   Dimensions,
   Platform,
   Image,
@@ -13,9 +14,6 @@ const { width, height } = Dimensions.get('window');
 export default class Watcher extends Component {
   render() {
     const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU';
-
-    console.log(this.props.data);
-
     return (
       <TouchableOpacity 
         style={styles.container}
@@ -24,15 +22,24 @@ export default class Watcher extends Component {
           source={{ uri: uri }} 
           style={styles.imageStyle}
             />
-        <Text style={styles.watcherInfo}>
-          {'감시 참여 횟수: '}
-          {this.props.data.count}
-        </Text>
-        <Text style={styles.watcherInfo}>
-          {'획득 포인트: '}
-          {this.props.data.point_sum}
-        </Text>
-
+        <View>
+          <Text style={styles.watcherInfo2}>
+            {'감시자님 ID: '}
+            {this.props.id}
+          </Text>
+          <View style={{ marginTop: 3 }} />
+      
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.watcherInfo}>
+              {'감시 참여 횟수: '}
+              {this.props.data.count}
+            </Text>
+            <Text style={styles.watcherInfo}>
+              {'획득 포인트: '}
+              {this.props.data.point_sum}
+            </Text>
+          </View>
+        </View>
       </TouchableOpacity>
 
     );
@@ -73,6 +80,11 @@ const styles = StyleSheet.create({
   },
 
   watcherInfo: {
+    marginLeft: 20,
+    fontSize: 14,
+  },
+  watcherInfo2: {
+    color: 'gray',
     marginLeft: 20,
     fontSize: 14,
   },

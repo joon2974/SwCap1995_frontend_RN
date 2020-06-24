@@ -327,11 +327,6 @@ export default class WatcherInfo extends Component {
                     </View>
                   ))                                
                 }
-            {/* <TouchableOpacity
-                    style={styles.moreExploreBar2}
-                            >
-                    <Text>감시자들 더보기</Text>
-                  </TouchableOpacity> */}
           </View>
 
           <View style={{ marginBottom: 10 }} />

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {
   LineChart,
-  ProgressChart,
+  BarChart,
 } from 'react-native-chart-kit';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -33,6 +33,8 @@ export default class DetailPlan extends Component {
       test: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
       keysPointAndCount: [],
       pointAndCount: [],
+      joinStatus: [],
+      authCount: 0,
     }
 
     async componentDidMount() {
@@ -49,7 +51,22 @@ export default class DetailPlan extends Component {
       this.setState({ date: date3 });
     }
 
-    setGraph=() => {
+    async setGraph() {
+      await axios.get('http://49.50.172.58:3000/daily_authentications/' + this.state.item.id).then((res) => {
+        if (res.data.rows.length !== 0) {        
+          this.setState({ 
+            currentAuthComment: 
+            res.data.rows[0].comment, 
+            authCount: 
+            res.data.count,
+          });
+        }
+      }).catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+
+
       axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: ' + this.state.item.id + '}) {createdAt}}').then((res) => {
         this.setState({
           authCreatedAt: res.data.data.dailyAuthenticationGet.map((data) => {
@@ -76,23 +93,23 @@ export default class DetailPlan extends Component {
         console.log(error);
         alert(error);
       });
-
-      axios.get('http://49.50.172.58:3000/daily_authentications/' + this.state.item.id).then((res) => {
-        if (res.data.rows.length !== 0) {        
-          this.setState({ currentAuthComment: res.data.rows[0].comment });
-        }
-      }).catch((error) => {
-        console.log(error);
-        alert(error);
-      });
-
+     
 
       axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + this.state.item.id).then((res) => {
         this.setState({
           pointAndCount: res.data, 
         }); 
         for (const key in this.state.pointAndCount) {
-          this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
+          this.setState({ 
+            keysPointAndCount: 
+            this.state.keysPointAndCount.concat(key),
+          });
+          if (this.state.authCount !== 0) {
+            this.setState({
+              joinStatus: 
+              this.state.joinStatus.concat((res.data[key].count / this.state.authCount) * 100),  
+            });
+          }  
         }
       }).catch((error) => {
         console.log(error);
@@ -138,24 +155,13 @@ export default class DetailPlan extends Component {
       }
     
       const watcherData = {
-        labels: ['빵준이', '한수찬', '김첨지'], // optional
-        data: [0.95, 0.30, 0.66],
+        labels: this.state.keysPointAndCount,
+        datasets: [
+          {
+            data: this.state.joinStatus,
+          },
+        ],
       };
-
-      // const commitsData = [
-      //   { date: '2017-01-02', count: 0 },
-      //   { date: '2017-01-03', count: 30 },
-      //   { date: '2017-01-04', count: 30 },
-      //   { date: '2017-01-05', count: 100 },
-      //   { date: '2017-01-06', count: 100 },
-      //   { date: '2017-01-30', count: 0 },
-      //   { date: '2017-01-31', count: 0 },
-      //   { date: '2017-03-01', count: 30 },
-      //   { date: '2017-04-02', count: 100 },
-      //   { date: '2017-03-05', count: 0 },
-      //   { date: '2017-02-30', count: 0 },
-      // ];
-
 
       const chartConfig = {
         backgroundGradientFrom: '#139c73',
@@ -164,7 +170,7 @@ export default class DetailPlan extends Component {
         backgroundGradientToOpacity: 0.5,
         color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
         strokeWidth: 2, // optional, default 3
-        barPercentage: 0.5,
+        barPercentage: 1,
         useShadowColorFromDataset: false, // optional
       };
 
@@ -308,16 +314,14 @@ export default class DetailPlan extends Component {
 
               <View style={styles.lineDivider} />
 
-              
-              <ProgressChart
+              <BarChart
                 data={watcherData}
-                width={width * 0.9}
-                height={height / 4}
-                strokeWidth={16}
-                radius={32}
+                width={width}
+                height={height / 3.5}
+                yAxisSuffix="%"
                 chartConfig={chartConfig}
-                hideLegend={false}
-        />
+                verticalLabelRotation={30}
+           />
 
               <View style={styles.titleInfoContainer2}>
                 <Text style={styles.titleStyle}>
