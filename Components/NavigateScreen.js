@@ -31,6 +31,7 @@ import DailyCertifyGalary from './HomeScreens/DailyCertifyGalary';
 import NotiTestScreen from './HomeScreens/NotiTestScreen';
 import FaceAuthenticationScreen from './HomeScreens/FaceAuthenticationScreen';
 import CameraTestScreen from './MyScreens/CameraTestScreen';
+import payment from './MyScreens/PaymentScreen';
 import Estimate from './HomeScreens/EstimatePlan';
 import AuthenticationPage from './SearchScreens/AuthenticationPage';
 
@@ -200,6 +201,7 @@ function MyMenuStackScreen() {
       <MyMenuStack.Screen name="고객센터" component={AllServiceScreen} />
       <MyMenuStack.Screen name="공지사항" component={NoticeScreen} />
       <MyMenuStack.Screen name="문의하기" component={ServiceScreen} />
+      <MyMenuStack.Screen name="결제" component={payment} />
     </MyMenuStack.Navigator>
   );
 }

@@ -16,6 +16,7 @@ import axios from 'axios';
 import {
   ContributionGraph,
 } from 'react-native-chart-kit';
+import { AntDesign } from '@expo/vector-icons';
 import MyPageBtn from './MyComponents/MyPageBtn';
 import MyPlan from './MyComponents/MyPlan';
 
@@ -34,6 +35,7 @@ export default class MyMenuScreen extends Component {
       planData: [],
       refreshing: false,
       notice: '',
+      challPoint: '',
     };
   }
 
@@ -113,15 +115,20 @@ export default class MyMenuScreen extends Component {
     );
     console.log(response.data);
     this.setState({
-      myPoint: response.data.point.challenge_total,
+      myPoint: response.data.point.general_total,
       nickname: response.data.nickname,
       friend_count: response.data.friend_count, 
       email: response.data.email,
+      challPoint: response.data.point.challenge_total,
     });
   };
 
+  moveToPlan = () => {
+    this.props.navigation.dangerouslyGetParent().navigate('Plan');
+  };
+
   render() {
-    const { planData } = this.state;
+    const { planData, challPoint } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
       
@@ -216,7 +223,7 @@ export default class MyMenuScreen extends Component {
                 </View>
                 <View style={styles.quarterContainer}>
                   <Text style={styles.userInfoMenuText}>도전 포인트</Text>
-                  <Text>12</Text>
+                  <Text>{challPoint}</Text>
                   <View style={{ height: 35 }} />
                 </View>
               </View>
@@ -246,8 +253,16 @@ export default class MyMenuScreen extends Component {
                 style={{ width: 50, height: 50, marginTop: 20 }}
                 />
             </View>
-             
             {plans}
+            <View style={styles.addContainer}>
+              <TouchableOpacity
+                style={styles.addBtnContainer}
+                onPress={this.moveToPlan}
+                >
+                <AntDesign name="pluscircleo" size={70} color="black" />
+                <Text>플랜 만들러 가기</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
           
           <View style={styles.lineDivider} />
@@ -442,5 +457,35 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
+  },
+  addContainer: {
+    width: width * 0.7,
+    height: width / 1.6,
+    backgroundColor: 'white',
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 5,
+    marginRight: 20,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  addBtnContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

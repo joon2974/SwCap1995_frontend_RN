@@ -3,7 +3,6 @@ import {
   View, Text, StyleSheet, Picker, TouchableOpacity, AsyncStorage,
 } from 'react-native';
 
-
 import axios from 'axios';
 
 export default class AddPointScreen extends Component {
@@ -23,7 +22,7 @@ export default class AddPointScreen extends Component {
     console.log(this.state.userId);
     await AsyncStorage.getItem('UserID').then((id) => {
       this.state.userId = id;
-      
+
       console.log('완료', this.state.userId);
     });
   };
@@ -66,7 +65,7 @@ export default class AddPointScreen extends Component {
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => this.requestAddPoint(this.state.selectedValue)}>
+          onPress={() => this.props.navigation.navigate('결제',{user_id:this.state.userId,payment:this.state.selectedValue})}>
           <Text style={styles.text}>충전</Text>
         </TouchableOpacity>
       </View>
