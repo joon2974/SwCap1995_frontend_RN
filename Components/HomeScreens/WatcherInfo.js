@@ -40,8 +40,7 @@ export default class WatcherInfo extends Component {
     pointHistory: [500],
     pointDate: ['6월 1일'],
     keysPointAndCount: [],
-    pointAndCount: [],
-    flag: 0,
+    pointAndCount: null,
     distributed_point: 0,
   }
 
@@ -69,17 +68,19 @@ export default class WatcherInfo extends Component {
 
   setTest = () => {
     axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + this.props.planData.id).then((res) => {
-      this.setState({ pointAndCount: res.data });  
+      this.setState({ pointAndCount: res.data }); 
       for (const key in this.state.pointAndCount) {
         this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
       }
-      this.setState({ flag: 1 });
+
       // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
     }).catch((error) => {
       console.log(error);
       alert(error);
     });
   }  
+
+//this.state.pointAndCount[this.props.userID].point_sum
 
   render() {
     const watcherData = {
@@ -100,7 +101,7 @@ export default class WatcherInfo extends Component {
    
 
     let coinInfo = null;
-    if (this.state.flag === 1) {
+    if (this.state.pointAndCount !== null) {
       coinInfo = (
 
         <View style={styles.getPointContainer}>
@@ -118,7 +119,6 @@ export default class WatcherInfo extends Component {
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
             <Text>
-              {this.state.pointAndCount[this.props.userID].point}
               {' '}
               💸
             </Text>
@@ -131,7 +131,7 @@ export default class WatcherInfo extends Component {
     }
 
     let coinThumbnail = null;
-    if (this.state.flag === 1) {
+    if (this.state.pointAndCount !== null) {
       coinThumbnail = (
         
         <TouchableOpacity
@@ -167,7 +167,6 @@ export default class WatcherInfo extends Component {
               획득 포인트
             </Text>
             <Text style={{ fontSize: 15 }}>
-              {this.state.pointAndCount[this.props.userID].point_sum}
               {' '}
               p
             </Text>

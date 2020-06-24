@@ -53,7 +53,6 @@ export default class WatcherPage extends Component {
 
 
   render() {
-    console.log('feqwfeqwfwqfew');
     return (
 
       <View>
