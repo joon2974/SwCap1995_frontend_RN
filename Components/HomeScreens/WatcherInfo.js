@@ -1,8 +1,6 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   Text,
@@ -35,26 +33,25 @@ const categoryURI = [
 
 export default class WatcherInfo extends Component {
   state = {
-    testArray: [],
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     watchers: [1, 2, 3],
     watchersComment: ['빵준이', '한수찬', '김첨지'],
-    // watchersComment: ['생각보다 열심히 하네', '웬일이지ㅋㅋㅋ', '500원 꺼억', '몸짱 되겠다!', '지석이 맞아?'],
     isModalVisible: 0,
     pointHistory: [500],
     pointDate: ['6월 1일'],
-    dateConveted: '',
     keysPointAndCount: [],
-    pointAndCount: [],
-    flag: 0,
+    pointAndCount: null,
+    distributed_point: 0,
   }
 
   async componentDidMount() {
     await this.setTest();
+    this.setTitle();
   }
 
+
   toggleModal=() => {
-    this.setState({ isModalVisible: !this.state.isModalVisible }); 
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
 
   setTitle = () => {
@@ -66,21 +63,12 @@ export default class WatcherInfo extends Component {
   }
 
   setTest = () => {
-    axios.get('http://49.50.172.58:3000/plans/' + this.props.planData.id).then((res) => {
-      this.setState({ testArray: res.data });
-      this.setTitle();
-    }).catch((error) => {
-      console.log(error);
-      alert(error);
-    });
-  
     axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + this.props.planData.id).then((res) => {
-      this.setState({ pointAndCount: res.data });  
+      this.setState({ pointAndCount: res.data }); 
       for (const key in this.state.pointAndCount) {
         this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
       }
-      
-      this.setState({ flag: 1 });
+
       // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
     }).catch((error) => {
       console.log(error);
@@ -107,7 +95,7 @@ export default class WatcherInfo extends Component {
    
 
     let coinInfo = null;
-    if (this.state.flag === 1) {
+    if (this.state.pointAndCount !== null) {
       coinInfo = (
 
         <View style={styles.getPointContainer}>
@@ -120,12 +108,11 @@ export default class WatcherInfo extends Component {
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
-            <Text>500</Text>
+            <Text>{this.state.distributed_point}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
             <Text>
-              {this.state.pointAndCount[this.props.userID].point}
               {' '}
               💸
             </Text>
@@ -138,7 +125,7 @@ export default class WatcherInfo extends Component {
     }
 
     let coinThumbnail = null;
-    if (this.state.flag === 1) {
+    if (this.state.pointAndCount !== null) {
       coinThumbnail = (
         
         <TouchableOpacity
@@ -174,7 +161,6 @@ export default class WatcherInfo extends Component {
               획득 포인트
             </Text>
             <Text style={{ fontSize: 15 }}>
-              {this.state.pointAndCount[this.props.userID].point}
               {' '}
               p
             </Text>
@@ -341,11 +327,6 @@ export default class WatcherInfo extends Component {
                     </View>
                   ))                                
                 }
-            {/* <TouchableOpacity
-                    style={styles.moreExploreBar2}
-                            >
-                    <Text>감시자들 더보기</Text>
-                  </TouchableOpacity> */}
           </View>
 
           <View style={{ marginBottom: 10 }} />

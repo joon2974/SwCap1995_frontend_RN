@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable global-require */
 /* eslint-disable react/no-access-state-in-setstate */
-
 import React, { Component } from 'react';
 import {
   View,

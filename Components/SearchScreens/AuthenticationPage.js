@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   View,
@@ -14,9 +12,6 @@ import {
   LineChart,
   BarChart,
   PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
 } from 'react-native-chart-kit';
 import VariableCard from './VariableCard';
 
@@ -24,8 +19,6 @@ const { width, height } = Dimensions.get('window');
 
 export default class WatcherPage extends Component {
   state = {
-    title: '',
-    isPublic: false,
     onOff: 0,
     selectedTab: 0,
     tabState: 0,
