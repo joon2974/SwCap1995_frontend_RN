@@ -42,8 +42,6 @@ export default class DailyCertifyGalary extends Component {
       } else {
         this.props.navigation.popToTop();
       }
-
-      console.log('image pick result', result);
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +69,6 @@ export default class DailyCertifyGalary extends Component {
         },
       })
       .then((res) => {
-        console.log(res.status);
         if (res.status === 200) {
           this.props.route.params.returnFunc();
         }

@@ -96,7 +96,6 @@ export default class FaceAuthenticationScreen extends Component {
       }),
     });
     const content = await rawResponse.json();
-    console.log('결과', content);
     const highestPercentId = content.images[0].transaction.face_id;
     if (this.props.route.params.userFaceId === highestPercentId) {
       this.setState({ modalVisible: false });

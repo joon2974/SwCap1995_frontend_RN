@@ -24,7 +24,6 @@ export default class noticeScreen extends Component {
     const response = await axios.get(
       'http://49.50.172.58:3000/notices',
     );
-    console.log(response.data);
     
     var noticeArray = [];
     const responseJson = await response.data.rows;

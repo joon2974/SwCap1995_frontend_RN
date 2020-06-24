@@ -50,7 +50,6 @@ export default class CameraTestScreen extends Component {
   };
 
   enroll = async (userId, base64) => {
-    console.log('유저 아이디', userId);
     const rawResponse = await fetch(`${BASE_URL}enroll`, {
       method: 'POST',
       headers: HEADERS,
@@ -61,7 +60,7 @@ export default class CameraTestScreen extends Component {
       }),
     });
     const content = await rawResponse.json();
-    console.log('인롤 결과', content);
+    console.log('콘텐츠', content);
   };
 
   recognize = async (base64) => {
@@ -74,7 +73,7 @@ export default class CameraTestScreen extends Component {
       }),
     });
     const content = await rawResponse.json();
-    console.log('레코그 나이즈', content);
+    console.log('콘텐츠', content);
   };
 
   switchCameraType = () => {

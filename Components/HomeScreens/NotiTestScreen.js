@@ -24,7 +24,6 @@ export default class NotiTextScreen extends React.Component {
 
   handleNotification = (notification) => {
     this.setState({ notification });
-    console.log('노티피케이션', notification);
   }
 
   handleChangeText = (text) => {
@@ -32,7 +31,6 @@ export default class NotiTextScreen extends React.Component {
   }
 
   sendMessage = async () => {
-    console.log(this.state.messageText);
     fetch(MESSAGE_ENPOINT, {
       method: 'POST',
       headers: {
@@ -52,7 +50,6 @@ export default class NotiTextScreen extends React.Component {
       return;
     }
     const token = await Notifications.getExpoPushTokenAsync();
-    console.log('토큰', token);
     fetch(PUSH_REGISTRATION_ENDPOINT, {
       method: 'POST',
       headers: {

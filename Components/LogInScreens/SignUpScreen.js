@@ -104,12 +104,6 @@ export default class SignUpScreen extends Component {
         const categories = this.catList(cat1, cat2, cat3, cat4, cat5, cat6);
         const sex = male ? 'male' : 'female';
 
-        console.log('아이디', ID);
-        console.log('성별', sex);
-        console.log('나이', age);
-        console.log('카테고리', categories);
-        console.log('토큰', token);
-
         axios
           .post('http://49.50.172.58:3000/users', {
             headers: {

@@ -74,7 +74,6 @@ export default class Searchscreen extends Component {
 
     axios.get('http://49.50.172.58:3000/detailedCategories/' + categoryID).then((res) => {  
       this.setState({ nowAllCate: res.data.rows });
-      console.log(this.state.nowAllCate);
     }).catch((error) => {
       console.log(error);
       alert(error);

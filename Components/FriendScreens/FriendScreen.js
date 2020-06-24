@@ -77,7 +77,6 @@ export default class FriendScreen extends Component {
     const requestresponse = await axios.get(
       'http://49.50.172.58:3000/friends/waiting/' + userID,
     );
-    console.log(requestresponse.data);
     const requestcount = await requestresponse.data.count;
     const requestresponseJson = await requestresponse.data.rows;
     try {

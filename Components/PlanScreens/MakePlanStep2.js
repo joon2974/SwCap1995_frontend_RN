@@ -21,7 +21,7 @@ import makePlan2Info2 from '../InfoImages/makePlan2Info2.png';
 import makePlan2Info3 from '../InfoImages/makePlan2Info3.png';
 
 const { width, height } = Dimensions.get('window');
-const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
+const statusbarHeight = Platform.OS === 'ios' ? 20 : 0;
 
 export default class MakePlanStep2 extends Component {
   state = {
@@ -156,7 +156,7 @@ export default class MakePlanStep2 extends Component {
                   onPress={() => this.setState({ modalVisible: false })}
                   style={{ marginRight: 20, justifyContent: 'flex-end', alignItems: 'flex-end' }}
                 >
-                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>도움말 닫기</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>도움말 닫기</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.modalTopContainerStyle}>
@@ -195,7 +195,7 @@ export default class MakePlanStep2 extends Component {
                 source={{
                   uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png',
                 }}
-                style={{ width: 30, height: 30 }}
+                style={{ width: 35, height: 35 }}
               />
             </TouchableOpacity>
           </View>

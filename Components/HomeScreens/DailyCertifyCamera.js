@@ -118,7 +118,6 @@ export default class DayCertifyCamera extends Component {
         },
       })
       .then((res) => {
-        console.log(res.status);
         if (res.status === 200) {
           this.props.route.params.returnFunc();
         }

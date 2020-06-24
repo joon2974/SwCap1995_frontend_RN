@@ -39,8 +39,9 @@ export default class AddFriendScreen extends Component {
       axios.put('http://49.50.172.58:3000/friends/add', {
         user_id: userId,
         nickname: targetNickname,
-      }).then(function () {
+      }).then(() => {
         alert(targetNickname + '님께 친구요청을 보냈습니다');
+        this.setState({ targetNickname: '' });
         this.props.navigation.popToTop();
       }).catch((err) => {
         if (err.response.status === 501) {

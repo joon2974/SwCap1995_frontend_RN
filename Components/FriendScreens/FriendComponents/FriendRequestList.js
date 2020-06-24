@@ -23,7 +23,6 @@ export default class FriendRequestList extends Component {
     }
 
     rejectRequet=(userId, targetNickname) => {
-      console.log(this.props);
       axios.patch('http://49.50.172.58:3000/friends/response', {
         user_id: userId,
         nickname: targetNickname,

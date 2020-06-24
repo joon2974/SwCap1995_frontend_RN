@@ -38,8 +38,6 @@ export default class CustomImagePickScreen extends Component {
       } else {
         this.props.navigation.goBack();
       }
-
-      console.log('image pick result', result);
     } catch (error) {
       console.log(error);
     }

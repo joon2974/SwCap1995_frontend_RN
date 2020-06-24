@@ -36,6 +36,7 @@ export default class MyMenuScreen extends Component {
       refreshing: false,
       notice: '',
       challPoint: '',
+      commits: [],
     };
   }
 
@@ -57,6 +58,7 @@ export default class MyMenuScreen extends Component {
     await AsyncStorage.getItem('UserID').then((id) => {
       this.state.userId = id;
       this.getUserPoint(id);
+      this.getUsercommits(id);
       this.loadNotice();
       this.loadAllPlan(id);
     });
@@ -66,17 +68,14 @@ export default class MyMenuScreen extends Component {
     const response = await axios.get(
       'http://49.50.172.58:3000/notices/recent',
     );
-    console.log(response.data);
     this.setState({ notice: response.data.title });
   };
 
 
   loadAllPlan = async (userId) => {
-    console.log('유저아이디1', userId);
     const response = await axios.get(
       'http://49.50.172.58:3000/plans/all/' + userId,
     );
-    console.log(response.data);
     const responseJson = await response.data.rows;
     const count = await response.data.count;
     var planarray;
@@ -109,11 +108,9 @@ export default class MyMenuScreen extends Component {
   };
 
   getUserPoint = async (userID) => {
-    console.log('유저아이디1', userID);
     const response = await axios.get(
       'http://49.50.172.58:3000/users/me/' + userID,
     );
-    console.log(response.data);
     this.setState({
       myPoint: response.data.point.general_total,
       nickname: response.data.nickname,
@@ -123,12 +120,37 @@ export default class MyMenuScreen extends Component {
     });
   };
 
+  isEmptyObject = (param) => Object.keys(param).length === 0 && param.constructor === Object
+
+  getUsercommits = async (userID) => {
+    const response = await axios.get(
+      'http://49.50.172.58:3000/users/auth_record/' + userID,
+    );
+
+    if (this.isEmptyObject(response.data)) {
+      console.log('commits are empty!');
+    } else {
+      const commitArray = [];
+      const keyArray = Object.keys(response.data);
+
+      for (let i = 0; i < keyArray.length; i++) {
+        const tempObject = {};
+        tempObject.date = keyArray[i];
+        tempObject.count = response.data[tempObject.date];
+        commitArray.push(tempObject);
+      }
+
+      this.setState({ commits: commitArray });
+      console.log('ㅁㄴ', commitArray);
+    }
+  };
+
   moveToPlan = () => {
     this.props.navigation.dangerouslyGetParent().navigate('Plan');
   };
 
   render() {
-    const { planData, challPoint } = this.state;
+    const { planData, challPoint, commits } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
       
@@ -144,19 +166,8 @@ export default class MyMenuScreen extends Component {
         today_auth={data.today_auth}
         percent={data.percent}
           />
-    )); const commitsData = [
-      { date: '2020-05-30', count: 1 },
-      { date: '2020-05-31', count: 2 },
-      { date: '2020-06-01', count: 3 },
-      { date: '2020-06-02', count: 4 },
-      { date: '2020-06-03', count: 5 },
-      { date: '2020-06-04', count: 2 },
-      { date: '2020-06-05', count: 3 },
-      { date: '2020-06-06', count: 2 },
-      { date: '2020-06-07', count: 4 },
-      { date: '2020-06-08', count: 2 },
-      { date: '2020-06-09', count: 4 },
-    ];
+    ));
+
     return (
       
       <ScrollView
@@ -269,23 +280,26 @@ export default class MyMenuScreen extends Component {
           <View style={{ marginBottom: 20 }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>목표달성 색칠하기</Text>
           </View>
-          <ContributionGraph
-            values={commitsData}
-            endDate={new Date('2020-08-10')}
-            numDays={85}
-            width={width - 50}
-            height={220}
-            gutterSize={0.7}
-            chartConfig={{
-              backgroundColor: '#000000',
-              backgroundGradientFrom: '#FD8A69',
-              backgroundGradientTo: '#FD8A69',
-              color: (opacity = 0.8) => `rgba(255, 255, 255, ${opacity})`,
-              style: {
-                borderRadius: 16,
-              },
-            }}
-          />
+          <View style={{ backgroundColor: '#FD8A69', borderRadius: 16 }}>
+            <ContributionGraph
+              values={commits}
+              endDate={new Date('2020-08-10')}
+              numDays={85}
+              width={width - 50}
+              height={220}
+              gutterSize={0.7}
+              chartConfig={{
+                backgroundGradientFrom: '#FD8A69',
+                backgroundGradientFromOpacity: 0,
+                backgroundGradientTo: '#FD8A69',
+                backgroundGradientToOpacity: 0.5,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+              }}
+            />
+          </View>
           <View style={styles.buttonContainer}>
             <MyPageBtn 
               btnName="고객센터"

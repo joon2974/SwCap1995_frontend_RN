@@ -117,10 +117,6 @@ export default class InputInfo extends Component {
         const categories = this.catList(cat1, cat2, cat3, cat4, cat5);
         const sex = male ? 'male' : 'female';
 
-        console.log('성별', sex);
-        console.log('나이', age);
-        console.log('카테고리', categories);
-
         axios
           .post('http://49.50.172.58:3000/users', {
             headers: {

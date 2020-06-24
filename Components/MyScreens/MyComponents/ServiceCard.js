@@ -11,10 +11,6 @@ const { width, height } = Dimensions.get('window');
 
 
 export default class ServiceCard extends Component {
-  componentDidMount() {
-    console.log('섹', this.props);
-  }
-
   render() {
     return (
         

@@ -19,7 +19,7 @@ import customInfoPicture2 from '../InfoImages/customMakePlanInfo2.png';
 import customInfoPicture3 from '../InfoImages/customMakePlanInfo3.png';
 
 const { height, width } = Dimensions.get('window');
-const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
+const statusbarHeight = Platform.OS === 'ios' ? 20 : 0;
 
 export default class CustomMakePlanStep1 extends Component {
   state = {
@@ -145,7 +145,7 @@ export default class CustomMakePlanStep1 extends Component {
                   onPress={() => this.setState({ modalVisible: false })}
                   style={{ marginRight: 20 }}
                 >
-                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>도움말 닫기</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>도움말 닫기</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.modalTopContainerStyle}>
@@ -177,7 +177,7 @@ export default class CustomMakePlanStep1 extends Component {
             >
               <Image
                 source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png' }}
-                style={{ width: 30, height: 30 }}
+                style={{ width: 35, height: 35 }}
               />
             </TouchableOpacity>
           </View>

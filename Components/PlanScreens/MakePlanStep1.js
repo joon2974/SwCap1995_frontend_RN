@@ -18,7 +18,7 @@ import customInfoPicture2 from '../InfoImages/customMakePlanInfo2.png';
 import MakePlan1Info1 from '../InfoImages/MakePlan1Info1.png';
 
 const { height, width } = Dimensions.get('window');
-const statusbarHeight = Platform.OS === 'ios' ? 3 : 0;
+const statusbarHeight = Platform.OS === 'ios' ? 20 : 0;
 const currentDate = Date();
 const currentDay = currentDate.split(' ')[2];
 
@@ -80,7 +80,7 @@ export default class PlanMain extends Component {
   loadRulesFromServer = async () => {
     await axios
       .get('http://49.50.172.58:3000/plan_templates')
-      .then(data => {
+      .then((data) => {
         const rulesFromServer = data.data.rows;
         this.setState({ ruleListFromServer: rulesFromServer });
         const ruleObject = {};
@@ -88,9 +88,10 @@ export default class PlanMain extends Component {
 
         for (let i = 0; i < rulesFromServer.length; i++) {
           if (
-            rulesFromServer[i].detailedCategory ==
             // eslint-disable-next-line eqeqeq
-            this.props.route.params.planName
+            rulesFromServer[i].detailedCategory
+            // eslint-disable-next-line eqeqeq
+            == this.props.route.params.planName
           ) {
             const tempList = [];
 
@@ -119,14 +120,14 @@ export default class PlanMain extends Component {
           authenticationWay: authentication,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('서버로부터 template 가져오기 에러: ', error);
       });
   };
 
-  mainRuleFilter = pictureRules => Object.keys(pictureRules);
+  mainRuleFilter = (pictureRules) => Object.keys(pictureRules);
 
-  updateCertifyPhoto = selectedMainRule => {
+  updateCertifyPhoto = (selectedMainRule) => {
     const ruleListFromServer = this.state.ruleListFromServer;
 
     let certifyPhotoUri;
@@ -172,7 +173,7 @@ export default class PlanMain extends Component {
                   onPress={() => this.setState({ modalVisible: false })}
                   style={{ marginRight: 20 }}
                 >
-                  <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                     도움말 닫기
                   </Text>
                 </TouchableOpacity>
@@ -212,7 +213,7 @@ export default class PlanMain extends Component {
                 source={{
                   uri: 'https://kr.object.ncloudstorage.com/swcap1995/faq.png',
                 }}
-                style={{ width: 30, height: 30 }}
+                style={{ width: 35, height: 35 }}
               />
             </TouchableOpacity>
           </View>
@@ -242,8 +243,7 @@ export default class PlanMain extends Component {
                 <Text>시작일</Text>
                 <TimePicker
                   time={startDate}
-                  onValueChange={itemValue =>
-                    this.setState({ startDate: itemValue })
+                  onValueChange={(itemValue) => this.setState({ startDate: itemValue })
                   }
                   times={dateList}
                 />
@@ -252,8 +252,7 @@ export default class PlanMain extends Component {
                 <Text>도전 기간(주)</Text>
                 <TimePicker
                   time={endDate}
-                  onValueChange={itemValue =>
-                    this.setState({ endDate: itemValue })
+                  onValueChange={(itemValue) => this.setState({ endDate: itemValue })
                   }
                   times={periodList}
                 />
@@ -262,8 +261,7 @@ export default class PlanMain extends Component {
                 <Text>인증 시간(시)</Text>
                 <TimePicker
                   time={certifyTime}
-                  onValueChange={itemValue =>
-                    this.setState({ certifyTime: itemValue })
+                  onValueChange={(itemValue) => this.setState({ certifyTime: itemValue })
                   }
                   times={timeList}
                 />
@@ -290,7 +288,7 @@ export default class PlanMain extends Component {
             <View style={styles.rulePickContainer}>
               <RulePicker
                 rule={selectedMainRule}
-                onValueChange={itemValue => {
+                onValueChange={(itemValue) => {
                   this.setState({ selectedMainRule: itemValue });
                   this.updateCertifyPhoto(itemValue);
                 }}
@@ -308,25 +306,24 @@ export default class PlanMain extends Component {
 
           <TouchableOpacity
             style={styles.nextStepBtn}
-            onPress={() =>
-              this.props.navigation.navigate('플랜 만들기: 2단계', {
-                category: this.props.route.params.category,
-                planName: this.props.route.params.planName,
-                startDate: startDate,
-                endDate: endDate,
-                certifyTime: certifyTime,
-                picture_rule_1: selectedMainRule,
-                picture_rule_2: pictureRules[selectedMainRule][0],
-                picture_rule_3: pictureRules[selectedMainRule][1],
-                custom_picture_rule_1: null,
-                custom_picture_rule_2: null,
-                custom_picture_rule_3: null,
-                certifyImgUri: certifyImageUri,
-                userID: this.props.route.params.userID,
-                categoryUri: this.props.route.params.uri,
-                is_custom: false,
-                authentication_way: authenticationWay,
-              })
+            onPress={() => this.props.navigation.navigate('플랜 만들기: 2단계', {
+              category: this.props.route.params.category,
+              planName: this.props.route.params.planName,
+              startDate: startDate,
+              endDate: endDate,
+              certifyTime: certifyTime,
+              picture_rule_1: selectedMainRule,
+              picture_rule_2: pictureRules[selectedMainRule][0],
+              picture_rule_3: pictureRules[selectedMainRule][1],
+              custom_picture_rule_1: null,
+              custom_picture_rule_2: null,
+              custom_picture_rule_3: null,
+              certifyImgUri: certifyImageUri,
+              userID: this.props.route.params.userID,
+              categoryUri: this.props.route.params.uri,
+              is_custom: false,
+              authentication_way: authenticationWay,
+            })
             }
           >
             <Text style={{ fontWeight: 'bold', color: 'white' }}>

@@ -18,7 +18,6 @@ export default class AllServiceScreen extends Component {
   };
   
   componentDidMount() {
-    console.log(this.state.userid);
     this.loadAllService();
   }
  
@@ -49,8 +48,6 @@ export default class AllServiceScreen extends Component {
     } catch (error) {
       console.error(error);
     }
-    
-    console.log('서비스', this.state.serviceArray);
   };
 
   render() {

@@ -53,9 +53,6 @@ export default class EstimatePlan extends Component {
   }
 
   checkSubmit() {
-    console.log('아이디', this.state.userId);
-    console.log('플랜', this.props.route.params.id);
-    console.log(this.state.imgPoint, this.state.rulePoint);
     if (this.state.imgPoint !== '0' && this.state.rulePoint !== '0') {
       axios.post(
         'http://49.50.172.58:3000/agreements/is_exist', {

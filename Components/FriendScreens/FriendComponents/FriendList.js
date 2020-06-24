@@ -6,7 +6,6 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons'; 
 
 const { width } = Dimensions.get('window');
 
@@ -25,7 +24,6 @@ export default class FriendList extends Component {
             <View style={styles.nickNameContainer}>
               <Text style={{ fontSize: 22 }}>{this.props.nickname}</Text>
             </View>
-            <Feather name="more-horizontal" size={24} color="black" />
           </View>
         </View>
         <View style={styles.lineDivider} />

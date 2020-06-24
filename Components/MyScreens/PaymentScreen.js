@@ -36,7 +36,6 @@ export default class PaymentScreen extends Component {
         amount: this.state.payment,
       },
     ).then(() => {
-      console.log(this.props);
       this.props.route.params.onRefresh();
       this.props.navigation.popToTop();
     });

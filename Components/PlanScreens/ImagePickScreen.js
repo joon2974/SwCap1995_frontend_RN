@@ -40,8 +40,6 @@ export default class ImagePickScreen extends Component {
       } else {
         this.props.navigation.popToTop();
       }
-
-      console.log('image pick result', result);
     } catch (error) {
       console.log(error);
     }

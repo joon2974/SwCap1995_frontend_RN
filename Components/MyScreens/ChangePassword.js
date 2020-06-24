@@ -17,13 +17,11 @@ export default class ChangePassWord extends Component {
 
 
     changepassword() {
-      console.log('비밀번호는', this.state.newPassword);
       var user = firebase.auth().currentUser;
       var credential = firebase.auth.EmailAuthProvider.credential(
         user.email,
         this.state.password,
       );
-      console.log('재인증', this.state.newPassword);
       var newPassword = this.state.newPassword;
       user.reauthenticateWithCredential(credential).then(function () {
         var user = firebase.auth().currentUser;

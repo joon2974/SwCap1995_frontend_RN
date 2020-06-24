@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import {
-  View, Text, StyleSheet, Picker, TouchableOpacity, AsyncStorage,
+  View,
+  Text,
+  StyleSheet,
+  Picker,
+  TouchableOpacity,
+  AsyncStorage,
+  Platform,
 } from 'react-native';
 
 import axios from 'axios';
@@ -19,11 +25,8 @@ export default class AddPointScreen extends Component {
   }
 
   loadUserID = async () => {
-    console.log(this.state.userId);
     await AsyncStorage.getItem('UserID').then((id) => {
       this.state.userId = id;
-
-      console.log('완료', this.state.userId);
     });
   };
 
@@ -39,7 +42,6 @@ requestAddPoint(selectedValue) {
       amount: selectedValue,
     },
   ).then(() => {
-    console.log(this.props);
     alert(selectedValue + '원 충전신청이 되었습니다');
     this.props.route.params.onRefresh();
     this.props.navigation.popToTop();
@@ -47,18 +49,17 @@ requestAddPoint(selectedValue) {
 }
 
 render() {
+  const { selectedValue, userId } = this.state;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.textContainer}>포인트 충전페이지</Text>
+      <Text style={styles.textContainer}>충전 금액</Text>
       <View style={styles.addPointContainer}>
-        <Text>충전금액</Text>
         <Picker
-          selectedValue={this.state.selectedValue}
+          selectedValue={selectedValue}
           style={{ width: 200, height: 45, marginLeft: 5 }}
           itemStyle={{ height: 45 }}
-          onValueChange={(selectedValue) => this.setState({ selectedValue: selectedValue })
-            }
-          >
+          onValueChange={(selectedValue) => this.setState({ selectedValue: selectedValue })}>
           <Picker.Item label="5000" value="5000" />
           <Picker.Item label="10000" value="10000" />
           <Picker.Item label="15000" value="15000" />
@@ -68,8 +69,8 @@ render() {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.button}
-        onPress={() => this.props.navigation.navigate('결제', { userId: this.state.userId, payment: this.state.selectedValue, onRefresh: this.onRefresh })}>
-        <Text style={styles.text}>충전</Text>
+        onPress={() => this.props.navigation.navigate('결제', { userId: userId, payment: selectedValue, onRefresh: this.onRefresh })}>
+        <Text style={styles.text}>충전하기</Text>
       </TouchableOpacity>
     </View>
   );
@@ -84,8 +85,36 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   addPointContainer: {
-    marginTop: 5,
+    marginTop: 10,
+  },
+  button: {
+    marginTop: 10,
+    borderRadius: 10,
+    backgroundColor: '#FD8A69',
+    width: 80,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  text: {
+    color: 'white',
   },
 });
