@@ -45,18 +45,16 @@ export default class WatcherPage extends Component {
     watchers: [1, 2, 3],
     watchersComment: ['빵준이', '한수찬', '김첨지'],
     isModalVisible: 0,
-    pointHistory: [500],
-    pointDate: ['6월 1일'],
     keysPointAndCount: [],
     pointAndCount: [],
-    distributed_point: 0,
+    distributedPoint: 0,
+    rejectCount: 0,
+    pointHistory2: [],
   }
 
   async componentDidMount() {
     await this.setTest();
-    this.setTest2();
     this.setTab();
-    this.setPoint();
   }
 
   setTab = () => {
@@ -68,7 +66,7 @@ export default class WatcherPage extends Component {
 
   setPoint =() => {
     this.setState({ 
-      distributed_point: 
+      distributedPoint: 
       (this.state.testArray2.bet_money * this.state.testArray2.percent) / 100, 
     });
   }
@@ -88,7 +86,10 @@ export default class WatcherPage extends Component {
 
   setTest = () => {
     axios.get('http://49.50.172.58:3000/daily_authentications/' + this.props.route.params.planID).then((res) => {
-      this.setState({ testArray: res.data.rows });
+      this.setState({
+        testArray: res.data.rows,
+        rejectCount: res.data.reject_count, 
+      });
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -100,6 +101,8 @@ export default class WatcherPage extends Component {
       
       this.setTitle();
       
+      this.setPoint();
+  
       const dateParsing1 = res.data.plan_start_day.split('-');
       let dateParsing2 = '';
       dateParsing2 = dateParsing2.concat(dateParsing1[0] + '년 ' + dateParsing1[1] + '월 ' + dateParsing1[2][0] + dateParsing1[2][1] + '일');
@@ -112,7 +115,10 @@ export default class WatcherPage extends Component {
 
   setTest2 = (id) => {
     axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + id).then((res) => {
-      this.setState({ pointAndCount: res.data }); 
+      this.setState({
+        pointAndCount: res.data, 
+        pointHistory2: res.data[this.props.route.params.userID].point, 
+      }); 
       for (const key in this.state.pointAndCount) {
         this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
       }
@@ -129,6 +135,11 @@ export default class WatcherPage extends Component {
       data: [0.95, 0.30, 0.66],
     };
 
+    
+    // if(Object.keys(this.state.pointAndCount).length !== 0){
+    //   console.log(this.state.pointAndCount[77].point);
+    // }
+    
     const chartConfig = {
       backgroundGradientFrom: '#139C73',
       backgroundGradientTo: 'white',
@@ -151,11 +162,11 @@ export default class WatcherPage extends Component {
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
-            <Text>1</Text>
+            <Text>{this.state.rejectCount}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
-            <Text>{this.state.distributed_point}</Text>
+            <Text>{this.state.distributedPoint}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
@@ -219,6 +230,28 @@ export default class WatcherPage extends Component {
       );
     }
 
+    let pointHistoryComponent = null;
+    if (this.state.pointHistory2.length !== 0) {
+      pointHistoryComponent = (
+        <View>
+          {
+          this.state.pointHistory2.map((data, index) => (
+            <View key={data}>
+              <PointHistory
+                key={data}
+                index={index}
+                data={data}
+              />
+            </View>
+          ))                                
+        }
+        </View>  
+      );
+    } else {
+      pointHistoryComponent = (
+        <View />
+      );
+    }
 
     return (
 
@@ -368,19 +401,9 @@ export default class WatcherPage extends Component {
                     {coinInfo}  
                   </View>            
   
+
                   <View>
-                    {
-                    this.state.pointHistory.map((data, index) => (
-                      <View key={data}>
-                        <PointHistory
-                          key={data}
-                          index={index}
-                          point={data}
-                          date={this.state.pointDate}
-                        />
-                      </View>
-                    ))                                
-                  }
+                    {pointHistoryComponent}
                     {/* <TouchableOpacity
                       style={styles.moreExploreBar2}
                               >
