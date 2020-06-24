@@ -1,3 +1,6 @@
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import React, { Component } from 'react';
 import {
   View,
@@ -23,13 +26,13 @@ const { width, height } = Dimensions.get('window');
 export default class DetailPlan extends Component {
     state = {
       item: [],
-      watchers: [1, 2, 3],
-      watchersComment: ['빵준이', '한수찬', '김첨지'],
       authCreatedAt: [],
       authStatus: [1],
       date: '',
       currentAuthComment: '',
       test: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
+      keysPointAndCount: [],
+      pointAndCount: [],
     }
 
     async componentDidMount() {
@@ -77,6 +80,19 @@ export default class DetailPlan extends Component {
       axios.get('http://49.50.172.58:3000/daily_authentications/' + this.state.item.id).then((res) => {
         if (res.data.rows.length !== 0) {        
           this.setState({ currentAuthComment: res.data.rows[0].comment });
+        }
+      }).catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+
+
+      axios.get('http://49.50.172.58:3000/plans/watch_achievement/' + this.state.item.id).then((res) => {
+        this.setState({
+          pointAndCount: res.data, 
+        }); 
+        for (const key in this.state.pointAndCount) {
+          this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
         }
       }).catch((error) => {
         console.log(error);
@@ -151,6 +167,27 @@ export default class DetailPlan extends Component {
         barPercentage: 0.5,
         useShadowColorFromDataset: false, // optional
       };
+
+      let watchersComponent = null;
+      if (Object.keys(this.state.pointAndCount).length !== 0) {
+        watchersComponent = (
+  
+          <View>
+            {
+            this.state.keysPointAndCount.map((data, index) => (
+              <View key={data}>
+                <Watcher 
+                  key={data}
+                  index={index}
+                  data={this.state.pointAndCount[data]}
+                  id={data}
+                />
+              </View>
+            ))                                
+          }
+          </View>
+        );
+      }
 
       return (
         <View style={styles.container}>
@@ -288,17 +325,7 @@ export default class DetailPlan extends Component {
                 </Text>
                         
                 <View>
-                  {
-                  this.state.watchers.map((data, index) => (
-                    <View key={data}>
-                      <Watcher 
-                        key={data}
-                        index={index}
-                        comment={this.state.watchersComment}
-                      />
-                    </View>
-                  ))                                
-                }
+                  {watchersComponent}
                   {/* <TouchableOpacity
                     style={styles.moreExploreBar2}
                             >

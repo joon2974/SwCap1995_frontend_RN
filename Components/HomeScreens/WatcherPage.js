@@ -42,14 +42,13 @@ export default class WatcherPage extends Component {
     dateConverted: '',
 
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
-    watchers: [1, 2, 3],
-    watchersComment: ['빵준이', '한수찬', '김첨지'],
     isModalVisible: 0,
     keysPointAndCount: [],
     pointAndCount: [],
     distributedPoint: 0,
     rejectCount: 0,
     pointHistory2: [],
+    authCount: 0,
   }
 
   async componentDidMount() {
@@ -89,6 +88,7 @@ export default class WatcherPage extends Component {
       this.setState({
         testArray: res.data.rows,
         rejectCount: res.data.reject_count, 
+        authCount: res.data.count,
       });
     }).catch((error) => {
       console.log(error);
@@ -135,10 +135,10 @@ export default class WatcherPage extends Component {
       data: [0.95, 0.30, 0.66],
     };
 
-    
     // if(Object.keys(this.state.pointAndCount).length !== 0){
-    //   console.log(this.state.pointAndCount[77].point);
+    //   console.log(this.state.pointAndCount[77].count);
     // }
+
     
     const chartConfig = {
       backgroundGradientFrom: '#139C73',
@@ -209,7 +209,6 @@ export default class WatcherPage extends Component {
             }}
             source={require('./money.png')}
           />
-
           <View style={{
             height: height / 6,
             width: height / 6,
@@ -250,6 +249,28 @@ export default class WatcherPage extends Component {
     } else {
       pointHistoryComponent = (
         <View />
+      );
+    }
+
+
+    let watchersComponent = null;
+    if (Object.keys(this.state.pointAndCount).length !== 0) {
+      watchersComponent = (
+
+        <View>
+          {
+          this.state.keysPointAndCount.map((data, index) => (
+            <View key={data}>
+              <Watcher 
+                key={data}
+                index={index}
+                data={this.state.pointAndCount[data]}
+                id={data}
+              />
+            </View>
+          ))                                
+        }
+        </View>
       );
     }
 
@@ -404,11 +425,6 @@ export default class WatcherPage extends Component {
 
                   <View>
                     {pointHistoryComponent}
-                    {/* <TouchableOpacity
-                      style={styles.moreExploreBar2}
-                              >
-                      <Text>감시자들 더보기</Text>
-                    </TouchableOpacity> */}
                   </View>
   
                   <TouchableOpacity
@@ -444,22 +460,7 @@ export default class WatcherPage extends Component {
               </Text>
                           
               <View>
-                {
-                    this.state.watchers.map((data, index) => (
-                      <View key={data}>
-                        <Watcher 
-                          key={data}
-                          index={index}
-                          comment={this.state.watchersComment}
-                        />
-                      </View>
-                    ))                                
-                  }
-                {/* <TouchableOpacity
-                      style={styles.moreExploreBar2}
-                              >
-                      <Text>감시자들 더보기</Text>
-                    </TouchableOpacity> */}
+                {watchersComponent}
               </View>
   
               <View style={{ marginBottom: 10 }} />
