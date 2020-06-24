@@ -42,14 +42,21 @@ export default class WatcherInfo extends Component {
     keysPointAndCount: [],
     pointAndCount: [],
     flag: 0,
+    distributed_point: 0,
   }
 
   async componentDidMount() {
     await this.setTest();
+    this.setTitle();
+    this.setPoint();
+  }
+
+  setPoint =() => {
+    this.setState({ distributed_point: this.props.planData.bet_money * this.props.planData.percent / 100 });
   }
 
   toggleModal=() => {
-    this.setState({ isModalVisible: !this.state.isModalVisible }); 
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
 
   setTitle = () => {
@@ -66,7 +73,6 @@ export default class WatcherInfo extends Component {
       for (const key in this.state.pointAndCount) {
         this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
       }
-      
       this.setState({ flag: 1 });
       // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
     }).catch((error) => {
@@ -107,7 +113,7 @@ export default class WatcherInfo extends Component {
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
-            <Text>500</Text>
+            <Text>{this.state.distributed_point}</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>내가 획득한 포인트:  </Text>
@@ -161,7 +167,7 @@ export default class WatcherInfo extends Component {
               획득 포인트
             </Text>
             <Text style={{ fontSize: 15 }}>
-              {this.state.pointAndCount[this.props.userID].point}
+              {this.state.pointAndCount[this.props.userID].point_sum}
               {' '}
               p
             </Text>
