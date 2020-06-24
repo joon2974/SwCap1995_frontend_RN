@@ -39,6 +39,8 @@ export default class PaymentScreen extends Component {
       console.log(this.props);
       this.props.route.params.onRefresh();
       this.props.navigation.popToTop();
+    }).catch((err) => {
+      console.log('에러', err);
     });
   }
 

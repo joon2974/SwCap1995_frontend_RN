@@ -47,12 +47,12 @@ export default class AddPointScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.textContainer}>포인트 충전페이지</Text>
-
         <View style={styles.addPointContainer}>
           <Text>충전금액</Text>
           <Picker
             selectedValue={this.state.selectedValue}
-            style={{ height: 50, width: 150 }}
+            style={{ width: 200, height: 45, marginLeft: 5 }}
+            itemStyle={{ height: 45 }}
             onValueChange={(selectedValue) => this.setState({ selectedValue: selectedValue })
             }
           >
@@ -65,7 +65,7 @@ export default class AddPointScreen extends Component {
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => this.props.navigation.navigate('결제', { user_id: this.state.userId, payment: this.state.selectedValue })}>
+          onPress={() => this.props.navigation.navigate('결제', { userId: this.state.userId, payment: this.state.selectedValue })}>
           <Text style={styles.text}>충전</Text>
         </TouchableOpacity>
       </View>
@@ -81,5 +81,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     color: 'black',
+  },
+  addPointContainer: {
+    marginTop: 5,
   },
 });
