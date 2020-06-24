@@ -47,12 +47,8 @@ export default class WatcherInfo extends Component {
   async componentDidMount() {
     await this.setTest();
     this.setTitle();
-    this.setPoint();
   }
 
-  setPoint =() => {
-    this.setState({ distributed_point: this.props.planData.bet_money * this.props.planData.percent / 100 });
-  }
 
   toggleModal=() => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -79,8 +75,6 @@ export default class WatcherInfo extends Component {
       alert(error);
     });
   }  
-
-//this.state.pointAndCount[this.props.userID].point_sum
 
   render() {
     const watcherData = {
