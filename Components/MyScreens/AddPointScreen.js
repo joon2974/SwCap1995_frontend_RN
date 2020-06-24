@@ -65,7 +65,7 @@ export default class AddPointScreen extends Component {
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => this.props.navigation.navigate('결제',{user_id:this.state.userId,payment:this.state.selectedValue})}>
+          onPress={() => this.props.navigation.navigate('결제', { user_id: this.state.userId, payment: this.state.selectedValue })}>
           <Text style={styles.text}>충전</Text>
         </TouchableOpacity>
       </View>

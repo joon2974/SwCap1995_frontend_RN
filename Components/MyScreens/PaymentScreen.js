@@ -13,24 +13,22 @@ export default class PaymentScreen extends Component {
     payment: this.props.route.params.payment,
   }
 
-  getPaymentData() {
-    return {
-      pg: 'html5_inicis',
-      pay_method: 'card',
-      name: 'planA',
-      merchant_uid: `mid_${new Date().getTime()}`,
-      amount: this.props.route.params.payment,
-      buyer_name: '홍길동',
-      buyer_tel: '01012345678',
-      buyer_email: 'example@naver.com',
-      buyer_addr: '서울시 강남구 신사동 661-16',
-      buyer_postcode: '06018',
-      app_scheme: 'example',
-      // [Deprecated v1.0.3]: m_redirect_url
-    };
-  }
+  getPaymentData = () => ({
+    pg: 'html5_inicis',
+    pay_method: 'card',
+    name: 'planA',
+    merchant_uid: `mid_${new Date().getTime()}`,
+    amount: '100',
+    buyer_name: '홍길동',
+    buyer_tel: '01012345678',
+    buyer_email: 'example@naver.com',
+    buyer_addr: '서울시 강남구 신사동 661-16',
+    buyer_postcode: '06018',
+    app_scheme: 'example',
+    // [Deprecated v1.0.3]: m_redirect_url
+  })
 
-  callback=() => {
+  callback = () => {
     axios.post(
       'http://49.50.172.58:3000/points/add', {
         user_id: this.state.userId,
