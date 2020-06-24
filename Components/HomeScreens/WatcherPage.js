@@ -177,11 +177,11 @@ export default class WatcherPage extends Component {
             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
           </View>
           <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>인증자 총 실패 횟수:  </Text>
             <Text>{this.state.rejectCount}</Text>
           </View>
           <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 한번 당 차감될 포인트:  </Text>
             <Text>{this.state.distributedPoint}</Text>
           </View>
           <View style={styles.lineContainer}>
@@ -236,6 +236,7 @@ export default class WatcherPage extends Component {
             </Text>
             <Text style={{ fontSize: 15 }}>
               {this.state.pointAndCount[this.props.route.params.userID].point_sum}
+              {console.log(this.state.pointAndCount[this.props.route.params.userID])}
               {' '}
               p
             </Text>
@@ -468,6 +469,7 @@ export default class WatcherPage extends Component {
               yAxisSuffix="%"
               chartConfig={chartConfig}
               verticalLabelRotation={30}
+              fromZero={true}
            />
   
             <View style={styles.titleInfoContainer}>
