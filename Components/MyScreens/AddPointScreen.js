@@ -27,12 +27,11 @@ export default class AddPointScreen extends Component {
     });
   };
 
-onRefresh=() => {
+onRefresh = () => {
   this.props.route.params.onRefresh();
 }
 
 requestAddPoint(selectedValue) {
-  console.log('보낼때 유저아이디', this.state.userId);
   axios.post(
     'http://49.50.172.58:3000/points/add', {
       user_id: this.state.userId,
@@ -51,12 +50,12 @@ render() {
   return (
     <View style={styles.container}>
       <Text style={styles.textContainer}>포인트 충전페이지</Text>
-
       <View style={styles.addPointContainer}>
         <Text>충전금액</Text>
         <Picker
           selectedValue={this.state.selectedValue}
-          style={{ height: 50, width: 150 }}
+          style={{ width: 200, height: 45, marginLeft: 5 }}
+          itemStyle={{ height: 45 }}
           onValueChange={(selectedValue) => this.setState({ selectedValue: selectedValue })
             }
           >
@@ -85,5 +84,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     color: 'black',
+  },
+  addPointContainer: {
+    marginTop: 5,
   },
 });
