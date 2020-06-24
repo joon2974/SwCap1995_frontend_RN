@@ -155,10 +155,9 @@ export default class LoginScreen extends Component {
   };
 
   loginWithFacebook = async () => {
-    await Facebook.initializeAsync('3059791560794838');
+    await Facebook.initializeAsync('3059791560794838', 'PlanA');
 
     const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-      '3059791560794838',
       {
         permissions: ['public_profile'],
       },
@@ -170,7 +169,6 @@ export default class LoginScreen extends Component {
         .auth()
         .signInWithCredential(credential)
         .then((result) => {
-          console.log('USER SIGNED IN');
           console.log('sign in result', result);
           this.sendLoginPath(result.user.email, false);
           if (result.additionalUserInfo.isNewUser) {

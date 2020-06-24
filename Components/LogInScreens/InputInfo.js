@@ -30,7 +30,7 @@ export default class InputInfo extends Component {
     cat3: null,
     cat4: null,
     cat5: null,
-    age: null,
+    age: 13,
     nickname: '',
     nicknameInfo: '',
     ableNickname: false,
@@ -110,6 +110,9 @@ export default class InputInfo extends Component {
         Alert.alert('', '성별을 선택해 주세요!');
       } else if (!age) {
         Alert.alert('', '나이를 선택해 주세요!');
+      } else if ((cat1 === null) 
+        && (cat2 === null) && (cat3 === null) && (cat4 === null) && (cat5 === null)) {
+        Alert.alert('', '관심 카테고리를 선택해 주세요!');
       } else {
         const categories = this.catList(cat1, cat2, cat3, cat4, cat5);
         const sex = male ? 'male' : 'female';
@@ -126,7 +129,7 @@ export default class InputInfo extends Component {
             email: this.props.userEmail,
             sex: sex,
             age: age,
-            categories: categories,
+            interest_category: categories,
             is_email_login: false,
             nickname: nickname,
             deviceToken: token,

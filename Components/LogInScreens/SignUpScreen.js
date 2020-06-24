@@ -37,7 +37,7 @@ export default class SignUpScreen extends Component {
     cat6: null,
     ableID: false,
     emailInfo: '',
-    age: null,
+    age: 13,
     nickname: '',
     nicknameInfo: '',
     ableNickname: false,
@@ -97,6 +97,9 @@ export default class SignUpScreen extends Component {
         alert('성별을 선택해 주세요!');
       } else if (!age) {
         alert('나이를 선택해 주세요!');
+      } else if ((cat1 === null) 
+      && (cat2 === null) && (cat3 === null) && (cat4 === null) && (cat5 === null)) {
+        alert('관심 카테고리를 선택해 주세요!');
       } else {
         const categories = this.catList(cat1, cat2, cat3, cat4, cat5, cat6);
         const sex = male ? 'male' : 'female';

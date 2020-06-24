@@ -41,10 +41,15 @@
       "config": {
         "googleSignIn": {
           "apiKey": "AIzaSyCPHHTbWOKEu60ilch4R2WSogNMgs_bvcw",
-          "certificateHash": "4B:5A:32:5F:55:60:2D:B3:5C:40:C4:98:0B:38:EF:B9:9D:F1:2E:C7"
+          "certificateHash": "4B5A325F55602DB35C40C4980B38EFB99DF12EC7"
         }
       }
     },
-    "description": ""
+    "description": "",
+    "extra": {
+      "facebook": {
+        "appId": "3059791560794838"
+      }
+    }
   }
 }
