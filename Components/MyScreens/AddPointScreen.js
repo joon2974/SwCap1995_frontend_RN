@@ -26,7 +26,9 @@ export default class AddPointScreen extends Component {
       console.log('완료', this.state.userId);
     });
   };
-
+onRefresh=()=>{
+  this.props.route.params.onRefresh();
+}
   requestAddPoint(selectedValue) {
     console.log('보낼때 유저아이디', this.state.userId);
     axios.post(
@@ -65,7 +67,7 @@ export default class AddPointScreen extends Component {
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => this.props.navigation.navigate('결제', { user_id: this.state.userId, payment: this.state.selectedValue })}>
+          onPress={() => this.props.navigation.navigate('결제', { userId: this.state.userId, payment: this.state.selectedValue,onRefresh: this.onRefresh })}>
           <Text style={styles.text}>충전</Text>
         </TouchableOpacity>
       </View>

@@ -18,7 +18,7 @@ export default class PaymentScreen extends Component {
     pay_method: 'card',
     name: 'planA',
     merchant_uid: `mid_${new Date().getTime()}`,
-    amount: '100',
+    amount: this.state.payment,
     buyer_name: '홍길동',
     buyer_tel: '01012345678',
     buyer_email: 'example@naver.com',
@@ -29,6 +29,7 @@ export default class PaymentScreen extends Component {
   })
 
   callback = () => {
+    console.log("결제는성공");
     axios.post(
       'http://49.50.172.58:3000/points/add', {
         user_id: this.state.userId,
@@ -38,8 +39,11 @@ export default class PaymentScreen extends Component {
     ).then(() => {
       console.log(this.props);
       this.props.route.params.onRefresh();
+      console.log("온프레시는성공")
       this.props.navigation.popToTop();
+      console.log("팝투탑성공");
     });
+    
   }
 
   render() {
