@@ -141,7 +141,6 @@ export default class MyMenuScreen extends Component {
       }
 
       this.setState({ commits: commitArray });
-      console.log('ㅁㄴ', commitArray);
     }
   };
 

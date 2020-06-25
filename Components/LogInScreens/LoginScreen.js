@@ -169,18 +169,17 @@ export default class LoginScreen extends Component {
         .auth()
         .signInWithCredential(credential)
         .then((result) => {
-          console.log('sign in result', result);
           this.sendLoginPath(result.user.email, false);
+          console.log('ajsjsjsjsjsjdsdsds', result.additionalUserInfo.profile);
           if (result.additionalUserInfo.isNewUser) {
             firebase
               .database()
               .ref('/users/' + result.user.uid)
               .set({
                 gmail: result.user.email,
-                profile_picture: result.addionalUserInfo.profile.picture,
-                locale: result.addionalUserInfo.profile.locale,
-                first_name: result.addionalUserInfo.profile.given_name,
-                last_name: result.addionalUserInfo.profile.family_name,
+                profile_picture: result.additionalUserInfo.profile.picture,
+                first_name: result.additionalUserInfo.profile.first_name,
+                last_name: result.additionalUserInfo.profile.last_name,
                 created_at: Date.now(),
               });
           } else {
@@ -193,6 +192,7 @@ export default class LoginScreen extends Component {
           }
         })
         .catch((error) => {
+          alert(error);
           console.log(error);
         });
     } else {
