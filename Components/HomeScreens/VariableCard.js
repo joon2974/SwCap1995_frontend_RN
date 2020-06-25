@@ -133,9 +133,17 @@ export default class VariableCard extends Component {
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
-            <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal2}>
+            <Modal 
+              isVisible={this.state.isModalVisible} 
+              style={{ alignItems: 'center', justifyContent: 'center' }}
+              onBackButtonPress={this.toggleModal2}>
               <View style={{
-                height: height / 3.8, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+                height: height / 3.4, 
+                width: width / 1.05, 
+                backgroundColor: 'white', 
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'space-between', 
               }}>
                 <Text style={{ 
                   color: 'white', 
@@ -207,6 +215,28 @@ export default class VariableCard extends Component {
                       this.sendComment();
                     }}
             />
+
+                </View>
+                <View style={{ alignItems: 'flex-end', width: width / 1.05 }}>
+                  <TouchableOpacity
+                    style={{
+                      height: height / 24, 
+                      width: width / 6, 
+                      backgroundColor: '#139C73',
+                      borderRadius: 5, 
+                      marginRight: 10,
+                      marginBottom: 40,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => this.toggleModal()}
+                 >
+                    <Text style={{
+                      color: 'white',
+                    }}>
+                      뒤로
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             
@@ -242,7 +272,7 @@ export default class VariableCard extends Component {
               
             <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal2}>
               <View style={{
-                height: height / 3.8, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
+                height: height / 3.4, width: width / 1.05, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', justifyContent: 'space-between', 
               }}>
                 <Text style={{ 
                   color: 'white', 
@@ -314,6 +344,27 @@ export default class VariableCard extends Component {
                       this.sendComment();
                     }}
               />
+                </View>
+                <View style={{ alignItems: 'flex-end', width: width / 1.05 }}>
+                  <TouchableOpacity
+                    style={{
+                      height: height / 24, 
+                      width: width / 6, 
+                      backgroundColor: '#139C73',
+                      borderRadius: 5, 
+                      marginRight: 10,
+                      marginBottom: 40,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => this.toggleModal()}
+                 >
+                    <Text style={{
+                      color: 'white',
+                    }}>
+                      뒤로
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
               

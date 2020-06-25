@@ -5,6 +5,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import axios from 'axios';
@@ -12,7 +13,7 @@ import Modal from 'react-native-modal';
 import { CardSix2, CardSeven2 } from './Cards';
 import AuthWatcher from './TabList/AuthWatcher';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class VariableCard extends Component {
   state={
@@ -152,6 +153,28 @@ export default class VariableCard extends Component {
                 
                 {comment}
                
+                <View style={{ alignItems: 'flex-end', width: width / 1.05 }}>
+                  <TouchableOpacity
+                    style={{
+                      height: height / 24, 
+                      width: width / 6, 
+                      backgroundColor: '#139C73',
+                      borderRadius: 5, 
+                      marginRight: 10,
+                      marginBottom: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => this.toggleModal()}
+                 >
+                    <Text style={{
+                      color: 'white',
+                    }}>
+                      뒤로
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
               </View>
               
             </Modal>
@@ -213,6 +236,28 @@ export default class VariableCard extends Component {
                   
                 {comment}
                  
+                <View style={{ alignItems: 'flex-end', width: width / 1.05 }}>
+                  <TouchableOpacity
+                    style={{
+                      height: height / 24, 
+                      width: width / 6, 
+                      backgroundColor: '#139C73',
+                      borderRadius: 5, 
+                      marginRight: 10,
+                      marginBottom: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => this.toggleModal()}
+                 >
+                    <Text style={{
+                      color: 'white',
+                    }}>
+                      뒤로
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
               </View>
                 
             </Modal>
