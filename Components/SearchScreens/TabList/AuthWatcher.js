@@ -8,42 +8,10 @@ import {
   Platform,
   Image,
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import axios from 'axios';
 
 const { width, height } = Dimensions.get('window');
 
 export default class AuthWatcher extends Component {
-  state = {
-    reportStatus: 0,
-  }
-  
-  sendReport = () => {
-    console.log(this.props.dailyAuthID);
-        
-    if (this.state.reportStatus === 0) {
-      axios
-        .post('http://49.50.172.58:3000/report_judges', {
-          headers: {
-            'content-type': 'x-www-form-urlencoded',
-          },
-          daily_auth_id: this.props.dailyAuthID,
-          plan_id: this.props.planID,
-          status: this.props.status,
-        })
-        .then(() => {
-        })
-        .catch(() => {
-
-        });
-  
-      this.setState({ reportStatus: 1 });      
-      alert('신고 접수가 완료 되었습니다');
-    } else {
-      alert('이미 신고가 접수되었습니다.');
-    }
-  }
-
   render() {
     const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU';
     let emoticon = null;
@@ -88,12 +56,6 @@ export default class AuthWatcher extends Component {
             </Text>     
           </View>
           
-          <TouchableOpacity 
-            style={{ height: height / 34, width: width / 15 }}
-            onPress={() => this.sendReport()}
-          >
-            <FontAwesome name="send-o" size={18} style={{ marginLeft: 5, marginTop: 2 }} />
-          </TouchableOpacity>
         </View>
       );
     } else {

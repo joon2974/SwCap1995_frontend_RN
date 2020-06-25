@@ -22,6 +22,7 @@ export default class VariableCard extends Component {
     watchers: [],
     authTitle: '',
   }
+  
 
   componentDidMount() {
     if (this.props.data.status === 'done') {
@@ -36,7 +37,28 @@ export default class VariableCard extends Component {
     test2 = test2.concat(test[1], '월 ', test[2][0], test[2][1], '일 인증');
     this.setState({ authTitle: test2 });
   }
-  
+
+
+  sendReport = () => {
+    console.log(this.props.data);
+    axios
+      .post('http://49.50.172.58:3000/report_judges', {
+        headers: {
+          'content-type': 'x-www-form-urlencoded',
+        },
+        daily_auth_id: this.props.data.id,
+        plan_id: this.props.data.plan_id,
+        status: this.props.data.status,
+      })
+      .then(() => {   
+        alert('신고 접수가 완료 되었습니다');
+      })
+      .catch(() => {
+        alert('신고가 접수되지 않았습니다. 고객센터에 문의해 주세요.');
+      });
+  }
+
+
   setTable = () => {
     axios.get('http://49.50.172.58:3000/plans/' + this.props.data.plan_id).then((res) => {
       this.setState({ planData: res.data });
@@ -106,6 +128,8 @@ export default class VariableCard extends Component {
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
             exploreComment={this.toggleModal}
+
+            sendReport={() => this.sendReport()}
       />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
@@ -165,6 +189,8 @@ export default class VariableCard extends Component {
             checkBoxStatus={this.state.watchStatusResult}
             planData={this.state.planData}
             exploreComment={this.toggleModal}
+
+            sendReport={() => this.sendReport()}
             />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               
