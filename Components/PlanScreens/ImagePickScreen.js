@@ -37,6 +37,7 @@ export default class ImagePickScreen extends Component {
       });
       if (!result.cancelled) {
         this.setState({ image: result.uri });
+        Alert.alert('', '한번 얼굴을 등록하면 변경할 수 없습니다. 주의해 주세요!');
       } else {
         this.props.navigation.popToTop();
       }
