@@ -251,8 +251,8 @@ export default class PlanMain extends Component {
                 source={{ uri: 'https://ifh.cc/g/gHDJv2.png' }} 
                 style={styles.imageStyle}
               />
-              <Text>Plan A는 사용자의 대리 인증을 방지하기 위해 본인 인증을 위한 수단으로 얼굴 인증을 사용하고 있습니다.</Text>
-              <Text>하단의 두 방법 중 하나의 방법으로 자신의 얼굴을 Plan A에 등록해 주세요.</Text>
+              <Text style={{ alignSelf: 'center' }}>Plan A는 사용자의 대리 인증을 방지하기 위해 본인 인증을 위한 수단으로 얼굴 인증을 사용하고 있습니다.</Text>
+              <Text style={{ alignSelf: 'center' }}>하단의 두 방법 중 하나의 방법으로 자신의 얼굴을 Plan A에 등록해 주세요.</Text>
             </View>
           </View>
 
