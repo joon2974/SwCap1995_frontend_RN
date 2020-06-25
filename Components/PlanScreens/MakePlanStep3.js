@@ -34,12 +34,22 @@ export default class MakePlanStep3 extends Component {
     formData.append('title', this.state.title);
     formData.append('category', this.props.route.params.category);
     formData.append('detailedCategory', this.props.route.params.planName);
-    formData.append('picture_rule_1', this.props.route.params.picture_rule_1);
-    formData.append('picture_rule_2', this.props.route.params.picture_rule_2);
-    formData.append('picture_rule_3', this.props.route.params.picture_rule_3);
-    formData.append('custom_picture_rule_1', this.props.route.params.custom_picture_rule_1);
-    formData.append('custom_picture_rule_2', this.props.route.params.custom_picture_rule_2);
-    formData.append('custom_picture_rule_3', this.props.route.params.custom_picture_rule_3);
+    if (this.props.route.params.is_custom) {
+      formData.append('picture_rule_1', this.props.route.params.custom_picture_rule_1);
+      formData.append('picture_rule_2', this.props.route.params.custom_picture_rule_2);
+      formData.append('picture_rule_3', this.props.route.params.custom_picture_rule_3);
+      formData.append('custom_picture_rule_1', this.props.route.params.custom_picture_rule_1);
+      formData.append('custom_picture_rule_2', this.props.route.params.custom_picture_rule_2);
+      formData.append('custom_picture_rule_3', this.props.route.params.custom_picture_rule_3);
+    } else {
+      formData.append('picture_rule_1', this.props.route.params.picture_rule_1);
+      formData.append('picture_rule_2', this.props.route.params.picture_rule_2);
+      formData.append('picture_rule_3', this.props.route.params.picture_rule_3);
+      formData.append('custom_picture_rule_1', this.props.route.params.picture_rule_1);
+      formData.append('custom_picture_rule_2', this.props.route.params.picture_rule_2);
+      formData.append('custom_picture_rule_3', this.props.route.params.picture_rule_3);
+    }
+    
     formData.append('plan_period', Number(this.props.route.params.endDate));
     formData.append('picture_time', Number(this.props.route.params.certifyTime));
     formData.append('plan_start_day', today.toString());

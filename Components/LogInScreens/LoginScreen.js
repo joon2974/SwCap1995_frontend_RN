@@ -128,6 +128,7 @@ export default class LoginScreen extends Component {
               }
             });
         } else {
+          this.setState({ modalVisible: false });
           console.log('User already signed-in Firebase.');
         }
       }.bind(this),
@@ -198,10 +199,12 @@ export default class LoginScreen extends Component {
           }
         })
         .catch((error) => {
+          this.setState({ modalVisible: false });
           alert(error);
           console.log(error);
         });
     } else {
+      this.setState({ modalVisible: false });
       console.log('facebook login failed!');
     }
   };
@@ -218,6 +221,7 @@ export default class LoginScreen extends Component {
           this.setState({ modalVisible: false });
         })
         .catch((error) => {
+          this.setState({ modalVisible: false });
           Alert.alert('ID 혹은 비밀번호를 확인해 주세요.');
           console.log(error);
         });
