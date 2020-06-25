@@ -444,10 +444,17 @@ export default class WatcherPage extends Component {
   
                   <TouchableOpacity
                     style={{
-                      width: width * 0.77,
-                      height: height / 12,
+                      width: width * 0.80,
+                      height: height / 13,
+                      backgroundColor: '#FD8A69',
+                      borderRadius: 15,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginLeft: 10,
                     }}
-                    onPress={this.toggleModal} />
+                    onPress={this.toggleModal}>
+                    <Text>닫기</Text>
+                  </TouchableOpacity>
   
                   <View style={{ marginBottom: 10 }} />
                 

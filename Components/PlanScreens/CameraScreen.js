@@ -61,7 +61,7 @@ export default class CameraScreen extends Component {
 
         if (uri) {
           this.setState({ imageUri: uri });
-          Alert.alert('', '사진을 찍었습니다!');
+          Alert.alert('', '한번 사진을 등록하면 변경하지 못합니다 주의해 주세요!');
           this.savePhoto(uri);
           this.setState({ isPhotoTaken: true });
         }
@@ -185,9 +185,10 @@ const styles = StyleSheet.create({
   },
   cameraStyle: {
     width: width - 40,
-    height: (width - 40) * 1.3,
+    height: (width - 40) * 1.25,
     borderRadius: 10,
     overflow: 'hidden',
+    marginTop: 10,
   },
   cameraContainer: {
     width: width,
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: width,
-    height: height * 0.1,
+    height: height * 0.08,
     alignItems: 'center',
     justifyContent: 'center',
   },

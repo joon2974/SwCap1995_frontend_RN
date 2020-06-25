@@ -20,6 +20,7 @@ const { width, height } = Dimensions.get('window');
 export default class MakePlanStep3 extends Component {
   state = {
     title: '',
+    description: '',
     isPublic: false,
   }
 
@@ -49,6 +50,7 @@ export default class MakePlanStep3 extends Component {
     formData.append('distrib_method', this.props.route.params.distribMethod);
     formData.append('is_custom', this.props.route.params.is_custom);
     formData.append('authentication_way', this.props.route.params.authentication_way);
+    formData.append('description', this.state.description);
 
     axios
       .post('http://49.50.172.58:3000/plans', formData, {
@@ -65,7 +67,7 @@ export default class MakePlanStep3 extends Component {
   };
 
   render() {
-    const { title, isPublic } = this.state;
+    const { title, isPublic, description } = this.state;
 
     return (
       <ScrollView style={styles.scrollViewStyle}>
@@ -202,6 +204,18 @@ export default class MakePlanStep3 extends Component {
                 keyboardType="email-address"
               />
             </View>
+            <View style={styles.titleContainer}>
+              <View style={styles.titleStyle}>
+                <Text>나만의 플랜 설명: </Text>
+              </View>
+              <TextInput
+                value={description}
+                onChangeText={(description) => this.setState({ description })}
+                style={styles.input}
+                placeholder="ex) 한달간 금주 플랜!!"
+                keyboardType="email-address"
+              />
+            </View>
             <View style={styles.isPublicSelectContainer}>
               <View style={styles.titleStyle}>
                 <Text>플랜 공개 설정: </Text>
@@ -225,7 +239,9 @@ export default class MakePlanStep3 extends Component {
             style={styles.nextStepBtn}
             onPress={() => {
               if (title.length === 0) {
-                Alert.alert('경고', '플랜 이름을 입력해 주세요!');
+                Alert.alert('', '플랜 이름을 입력해 주세요!');
+              } else if (description.length === 0) {
+                Alert.alert('', '플랜 설명을 입력해 주세요!');
               } else {
                 this.sendPlanInfo();
                 this.props.navigation.popToTop();
@@ -348,7 +364,7 @@ const styles = StyleSheet.create({
   },
   additionalInfoContainer: {
     width: width,
-    height: height * 0.2,
+    height: height * 0.25,
     alignItems: 'center',
     justifyContent: 'center',
   },

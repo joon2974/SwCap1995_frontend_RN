@@ -4,11 +4,14 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Platform,
+  Dimensions,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import firebase from 'firebase';
 
+const { width } = Dimensions.get('window');
 export default class ChangePassWord extends Component {
     state = {
       password: '',
@@ -48,7 +51,7 @@ export default class ChangePassWord extends Component {
             style={styles.input} />
           <TouchableOpacity
             activeOpacity={0.8}
-            style={styles.button}
+            style={styles.nextStepBtn}
             onPress={() => this.changepassword()}>
             <Text style={styles.text}>비밀번호 변경</Text>
           </TouchableOpacity>
@@ -66,16 +69,33 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
+    borderRadius: 5,
     height: 40,
-    width: 180,
+    width: width / 2,
     marginBottom: 20,
   },
-  button: {
-    height: 30,
-    width: 80,
-    borderWidth: 2,
-    borderRadius: 5,
+  nextStepBtn: {
+    width: width / 2,
+    height: 40,
+    backgroundColor: '#FD8A69',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 15,
+    marginTop: 30,
+    marginBottom: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgb(50, 50, 50)',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        shadowOffset: {
+          height: -1,
+          width: 0,
+        },
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
 });

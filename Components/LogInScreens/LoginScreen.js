@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from 'expo-google-app-auth';
@@ -22,6 +24,7 @@ export default class LoginScreen extends Component {
   state = {
     ID: '',
     password: '',
+    modalVisible: false,
   };
 
   gotoSignUp = () => {
@@ -39,7 +42,7 @@ export default class LoginScreen extends Component {
       },
       is_email_login: isEmailLogin,
       email: userID,
-    });
+    }).then(() => this.setState({ modalVisible: false }));
   };
 
   isUserEqual = (googleUser, firebaseUser) => {
@@ -63,6 +66,7 @@ export default class LoginScreen extends Component {
   };
 
   onSignIn = (googleUser) => {
+    this.setState({ modalVisible: true });
     console.log('Google Auth Response', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged(
@@ -131,6 +135,7 @@ export default class LoginScreen extends Component {
   };
 
   signInWithGoogleAsync = async () => {
+    this.setState({ modalVisible: true });
     try {
       const result = await Google.logInAsync({
         behavior: 'web',
@@ -142,6 +147,7 @@ export default class LoginScreen extends Component {
         androidStandaloneAppClientId:
           '842449399588-p26hb0obemoua7gn7eglfdnkkft08mln.apps.googleusercontent.com',
       });
+      this.setState({ modalVisible: false });
 
       if (result.type === 'success') {
         this.onSignIn(result);
@@ -169,18 +175,17 @@ export default class LoginScreen extends Component {
         .auth()
         .signInWithCredential(credential)
         .then((result) => {
-          console.log('sign in result', result);
           this.sendLoginPath(result.user.email, false);
+          console.log('ajsjsjsjsjsjdsdsds', result.additionalUserInfo.profile);
           if (result.additionalUserInfo.isNewUser) {
             firebase
               .database()
               .ref('/users/' + result.user.uid)
               .set({
                 gmail: result.user.email,
-                profile_picture: result.addionalUserInfo.profile.picture,
-                locale: result.addionalUserInfo.profile.locale,
-                first_name: result.addionalUserInfo.profile.given_name,
-                last_name: result.addionalUserInfo.profile.family_name,
+                profile_picture: result.additionalUserInfo.profile.picture,
+                first_name: result.additionalUserInfo.profile.first_name,
+                last_name: result.additionalUserInfo.profile.last_name,
                 created_at: Date.now(),
               });
           } else {
@@ -193,6 +198,7 @@ export default class LoginScreen extends Component {
           }
         })
         .catch((error) => {
+          alert(error);
           console.log(error);
         });
     } else {
@@ -201,6 +207,7 @@ export default class LoginScreen extends Component {
   };
 
   logInWithPlanA = async (ID, password) => {
+    this.setState({ modalVisible: true });
     try {
       firebase
         .auth()
@@ -208,6 +215,7 @@ export default class LoginScreen extends Component {
         .then((user) => {
           console.log(user);
           this.sendLoginPath(ID, true);
+          this.setState({ modalVisible: false });
         })
         .catch((error) => {
           Alert.alert('ID 혹은 비밀번호를 확인해 주세요.');
@@ -219,9 +227,19 @@ export default class LoginScreen extends Component {
   };
 
   render() {
-    const { ID, password } = this.state;
+    const { ID, password, modalVisible } = this.state;
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+        >
+          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <ActivityIndicator size="large" />
+            <Text>불러오는 중...</Text>
+          </View>
+        </Modal>
         <View style={styles.logoContainer}>
           <Image
             source={{

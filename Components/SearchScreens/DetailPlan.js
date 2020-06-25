@@ -68,27 +68,31 @@ export default class DetailPlan extends Component {
 
 
       axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: ' + this.state.item.id + '}) {createdAt}}').then((res) => {
-        this.setState({
-          authCreatedAt: res.data.data.dailyAuthenticationGet.map((data) => {
-            const date1 = data.createdAt.split('-');
-            let date2 = '';
-            date2 = date2.concat(date1[2][0] + date1[2][1]);
-            return date2;
-          }),
-        });  
+        if (res.data.data.dailyAuthenticationGet.length !== 0) {
+          this.setState({
+            authCreatedAt: res.data.data.dailyAuthenticationGet.map((data) => {
+              const date1 = data.createdAt.split('-');
+              let date2 = '';
+              date2 = date2.concat(date1[2][0] + date1[2][1]);
+              return date2;
+            }),
+          });  
+        }
       }).catch((error) => {
         console.log(error);
         alert(error);
       });
 
       axios.get('http://49.50.172.58:3000/graphql?query={dailyAuthenticationGet(where: {plan_id: ' + this.state.item.id + '}) {status}}').then((res) => {
-        this.setState({
-          authStatus: res.data.data.dailyAuthenticationGet.map((data) => {
-            if (data.status === 'done') return 1;
-            else if (data.status === 'reject') return 0;
-            else return 0.5;
-          }), 
-        });
+        if (res.data.data.dailyAuthenticationGet.length !== 0) {
+          this.setState({
+            authStatus: res.data.data.dailyAuthenticationGet.map((data) => {
+              if (data.status === 'done') return 1;
+              else if (data.status === 'reject') return 0;
+              else return 0.5;
+            }), 
+          });
+        }
       }).catch((error) => {
         console.log(error);
         alert(error);
@@ -226,8 +230,6 @@ export default class DetailPlan extends Component {
               <View style={styles.lineDivider} />    
                         
               <View style={{ alignItems: 'center', marginVertical: 10 }}>
- 
-                
                 <View style={{ alignItems: 'center' }}>
 
                   {/* <ContributionGraph
@@ -240,48 +242,47 @@ export default class DetailPlan extends Component {
                 /> */}
 
                   {congratulation}
-
-
-                  <LineChart
-                    data={{
-                      labels: this.state.authCreatedAt,
-                      datasets: [
-                        {
-                          data: this.state.authStatus,
+                  <View style={{ backgroundColor: '#139C73', marginVertical: 8, borderRadius: 16 }}>
+                    <LineChart
+                      data={{
+                        labels: this.state.authCreatedAt,
+                        datasets: [
+                          {
+                            data: this.state.authStatus,
+                          },
+                        ],
+                      }}
+                      width={width * 0.9} // from react-native
+                      height={height / 4}
+                      yAxisLabel=""
+                      yAxisSuffix=""
+                      formatYLabel={(data) => {
+                        if (data === '1.00') return '성공';
+                        else if (data === '0.50') return '보류';
+                        else return '실패';
+                      }}
+                      segments={2}
+                      fromZero={true}
+                      chartConfig={{
+                        backgroundGradientFrom: '#139C73',
+                        backgroundGradientTo: 'black',
+                        decimalPlaces: 2, // optional, defaults to 2dp
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {                        
                         },
-                      ],
-                    }}
-                    width={width * 0.9} // from react-native
-                    height={height / 4}
-                    yAxisLabel=""
-                    yAxisSuffix=""
-                    formatYLabel={(data) => {
-                      if (data === '1.00') return '성공';
-                      else if (data === '0.50') return '보류';
-                      else return '실패';
-                    }}
-                    segments={2}
-                    fromZero={true}
-                    chartConfig={{
-                      backgroundGradientFrom: '#139C73',
-                      backgroundGradientTo: 'black',
-                      decimalPlaces: 2, // optional, defaults to 2dp
-                      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                      style: {                        
-                      },
-                      propsForDots: { 
-                        r: '6',
-                        strokeWidth: '2',
-                        stroke: '#fd8a69',
-                      },
-                    }}
-                    bezier
-                    style={{
-                      marginVertical: 8,
-                      borderRadius: 16,
-                    }}
-                  />
+                        propsForDots: { 
+                          r: '6',
+                          strokeWidth: '2',
+                          stroke: '#fd8a69',
+                        },
+                      }}
+                      bezier
+                      style={{
+                        borderRadius: 16,
+                      }}
+                    />
+                  </View>
                 </View>
 
                 <TouchableOpacity 
@@ -299,14 +300,13 @@ export default class DetailPlan extends Component {
                   인증 방법에 대해...
                 </Text>
                 <Text style={styles.subTitleStyle}>
-                  {'Rule1: ' + item.picture_rule_1}
+                  {'Main Rule: ' + item.picture_rule_1}
                 </Text>
                 <Text style={styles.subTitleStyle}>
-                
-                  {'Rule2: ' + item.picture_rule_2}
+                  {'Sub Rule1: ' + item.picture_rule_2}
                 </Text>
                 <Text style={styles.subTitleStyle}>
-                  {'Rule3: ' + item.picture_rule_3}
+                  {'Sub Rule2: ' + item.picture_rule_3}
                 </Text>
                 
                 <View style={{ marginBottom: 10 }} />
