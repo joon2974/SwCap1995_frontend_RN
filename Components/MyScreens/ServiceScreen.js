@@ -21,7 +21,6 @@ export default class ServiceScreen extends Component {
       email: '',
     }
 
-
     setCategory=(category) => {
       this.setState({ category: category });
     }
@@ -49,11 +48,13 @@ export default class ServiceScreen extends Component {
               <Picker
                 selectedValue={category}
                 style={{
-                  height: 30, width: width - 100, 
+                  height: 45, 
+                  width: width - 100,
+                  marginBottom: 10,
                 }}
+                itemStyle={{ height: 45 }}
                 onValueChange={this.setCategory}
-      >
-
+              >
                 <Picker.Item label="템플릿제의" value="템플릿제의" />
                 <Picker.Item label="인증" value="인증" />
                 <Picker.Item label="감시" value="감시" />
@@ -113,8 +114,10 @@ const styles = StyleSheet.create({
   },
   titleInputStyle: {
     width: width - 100,
+    height: 40,
     borderRadius: 5,
     backgroundColor: '#F2F2F2',
+    paddingLeft: 5,
   },
   pickerContainer: {
     marginBottom: 20,
@@ -125,6 +128,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#F2F2F2',
     flexShrink: 1,
+    paddingLeft: 5,
+    paddingTop: 5,
   },    
   
   button: {
