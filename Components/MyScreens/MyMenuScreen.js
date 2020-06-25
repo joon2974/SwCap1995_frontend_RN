@@ -221,8 +221,8 @@ export default class MyMenuScreen extends Component {
                   <View style={{ height: 35 }} />
                 </View>
                 <View style={styles.quarterContainer}>
-                  <Text style={styles.userInfoMenuText}>포인트</Text>
-                  <Text>{this.state.myPoint}</Text> 
+                  <Text style={styles.userInfoMenuText}>도전 포인트</Text>
+                  <Text>{challPoint}</Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.button}
@@ -232,8 +232,8 @@ export default class MyMenuScreen extends Component {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.quarterContainer}>
-                  <Text style={styles.userInfoMenuText}>도전 포인트</Text>
-                  <Text>{challPoint}</Text>
+                  <Text style={styles.userInfoMenuText}> 보너스 포인트</Text>
+                  <Text>{this.state.myPoint}</Text> 
                   <View style={{ height: 35 }} />
                 </View>
               </View>
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
   },
   quarterContainer: {
     height: height / 8,
-    width: width * 0.33,
+    width: width * 0.28,
     alignItems: 'center',
     justifyContent: 'center',
   },
