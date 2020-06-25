@@ -36,7 +36,7 @@ export default class Watcher extends Component {
             </Text>
             <Text style={styles.watcherInfo}>
               {'획득 포인트: '}
-              {this.props.data.point_sum}
+              {this.props.data.point_sum.toFixed(2)}
             </Text>
           </View>
         </View>

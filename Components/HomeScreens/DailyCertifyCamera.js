@@ -164,8 +164,8 @@ export default class DayCertifyCamera extends Component {
               <TouchableOpacity
                 style={styles.uploadBtn}
                 onPress={() => {
-                  this.sendImage(imageUri, comment);
                   this.setState({ postDisable: true });
+                  this.sendImage(imageUri, comment);
                 }}
                 disabled={postDisable}
               >

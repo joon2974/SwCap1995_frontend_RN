@@ -77,7 +77,7 @@ export default class MyPlan extends Component {
             {this.props.nickname 
               && (
               <View style={{ flexDirection: 'row' }}>
-                <Text>
+                <Text style={styles.textstyle}>
                   🙍 
                   {' '}
                   {this.props.nickname}
