@@ -31,6 +31,7 @@ export default class DayCertifyCamera extends Component {
       isPhotoTaken: false,
       imageUri: null,
       comment: '',
+      disable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -57,6 +58,7 @@ export default class DayCertifyCamera extends Component {
   };
 
   takePhoto = async () => {
+    this.setState({ disable: true });
     try {
       if (this.cameraRef.current) {
         const { uri } = await this.cameraRef.current.takePictureAsync({
@@ -129,7 +131,7 @@ export default class DayCertifyCamera extends Component {
 
   render() {
     const {
-      hasPermission, cameraType, isPhotoTaken, imageUri, comment,
+      hasPermission, cameraType, isPhotoTaken, imageUri, comment, disable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -186,7 +188,10 @@ export default class DayCertifyCamera extends Component {
               />
             </View>
             <View style={styles.shutterBtnContainer}>
-              <TouchableOpacity onPress={this.takePhoto}>
+              <TouchableOpacity 
+                onPress={this.takePhoto}
+                disabled={disable}
+              >
                 <Image
                   source={{
                     uri:

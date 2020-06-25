@@ -62,6 +62,7 @@ export default class FaceAuthenticationScreen extends Component {
   }
 
   takePhoto = async () => {
+    this.setState({ disable: true });
     const { isFaceDetected } = this.state;
     if (isFaceDetected) {
       try {
@@ -127,6 +128,7 @@ export default class FaceAuthenticationScreen extends Component {
       imageUri,
       imageBase64,
       modalVisible,
+      disable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -178,6 +180,7 @@ export default class FaceAuthenticationScreen extends Component {
             <View style={styles.shutterBtnContainer}>
               <TouchableOpacity
                 onPress={this.takePhoto}
+                disabled={disable}
               >
                 <Image 
                   source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png' }} 

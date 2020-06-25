@@ -27,6 +27,7 @@ export default class CustomCameraScreen extends Component {
       cameraType: Camera.Constants.Type.front,
       isPhotoTaken: false,
       imageUri: null,
+      disable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -53,6 +54,7 @@ export default class CustomCameraScreen extends Component {
   }
 
   takePhoto = async () => {
+    this.setState({ disable: true });
     try {
       if (this.cameraRef.current) {
         const { uri } = await this.cameraRef.current.takePictureAsync({
@@ -103,6 +105,7 @@ export default class CustomCameraScreen extends Component {
       cameraType,
       isPhotoTaken,
       imageUri,
+      disable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -143,6 +146,7 @@ export default class CustomCameraScreen extends Component {
             <View style={styles.shutterBtnContainer}>
               <TouchableOpacity
                 onPress={this.takePhoto}
+                disabled={disable}
               >
                 <Image 
                   source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png' }} 
