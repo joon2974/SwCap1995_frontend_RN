@@ -1077,26 +1077,51 @@ export class CardSix2 extends Component {
       );
     } else if (this.props.authData.status === 'reject') { 
       checkBox = (
-        <View
-          style={[
-            {
-              justifyContent: 'center',
-              zIndex: 3,
-              alignItems: 'center',
-              width: scale(120),
-              height: scale(50),
-              margin: 10,
-              shadowRadius: 5,
-              borderRadius: scale(40),
-              backgroundColor: this.props.iconBackground2,
-            },
-          ]}
+        <View style={{ flexDirection: 'row' }}>
+          <View
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(60),
+                height: scale(50),
+                marginVertical: 10,
+                shadowRadius: 5,
+                borderRadius: scale(40),
+                backgroundColor: this.props.iconBackground2,
+                flexDirection: 'row',
+              },
+            ]}
        >
-          <Icon
-            name={this.props.icon2}
-            color={this.props.iconColor2}
-            size={scale(20)}
+            <Icon
+              name={this.props.icon2}
+              color={this.props.iconColor2}
+              size={scale(20)}
          />
+          </View>
+          <TouchableOpacity
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(60),
+                height: scale(50),
+                margin: 10,
+                shadowRadius: 5,
+                borderRadius: scale(40),
+                backgroundColor: 'red',
+                flexDirection: 'row',
+              },
+            ]}
+            onPress={this.props.sendReport}
+       >
+            <Text style={{ color: 'white', fontSize: 20 }}>
+              신고
+            </Text>
+
+          </TouchableOpacity>
         </View>
     
       );
@@ -1342,26 +1367,51 @@ export class CardSeven2 extends Component {
       );
     } else if (this.props.authData.status === 'reject') { 
       checkBox = (
-        <View
-          style={[
-            {
-              justifyContent: 'center',
-              zIndex: 3,
-              alignItems: 'center',
-              width: scale(70),
-              height: scale(30),
-              margin: 2,
-              shadowRadius: 5,
-              borderRadius: scale(15),
-              backgroundColor: this.props.iconBackground2,
-            },
-          ]}
-            >
-          <Icon
-            name={this.props.icon2}
-            color={this.props.iconColor2}
-            size={scale(15)}
-              />
+
+        <View style={{ flexDirection: 'row' }}>
+          <View
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(35),
+                height: scale(30),
+                marginVertical: 2,
+                shadowRadius: 5,
+                borderRadius: scale(15),
+                backgroundColor: this.props.iconBackground2,
+              },
+            ]}
+              >
+            <Icon
+              name={this.props.icon2}
+              color={this.props.iconColor2}
+              size={scale(15)}
+                />
+          </View>
+
+          <TouchableOpacity
+            style={[
+              {
+                justifyContent: 'center',
+                zIndex: 3,
+                alignItems: 'center',
+                width: scale(35),
+                height: scale(30),
+                margin: 2,
+                shadowRadius: 5,
+                borderRadius: scale(15),
+                backgroundColor: 'red',
+              },
+            ]}
+            onPress={this.props.sendReport}
+              >
+            <Text style={{ color: 'white', fontSize: 15 }}>
+              신고
+            </Text>
+          </TouchableOpacity>
+
         </View>
       );
     } else if (this.props.authData.status === 'invalid') { 
@@ -1492,7 +1542,9 @@ export class CardSeven2 extends Component {
           <View style={{
             flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginRight: 10, 
           }}>
-
+              
+            {checkBox}
+     
             <TouchableOpacity
               style={{
                 alignItems: 'center', 
@@ -1501,7 +1553,7 @@ export class CardSeven2 extends Component {
                 width: screenWidth / 4.5,
                 backgroundColor: '#FD8A69',
                 borderRadius: 10,
-                marginRight: 15, 
+                marginLeft: 15, 
               }}
               onPress={this.props.exploreComment}>
               <Text style={{ color: 'white' }}>
@@ -1510,7 +1562,6 @@ export class CardSeven2 extends Component {
             </TouchableOpacity>
 
 
-            {checkBox}
           </View>
 
         </View>

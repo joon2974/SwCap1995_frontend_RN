@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  View,
   Dimensions,
   Platform,
   Image,
@@ -36,7 +37,47 @@ export default class AuthWatcher extends Component {
       );
     }
 
-   
+    let watchingResult = null;
+    if (this.props.isCorrect === false) {
+      watchingResult = (
+        <View style={{ flexDirection: 'row' }}>
+        
+          <View style={{  
+            alignItems: 'center', 
+            justifyContent: 'center',
+            height: height / 34,
+            width: width / 6,
+            backgroundColor: '#fd8a69',
+            borderRadius: 10,
+            marginRight: 5, 
+          }}>   
+            <Text style={{ color: 'white' }}>
+              reject
+            </Text>     
+          </View>
+          
+        </View>
+      );
+    } else {
+      watchingResult = (
+        
+        <View style={{  
+          alignItems: 'center', 
+          justifyContent: 'center',
+          height: height / 34,
+          width: width / 6,
+          backgroundColor: 'green',
+          borderRadius: 10,
+          marginRight: 5, 
+        }}>   
+          <Text style={{ color: 'white' }}>
+            accept
+          </Text>     
+        </View> 
+      );
+    }
+
+    
     return (
       <TouchableOpacity 
         style={styles.container}
@@ -46,11 +87,17 @@ export default class AuthWatcher extends Component {
           source={{ uri: uri }} 
           style={styles.imageStyle}
             />
-        <Text style={styles.watcherInfo}>
-          {this.props.comment}
-        </Text>
-
-        {emoticon}
+        <View style={{ width: width / 1.5 }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.watcherInfo}>
+              {this.props.comment}
+            </Text>
+            {emoticon}
+          </View>
+          <View style={{ alignItems: 'flex-end' }}>
+            {watchingResult}
+          </View>
+        </View>
       </TouchableOpacity>
 
     );

@@ -177,7 +177,7 @@ export default class WatcherInfo extends Component {
         <CardNine3
           title={this.props.planData.title}
           subTitle={this.props.planData.category} 
-          description={this.props.planData.custom_picture_rule_3} // description => subtitle 
+          description={this.props.planData.description} // description => subtitle 
           image={{ uri: this.state.titleURI }}
           exploreMoreInfo={this.props.exploreMoreInfo}
         />
