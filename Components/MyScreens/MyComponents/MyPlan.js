@@ -33,12 +33,14 @@ export default class MyPlan extends Component {
         <View style={this.props.status === 'waiting' ? styles.watingtopContainer : styles.completetopContainer}>
           <Text style={{ fontWeight: 'bold' }}>{this.props.title}</Text>
         
+          {!this.props.isMyMenu && (
           <TouchableOpacity
             onPress={() => this.props.btnFunc(this.props.id)}
             style={styles.btnContainer}>
            
             <Feather name="more-horizontal" size={24} color="black" />
           </TouchableOpacity>
+          )}
         </View>
         <View style={styles.planInfoContainer}>
           <TouchableOpacity 
@@ -51,7 +53,7 @@ export default class MyPlan extends Component {
                 uri: this.props.url,
               }}
               style={styles.photoStyle}
-                />
+            />
           </TouchableOpacity>
           <View style={{
             justifyContent: 'space-evenly', height: 200,

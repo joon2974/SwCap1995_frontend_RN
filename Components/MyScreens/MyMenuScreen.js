@@ -152,7 +152,6 @@ export default class MyMenuScreen extends Component {
     const { planData, challPoint, commits } = this.state;
     const plans = planData.map((data) => (
       <MyPlan
-      
         key={data.id}
         planId={data.id}
         title={data.title}
@@ -164,7 +163,8 @@ export default class MyMenuScreen extends Component {
         faceAuthentication={this.faceAuthentication}
         today_auth={data.today_auth}
         percent={data.percent}
-          />
+        isMyMenu={true}
+      />
     ));
 
     return (
