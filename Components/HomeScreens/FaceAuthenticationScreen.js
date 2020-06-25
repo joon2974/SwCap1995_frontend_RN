@@ -36,6 +36,8 @@ export default class FaceAuthenticationScreen extends Component {
       imageBase64: null,
       modalVisible: false,
       isFaceDetected: false,
+      disable: false,
+      postDisable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -62,6 +64,7 @@ export default class FaceAuthenticationScreen extends Component {
   }
 
   takePhoto = async () => {
+    this.setState({ disable: true });
     const { isFaceDetected } = this.state;
     if (isFaceDetected) {
       try {
@@ -127,6 +130,8 @@ export default class FaceAuthenticationScreen extends Component {
       imageUri,
       imageBase64,
       modalVisible,
+      disable,
+      postDisable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -150,7 +155,11 @@ export default class FaceAuthenticationScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.recognize(imageBase64)}  
+              onPress={() => {
+                this.setState({ postDisable: true });
+                this.recognize(imageBase64);
+              }}
+              disabled={postDisable}
             >
               <Text>이 사진으로 본인 인증하기</Text>
             </TouchableOpacity>
@@ -178,6 +187,7 @@ export default class FaceAuthenticationScreen extends Component {
             <View style={styles.shutterBtnContainer}>
               <TouchableOpacity
                 onPress={this.takePhoto}
+                disabled={disable}
               >
                 <Image 
                   source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png' }} 

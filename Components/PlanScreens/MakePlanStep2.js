@@ -209,7 +209,7 @@ export default class MakePlanStep2 extends Component {
               <View style={styles.pointsStyle}>
                 <View style={styles.currentPointEach}>
                   <Text style={{ fontSize: 15 }}>
-                    잔여 포인트: 
+                    보너스 포인트: 
                     {' '}
                     {point}
                   </Text>

@@ -19,6 +19,7 @@ export default class DailyCertifyGalary extends Component {
   state = {
     image: null,
     comment: '',
+    disable: false,
   };
 
   componentDidMount = async () => {
@@ -79,7 +80,7 @@ export default class DailyCertifyGalary extends Component {
   };
 
   render() {
-    const { image, comment } = this.state;
+    const { image, comment, disable } = this.state;
 
     return (
       <ScrollView>
@@ -103,7 +104,11 @@ export default class DailyCertifyGalary extends Component {
           />
           <TouchableOpacity
             style={styles.uploadBtn}
-            onPress={() => this.sendImage(image, comment)}
+            onPress={() => {
+              this.setState({ disable: true });
+              this.sendImage(image, comment);
+            }}
+            disabled={disable}
           >
             <Text>이 사진으로 일일 인증하기</Text>
           </TouchableOpacity>

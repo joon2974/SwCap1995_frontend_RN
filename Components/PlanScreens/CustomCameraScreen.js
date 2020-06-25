@@ -27,6 +27,8 @@ export default class CustomCameraScreen extends Component {
       cameraType: Camera.Constants.Type.front,
       isPhotoTaken: false,
       imageUri: null,
+      disable: false,
+      postDisable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -53,6 +55,7 @@ export default class CustomCameraScreen extends Component {
   }
 
   takePhoto = async () => {
+    this.setState({ disable: true });
     try {
       if (this.cameraRef.current) {
         const { uri } = await this.cameraRef.current.takePictureAsync({
@@ -103,6 +106,8 @@ export default class CustomCameraScreen extends Component {
       cameraType,
       isPhotoTaken,
       imageUri,
+      disable,
+      postDisable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -116,7 +121,11 @@ export default class CustomCameraScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.sendImage(imageUri)}  
+              onPress={() => {
+                this.setState({ postDisable: true });
+                this.sendImage(imageUri);
+              }}
+              disabled={postDisable}
             >
               <Text>이 사진을 인증사진으로 사용하기</Text>
             </TouchableOpacity>
@@ -143,6 +152,7 @@ export default class CustomCameraScreen extends Component {
             <View style={styles.shutterBtnContainer}>
               <TouchableOpacity
                 onPress={this.takePhoto}
+                disabled={disable}
               >
                 <Image 
                   source={{ uri: 'https://kr.object.ncloudstorage.com/swcap1995/001-camera.png' }} 

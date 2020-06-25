@@ -15,7 +15,7 @@ export default class ServiceCard extends Component {
     return (
         
       <View style={styles.noticeContainer}>
-        <View>
+        <View style={{ marginTop: 15, marginBottom: 10 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{this.props.title}</Text>
         </View>
         <View style={styles.lineDivider} />
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     
   lineDivider: {
     backgroundColor: '#F2F2F2',
-    width: width - 30,
+    width: width - 75,
     height: 1.5,
     marginLeft: 15,
     marginBottom: 15,

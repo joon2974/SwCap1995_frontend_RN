@@ -36,7 +36,7 @@ export default class WatcherInfo extends Component {
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
     watchers: [1, 2, 3],
     watchersComment: ['빵준이', '한수찬', '김첨지'],
-    isModalVisible: 0,
+    isModalVisible: false,
     pointHistory: [500],
     pointDate: ['6월 1일'],
     keysPointAndCount: [],
