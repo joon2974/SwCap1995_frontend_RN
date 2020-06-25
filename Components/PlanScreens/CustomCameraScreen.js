@@ -28,6 +28,7 @@ export default class CustomCameraScreen extends Component {
       isPhotoTaken: false,
       imageUri: null,
       disable: false,
+      postDisable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -106,6 +107,7 @@ export default class CustomCameraScreen extends Component {
       isPhotoTaken,
       imageUri,
       disable,
+      postDisable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -119,7 +121,11 @@ export default class CustomCameraScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.sendImage(imageUri)}  
+              onPress={() => {
+                this.setState({ postDisable: true });
+                this.sendImage(imageUri);
+              }}
+              disabled={postDisable}
             >
               <Text>이 사진을 인증사진으로 사용하기</Text>
             </TouchableOpacity>

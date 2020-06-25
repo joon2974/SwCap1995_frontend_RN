@@ -42,7 +42,7 @@ export default class WatcherPage extends Component {
     dateConverted: '',
 
     titleURI: 'https://kr.object.ncloudstorage.com/swcap1995/plans/noimg.png',
-    isModalVisible: 0,
+    isModalVisible: false,
     keysPointAndCount: [],
     pointAndCount: [],
     distributedPoint: 0,

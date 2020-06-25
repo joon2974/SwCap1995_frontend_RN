@@ -32,6 +32,7 @@ export default class DayCertifyCamera extends Component {
       imageUri: null,
       comment: '',
       disable: false,
+      postDisable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -131,7 +132,7 @@ export default class DayCertifyCamera extends Component {
 
   render() {
     const {
-      hasPermission, cameraType, isPhotoTaken, imageUri, comment, disable,
+      hasPermission, cameraType, isPhotoTaken, imageUri, comment, disable, postDisable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -162,7 +163,11 @@ export default class DayCertifyCamera extends Component {
               />
               <TouchableOpacity
                 style={styles.uploadBtn}
-                onPress={() => this.sendImage(imageUri, comment)}
+                onPress={() => {
+                  this.sendImage(imageUri, comment);
+                  this.setState({ postDisable: true });
+                }}
+                disabled={postDisable}
               >
                 <Text>이 사진으로 일일 인증하기</Text>
               </TouchableOpacity>

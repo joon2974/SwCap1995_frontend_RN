@@ -80,8 +80,8 @@ export default class MyPlan extends Component {
                 <Text>
                   🙍 
                   {' '}
+                  {this.props.nickname}
                 </Text>
-                <Text style={{ marginLeft: 5, fontSize: 16 }}>{this.props.nickname}</Text>
               </View>
               )
             }

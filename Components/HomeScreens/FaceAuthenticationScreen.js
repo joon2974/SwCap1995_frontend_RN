@@ -36,6 +36,8 @@ export default class FaceAuthenticationScreen extends Component {
       imageBase64: null,
       modalVisible: false,
       isFaceDetected: false,
+      disable: false,
+      postDisable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -129,6 +131,7 @@ export default class FaceAuthenticationScreen extends Component {
       imageBase64,
       modalVisible,
       disable,
+      postDisable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -152,7 +155,11 @@ export default class FaceAuthenticationScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.recognize(imageBase64)}  
+              onPress={() => {
+                this.setState({ postDisable: true });
+                this.recognize(imageBase64);
+              }}
+              disabled={postDisable}
             >
               <Text>이 사진으로 본인 인증하기</Text>
             </TouchableOpacity>

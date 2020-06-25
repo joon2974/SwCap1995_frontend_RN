@@ -28,6 +28,7 @@ export default class CameraScreen extends Component {
       isPhotoTaken: false,
       imageUri: null,
       disable: false,
+      postDisable: false,
     };
 
     this.cameraRef = React.createRef();
@@ -121,6 +122,7 @@ export default class CameraScreen extends Component {
       isPhotoTaken,
       imageUri,
       disable,
+      postDisable,
     } = this.state;
 
     if (hasPermission === true) {
@@ -134,7 +136,11 @@ export default class CameraScreen extends Component {
             />
             <TouchableOpacity 
               style={styles.uploadBtn}
-              onPress={() => this.sendImage(imageUri)}  
+              onPress={() => {
+                this.setState({ postDisable: true });
+                this.sendImage(imageUri);
+              }}
+              disabled={postDisable}
             >
               <Text>이 사진으로 얼굴 등록하기</Text>
             </TouchableOpacity>

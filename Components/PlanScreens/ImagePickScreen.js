@@ -17,6 +17,7 @@ const { width } = Dimensions.get('window');
 export default class ImagePickScreen extends Component {
   state = {
     image: null,
+    disable: false,
   }
 
   componentDidMount = async () => {
@@ -68,7 +69,7 @@ export default class ImagePickScreen extends Component {
   }
 
   render() {
-    const { image } = this.state;
+    const { image, disable } = this.state;
 
     return (
       <View style={styles.container}>
@@ -80,7 +81,11 @@ export default class ImagePickScreen extends Component {
         )}
         <TouchableOpacity 
           style={styles.uploadBtn}
-          onPress={() => this.sendImage(image)}  
+          onPress={() => {
+            this.setState({ disable: true });
+            this.sendImage(image);
+          }}
+          disabled={disable}
         >
           <Text>이 사진으로 얼굴 등록하기</Text>
         </TouchableOpacity>
