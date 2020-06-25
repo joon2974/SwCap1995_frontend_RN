@@ -207,8 +207,10 @@ export default class WatcherPage extends Component {
                     this.setState({ onOff: index });
                   }} 
                 />
+                  
               ))
             }
+            
                 <View style={styles.lineDivider} />
 
               </View>

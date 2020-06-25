@@ -204,7 +204,7 @@ export default class DetailPlan extends Component {
 
               <CardNine
                 title={item.detailedCategory}
-                subTitle={item.custom_picture_rule_3}
+                subTitle={item.description}
                 description={this.state.date}
                 image={{ uri: item.image_url }}
                // image={this.setTitleImage()}
@@ -321,6 +321,7 @@ export default class DetailPlan extends Component {
                 yAxisSuffix="%"
                 chartConfig={chartConfig}
                 verticalLabelRotation={30}
+                fromZero={true}
            />
 
               <View style={styles.titleInfoContainer2}>

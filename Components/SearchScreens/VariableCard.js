@@ -66,6 +66,10 @@ export default class VariableCard extends Component {
                 userID={data.user_id}
                 comment={data.comment}
                 emoticon={data.emoticon}
+                isCorrect={data.is_correct}
+                dailyAuthID={data.daily_auth_id}
+                planID={this.props.data.plan_id}
+                status={this.props.data.status}
               />
             </View>
           ))}

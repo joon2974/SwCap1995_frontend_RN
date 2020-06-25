@@ -154,7 +154,6 @@ export default class WatcherPage extends Component {
     //   console.log(this.state.pointAndCount[77].count);
     // }
 
-    console.log(this.state.joinStatus);
     
     const chartConfig = {
       backgroundGradientFrom: '#139C73',
@@ -236,7 +235,6 @@ export default class WatcherPage extends Component {
             </Text>
             <Text style={{ fontSize: 15 }}>
               {this.state.pointAndCount[this.props.route.params.userID].point_sum}
-              {console.log(this.state.pointAndCount[this.props.route.params.userID])}
               {' '}
               p
             </Text>
@@ -353,13 +351,13 @@ export default class WatcherPage extends Component {
             <CardNine3
               title={this.state.testArray2.title}
               subTitle={this.state.testArray2.category} 
-              description={this.state.testArray2.custom_picture_rule_3} // description => subtitle 
+              description={this.state.testArray2.description} // description => subtitle 
               image={{ uri: this.state.titleURI }}
               exploreMoreInfo={() => this.props.navigation.navigate('플랜 상세 정보', { item: this.state.testArray2 })}
           />
   
             <View style={styles.lineDivider} />
-  
+                        
             <View style={styles.timeContainer}>
               <View style={styles.componentTitleContainer}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>날짜 / 시간</Text>
