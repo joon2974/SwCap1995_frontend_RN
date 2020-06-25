@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   Button,
+  Text,
 } from 'react-native';
 import axios from 'axios';
 import ServiceCard from './MyComponents/ServiceCard';
@@ -76,6 +77,12 @@ export default class AllServiceScreen extends Component {
         }
          />
           {service}
+          {service.length === 0 
+          && (
+          <View style={{ marginTop: 20 }}>
+            <Text>문의 내역이 없습니다.</Text>
+          </View>
+          )}
         </View>
         
       </ScrollView>
@@ -84,7 +91,6 @@ export default class AllServiceScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    
   Container: {
     height: height,
     width: width,
