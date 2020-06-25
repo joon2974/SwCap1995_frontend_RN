@@ -1,5 +1,4 @@
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
   View,
@@ -18,12 +17,9 @@ const { width } = Dimensions.get('window');
 export default class VariableCard extends Component {
   state={
     isModalVisible: false,
-    currentComment: '',
-    currentWatchStatus: 0,
     watchStatusResult: 0,
     planData: [],
     watchers: [],
-    testComment: '',
     authTitle: '',
   }
 

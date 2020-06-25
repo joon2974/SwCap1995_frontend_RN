@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
   TouchableOpacity,
@@ -12,27 +10,37 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
+            
 export default class PointHistory extends Component {
-  render() {
-    const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6mNjNuuWUdzd5TSnJCzZVxeaH0H-QZG6TK0LtjfOVTD60e7Jo&usqp=CAU';
+  state={
+    convertedDate: '',
+  }
 
+  componentDidMount() {
+    this.setDate();
+  }
+
+  setDate=() => {
+    const date1 = this.props.data.date.split('-');
+    let date2 = '';
+    date2 = date2.concat(date1[1] + '월 ' + date1[2][0] + date1[2][1] + '일');
+    this.setState({ convertedDate: date2 });
+  }
+
+  render() {    
     return (
       <TouchableOpacity 
         style={styles.container}
-        onPress={this.props.explore}
         >
-        {/* <Image 
-          source={{ uri: uri }} 
-          style={styles.imageStyle}
-            /> */}
         <Text style={styles.watcherInfo}>
-          {this.props.date[this.props.index]}
-          {': '}
+          {this.state.convertedDate}
+          {':'}
         </Text>
         <Text style={styles.watcherInfo}>
-          {this.props.point}
+          {this.props.data.point}
           {' p'}
         </Text>
+
         
         <Image
           style={{ height: height / 24, width: height / 24, marginLeft: 15 }}

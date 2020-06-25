@@ -1,5 +1,4 @@
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import {
   View,
@@ -26,8 +25,6 @@ export default class VariableCard extends Component {
     currentWatchStatus: -1,
     watchStatusResult: -1,
     authTitle: '',
-    emoticon: [1, 2, 3, 4, 5],
-    test4: './emoticons/emoticon1.png',
     currentEmoticon: 0,
   }
 
