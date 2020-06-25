@@ -169,10 +169,10 @@ export default class DetailPlan extends Component {
 
       const chartConfig = {
         backgroundGradientFrom: '#139c73',
-        backgroundGradientTo: 'white',
+        backgroundGradientTo: 'black',
         backgroundGradientFromOpacity: 0,
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 1,
         useShadowColorFromDataset: false, // optional
@@ -242,7 +242,11 @@ export default class DetailPlan extends Component {
                 /> */}
 
                   {congratulation}
-                  <View style={{ backgroundColor: '#139C73', marginVertical: 8, borderRadius: 16 }}>
+                  <View style={{ 
+                    backgroundColor: '#139C73', 
+                    marginVertical: 8, 
+                    borderRadius: 16, 
+                  }}>
                     <LineChart
                       data={{
                         labels: this.state.authCreatedAt,
