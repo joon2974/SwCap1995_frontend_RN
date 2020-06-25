@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   TouchableWithoutFeedback,
+  Platform,
   Keyboard,
   Text,
 } from 'react-native';
@@ -263,10 +264,13 @@ export default class WatcherPage extends Component {
       );
     } else {
       pointHistoryComponent = (
-        <View />
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>
+            포인트 획득 이력이 없습니다.
+          </Text>
+        </View>
       );
     }
-
 
     let watchersComponent = null;
     if (Object.keys(this.state.pointAndCount).length !== 0) {
@@ -424,7 +428,10 @@ export default class WatcherPage extends Component {
   
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 
-              <Modal isVisible={this.state.isModalVisible} style={{ alignItems: 'center', justifyContent: 'center' }} onBackButtonPress={this.toggleModal}>
+              <Modal 
+                isVisible={this.state.isModalVisible} 
+                style={{ alignItems: 'center', justifyContent: 'center' }}
+                onBackButtonPress={this.toggleModal}>
   
                 <ScrollView style={{
                   backgroundColor: 'white',
@@ -441,19 +448,35 @@ export default class WatcherPage extends Component {
                   <View>
                     {pointHistoryComponent}
                   </View>
-  
+
+
                   <TouchableOpacity
                     style={{
-                      width: width * 0.80,
-                      height: height / 13,
-                      backgroundColor: '#FD8A69',
-                      borderRadius: 15,
+                      width: width * 0.77,
+                      height: height / 16,
+                      backgroundColor: '#139C73',
+                      borderRadius: 10,
                       alignItems: 'center',
                       justifyContent: 'center',
-                      marginLeft: 10,
+                      margin: 4,
+                      marginLeft: 20,
+                      ...Platform.select({
+                        ios: {
+                          shadowColor: 'rgb(50, 50, 50)',
+                          shadowOpacity: 0.1,
+                          shadowRadius: 5,
+                          shadowOffset: {
+                            height: -1,
+                            width: 0,
+                          },
+                        },
+                        android: {
+                          elevation: 4,
+                        },
+                      }),    
                     }}
                     onPress={this.toggleModal}>
-                    <Text>닫기</Text>
+                    <Text style={{ color: 'white', fontSize: 20 }}>닫기</Text>
                   </TouchableOpacity>
   
                   <View style={{ marginBottom: 10 }} />
@@ -578,7 +601,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     padding: 10,
-    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
