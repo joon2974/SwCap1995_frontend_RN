@@ -154,7 +154,6 @@ export default class WatcherPage extends Component {
     //   console.log(this.state.pointAndCount[77].count);
     // }
 
-    console.log(this.state.joinStatus);
     
     const chartConfig = {
       backgroundGradientFrom: '#139C73',
@@ -177,11 +176,11 @@ export default class WatcherPage extends Component {
             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>획득 포인트</Text>
           </View>
           <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 횟수:  </Text>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>인증자 총 실패 횟수:  </Text>
             <Text>{this.state.rejectCount}</Text>
           </View>
           <View style={styles.lineContainer}>
-            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>차감될 포인트:  </Text>
+            <Text style={{ fontWeight: '800', fontSize: 17, marginLeft: 10 }}>실패 한번 당 차감될 포인트:  </Text>
             <Text>{this.state.distributedPoint}</Text>
           </View>
           <View style={styles.lineContainer}>
@@ -352,13 +351,13 @@ export default class WatcherPage extends Component {
             <CardNine3
               title={this.state.testArray2.title}
               subTitle={this.state.testArray2.category} 
-              description={this.state.testArray2.custom_picture_rule_3} // description => subtitle 
+              description={this.state.testArray2.description} // description => subtitle 
               image={{ uri: this.state.titleURI }}
               exploreMoreInfo={() => this.props.navigation.navigate('플랜 상세 정보', { item: this.state.testArray2 })}
           />
   
             <View style={styles.lineDivider} />
-  
+                        
             <View style={styles.timeContainer}>
               <View style={styles.componentTitleContainer}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>날짜 / 시간</Text>
@@ -475,6 +474,7 @@ export default class WatcherPage extends Component {
               yAxisSuffix="%"
               chartConfig={chartConfig}
               verticalLabelRotation={30}
+              fromZero={true}
            />
   
             <View style={styles.titleInfoContainer}>

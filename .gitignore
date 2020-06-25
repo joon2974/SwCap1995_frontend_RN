@@ -13,6 +13,5 @@ web-report/
 firebaseConfig.js
 kairosConfig.js
 google-services.json
-
 # macOS
 .DS_Store
