@@ -169,12 +169,6 @@ const styles = StyleSheet.create({
     height: height * 0.2,
     borderRadius: 10,
   },
-  calendarStyle: {
-    width: width * 0.75,
-    height: height * 0.2,
-    borderRadius: 10,
-    marginLeft: 10,
-  },
   titleInfoContainer: {
     backgroundColor: '#F2F2F2',
     width: width * 0.9,
@@ -220,18 +214,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 15,
     marginLeft: 10,
-  },
-  categoryUnitList: {
-    flexDirection: 'row',
-    padding: 5,
-  },
-  category: {
-    margin: 5,
-    width: 180,
-    height: 150,
-  },
-  calendar: {
-    width: 360,
-    height: 200,
   },
 });

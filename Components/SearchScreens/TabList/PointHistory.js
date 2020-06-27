@@ -78,13 +78,6 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  
-  imageStyle: {
-    width: width * 0.12,
-    height: height * 0.06,
-    borderRadius: 10,
-    marginLeft: 8,
-  },
 
   watcherInfo: {
     marginLeft: 60,

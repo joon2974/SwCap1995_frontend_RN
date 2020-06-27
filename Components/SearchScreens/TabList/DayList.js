@@ -71,12 +71,4 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  
-  imageStyle: {
-    width: width * 0.25,
-    height: height * 0.14,
-    borderRadius: 10,
-    marginBottom: 5,
-    marginLeft: 5,
-  },
 });

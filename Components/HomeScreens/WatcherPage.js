@@ -564,11 +564,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 10,
   },
-  friendtitle: {
-    width: 80,
-    height: 40,
-    marginLeft: 5,
-  },
   pointContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -580,17 +575,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width,
     marginVertical: 20,
-  },
-  friendsContainer: {
-    justifyContent: 'center',
-    width: width,
-  },
-  titleContainer: {
-    width: width,
-    height: height * 0.1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    flexDirection: 'row',
   },
   titleInfoContainer: {
     borderWidth: 4,
