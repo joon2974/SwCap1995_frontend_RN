@@ -44,7 +44,7 @@ export default class PointHistory extends Component {
         
         <Image
           style={{ height: height / 24, width: height / 24, marginLeft: 15 }}
-          source={require('../../HomeScreens/money.png')} />
+          source={require('../../../imgs/money.png')} />
 
       </TouchableOpacity>
 

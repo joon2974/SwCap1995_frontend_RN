@@ -201,7 +201,7 @@ export default class DetailPlan extends Component {
 
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./back8.png')} style={{ width: width }}>
+          <ImageBackground source={require('../../imgs/back8.png')} style={{ width: width }}>
             <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: '#d6a192' }}>
               
               <View style={{ marginVertical: 10 }} />

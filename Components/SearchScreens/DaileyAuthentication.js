@@ -54,7 +54,7 @@ export default class DaileyAuthentication extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require('./back8.png')}
+          source={require('../../imgs/back8.png')}
           style={{ width: width }}
         >
           <ScrollView contentContainerStyle={{ alignItems: 'center' }}>

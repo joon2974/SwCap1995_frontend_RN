@@ -223,7 +223,7 @@ export default class WatcherPage extends Component {
               marginLeft: 10,
               resizeMode: 'stretch',
             }}
-            source={require('./money.png')}
+            source={require('../../imgs/money.png')}
           />
           <View style={{
             height: height / 6,

@@ -52,7 +52,7 @@ export default class CategoryList extends Component {
       return (
  
         <View style={styles.container}>
-          <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
+          <ImageBackground source={require('../../imgs/backReverse8.png')} style={{ width: width }}>
   
             <FlatList 
               style={{ marginTop: 30, width: width }}

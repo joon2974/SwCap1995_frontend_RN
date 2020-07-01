@@ -26,7 +26,7 @@ export class CardOne extends Component {
     height: 100,
     borderRadius: 0,
     shadowColor: '#000000',
-    image: require('./placeholderImage.jpg'),
+    image: require('../../imgs/placeholderImage.jpg'),
   }
 
 
@@ -69,10 +69,10 @@ export class CardTwo extends Component {
   static defaultProps={
     title: '',
     subTitle: '',
-    profile: require('./placeholderImage.jpg'),
+    profile: require('../../imgs/placeholderImage.jpg'),
     icon: '',
     iconColor: '',
-    image: require('./placeholderImage.jpg'),
+    image: require('../../imgs/placeholderImage.jpg'),
   }
   
   
@@ -400,7 +400,7 @@ export class CardFour extends Component {
 export class CardFive extends Component {
   static defaultProps={
 
-    image: require('./placeholderImage.jpg'),
+    image: require('../../imgs/placeholderImage.jpg'),
   }
 
   render() {

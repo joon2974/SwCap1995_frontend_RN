@@ -66,7 +66,7 @@ export default class PlanList extends Component {
     render() {
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
+          <ImageBackground source={require('../../imgs/backReverse8.png')} style={{ width: width }}>
 
             <FlatList 
               style={{ marginTop: 10, width: width }}
