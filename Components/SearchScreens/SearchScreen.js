@@ -49,16 +49,7 @@ export default class Searchscreen extends Component {
 
   async setPlanList(categoryName) {
     await this.setState({ selectedRecommend: categoryName, age: categoryName });
-    // axios.get('http://49.50.172.58:3000/plans?limit=4&page=1').then((res) => {
-    //   this.setState({ nowRecommend: res.data.plans });
     
-    // //      this.setState({ nowRecommendUri: res.data.data.categorcyGet });
-    // }).catch((error) => {
-    //   console.log(error);
-    //   alert(error);
-    // });
-      
-
     axios.get('http://49.50.172.58:3000/plans/filter_age?age=' + this.state.age + '&limit=4&page=1').then((res) => {
       this.setState({ nowRecommend: res.data.plans });
     }).catch((error) => {

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,

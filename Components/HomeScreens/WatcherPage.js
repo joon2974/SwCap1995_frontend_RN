@@ -1,6 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
 import React, { Component } from 'react';
 import {
   View,
@@ -135,7 +132,7 @@ export default class WatcherPage extends Component {
           });
         }  
       }
-      // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
+   
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -151,10 +148,6 @@ export default class WatcherPage extends Component {
         },
       ],
     };
-    // if(Object.keys(this.state.pointAndCount).length !== 0){
-    //   console.log(this.state.pointAndCount[77].count);
-    // }
-
     
     const chartConfig = {
       backgroundGradientFrom: '#139C73',
@@ -162,9 +155,9 @@ export default class WatcherPage extends Component {
       backgroundGradientFromOpacity: 0,
       backgroundGradientToOpacity: 0.5,
       color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
-      strokeWidth: 2, // optional, default 3
+      strokeWidth: 2, 
       barPercentage: 1,
-      useShadowColorFromDataset: false, // optional
+      useShadowColorFromDataset: false, 
     };
    
 

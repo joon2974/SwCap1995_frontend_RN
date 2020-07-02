@@ -33,12 +33,9 @@ export default class DaileyAuthentication extends Component {
         'http://49.50.172.58:3000/graphql?query={categoryGet{id,name,description,image_url,createdAt,updatedAt}}',
       )
       .then((res) => {
-        // eslint-disable-next-line react/no-unused-state
         this.setState({ nowPlanTitle: res.data.data.categoryGet[0].name });
         this.setState({ nowPlanImage: res.data.data.categoryGet[0].image_url });
-        // eslint-disable-next-line react/no-unused-state
         this.setState({
-          // eslint-disable-next-line react/no-unused-state
           nowPlanDescription: res.data.data.categoryGet[0].description,
         });
         this.setState({ nowCreatedAt: res.data.data.categoryGet[0].createdAt });
@@ -46,8 +43,7 @@ export default class DaileyAuthentication extends Component {
       })
       .catch((error) => {
         console.log(error);
-        // alert(error);
-      });
+        });
   };
 
   render() {

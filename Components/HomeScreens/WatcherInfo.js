@@ -1,6 +1,3 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   Text,
@@ -69,7 +66,6 @@ export default class WatcherInfo extends Component {
         this.setState({ keysPointAndCount: this.state.keysPointAndCount.concat(key) });  
       }
 
-      // this.state.keysPointAndCount.map(data => {console.log(this.state.pointAndCount[data])});
     }).catch((error) => {
       console.log(error);
       alert(error);
@@ -78,7 +74,7 @@ export default class WatcherInfo extends Component {
 
   render() {
     const watcherData = {
-      labels: ['빵준이', '한수찬', '김첨지'], // optional
+      labels: ['빵준이', '한수찬', '김첨지'], 
       data: [0.95, 0.30, 0.66],
     };
 
@@ -88,9 +84,9 @@ export default class WatcherInfo extends Component {
       backgroundGradientFromOpacity: 0,
       backgroundGradientToOpacity: 0.5,
       color: (opacity = 1) => `rgba(19, 156, 115, ${opacity})`,
-      strokeWidth: 2, // optional, default 3
+      strokeWidth: 2, 
       barPercentage: 0.5,
-      useShadowColorFromDataset: false, // optional
+      useShadowColorFromDataset: false, 
     };
    
 
@@ -276,11 +272,7 @@ export default class WatcherInfo extends Component {
                     </View>
                   ))                                
                 }
-                {/* <TouchableOpacity
-                    style={styles.moreExploreBar2}
-                            >
-                    <Text>감시자들 더보기</Text>
-                  </TouchableOpacity> */}
+        
               </View>
 
               <TouchableOpacity

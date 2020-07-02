@@ -1,4 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,
@@ -18,11 +17,9 @@ export default class PlanList extends Component {
       nowPage: 1,
       moreData: 0,
       detailedCategory: null,
-      // nowRecommended: this.props.route.params,  이거 마지막으로 api연동 해줘야함
     }
 
     async componentDidMount() {
-      // this.getData();
       await this.setState({ detailedCategory: this.props.route.params.detailedCategory });
       this.getData();
     }

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,
@@ -10,8 +9,6 @@ import {
 } from 'react-native';
 import { CardFive } from './Cards';
 
-
-// eslint-disable-next-line no-unused-vars
 const { width, height } = Dimensions.get('window');
 
 export default class HotPlan extends Component {
@@ -19,7 +16,6 @@ export default class HotPlan extends Component {
       data: [],
       nowPage: 1,
       moreData: 0,
-      // nowRecommended: this.props.route.params,  이거 마지막으로 api연동 해줘야함
     }
 
     componentDidMount() {
