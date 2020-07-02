@@ -29,6 +29,7 @@ export default class CameraScreen extends Component {
       imageUri: null,
       disable: false,
       postDisable: false,
+      isFaceDetected: false,
     };
 
     this.cameraRef = React.createRef();
@@ -55,22 +56,33 @@ export default class CameraScreen extends Component {
   }
 
   takePhoto = async () => {
+    const { isFaceDetected } = this.state;
     this.setState({ disable: true });
-    try {
-      if (this.cameraRef.current) {
-        const { uri } = await this.cameraRef.current.takePictureAsync({
-          quality: 1,
-        });
+    if (isFaceDetected) {
+      try {
+        if (this.cameraRef.current) {
+          const { uri } = await this.cameraRef.current.takePictureAsync({
+            quality: 1,
+          });
 
-        if (uri) {
-          this.setState({ imageUri: uri });
-          Alert.alert('', '한번 사진을 등록하면 변경하지 못합니다 주의해 주세요!');
-          this.savePhoto(uri);
-          this.setState({ isPhotoTaken: true });
+          if (uri) {
+            this.setState({ imageUri: uri });
+            Alert.alert('', '한번 사진을 등록하면 변경하지 못합니다 주의해 주세요!');
+            this.savePhoto(uri);
+            this.setState({ isPhotoTaken: true });
+          }
         }
+      } catch (error) {
+        alert(error);
       }
-    } catch (error) {
-      alert(error);
+    } else {
+      Alert.alert('', '얼굴이 잘 나오게 찍어주세요!');
+    }
+  }
+
+  faceDetected = (faces) => {
+    if (faces.faces.length !== 0) {
+      this.setState({ isFaceDetected: true });
     }
   }
 
@@ -162,6 +174,7 @@ export default class CameraScreen extends Component {
                 style={styles.cameraStyle}
                 type={cameraType}
                 ref={this.cameraRef}
+                onFacesDetected={this.faceDetected}
               />
             </View>
             <View style={styles.shutterBtnContainer}>

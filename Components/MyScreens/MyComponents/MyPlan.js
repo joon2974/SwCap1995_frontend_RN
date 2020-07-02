@@ -8,45 +8,59 @@ import {
   Image,
   Platform,
   Alert,
-} from 'react-native'; 
-import {
-  Feather,
-} from '@expo/vector-icons'; 
+} from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
 export default class MyPlan extends Component {
   goToCertifyPage = () => {
     if (this.props.today_auth === false) {
-      this.props.faceAuthentication(this.props.planId, 
+      this.props.faceAuthentication(
+        this.props.planId,
         this.props.certifyMethod,
         this.props.picturetime,
-        this.props.userFaceId);
+        this.props.userFaceId,
+      );
     } else {
       Alert.alert('', '이미 일일 인증을 했습니다!');
     }
-  }
+  };
 
   render() {
     return (
+      // eslint-disable-next-line react/jsx-no-comment-textnodes
+      // eslint-disable-next-line no-nested-ternary
       <View style={styles.container}>
-        <View style={this.props.status === 'waiting' ? styles.watingtopContainer : styles.completetopContainer}>
+        <View
+          style={
+            // eslint-disable-next-line no-nested-ternary
+            this.props.status === 'end'
+              ? styles.endtopContainer
+              : this.props.status === 'waiting'
+                ? styles.watingtopContainer
+                : styles.completetopContainer
+          }
+        >
           <Text style={{ fontWeight: 'bold' }}>{this.props.title}</Text>
-        
+
           {!this.props.isMyMenu && (
-          <TouchableOpacity
-            onPress={() => this.props.btnFunc(this.props.id)}
-            style={styles.btnContainer}>
-           
-            <Feather name="more-horizontal" size={24} color="black" />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.btnFunc(this.props.id)}
+              style={styles.btnContainer}
+            >
+              <Feather name="more-horizontal" size={24} color="black" />
+            </TouchableOpacity>
           )}
         </View>
         <View style={styles.planInfoContainer}>
-          <TouchableOpacity 
-            style={styles.photoContainer} 
-            onPress={this.props.faceAuthentication 
-              ? this.goToCertifyPage : this.props.moveToWatching}
+          <TouchableOpacity
+            style={styles.photoContainer}
+            onPress={
+              this.props.faceAuthentication
+                ? this.goToCertifyPage
+                : this.props.moveToWatching
+            }
           >
             <Image
               source={{
@@ -55,46 +69,44 @@ export default class MyPlan extends Component {
               style={styles.photoStyle}
             />
           </TouchableOpacity>
-          <View style={{
-            justifyContent: 'space-evenly', height: 200,
-          }}> 
+          <View
+            style={{
+              justifyContent: 'space-evenly',
+              height: 200,
+            }}
+          >
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.textstyle}>
-                ⏰
-                {' '} 
+                ⏰ 
+                {' '}
                 {this.props.picturetime}
-                :00   
+                :00
               </Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.textstyle}>
-                📊
+                📊 
                 {' '}
                 {(this.props.percent * 100).toFixed(2)}
                 %
               </Text>
             </View>
-            {this.props.nickname 
-              && (
+            {this.props.nickname && (
               <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.textstyle}>
-                  🙍 
-                  {' '}
+                <Text>🙍 </Text>
+                <Text style={{ marginLeft: 5, fontSize: 16 }}>
                   {this.props.nickname}
                 </Text>
               </View>
-              )
-            }
+            )}
             <View style={{ flexDirection: 'row' }}>
-              {(this.props.status === 'waiting') && (
+              {this.props.status === 'waiting' && (
                 <Text style={{ fontSize: 16 }}>⌛ 대기 중</Text>
               )}
             </View>
           </View>
         </View>
-         
       </View>
-
     );
   }
 }
@@ -137,6 +149,13 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#64FE2E',
   },
+  endtopContainer: {
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#FD8A69',
+  },
   photoContainer: {
     height: width / 1.6 - 40,
     flexDirection: 'row',
@@ -155,7 +174,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textstyle: {
-    fontSize: 16, paddingRight: 10,
+    fontSize: 16,
+    paddingRight: 10,
   },
   planInfoContainer: {
     flexDirection: 'row',

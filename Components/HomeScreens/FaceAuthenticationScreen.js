@@ -88,31 +88,44 @@ export default class FaceAuthenticationScreen extends Component {
     }
   }
 
+  // recognize = async (base64) => {
+  //   this.setState({ modalVisible: true });
+  //   const rawResponse = await fetch(`${BASE_URL}recognize`, {
+  //     method: 'POST',
+  //     headers: HEADERS,
+  //     body: JSON.stringify({
+  //       image: base64,
+  //       gallery_name: 'MyGallery',
+  //     }),
+  //   });
+  //   const content = await rawResponse.json();
+  //   const highestPercentId = content.images[0].transaction.face_id;
+  //   if (this.props.route.params.userFaceId === highestPercentId) {
+  //     this.setState({ modalVisible: false });
+  //     if (this.props.route.params.certifyMethod === 0) {
+  //       Alert.alert('', '본인 인증이 완료되었습니다!');
+  //       this.props.route.params.galaryCertify(this.props.route.params.planID);
+  //     } else {
+  //       Alert.alert('', '본인 인증이 완료되었습니다!');
+  //       this.props.route.params.cameraCertify(this.props.route.params.planID);
+  //     }
+  //   } else {
+  //     this.setState({ modalVisible: false });
+  //     Alert.alert('', '얼굴이 일치하지 않습니다!');
+  //     this.props.navigation.goBack();
+  //   }
+  // };
+
   recognize = async (base64) => {
     this.setState({ modalVisible: true });
-    const rawResponse = await fetch(`${BASE_URL}recognize`, {
-      method: 'POST',
-      headers: HEADERS,
-      body: JSON.stringify({
-        image: base64,
-        gallery_name: 'MyGallery',
-      }),
-    });
-    const content = await rawResponse.json();
-    const highestPercentId = content.images[0].transaction.face_id;
-    if (this.props.route.params.userFaceId === highestPercentId) {
+    if (this.props.route.params.certifyMethod === 0) {
+      Alert.alert('', '본인 인증이 완료되었습니다!');
+      this.props.route.params.galaryCertify(this.props.route.params.planID);
       this.setState({ modalVisible: false });
-      if (this.props.route.params.certifyMethod === 0) {
-        Alert.alert('', '본인 인증이 완료되었습니다!');
-        this.props.route.params.galaryCertify(this.props.route.params.planID);
-      } else {
-        Alert.alert('', '본인 인증이 완료되었습니다!');
-        this.props.route.params.cameraCertify(this.props.route.params.planID);
-      }
     } else {
+      Alert.alert('', '본인 인증이 완료되었습니다!');
+      this.props.route.params.cameraCertify(this.props.route.params.planID);
       this.setState({ modalVisible: false });
-      Alert.alert('', '얼굴이 일치하지 않습니다!');
-      this.props.navigation.goBack();
     }
   };
 
