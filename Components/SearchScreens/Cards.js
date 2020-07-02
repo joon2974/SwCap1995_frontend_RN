@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable max-classes-per-file */
 import React, { Component } from 'react';
 import {
   Text,
@@ -355,16 +353,7 @@ export class CardFour extends Component {
             >
               {this.props.off}
             </Text>
-            {/* <Text
-              style={{
-                color: '#fff',
-                fontSize: scale(11),
-                width: scale(200),
-                textAlign: 'justify',
-              }}
-            >
-              {this.props.offText.substring(0, 100) + '.'}
-            </Text> */}
+   
           </View>
           <TouchableOpacity
             onPress={() => this.props.onClicked()}
@@ -473,85 +462,6 @@ export class CardFive extends Component {
               >
                 {this.props.subTitle}
               </Text>
-
-              {/* <View
-                style={{
-                  backgroundColor: "#fff",
-                  flex: 1,
-                  borderBottomRightRadius: 12,
-                  flexDirection: "row"
-                }}
-              >
-                {this.props.icon ? (
-                  <Icon
-                    name={this.props.icon}
-                    color={
-                      this.props.nbStar >= 1 ? this.props.iconColor : "#999"
-                    }
-                    size={scale(17)}
-                    style={{ margin: scale(2) }}
-                  />
-                ) : null}
-                {this.props.icon ? (
-                  <Icon
-                    name={this.props.icon}
-                    color={
-                      this.props.nbStar >= 2 ? this.props.iconColor : "#999"
-                    }
-                    size={scale(17)}
-                    style={{ margin: scale(2) }}
-                  />
-                ) : null}
-                {this.props.icon ? (
-                  <Icon
-                    name={this.props.icon}
-                    color={
-                      this.props.nbStar >= scale(3)
-                        ? this.props.iconColor
-                        : "#999"
-                    }
-                    size={scale(17)}
-                    style={{ margin: scale(2) }}
-                  />
-                ) : null}
-                {this.props.icon ? (
-                  <Icon
-                    name={this.props.icon}
-                    color={
-                      this.props.nbStar >= scale(4)
-                        ? this.props.iconColor
-                        : "#999"
-                    }
-                    size={scale(17)}
-                    style={{ margin: scale(2) }}
-                  />
-                ) : null}
-                {this.props.icon ? (
-                  <Icon
-                    name={this.props.icon}
-                    color={
-                      this.props.nbStar >= scale(5)
-                        ? this.props.iconColor
-                        : "#999"
-                    }
-                    size={scale(17)}
-                    style={{ margin: scale(2) }}
-                  />
-                ) : null}
-                <Text
-                  style={{
-                    color: "#666",
-                    margin: scale(2),
-                    fontSize: scale(15),
-                    alignSelf: "center"
-                  }}
-                >
-                  ({this.props.nbStar +
-                    " star" +
-                    (this.props.nbStar > scale(1) ? "s" : "")})
-                </Text>
-              </View> */}
-
             </View>
           </View>
         </View>
@@ -1751,57 +1661,6 @@ export class CardNine extends Component {
             >
               {this.props.description}
             </Text>
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: scale(10),
-              }}
-            >
-              <Text
-                style={{
-                  height: scale(22),
-                  color: '#535bfe',
-                  fontSize: 12,
-                  fontWeight: '900',
-                  letterSpacing: -0.29,
-                  lineHeight: scale(22),
-                }}
-              >
-                $
-                {this.props.price}
-              </Text>
-              <TouchableOpacity
-                onPress={() => this.props.onClicked()}
-                style={[
-                  {
-                    justifyContent: 'center',
-                    zIndex: 3,
-                    borderWidth: 1,
-                    borderColor: '#eee',
-                    alignItems: 'center',
-                    alignSelf: 'flex-end',
-                    width: scale(80),
-                    height: scale(30),
-                    margin: 30,
-                    shadowRadius: 5,
-                    borderRadius: scale(40),
-                    backgroundColor: this.props.iconBackground2,
-                  },
-                ]}
-              >
-                <Text
-                  style={{
-                    color: '#535bfe',
-                    fontSize: 12,
-                    fontWeight: '900',
-                  }}
-                >
-                  Buy now
-                </Text>
-              </TouchableOpacity>
-            </View>  */}
           </View>
       
         </View>
@@ -1935,58 +1794,6 @@ export class CardNine3 extends Component {
               </TouchableOpacity>
 
             </View>
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: scale(10),
-              }}
-            >
-              <Text
-                style={{
-                  height: scale(22),
-                  color: '#535bfe',
-                  fontSize: 12,
-                  fontWeight: '900',
-                  letterSpacing: -0.29,
-                  lineHeight: scale(22),
-                }}
-              >
-                $
-                {this.props.price}
-              </Text>
-              <TouchableOpacity
-                onPress={() => this.props.onClicked()}
-                style={[
-                  {
-                    justifyContent: 'center',
-                    zIndex: 3,
-                    borderWidth: 1,
-                    borderColor: '#eee',
-                    alignItems: 'center',
-                    alignSelf: 'flex-end',
-                    width: scale(80),
-                    height: scale(30),
-                    margin: 30,
-                    shadowRadius: 5,
-                    borderRadius: scale(40),
-                    backgroundColor: this.props.iconBackground2,
-                  },
-                ]}
-              >
-                <Text
-                  style={{
-                    color: '#535bfe',
-                    fontSize: 12,
-                    fontWeight: '900',
-                  }}
-                >
-                  Buy now
-                </Text>
-              </TouchableOpacity>
-            </View>  */}
-
           </View>
       
         </View>
@@ -2082,71 +1889,6 @@ export class CardNine2 extends Component {
             >
               {this.props.subTitle}
             </Text>
-            {/* <Text
-              style={{
-                width: screenWidth / 2.2,
-                color: '#adb3bf',
-                fontSize: 12,
-                fontWeight: '400',
-                letterSpacing: -0.29,
-                marginTop: scale(20),
-                marginLeft: scale(20),
-                marginBottom: scale(10),
-              }}
-            >
-              {this.props.description}
-            </Text> */}
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: scale(10),
-              }}
-            >
-              <Text
-                style={{
-                  height: scale(22),
-                  color: '#535bfe',
-                  fontSize: 12,
-                  fontWeight: '900',
-                  letterSpacing: -0.29,
-                  lineHeight: scale(22),
-                }}
-              >
-                $
-                {this.props.price}
-              </Text>
-              <TouchableOpacity
-                onPress={() => this.props.onClicked()}
-                style={[
-                  {
-                    justifyContent: 'center',
-                    zIndex: 3,
-                    borderWidth: 1,
-                    borderColor: '#eee',
-                    alignItems: 'center',
-                    alignSelf: 'flex-end',
-                    width: scale(80),
-                    height: scale(30),
-                    margin: 30,
-                    shadowRadius: 5,
-                    borderRadius: scale(40),
-                    backgroundColor: this.props.iconBackground2,
-                  },
-                ]}
-              >
-                <Text
-                  style={{
-                    color: '#535bfe',
-                    fontSize: 12,
-                    fontWeight: '900',
-                  }}
-                >
-                  Buy now
-                </Text>
-              </TouchableOpacity>
-            </View>  */}
           </View>
       
         </View>

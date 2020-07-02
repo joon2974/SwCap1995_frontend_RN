@@ -1,6 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
 import React, { Component } from 'react';
 import {
   View,
@@ -211,7 +208,6 @@ export default class DetailPlan extends Component {
                 subTitle={item.description}
                 description={this.state.date}
                 image={{ uri: item.image_url }}
-               // image={this.setTitleImage()}
             />
                
  
@@ -383,7 +379,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     padding: 10,
-    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',
@@ -408,7 +403,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     padding: 10,
-    // eslint-disable-next-line no-undef
     ...Platform.select({
       ios: {
         shadowColor: 'rgb(50, 50, 50)',

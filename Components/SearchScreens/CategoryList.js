@@ -1,4 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import {
   View,
@@ -12,19 +11,12 @@ import SmallCate from './TabList/SmallCate';
 const { width } = Dimensions.get('window');
 
 export default class CategoryList extends Component {
-    state = {
-      // selectedAllCate: '',      
+    state = {   
       data: [],
     }
 
     async componentDidMount() {
-      this.setParams();
       this.getData();
-      // this.getDataTest();
-    }
-
-    setParams = () => {
-      // this.setState({ selectedAllCate: this.props.route.params.selectedAllCate });
     }
 
     async getData() {

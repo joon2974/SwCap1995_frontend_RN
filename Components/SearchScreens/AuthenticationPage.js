@@ -1,6 +1,3 @@
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
 import React, { Component } from 'react';
 import {
   View,
