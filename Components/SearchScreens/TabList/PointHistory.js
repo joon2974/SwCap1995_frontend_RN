@@ -44,7 +44,7 @@ export default class PointHistory extends Component {
         
         <Image
           style={{ height: height / 24, width: height / 24, marginLeft: 15 }}
-          source={require('../../HomeScreens/money.png')} />
+          source={require('../../../imgs/money.png')} />
 
       </TouchableOpacity>
 
@@ -77,13 +77,6 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
-  },
-  
-  imageStyle: {
-    width: width * 0.12,
-    height: height * 0.06,
-    borderRadius: 10,
-    marginLeft: 8,
   },
 
   watcherInfo: {

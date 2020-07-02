@@ -166,7 +166,7 @@ export default class Searching extends Component {
           </View>
 
           <View style={styles.searchedList}>
-            <ImageBackground source={require('./backReverse8.png')} style={{ width: width }}>
+            <ImageBackground source={require('../../imgs/backReverse8.png')} style={{ width: width }}>
               {showSearched}   
             </ImageBackground>
           </View>

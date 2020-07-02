@@ -61,10 +61,13 @@ export default class WatcherPage extends Component {
       this.setState({
         pointAndCount: res.data, 
       }); 
+      
       for (const key in this.state.pointAndCount) {
         this.setState({ 
+          
+          
           keysPointAndCount: 
-          this.state.keysPointAndCount.concat(key),
+                    this.state.keysPointAndCount.concat(key),
         });
         if (this.state.authCount !== 0) {
           this.setState({
@@ -159,29 +162,6 @@ export default class WatcherPage extends Component {
       barPercentage: 1,
       useShadowColorFromDataset: false, // optional
     };
-
-    // if (this.state.authCount !== 0) {
-    // invalidComponent = (
-    //   <View>
-    //     <Text>
-    //       { (this.state.invalidCount / this.state.authCount) * 100}
-    //       {'%\n'}
-    //     </Text>
-    //   </View>  
-    // );
-    // }
-    // if (this.state.authCount !== 0) {
-   
-    // rejectComponent = (
-    //   <View>
-    //     <Text>
-    //       { (this.state.rejectCount / this.state.authCount) * 100}
-    //       {'%\n'}
-    //     </Text>
-    //   </View>   
-    // );
-    // } 
-
 
     let auth = null;
     if (this.state.authCount === 0) {

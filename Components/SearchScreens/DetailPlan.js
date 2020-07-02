@@ -201,7 +201,7 @@ export default class DetailPlan extends Component {
 
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./back8.png')} style={{ width: width }}>
+          <ImageBackground source={require('../../imgs/back8.png')} style={{ width: width }}>
             <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: '#d6a192' }}>
               
               <View style={{ marginVertical: 10 }} />
@@ -232,15 +232,6 @@ export default class DetailPlan extends Component {
               <View style={{ alignItems: 'center', marginVertical: 10 }}>
                 <View style={{ alignItems: 'center' }}>
 
-                  {/* <ContributionGraph
-                    values={commitsData}
-                    endDate={new Date('2017-04-09')}
-                    numDays={105}
-                    width={width}
-                    height={220}
-                    chartConfig={chartConfig}
-                /> */}
-
                   {congratulation}
                   <View style={{ 
                     backgroundColor: '#139C73', 
@@ -256,7 +247,7 @@ export default class DetailPlan extends Component {
                           },
                         ],
                       }}
-                      width={width * 0.9} // from react-native
+                      width={width * 0.9} 
                       height={height / 4}
                       yAxisLabel=""
                       yAxisSuffix=""
@@ -335,11 +326,6 @@ export default class DetailPlan extends Component {
                         
                 <View>
                   {watchersComponent}
-                  {/* <TouchableOpacity
-                    style={styles.moreExploreBar2}
-                            >
-                    <Text>감시자들 더보기</Text>
-                  </TouchableOpacity> */}
                 </View>
 
                 <View style={{ marginBottom: 10 }} />
@@ -361,30 +347,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center', 
     alignItems: 'center',
-  },
-  titleImageContainer: {
-    width: width * 0.9,
-    height: height / 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10,
-    margin: 6,
-    marginTop: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgb(50, 50, 50)',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: {
-          height: -1,
-          width: 0,
-        },
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
   },
   moreExploreBar: {
     width: width * 0.8,
@@ -411,41 +373,6 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
-  },
-  moreExploreBar2: {
-    width: width * 0.8,
-    height: height / 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10,
-    margin: 6,
-    marginTop: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgb(50, 50, 50)',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: {
-          height: -1,
-          width: 0,
-        },
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-  imageStyle: {
-    width: width * 0.75,
-    height: height * 0.2,
-    borderRadius: 10,
-  },
-  calendarStyle: {
-    width: width * 0.75,
-    height: height * 0.2,
-    borderRadius: 10,
-    marginLeft: 10,
   },
   titleInfoContainer: {
     borderWidth: 4,
@@ -506,16 +433,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginLeft: 14,
     marginVertical: 3,
-  },
-  dateInfo: {
-    color: '#adb3bf',
-    fontSize: 12,
-    marginTop: 15,
-    marginLeft: 10,
-  },
-  calendar: {
-    width: 360,
-    height: 200,
   },
   lineDivider: {
     backgroundColor: '#F2F2F2',

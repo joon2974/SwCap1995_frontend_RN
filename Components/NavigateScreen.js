@@ -55,7 +55,6 @@ import CategoryList from './SearchScreens/CategoryList';
 import HotPlan from './SearchScreens/HotPlan';
 import PlanList from './SearchScreens/PlanList';
 import DetailPlan from './SearchScreens/DetailPlan';
-import Joom from './SearchScreens/TabList/Joom';
 import DaileyAuthentication from './SearchScreens/DaileyAuthentication';
 
 const statusbarHeight = Platform.OS === 'ios' ? Constants.statusBarHeight : 0;
@@ -100,7 +99,6 @@ function HomeStackScreen() {
       <HomeStack.Screen name="인증 리스트" component={AuthenticationPage} />
       <HomeStack.Screen name="감시 리스트" component={WatcherPage} />
       <HomeStack.Screen name="플랜 상세 정보" component={DetailPlan} />
-      <HomeStack.Screen name="줌" component={Joom} />
       <HomeStack.Screen name="인증" component={AuthenticationPage} />
     </HomeStack.Navigator>
   );
