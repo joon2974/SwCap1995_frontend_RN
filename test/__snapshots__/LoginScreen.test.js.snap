@@ -1,0 +1,428 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoginScreen /> renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "justifyContent": "center",
+      "marginTop": 30,
+      "position": "absolute",
+    }
+  }
+>
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={false}
+    visible={false}
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <ActivityIndicator
+        animating={true}
+        color="#999999"
+        hidesWhenStopped={true}
+        size="large"
+      />
+      <Text>
+        불러오는 중...
+      </Text>
+    </View>
+  </Modal>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "flex-end",
+        "marginBottom": 40,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https://kr.object.ncloudstorage.com/swcap1995/icon.png",
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 20,
+          "height": 200,
+          "width": 200,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1.5,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F2F2F2",
+          "borderRadius": 25,
+          "height": 45,
+          "marginBottom": 5,
+          "width": 690,
+        }
+      }
+    >
+      <Text />
+      <TextInput
+        allowFontScaling={true}
+        keyboardType="email-address"
+        onChangeText={[Function]}
+        placeholder="E - mail"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "borderRadius": 25,
+            "fontSize": 16,
+            "height": 45,
+            "paddingLeft": 45,
+            "width": 695,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F2F2F2",
+          "borderRadius": 25,
+          "height": 45,
+          "marginBottom": 5,
+          "width": 690,
+        }
+      }
+    >
+      <Text />
+      <TextInput
+        allowFontScaling={true}
+        onChangeText={[Function]}
+        placeholder="Password"
+        rejectResponderTermination={true}
+        secureTextEntry={true}
+        style={
+          Object {
+            "borderRadius": 25,
+            "fontSize": 16,
+            "height": 45,
+            "paddingLeft": 45,
+            "width": 695,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "green",
+          "borderColor": "#fff",
+          "borderRadius": 10,
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 40,
+          "margin": 5,
+          "opacity": 1,
+          "width": 220,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "https://kr.object.ncloudstorage.com/swcap1995/icon.png",
+          }
+        }
+        style={
+          Object {
+            "height": 25,
+            "margin": 5,
+            "padding": 10,
+            "resizeMode": "stretch",
+            "width": 25,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "backgroundColor": "#fff",
+            "height": 40,
+            "width": 1,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#fff",
+            "marginBottom": 4,
+            "marginLeft": 10,
+            "marginRight": 20,
+          }
+        }
+      >
+         Log in with Plan A ID 
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#dc4e41",
+          "borderColor": "#fff",
+          "borderRadius": 10,
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 40,
+          "margin": 5,
+          "opacity": 1,
+          "width": 220,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "https://raw.githubusercontent.com/AboutReact/sampleresource/master/google-plus.png",
+          }
+        }
+        style={
+          Object {
+            "height": 25,
+            "margin": 5,
+            "padding": 10,
+            "resizeMode": "stretch",
+            "width": 25,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "backgroundColor": "#fff",
+            "height": 40,
+            "width": 1,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#fff",
+            "marginBottom": 4,
+            "marginLeft": 10,
+            "marginRight": 20,
+          }
+        }
+      >
+         Log in with Google 
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#485a96",
+          "borderColor": "#fff",
+          "borderRadius": 10,
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 40,
+          "margin": 5,
+          "opacity": 1,
+          "width": 220,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "https://raw.githubusercontent.com/AboutReact/sampleresource/master/facebook.png",
+          }
+        }
+        style={
+          Object {
+            "height": 25,
+            "margin": 5,
+            "padding": 10,
+            "resizeMode": "stretch",
+            "width": 25,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "backgroundColor": "#fff",
+            "height": 40,
+            "width": 1,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#fff",
+            "marginBottom": 4,
+            "marginLeft": 10,
+            "marginRight": 20,
+          }
+        }
+      >
+         Log in with Facebook 
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#D8D8D8",
+          "borderRadius": 5,
+          "height": 2,
+          "marginBottom": 10,
+          "marginTop": 20,
+          "width": 562.5,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+          "width": 750,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "height": 40,
+            "justifyContent": "center",
+            "opacity": 1,
+            "width": 80,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#D8D8D8",
+            }
+          }
+        >
+          회원가입
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#D8D8D8",
+            "height": 20,
+            "marginRight": 10,
+            "width": 1,
+          }
+        }
+      />
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "height": 40,
+            "justifyContent": "center",
+            "opacity": 1,
+            "width": 80,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#D8D8D8",
+            }
+          }
+        >
+          비밀번호 찾기
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

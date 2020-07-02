@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 /* 아임포트 모듈을 불러옵니다. */
-import IMP from 'iamport-react-native';
+// import IMP from 'iamport-react-native';
 
 /* 로딩 컴포넌트를 불러옵니다. */
 import axios from 'axios';

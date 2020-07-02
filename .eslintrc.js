@@ -16,6 +16,14 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
+  overrides: [
+    {
+      excludedFiles: '*.test.js',
+      rules: {
+        "require-jsdoc": "off"
+      }
+    },
+  ],
   plugins: ['react'],
   rules: {
     'linebreak-style': 0,

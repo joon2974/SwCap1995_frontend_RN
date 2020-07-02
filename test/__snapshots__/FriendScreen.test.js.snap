@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FriendScreen /> renders correctly 1`] = `
+<RCTScrollView
+  refreshControl={
+    <RefreshControlMock
+      colors={
+        Array [
+          "#ff0000",
+          "#00ff00",
+          "#0000ff",
+        ]
+      }
+      onRefresh={[Function]}
+      progressBackgroundColor="white"
+      refreshing={false}
+      tintColor="#ff0000"
+      title="Loading..."
+      titleColor="#00ff00"
+    />
+  }
+  style={
+    Object {
+      "backgroundColor": "white",
+      "flex": 1,
+    }
+  }
+>
+  <RCTRefreshControl />
+  <View>
+    <View
+      style={
+        Object {
+          "height": 200.1,
+          "width": 750,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "height": 66.7,
+            "justifyContent": "center",
+            "marginBottom": 5,
+            "marginLeft": 10,
+            "marginTop": 10,
+            "width": 740,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignSelf": "flex-start",
+              "height": 66.7,
+              "marginLeft": 10,
+              "width": 700,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "alignSelf": "flex-start",
+                "fontSize": 25,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            친구
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignSelf": "flex-end",
+              "height": 66.7,
+              "opacity": 1,
+              "width": 30,
+            }
+          }
+        >
+          <Text />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "height": 133.4,
+            "justifyContent": "center",
+            "marginLeft": 10,
+            "width": 740,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 10,
+              "height": 40,
+              "justifyContent": "center",
+              "opacity": 1,
+              "width": 150,
+            }
+          }
+        >
+          <Text>
+            친구추가 하러 가기
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F2F2F2",
+          "height": 1.5,
+          "marginBottom": 15,
+          "marginLeft": 15,
+          "marginTop": 15,
+          "width": 720,
+        }
+      }
+    />
+    <RCTScrollView>
+      <View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "marginBottom": 5,
+              "marginLeft": 10,
+              "width": 740,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "flex-start",
+                "height": 66.7,
+                "marginLeft": 10,
+                "width": 700,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "fontSize": 25,
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              친구 요청
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F2F2F2",
+          "height": 1.5,
+          "marginBottom": 15,
+          "marginLeft": 15,
+          "marginTop": 15,
+          "width": 720,
+        }
+      }
+    />
+    <RCTScrollView>
+      <View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "marginBottom": 5,
+              "marginLeft": 10,
+              "width": 740,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "flex-start",
+                "height": 66.7,
+                "marginLeft": 10,
+                "width": 700,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "fontSize": 25,
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              친구 목록
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</RCTScrollView>
+`;

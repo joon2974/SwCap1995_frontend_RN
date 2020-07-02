@@ -13,16 +13,16 @@ import {
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-import { kairosConfig } from '../../kairosConfig';
+// import { kairosConfig } from '../../kairosConfig';
 
 const { height, width } = Dimensions.get('window');
-const BASE_URL = 'https://api.kairos.com/';
-const HEADERS = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-  app_id: kairosConfig.app_id,
-  app_key: kairosConfig.app_key,
-};
+// const BASE_URL = 'https://api.kairos.com/';
+// const HEADERS = {
+//   Accept: 'application/json',
+//   'Content-Type': 'application/json',
+//   app_id: kairosConfig.app_id,
+//   app_key: kairosConfig.app_key,
+// };
 
 export default class FaceAuthenticationScreen extends Component {
   constructor(props) {
@@ -117,6 +117,7 @@ export default class FaceAuthenticationScreen extends Component {
   // };
 
   recognize = async (base64) => {
+    console.log(base64);
     this.setState({ modalVisible: true });
     if (this.props.route.params.certifyMethod === 0) {
       Alert.alert('', '본인 인증이 완료되었습니다!');

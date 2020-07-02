@@ -1,0 +1,642 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InputInfo /> renders correctly 1`] = `
+<RCTScrollView
+  style={
+    Object {
+      "backgroundColor": "white",
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "height": 1143.4285714285713,
+          "justifyContent": "center",
+          "marginTop": 20,
+          "width": 750,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "height": 45,
+            "marginBottom": 10,
+            "width": 730,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 45,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 55,
+            }
+          }
+        >
+          <Text>
+            닉네임
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 10,
+              "height": 45,
+              "marginBottom": 5,
+              "marginLeft": 5,
+              "width": 650,
+            }
+          }
+        >
+          <TextInput
+            allowFontScaling={true}
+            keyboardType="email-address"
+            onChangeText={[Function]}
+            placeholder="nickname"
+            rejectResponderTermination={true}
+            style={
+              Object {
+                "borderRadius": 10,
+                "fontSize": 16,
+                "height": 45,
+                "paddingLeft": 20,
+                "width": 695,
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "height": 45,
+            "marginBottom": 10,
+            "width": 730,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#00FF80",
+              "borderRadius": 10,
+              "height": 35,
+              "justifyContent": "center",
+              "marginLeft": 65,
+              "opacity": 1,
+              "width": 60,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            중복 확인
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": 40,
+              "justifyContent": "center",
+              "marginLeft": 10,
+              "width": 200,
+            }
+          }
+        >
+          <Text>
+            
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "height": 50,
+            "marginBottom": 10,
+            "width": 730,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 45,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 55,
+            }
+          }
+        >
+          <Text>
+            성별
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 10,
+              "height": 45,
+              "justifyContent": "center",
+              "marginLeft": 5,
+              "opacity": 1,
+              "width": 100,
+            }
+          }
+        >
+          <Text>
+            남자
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F2F2F2",
+              "borderRadius": 10,
+              "height": 45,
+              "justifyContent": "center",
+              "marginLeft": 5,
+              "opacity": 1,
+              "width": 100,
+            }
+          }
+        >
+          <Text>
+            여자
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "height": 50,
+            "marginBottom": 10,
+            "width": 730,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 45,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 55,
+            }
+          }
+        >
+          <Text>
+            나이
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "height": 50,
+              "marginBottom": 10,
+              "width": 730,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 45,
+                "marginLeft": 5,
+                "width": 200,
+              }
+            }
+          >
+            <RCTPicker
+              items={
+                Array [
+                  Object {
+                    "label": "13",
+                    "textColor": undefined,
+                    "value": "13",
+                  },
+                  Object {
+                    "label": "14",
+                    "textColor": undefined,
+                    "value": "14",
+                  },
+                  Object {
+                    "label": "15",
+                    "textColor": undefined,
+                    "value": "15",
+                  },
+                  Object {
+                    "label": "16",
+                    "textColor": undefined,
+                    "value": "16",
+                  },
+                  Object {
+                    "label": "17",
+                    "textColor": undefined,
+                    "value": "17",
+                  },
+                  Object {
+                    "label": "18",
+                    "textColor": undefined,
+                    "value": "18",
+                  },
+                  Object {
+                    "label": "19",
+                    "textColor": undefined,
+                    "value": "19",
+                  },
+                  Object {
+                    "label": "20",
+                    "textColor": undefined,
+                    "value": "20",
+                  },
+                  Object {
+                    "label": "21",
+                    "textColor": undefined,
+                    "value": "21",
+                  },
+                  Object {
+                    "label": "22",
+                    "textColor": undefined,
+                    "value": "22",
+                  },
+                  Object {
+                    "label": "23",
+                    "textColor": undefined,
+                    "value": "23",
+                  },
+                  Object {
+                    "label": "24",
+                    "textColor": undefined,
+                    "value": "24",
+                  },
+                  Object {
+                    "label": "25",
+                    "textColor": undefined,
+                    "value": "25",
+                  },
+                  Object {
+                    "label": "26",
+                    "textColor": undefined,
+                    "value": "26",
+                  },
+                  Object {
+                    "label": "27",
+                    "textColor": undefined,
+                    "value": "27",
+                  },
+                  Object {
+                    "label": "28",
+                    "textColor": undefined,
+                    "value": "28",
+                  },
+                  Object {
+                    "label": "29",
+                    "textColor": undefined,
+                    "value": "29",
+                  },
+                  Object {
+                    "label": "30",
+                    "textColor": undefined,
+                    "value": "30",
+                  },
+                  Object {
+                    "label": "31",
+                    "textColor": undefined,
+                    "value": "31",
+                  },
+                  Object {
+                    "label": "32",
+                    "textColor": undefined,
+                    "value": "32",
+                  },
+                  Object {
+                    "label": "33",
+                    "textColor": undefined,
+                    "value": "33",
+                  },
+                  Object {
+                    "label": "34",
+                    "textColor": undefined,
+                    "value": "34",
+                  },
+                  Object {
+                    "label": "35",
+                    "textColor": undefined,
+                    "value": "35",
+                  },
+                  Object {
+                    "label": "36",
+                    "textColor": undefined,
+                    "value": "36",
+                  },
+                  Object {
+                    "label": "37",
+                    "textColor": undefined,
+                    "value": "37",
+                  },
+                  Object {
+                    "label": "38",
+                    "textColor": undefined,
+                    "value": "38",
+                  },
+                  Object {
+                    "label": "39",
+                    "textColor": undefined,
+                    "value": "39",
+                  },
+                  Object {
+                    "label": "40",
+                    "textColor": undefined,
+                    "value": "40",
+                  },
+                ]
+              }
+              onChange={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              selectedIndex={0}
+              style={
+                Array [
+                  Object {
+                    "height": 216,
+                  },
+                  Object {
+                    "height": 45,
+                  },
+                ]
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "height": 266.8,
+            "width": 730,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "height": 45,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 55,
+            }
+          }
+        >
+          <Text>
+            관심사
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "flexWrap": "wrap",
+              "height": 266.8,
+              "marginLeft": 5,
+              "width": 650,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "borderRadius": 10,
+                "height": 45,
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "marginRight": 5,
+                "opacity": 1,
+                "width": 80,
+              }
+            }
+          >
+            <Text>
+              건강/운동
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "borderRadius": 10,
+                "height": 45,
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "marginRight": 5,
+                "opacity": 1,
+                "width": 80,
+              }
+            }
+          >
+            <Text>
+              생활습관
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "borderRadius": 10,
+                "height": 45,
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "marginRight": 5,
+                "opacity": 1,
+                "width": 80,
+              }
+            }
+          >
+            <Text>
+              자기계발
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "borderRadius": 10,
+                "height": 45,
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "marginRight": 5,
+                "opacity": 1,
+                "width": 80,
+              }
+            }
+          >
+            <Text>
+              감정관리
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "borderRadius": 10,
+                "height": 45,
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "marginRight": 5,
+                "opacity": 1,
+                "width": 80,
+              }
+            }
+          >
+            <Text>
+              기타
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#00FF80",
+            "borderRadius": 15,
+            "height": 40,
+            "justifyContent": "center",
+            "marginTop": 1,
+            "opacity": 1,
+            "width": 200,
+          }
+        }
+      >
+        <Text>
+          정보 입력
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
